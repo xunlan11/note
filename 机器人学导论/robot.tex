@@ -549,7 +549,7 @@ $ \text{灵巧系数} = \frac{\text{可达角度所占弧长}}{\text{单位圆�
 %----------------------------------------------------------------------------------------
 \section{雅可比}
 %------------------------------------------------
-\subsection{概念}
+\subsection{雅可比矩阵}
 关节（平移距离或旋转角度）变化$ q/\theta $引起末端位姿$ X $变化，雅可比矩阵$ J $用来描述关节速度与末端速度间的关系。
 
 关节变化向量$ q = (q_1, q_2, \dots, q_n) $，其中$ q_i = \overline{\epsilon}_i\theta_i + \epsilon_id_i $（$ \epsilon_i $与其非表示关节为平移关节或旋转关节之一）。
@@ -570,6 +570,82 @@ $$
 \item $ J_{ij}(q) = \frac{\partial}{\partial q_j} f_i(q) $。
 \item $ m $是末端位姿（输出量）描述维度，$ n $是关节变化（输入量）维度。
 \end{itemize} 
+%------------------------------------------------
+\subsection{雅可比矩阵的转换}
+笛卡尔坐标系基础雅可比矩阵：
+$$ \begin{bmatrix} v \\ \omega \end{bmatrix}_{(6 \times 1)} = J_0(q)_{(6 \times n)} \dot{q}_{(n \times 1)} $$
+
+在不同的坐标系描述下，雅可比矩阵可以相互转化：
+
+$ X_P,X_R $定义了描述方式，$ E_P,E_R $则描述了对应的转换关系：
+\begin{align*}
+\dot{X}_P &= E_P \cdot v = [E_P \cdot J_v] \dot{q} = J_P \dot{q} \\
+\dot{X}_R &= E_R \cdot \omega = [E_R \cdot J_\omega] \dot{q} = J_R \dot{q}
+\end{align*}
+$$
+J = 
+\begin{bmatrix} J_P \\ J_R \end{bmatrix}
+=
+\begin{bmatrix} E_P & 0 \\ 0 & E_R \end{bmatrix}
+\begin{bmatrix} J_v \\ J_\omega \end{bmatrix}
+$$
+%------------------------------------------------
+\paragraph{线雅可比}
+\begin{itemize}
+\item 笛卡尔坐标系：$ X_P = \begin{bmatrix} x & y & z \end{bmatrix}^T, E_P = E $。
+\item 圆柱坐标系：$ X_P = \begin{bmatrix} r & \theta & z \end{bmatrix}^T, E_P = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\frac{\sin\theta}{\rho} & \frac{\cos\theta}{\rho} & 0 \\ 0 & 0 & 1 \end{bmatrix} $。
+\item 球坐标系：$ X_P = \begin{bmatrix} \rho & \theta & \phi \end{bmatrix}^T, E_P = \begin{bmatrix} \cos\theta \sin\phi & \sin\theta \sin\phi & \cos\phi \\ -\frac{\sin\theta}{\rho \sin\phi} & \frac{\cos\theta}{\rho \sin\phi} & 0 \\ \frac{\cos\theta \cos\phi}{\rho} & \frac{\sin\theta \cos\phi}{\rho} & -\frac{\sin\phi}{\rho} \end{bmatrix} $。
+\end{itemize} 
+%------------------------------------------------
+\paragraph{角雅可比}~\\
+
+旋转阵的导数为
+$ \dot{R} = \lim_{\Delta t \to 0} (\frac{R_K(\Delta\theta) - I_3}{\Delta t} R(t)) $，
+
+其与逆（转置）的积为反对称阵：
+$$ \dot{R} R^{-1} = \dot{R} R^T = \hat{\Omega} = \begin{bmatrix} 0 & -\Omega_z & \Omega_y \\ \Omega_z & 0 & -\Omega_x \\ -\Omega_y & \Omega_x & 0 \end{bmatrix} $$
+
+可得到方程组
+$
+\begin{cases}
+\Omega_x = \dot{r}_{31} r_{21} + \dot{r}_{32} r_{22} + \dot{r}_{33} r_{23} \\
+\Omega_y = \dot{r}_{11} r_{31} + \dot{r}_{12} r_{32} + \dot{r}_{13} r_{33} \\
+\Omega_z = \dot{r}_{21} r_{11} + \dot{r}_{22} r_{12} + \dot{r}_{23} r_{13}
+\end{cases}
+$，
+
+$ \Omega = \begin{bmatrix} \Omega_x & \Omega_y & \Omega_z \end{bmatrix}^T = \begin{bmatrix} k_x & k_y & k_z \end{bmatrix}^T $为瞬时旋转轴。
+
+对于Z-Y-Z欧拉角$ X_R = \begin{bmatrix} \alpha & \beta & \gamma \end{bmatrix}^T $，有旋转阵：
+$$
+^A_B R_{ZYZ}(\alpha, \beta, \gamma) =
+\begin{bmatrix}
+c\alpha c\beta c\gamma - s\alpha s\gamma & -c\alpha c\beta s\gamma - s\alpha c\gamma & c\alpha s\beta \\
+s\alpha c\beta c\gamma + c\alpha s\gamma & -s\alpha c\beta s\gamma + c\alpha c\gamma & s\alpha s\beta \\
+-s\beta c\gamma & s\beta s\gamma & c\beta
+\end{bmatrix}
+$$
+
+二者变换为：
+$$
+\begin{bmatrix} \Omega_x \\ \Omega_y \\ \Omega_z \end{bmatrix}
+=
+\begin{bmatrix} 0 & -s\alpha & c\alpha s\beta \\ 0 & c\alpha & s\alpha s\beta \\ 1 & 0 & c\beta \end{bmatrix}
+\begin{bmatrix} \dot{\alpha} \\ \dot{\beta} \\ \dot{\gamma} \end{bmatrix}
+\Rightarrow 
+\begin{bmatrix} \dot{\alpha} \\ \dot{\beta} \\ \dot{\gamma} \end{bmatrix}
+=
+\underbrace{\left[
+\begin{array}{ccc}
+\frac{c\alpha c\beta}{s\beta} & -\frac{s\alpha c\beta}{s\beta} & 1 \\
+-\frac{s\alpha}{s\beta} & \frac{c\alpha}{s\beta} & 0 \\
+c\alpha & s\alpha & 0
+\end{array}
+\right]}_{E_R}
+\begin{bmatrix} \Omega_x \\ \Omega_y \\ \Omega_z \end{bmatrix}
+$$
+
+（X-Y-Z固定角与Z-Y-Z欧拉角对偶，$ E_R $相同）
 %------------------------------------------------
 \subsection{速度传播}
 %------------------------------------------------
@@ -694,7 +770,8 @@ $$
 \begin{figure}[H]
 \centering
 \subfloat[角速度与线速度]{\includegraphics[width=.15\textwidth]{wv}} \quad
-\subfloat[力与扭矩]{\includegraphics[width=.15\textwidth]{ft}}
+\subfloat[力与扭矩]{\includegraphics[width=.15\textwidth]{ft}} \quad
+\subfloat[例题]{\includegraphics[width=.3\textwidth]{5}}
 \caption[速度与扭矩]{速度与扭矩}
 \end{figure}
 
@@ -704,12 +781,6 @@ v &= \omega \times p = -\hat{p} \omega = J \dot{\theta} \\
 \end{align*}
 %------------------------------------------------
 \paragraph{例题}\label{sec:example5.1}
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.3\textwidth]{5} 
-\caption[速度与扭矩例题]{速度与扭矩例题}
-\end{figure}
-
 条件： $ l_1 = l_2 = 1, \theta_1 = 0, \theta_2 = 60^\circ, F = \begin{bmatrix} 0 & -1 & 0 \end{bmatrix}^T N $。
 \begin{itemize}
 \item 对于连杆2：$ f_2 = F, n_2 = \vec{l}_2 \times F = \begin{bmatrix} 0 & 0 & -l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
@@ -722,29 +793,8 @@ v &= \omega \times p = -\hat{p} \omega = J \dot{\theta} \\
 %------------------------------------------------
 \subsubsection{直接法}\tip{直接法求雅可比}
 对正运动学方程直接求导。
-
-以下以笛卡尔坐标系基础雅可比矩阵为例：
-$$ \begin{bmatrix} v \\ \omega \end{bmatrix}_{(6 \times 1)} = J(q)_{(6 \times n)} \dot{q}_{(n \times 1)} $$
-
-$ X_P,X_R $定义了位姿的描述方式，$ E_P(X_P),E_R(X_R) $则描述了末端速度与位姿的转换关系：
 $$
-X_P = \begin{bmatrix} x \\ y \\ z \end{bmatrix},
-E_P(X_P) = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix};
-X_R = \begin{bmatrix} \alpha \\ \beta \\ \gamma \end{bmatrix},
-E_R(X_R) = \begin{bmatrix} \frac{c\alpha c\beta}{s\beta} & -\frac{s\alpha c\beta}{s\beta} & 1 \\ -\frac{s\alpha}{s\beta} & \frac{c\alpha}{s\beta} & 0 \\ c\alpha & s\alpha & 0 \end{bmatrix}
-$$
-
-将末端速度表达为雅可比矩阵$ J_v,J_\omega $与关节速度的乘积，可提出雅可比矩阵$ J_{X_P},J_{X_R} $：
-\begin{align*}
-\dot{X}_P &= E_P(X_P) \cdot v = [E_P(X_P) \cdot J_v] \dot{q} = J_{X_P} \dot{q} \\
-\dot{X}_R &= E_R(X_R) \cdot \omega = [E_R(X_R) \cdot J_\omega] \dot{q} = J_{X_R} \dot{q}
-\end{align*}
-$$
-J = 
-\begin{bmatrix} J_{X_P} \\ J_{X_R} \end{bmatrix}
-=
-\begin{bmatrix} E_P(X_P) & 0 \\ 0 & E_R(X_R) \end{bmatrix}
-\begin{bmatrix} J_v \\ J_\omega \end{bmatrix}
+J = \begin{bmatrix} \frac{\partial x_P}{\partial q_1} & \frac{\partial x_P}{\partial q_2} & \cdots & \frac{\partial x_P}{\partial q_N} \\ \frac{\partial x_R}{\partial q_1} & \frac{\partial x_R}{\partial q_2} & \cdots & \frac{\partial x_R}{\partial q_N} \end{bmatrix}
 $$
 %------------------------------------------------
 \subsubsection{旋转阵法}\tip{旋转阵法求雅可比}
@@ -752,33 +802,20 @@ $$
 $$
 J = \begin{bmatrix} \frac{\partial x_P}{\partial q_1} & \frac{\partial x_P}{\partial q_2} & \cdots & \frac{\partial x_P}{\partial q_N} \\ \overline{\epsilon}_1 Z_1 & \overline{\epsilon}_2 Z_2 & \cdots & \overline{\epsilon}_n Z_n \end{bmatrix}
 $$
-
-以下以Z-Y-Z欧拉角为例说明：
-
-其各关节旋转阵依次为：
-$$
-R_z(\alpha) = \begin{bmatrix} c\alpha & -s\alpha & \textcolor{red}{0} \\ s\alpha & c\alpha & \textcolor{red}{0} \\ 0 & 0 & \textcolor{red}{1} \end{bmatrix};
-R_z(\alpha) R_y(\beta) = \begin{bmatrix} c\alpha c\beta & \textcolor{red}{-s\alpha} & c\alpha s\beta \\ s\alpha c\beta & \textcolor{red}{c\alpha} & s\alpha s\beta \\ -s\beta & \textcolor{red}{0} & c\beta \end{bmatrix}
-$$
-$$
-R_Z(\alpha) R_Y(\beta) R_Z(\gamma) = \begin{bmatrix} c\alpha c\beta c\gamma - s\alpha s\gamma & -c\alpha c\beta s\gamma - s\alpha c\gamma & \textcolor{red}{c\alpha s\beta} \\ s\alpha c\beta c\gamma + c\alpha s\gamma & -s\alpha c\beta s\gamma + c\alpha c\gamma & \textcolor{red}{s\alpha s\beta} \\ -s\beta c\gamma & s\beta s\gamma & \textcolor{red}{c\beta} \end{bmatrix}
-$$
-
-提取各旋转阵$ Z $列，得到角雅可比矩阵$ \begin{bmatrix} 0 & -s\alpha & c\alpha c\beta \\ 0 & c\alpha & s\alpha c\beta \\ 1 & 0 & -s\beta \end{bmatrix} $。
 %------------------------------------------------
 \paragraph{例题}
-以下以斯坦福臂为例求解雅可比矩阵：
+以下以斯坦福臂（2RP3R）为例：
 
 \begin{figure}[H]
 \centering
-\subfloat[结构图]{\includegraphics[width=.45\textwidth]{4.1}} \quad
+\subfloat[斯坦福臂结构图]{\includegraphics[width=.45\textwidth]{4.1}} \quad
 \subfloat[参数表]{\includegraphics[width=.45\textwidth]{4.2}}
-\caption[求解斯坦福臂雅可比矩阵]{求解斯坦福臂雅可比矩阵}
+\caption[旋转阵法求雅可比例题]{旋转阵法求雅可比例题}
 \end{figure}
 
 $ _6^0T = {_1^0T}{_2^1T}{_3^2T}{_4^3T}{_5^4T}{_6^5T} $得到正运动学方程，将其提取为列向量：
 $$
-X = \begin{bmatrix} X_P \\ r_1 \\ r_2 \\ r_3 \end{bmatrix}
+X = \begin{bmatrix} X_P \\ r_1 \\ r_2 \\ \textcolor{red}{r_3} \end{bmatrix}
 =
 \begin{bmatrix}
 d_3 c_1 s_2 - d_2 s_1 \\
@@ -792,10 +829,11 @@ d_3 c_2 \\
 \end{bmatrix}
 $$
 
-雅可比矩阵为
+雅可比矩阵为：
 \begin{align*}
+J &= \begin{bmatrix} Z_1 \times P_{13} & Z_2 \times P_{23} & Z_3 & Z_4 \times 0 & Z_5 \times 0 & Z_6 \times 0 \\ Z_1 & Z_2 & 0 & Z_4 & Z_5 & Z_6 \end{bmatrix} \\
 ^0 J 
-&= \begin{bmatrix} \frac{\partial}{\partial q_1} (^0 x_P) & \frac{\partial}{\partial q_2} (^0 x_P) & \frac{\partial}{\partial q_3} (^0 x_P) & 0 & 0 & 0 \\ ^0 Z_1 & ^0 Z_2 & ^0 Z_3 & ^0 Z_4 & ^0 Z_5 & ^0 Z_6 \end{bmatrix} \\
+&= \begin{bmatrix} \frac{\partial}{\partial q_1} (^0 x_P) & \frac{\partial}{\partial q_2} (^0 x_P) & \frac{\partial}{\partial q_3} (^0 x_P) & 0 & 0 & 0 \\ ^0 Z_1 & ^0 Z_2 & 0 & ^0 Z_4 & ^0 Z_5 & \textcolor{red}{^0 Z_6} \end{bmatrix} \\
 &=
 \begin{bmatrix}
 -(d_3 s_1 s_2 + d_2 c_1) & c_1 c_2 d_3 & c_1 s_2 & 0 & 0 & 0 \\
@@ -807,15 +845,17 @@ d_3 c_1 s_2 - d_2 s_1 & s_1 c_2 d_3 & s_1 s_2 & 0 & 0 & 0 \\
 \end{bmatrix}
 \end{align*}
 
+以上省略了中间的齐次变换阵，它们旋转阵$ Z $列对应各$ ^0 Z_i $。
+
 在$ \theta_5 = k\pi $时，奇异，简化为（第4列和第6列相同）：
 $$
 \begin{bmatrix}
--(d_3 s_1 s_2 + d_2 c_1) & c_1 c_2 d_3 & c_1 s_2 & 0 & 0 & 0 \\
-d_3 c_1 s_2 - d_2 s_1 & s_1 c_2 d_3 & s_1 s_2 & 0 & 0 & 0 \\
-0 & -s_2 d_3 & c_2 & 0 & 0 & 0 \\
-0 & -s_1 & 0 & c_1 s_2 & -c_1 c_2 s_4 - s_1 c_4 & c_1 s_2 \\
-0 & c_1 & 0 & s_1 s_2 & -s_1 c_2 s_4 + c_1 c_4 & s_1 s_2 \\
-1 & 0 & 0 & c_2 & s_2 s_4 & c_2
+x & x & x& 0 & 0 & 0 \\
+x & x & x & 0 & 0 & 0 \\
+x & x & x& 0 & 0 & 0 \\
+0 & x & 0 & c_1 s_2 & x & c_1 s_2 \\
+0 & x & 0 & s_1 s_2 & x & s_1 s_2 \\
+x & 0 & 0 & c_2 & x& c_2
 \end{bmatrix}
 $$
 %------------------------------------------------
