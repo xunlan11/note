@@ -108,9 +108,9 @@ pdfproducer={LaTeX with hyperref and ClassicThesis}
 \newtheorem{remark}{备注}
 \newtheorem{example}{样例}
 \usepackage{tocloft} % 目录
-\newlistof{tips}{tip}{标\hspace{1em}签} % 标签目录
+\newlistof{tips}{tip}{要\hspace{1em}点} % 要点目录
 \newcommand{\tip}[1]{
   \refstepcounter{tips}
   \textsuperscript{\textcolor{orange}{\textbf{\thetips}}}
-  \addcontentsline{tip}{tips}{标签~\thetips: #1}
+  \addcontentsline{tip}{tips}{\makebox[7em][l]{要点~\thetips} #1}
 }
