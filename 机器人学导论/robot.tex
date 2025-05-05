@@ -25,10 +25,10 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \section{基础知识}
 %------------------------------------------------
 \paragraph{表示}
-$ ^A P $表示$ A $坐标系下的量$ P $。
+$ ^A P_B $表示$ A $坐标系下的量$ P_B $。
 %------------------------------------------------
-\paragraph{向量叉乘}
-可转换为反对称阵点乘：
+\paragraph{向量叉乘}\tip{向量叉乘}
+转换为反对称阵点乘：
 \begin{align*}
 p \times q
 = \begin{vmatrix} i & j & k \\ p_1 & p_2 & p_3 \\ q_1 & q_2 & q_3 \end{vmatrix}
@@ -43,10 +43,10 @@ p \times q
 \paragraph{$ \arctan 2(x, y) $}
 四象限反正切函数，避免反三角函数的无穷、除零错误，且不会多解。
 %------------------------------------------------
-\paragraph{速度合成}
+\paragraph{速度合成}\tip{速度合成}
 \begin{figure}[H]
 \centering
-\subfloat[相对速度]{\includegraphics[width=.4\textwidth]{Linear Velocity}} \quad
+\subfloat[相对速度]{\includegraphics[width=.35\textwidth]{Linear Velocity}} \quad
 \subfloat[旋转]{\includegraphics[width=.3\textwidth]{Rotational Motion}}
 \caption[速度合成]{速度合成}
 \end{figure}
@@ -60,7 +60,7 @@ p \times q
 \paragraph{课程内容}
 \begin{figure}[H]
 \centering
-\subfloat[控制系统]{\includegraphics[width=.6\textwidth]{control}} \quad
+\subfloat[控制系统]{\includegraphics[width=.5\textwidth]{control}} \quad
 \subfloat[正逆运动学]{\includegraphics[width=.35\textwidth]{kinematics}}
 \caption[课程内容]{课程内容}
 \end{figure}
@@ -90,7 +90,7 @@ p \times q
 %------------------------------------------------
 \subsection{空间描述}
 %------------------------------------------------
-\paragraph{坐标系}
+\subsubsection{坐标系}
 \begin{itemize}
 \item 笛卡尔坐标系：
 \begin{itemize}
@@ -132,10 +132,10 @@ $。
 \caption[坐标系]{坐标系}
 \end{figure}
 %------------------------------------------------
-\paragraph{刚体}
+\subsubsection{刚体}
 \begin{itemize}
 \item 刚体上任意两点间相对距离保持不变，角速度、角加速度相同。
-\item 空间描述：位姿（Pose）=位置$ P $（Position）+姿态$ \{\vec x_B, \vec y_B, \vec z_B\} $（Orientation）。
+\item 空间描述：位姿（Pose）=位置（Position）$ P $+姿态（Orientation）$ \{\vec x_B, \vec y_B, \vec z_B\} $。
 \end{itemize}
 
 \begin{figure}[H]
@@ -144,7 +144,11 @@ $。
 \caption[刚体位姿]{刚体位姿}
 \end{figure}
 %------------------------------------------------
-\paragraph{旋转阵（Rotation Matrix）}\tip{旋转矩阵}
+\subsection{变换}
+%------------------------------------------------
+\subsubsection{变换阵（$ B \to A $）}\tip{变换阵（逆变换）}
+%------------------------------------------------
+\paragraph{旋转阵（Rotation Matrix）}
 $ ^A X = ^A_B R \cdot ^B X $。
 $$ 
 ^A_B R 
@@ -155,19 +159,25 @@ $$
 \in R^{3 \times 3}
 $$
 \begin{itemize}
-\item $ ^A \vec x_B, ^A \vec y_B, ^A \vec z_B $是单位正交矢量，单位正交阵$ ^A_B R $满秩。
+\item 单位正交阵$ ^A_B R $满秩。
+\item 求解：每列是B的基在A下的表示，每行是A的基在B下的表示。
 \item $ ^A_B R^{-1} = ^A_B R^T = ^B_A R $。
-\item 求解：由坐标系B到坐标系A的旋转阵，每列是B的基在A下的表示，每行是A的基在B下的表示。
 \end{itemize}
 %------------------------------------------------
-\paragraph{齐次变换阵}\tip{齐次变换阵}
+\paragraph{齐次变换阵}
 $ ^A_B T = \begin{bmatrix} ^A_B R & ^A P_{Borg} \\ 0 & 1 \end{bmatrix} $。
 \begin{itemize}
 \item $ ^A_B T $满秩。其中右下角的$ 1 $是比例，左下角的$ 0 $是透视变换。
 \item 求解：求$ ^A_B R $，填底行，求$ P_{Borg} $（沿$ A $坐标系，即旋转完的$ B $坐标系，$ B $到$ A $的移动）。
+\item 
+$ 
+^A_B T^{-1} = ^B_A T 
+= \begin{bmatrix} ^B_A R & ^B P_{Aorg} \\ \mathbf{0} & 1 \end{bmatrix} 
+= \begin{bmatrix} ^A_B R^T & -^A_B R^T \cdot ^A P_{Borg} \\ \mathbf{0} & 1 \end{bmatrix} 
+$，
+
+推导：$ ^B(^A P_{Borg}) = ^B_A R \cdot ^A P_{Borg} + ^B P_{Aorg} = 0 $。
 \end{itemize}
-%------------------------------------------------
-\subsection{变换}
 %------------------------------------------------
 \subsubsection{坐标系映射（Mapping）——不同坐标系，右乘}
 $ ^A P = ^A_B R \cdot ^B P + ^A P_{Borg} = ^A_B T \cdot ^B P $。
@@ -215,35 +225,22 @@ $$ \\
 \end{table}
 %------------------------------------------------
 \subsubsection{复合变换}\tip{复合变换}
-$$ ^A_C T = ^A_B T \cdot ^B_C T $$
-
-左下消右上，链式。
-%------------------------------------------------
-\paragraph{计算复杂性}
-$$ ^A P = ^A_B T \cdot ^B_C T \cdot ^C P $$
-
-计算顺序与计算量：从左向右先推导旋转阵比从右向左依次变换计算量大很多。
-%------------------------------------------------
-\subsubsection{逆变换}\tip{逆变换}
-$$ 
-^B_A T 
-= \begin{bmatrix} ^B_A R & ^B P_{Aorg} \\ \mathbf{0} & 1 \end{bmatrix} 
-= \begin{bmatrix} ^A_B R^T & -^A_B R^T \cdot ^A P_{Borg} \\ \mathbf{0} & 1 \end{bmatrix} 
-$$
-
-推导：$ ^B(^A P_{Borg}) = ^B_A R \cdot ^A P_{Borg} + ^B P_{Aorg} = 0 $。
+\begin{itemize}
+\item $ ^A_C T = ^A_B T \cdot ^B_C T $：左下消右上，链式。
+\item 计算顺序与计算量：$ ^A P = ^A_B T \cdot ^B_C T \cdot ^C P $从左向右先推导旋转阵比从右向左依次变换计算量大很多。
+\end{itemize}
 %------------------------------------------------
 \subsection{姿态描述}
 %------------------------------------------------
 \subsubsection{描述方式}
 %------------------------------------------------
-\paragraph{旋转矩阵}
-$ R = \begin{bmatrix} r_{11} & r_{12} & r_{13} \\ r_{21} & r_{22} & r_{23} \\ r_{31} & r_{32} & r_{33} \end{bmatrix} $。
-%------------------------------------------------
-\paragraph{方向余弦（9个变量）}
-$ x_r = \begin{bmatrix} {r_1}_{(3 \times 1)} \\ {r_2}_{(3 \times 1)} \\ {r_3}_{(3 \times 1)} \end{bmatrix}_{(9 \times 1)} $。
-
-$ 6 $个约束（单位+正交），$ 3 $个独立变量。
+\paragraph{旋转矩阵与方向余弦}
+\begin{itemize}
+\item 旋转矩阵$ R = \begin{bmatrix} r_{11} & r_{12} & r_{13} \\ r_{21} & r_{22} & r_{23} \\ r_{31} & r_{32} & r_{33} \end{bmatrix} $
+$ \Leftrightarrow $
+方向余弦$ x_r = \begin{bmatrix} {r_1}_{(3 \times 1)} \\ {r_2}_{(3 \times 1)} \\ {r_3}_{(3 \times 1)} \end{bmatrix}_{(9 \times 1)} $。
+\item $ 9 $个变量，$ 6 $个约束（单位+正交），$ 3 $个独立变量。
+\end{itemize}
 %------------------------------------------------
 \paragraph{等效轴角（绕空间中一轴旋转）}\tip{等效轴角}
 \begin{itemize}
@@ -296,9 +293,12 @@ $
 %------------------------------------------------
 \subsubsection{旋转角}
 \begin{itemize}
-\item $ X-Y-Z $固定角：绕同一坐标轴旋转，算子左乘。
-\item $ Z-Y-X $泰特布莱恩角：绕变换坐标轴旋转，映射右乘，与$ X-Y-Z $固定角对偶。
-\item $ Z-Y-Z $欧拉角：绕变换坐标轴旋转，奇异现象（中间旋转导致前后旋转轴重合，自由度丢失）。
+\item 固定角（12种）：绕同一坐标轴旋转，算子左乘。
+\item 变角（12种）：绕变换坐标轴旋转，映射右乘。
+\begin{itemize}
+\item 泰特布莱恩角：三个旋转轴不同，$ Z-Y-X $泰特布莱恩角与$ X-Y-Z $固定角对偶。
+\item 欧拉角：第一个旋转轴与最后一个旋转轴相同，奇异现象（中间旋转导致前后旋转轴重合，自由度丢失）。
+\end{itemize}
 \end{itemize}
 %----------------------------------------------------------------------------------------
 \section{正运动学}
@@ -334,7 +334,7 @@ $
 可以增加灵活性，避免奇异，提升避障能力，但因为逆运动学多解而求解复杂。
 \end{itemize}
 %------------------------------------------------
-\subsection{DH参数}\tip{DH参数}
+\subsection{DH参数}
 %------------------------------------------------
 \subsubsection{定义}
 \begin{figure}[H]
@@ -357,14 +357,14 @@ $
 \item 关节转角（Joint Angle）$ \theta_i $：公垂线夹角。
 \end{itemize}
 \item 基座：虚拟关节$ 0 $与关节$ 1 $重合，$ \vec a_0 = 0, \alpha_0 = 0 $。 \\
-末端：虚拟关节$ n - 1 $与关节$ n $重合，$ \vec a_n = 0, \alpha_n = 0 $。
+末端：虚拟关节$ n + 1 $与关节$ n $重合，$ \vec a_n = 0, \alpha_n = 0 $。
 \item 关节$ i $的DH参数表征其所在坐标系与前一坐标系的关系。 \\
 坐标系$ i $的参数表征连杆$ i $沿其$ z $轴运动后相对于连杆$ i - 1 $的位姿。
 \end{itemize}
 
-\begin{table}[hbt]
-\caption{DH参数表示例}
+\begin{minipage}{0.48\textwidth}
 \centering
+\captionof{table}{DH参数表示例}
 \begin{tabular}{c|cccc}
 \hline
 关节 & $ \alpha_{i - 1} $ & $ \vec a_{i - 1} $ & $ \theta_i $ & $ d_i $ \\
@@ -373,22 +373,11 @@ $
 2 & $ \alpha_1 $ & $ \vec a_1 $ & $ \theta_2 $ & $ d_2 $ \\
 \hline
 \end{tabular}
-\end{table}
-%------------------------------------------------
-\subsubsection{求取}
-\begin{enumerate}
-\item $ Z_i $轴：关节$ i $轴延长线，标注正方向。
-\item $ X_i $轴：$ Z_{i - 1} $轴与$ Z_i $轴公垂线（由前者指向后者）或交点（垂直平面，一般指向末端）。
-\item （$ Y_i $轴：$ Z_i $轴与$ X_i $轴公垂线，右手法则确定。）
-\item 标注基座坐标系和末端坐标系，尽可能与相邻坐标系重合。
-\item 制表，并根据关节的平移或旋转属性在对应位置标注变量。
-\item 沿$ X_{i - 1} $，由$ Z_{i - 1} $与$ Z_i $求取$ \vec a_{i - 1}  $和$ \alpha_{i - 1} $。
-\item 沿$ Z_i $，由$ X_{i - 1} $与$ X_i $求取$ d_i $和$ \theta_i $。
-\end{enumerate}
-
-\begin{table}[hbt]
-\caption{DH参数情况讨论}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
 \centering
+\captionof{table}{DH参数情况讨论}
 \begin{tabular}{c|cc}
 \hline
 相邻轴关系 & 角 & 距离 \\
@@ -399,18 +388,29 @@ $
 不相交 & $ \theta $ & $ d $ \\
 \hline
 \end{tabular}
-\end{table}
+\end{minipage}
+%------------------------------------------------
+\subsubsection{求取}\tip{求取DH参数}
+\begin{enumerate}
+\item $ Z_i $轴：关节$ i $轴延长线，标注正方向。
+\item $ X_i $轴：$ Z_{i - 1} $轴与$ Z_i $轴公垂线（由前者指向后者）或交点（垂直平面，一般指向末端）。
+\item （$ Y_i $轴：$ Z_i $轴与$ X_i $轴公垂线，右手法则确定。）
+\item 标注基座坐标系和末端坐标系，尽可能与相邻坐标系重合。
+\item 制表，并根据关节的平移或旋转属性在对应位置标注变量。
+\item 沿$ X_{i - 1} $，由$ Z_{i - 1} $与$ Z_i $求取$ \vec a_{i - 1}  $和$ \alpha_{i - 1} $。
+\item 沿$ Z_i $，由$ X_{i - 1} $与$ X_i $求取$ d_i $和$ \theta_i $。
+\end{enumerate}
 %------------------------------------------------
 \paragraph{例题}
 \begin{figure}[H]
 \centering
 \subfloat[例1结构图]{\includegraphics[width=.3\textwidth]{1.1.1}} \quad
-\subfloat[例1参数表]{\includegraphics[width=.3\textwidth]{1.1.2}} \\
-\subfloat[例2结构图]{\includegraphics[width=.3\textwidth]{1.2.1}} \quad
+\subfloat[例2结构图]{\includegraphics[width=.3\textwidth]{1.2.1}} \\
+\subfloat[例1参数表]{\includegraphics[width=.3\textwidth]{1.1.2}} \quad
 \subfloat[例2参数表]{\includegraphics[width=.3\textwidth]{1.2.2}} \\
 \subfloat[例3结构图]{\includegraphics[width=.3\textwidth]{1.3.1}} \quad
-\subfloat[例3参数表]{\includegraphics[width=.3\textwidth]{1.3.2}} \\
-\subfloat[例4结构图]{\includegraphics[width=.3\textwidth]{1.4.1}} \quad
+\subfloat[例4结构图]{\includegraphics[width=.3\textwidth]{1.4.1}} \\
+\subfloat[例3参数表]{\includegraphics[width=.3\textwidth]{1.3.2}} \quad
 \subfloat[例4参数表]{\includegraphics[width=.3\textwidth]{1.4.2}}
 \caption[DH参数例题]{DH参数例题}
 \end{figure}
@@ -455,12 +455,13 @@ $ i $ & $ \alpha_{i - 1} $ & $ a_{i - 1} $ & $ \theta_i $ & $ d_i $ \\
 \end{table}
 
 由其转化得到各齐次阵：
+{\scriptsize
 $$
 ^0_1T = \begin{bmatrix} c_1 & -s_1 & 0 & 0 \\ s_1 & c_1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix},
 ^1_2T = \begin{bmatrix} c_2 & -s_2 & 0 & 1 \\ s_2 & c_2 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix},
 ^2_3T = \begin{bmatrix} c_3 & -s_3 & 0 & 0 \\ \frac{\sqrt{2}}{2}s_3 & \frac{\sqrt{2}}{2}c_3 & \frac{\sqrt{2}}{2} & 1 \\ -\frac{\sqrt{2}}{2}s_3 & -\frac{\sqrt{2}}{2}c_3 & \frac{\sqrt{2}}{2} & 1 \\ 0 & 0 & 0 & 1 \end{bmatrix},
 ^3_4T = \begin{bmatrix} c_4 & -s_4 & 0 & \sqrt{2} \\ s_4 & c_4 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
-$$
+$$}
 
 最终得到正运动学方程：
 $$
@@ -507,7 +508,7 @@ $$
 \subsubsection{解的讨论}
 \begin{itemize}
 \item 存在：目标点是否超出工作空间，代数上为反三角函数定义域，几何上为三角不等式。
-\item 多解：由反三角函数多解引起，需关注不同解对应的空间构型。
+\item 多解：由反三角函数多解（尽量使用$ \arctan2(x, y) $保证解唯一）引起，需关注不同解对应的空间构型。
 \item 奇异：自由度丢失，表现为除零。
 \end{itemize} 
 %------------------------------------------------
@@ -515,9 +516,9 @@ $$
 %------------------------------------------------
 \paragraph{概念}
 \begin{itemize}
-\item 指末端位置，而非腕部位置。
-\item 工作空间（W）/可达空间（RW）：末端至少能以一种姿态到达。 \\
-灵巧空间（DW）：末端能以任意姿态到达。
+\item 工作空间（W）：末端能到达的空间。
+\item 可达空间（RW）：机器人至少能以一种姿态到达的空间。
+\item 灵巧空间（DW）：末端能以任意姿态到达的空间。
 \item $ DW \subset RW = W $。
 \end{itemize} 
 %------------------------------------------------
@@ -527,11 +528,11 @@ $$
 以下以3R操作臂为例，分析不同臂长情况下的灵巧空间：
 \begin{figure}[H]
 \centering
-\subfloat[圆环状]{\includegraphics[width=.3\textwidth]{space1}} \quad
-\subfloat[内圆外环]{\includegraphics[width=.3\textwidth]{space2}} \quad
-\subfloat[大圆]{\includegraphics[width=.3\textwidth]{space5}} \\
-\subfloat[内圆]{\includegraphics[width=.3\textwidth]{space3}} \quad
-\subfloat[无]{\includegraphics[width=.3\textwidth]{space4}}
+\subfloat[圆环状]{\includegraphics[width=.2\textwidth]{space1}} \quad
+\subfloat[内圆外环]{\includegraphics[width=.2\textwidth]{space2}} \quad
+\subfloat[大圆]{\includegraphics[width=.2\textwidth]{space5}} \\
+\subfloat[内圆]{\includegraphics[width=.2\textwidth]{space3}} \quad
+\subfloat[无]{\includegraphics[width=.2\textwidth]{space4}}
 \caption[3R操作臂灵巧空间]{3R操作臂灵巧空间}
 \end{figure}
 \begin{enumerate}
@@ -544,8 +545,11 @@ $$
 
 为寻求较大灵巧空间，需要上下臂基本等长，且臂长不过长。
 %------------------------------------------------
-\paragraph{灵巧系数}
-$ \text{灵巧系数} = \frac{\text{可达角度所占弧长}}{\text{单位圆周长}}_{\text{(平面)}} = \frac{\text{可达角度所占表面积}}{\text{单位球表面积}}_{\text{(空间)}} $。
+\paragraph{参数}
+\begin{itemize}
+\item $ \text{灵巧系数} = \frac{\text{可达角度所占弧长}}{\text{单位圆周长}}_{\text{(平面)}} = \frac{\text{可达角度所占表面积}}{\text{单位球表面积}}_{\text{(空间)}} $。
+\item 重复精度：返回示教点精度。
+\end{itemize} 
 %----------------------------------------------------------------------------------------
 \section{雅可比}
 %------------------------------------------------
@@ -571,13 +575,11 @@ $$
 \item $ m $是末端位姿（输出量）描述维度，$ n $是关节变化（输入量）维度。
 \end{itemize} 
 %------------------------------------------------
-\subsection{雅可比矩阵的转换}
+\subsection{不同坐标描述下的雅可比矩阵转换}\tip{不同坐标描述下的雅可比矩阵转换}
 笛卡尔坐标系基础雅可比矩阵：
 $$ \begin{bmatrix} v \\ \omega \end{bmatrix}_{(6 \times 1)} = J_0(q)_{(6 \times n)} \dot{q}_{(n \times 1)} $$
 
-在不同的坐标系描述下，雅可比矩阵可以相互转化：
-
-$ X_P,X_R $定义了描述方式，$ E_P,E_R $则描述了对应的转换关系：
+在不同的坐标系描述下，雅可比矩阵可以相互转化。$ X_P,X_R $定义了描述方式，$ E_P,E_R $则描述了对应的转换关系：
 \begin{align*}
 \dot{X}_P &= E_P \cdot v = [E_P \cdot J_v] \dot{q} = J_P \dot{q} \\
 \dot{X}_R &= E_R \cdot \omega = [E_R \cdot J_\omega] \dot{q} = J_R \dot{q}
@@ -616,9 +618,9 @@ $，
 
 $ \Omega = \begin{bmatrix} \Omega_x & \Omega_y & \Omega_z \end{bmatrix}^T = \begin{bmatrix} k_x & k_y & k_z \end{bmatrix}^T $为瞬时旋转轴。
 
-对于Z-Y-Z欧拉角$ X_R = \begin{bmatrix} \alpha & \beta & \gamma \end{bmatrix}^T $，有旋转阵：
+对于Z-Y-Z欧拉角（X-Y-Z固定角）$ X_R = \begin{bmatrix} \alpha & \beta & \gamma \end{bmatrix}^T $，有旋转阵：
 $$
-^A_B R_{ZYZ}(\alpha, \beta, \gamma) =
+^A_B R(\alpha, \beta, \gamma) =
 \begin{bmatrix}
 c\alpha c\beta c\gamma - s\alpha s\gamma & -c\alpha c\beta s\gamma - s\alpha c\gamma & c\alpha s\beta \\
 s\alpha c\beta c\gamma + c\alpha s\gamma & -s\alpha c\beta s\gamma + c\alpha c\gamma & s\alpha s\beta \\
@@ -644,8 +646,6 @@ c\alpha & s\alpha & 0
 \right]}_{E_R}
 \begin{bmatrix} \Omega_x \\ \Omega_y \\ \Omega_z \end{bmatrix}
 $$
-
-（X-Y-Z固定角与Z-Y-Z欧拉角对偶，$ E_R $相同）
 %------------------------------------------------
 \subsection{速度传播}
 %------------------------------------------------
@@ -674,7 +674,7 @@ $$
 %------------------------------------------------
 \subsubsection{并行末端作用求解}\tip{并行速度传播}\label{sec:Terminal_function}
 %------------------------------------------------
-\paragraph{单关节作用}
+\paragraph{单关节作用}\label{sec:bingxing}
 求一关节运动对末端运动影响时，将其他连杆固定，视为刚体。
 \begin{figure}[H]
 \centering 
@@ -700,20 +700,6 @@ $$
 \item 角速度只有角速度传导。
 \end{itemize} 
 %------------------------------------------------
-\paragraph{矩阵形式}\label{sec:bmatrix}
-换序+反对称：
-$$ 
-\begin{bmatrix} v_n \\ \omega_n \end{bmatrix} 
-=
-\begin{bmatrix} E & -\hat{P}_{in} \\ 0 & E \end{bmatrix}
-\begin{bmatrix} v_i \\ \omega_i \end{bmatrix} 
-\Rightarrow 
-J_n = \begin{bmatrix} E & -\hat{P}_{in} \\ 0 & E \end{bmatrix} J_i
-$$ 
-
-注意转换坐标系时$ ^i\hat{P}_{in} = ^i_n R \cdot ^n\hat{P}_{in} \cdot ^i_n R^T $（不能简单左乘旋转阵），即：
-$$ ^i J_n = \begin{bmatrix} ^i_n R & -^i_n R \cdot ^n\hat{P}_{in} \cdot ^i_n R^T \\ 0 & ^i_n R \end{bmatrix} {}^n J_i $$
-%------------------------------------------------
 \paragraph{综合作用}
 基于基坐标系，由$ V_i = Z_i \dot{q}_i, \Omega_i = Z_i \dot{q}_i $，综合各关节运动，得到：
 \begin{align*}
@@ -721,15 +707,15 @@ v &= \sum_{i = 1}^n [\epsilon_i V_i + \overline{\epsilon}_i (\Omega_i \times P_{
 \omega &= \sum_{i = 1}^n \overline{\epsilon}_i \Omega_i = \sum_{i = 1}^n (\overline{\epsilon}_i Z_i) \dot{q}_i
 \end{align*}
 %------------------------------------------------
-\subsection{力与力矩}
+\subsection{静态力传播}
 %------------------------------------------------
-\subsubsection{力与力矩分析}\tip{力与力矩分析}\label{sec:fn}
+\subsubsection{力与力矩}\tip{力与力矩}\label{sec:fn}
 由末端往回推，根据各连杆力与力矩平衡进行求解。
 
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.3\textwidth]{force} 
-\caption[关节力与力矩分析]{关节力与力矩分析}
+\caption[关节受力分析]{关节受力分析}
 \end{figure}
 
 对于连杆$ i $，$ f_i, n_i $表示自身受力（矩），$ -f_{i + 1}, -n_{i + 1} $表示下一连杆的反作用力（矩），$ P $表示其长度，有：
@@ -749,7 +735,7 @@ $$
 \centering
 \subfloat[平移关节]{\includegraphics[width=.2\textwidth]{Prismatic Joint}} \quad
 \subfloat[旋转关节]{\includegraphics[width=.2\textwidth]{Revolute Joint}}
-\caption[关节力与力矩分析讨论]{关节力与力矩分析讨论}
+\caption[力与力矩]{力与力矩}
 \end{figure}
 
 \begin{table}[H]
@@ -763,7 +749,7 @@ $$
 内部平衡量 & 力矩 & 力 \\
 \hline
 \end{tabular}
-\caption{关节力与力矩分析讨论}
+\caption{力与力矩}
 \end{table}
 %------------------------------------------------
 \subsubsection{速度与扭矩}
@@ -794,13 +780,13 @@ v &= \omega \times p = -\hat{p} \omega = J \dot{\theta} \\
 \subsubsection{直接法}\tip{直接法求雅可比}
 对正运动学方程直接求导。
 $$
-J = \begin{bmatrix} \frac{\partial x_P}{\partial q_1} & \frac{\partial x_P}{\partial q_2} & \cdots & \frac{\partial x_P}{\partial q_N} \\ \frac{\partial x_R}{\partial q_1} & \frac{\partial x_R}{\partial q_2} & \cdots & \frac{\partial x_R}{\partial q_N} \end{bmatrix}
+J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \frac{\partial x_R}{\partial q_1} & \frac{\partial x_R}{\partial q_2} & \cdots & \frac{\partial x_R}{\partial q_N} \end{bmatrix}
 $$
 %------------------------------------------------
 \subsubsection{旋转阵法}\tip{旋转阵法求雅可比}
 线雅可比对正运动学方程直接求导，角雅可比提取各旋转阵$ Z $列（见\ref{sec:Terminal_function}）。
 $$
-J = \begin{bmatrix} \frac{\partial x_P}{\partial q_1} & \frac{\partial x_P}{\partial q_2} & \cdots & \frac{\partial x_P}{\partial q_N} \\ \overline{\epsilon}_1 Z_1 & \overline{\epsilon}_2 Z_2 & \cdots & \overline{\epsilon}_n Z_n \end{bmatrix}
+J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \overline{\epsilon}_1 Z_1 & \overline{\epsilon}_2 Z_2 & \cdots & \overline{\epsilon}_n Z_n \end{bmatrix}
 $$
 %------------------------------------------------
 \paragraph{例题}
@@ -814,6 +800,7 @@ $$
 \end{figure}
 
 $ _6^0T = {_1^0T}{_2^1T}{_3^2T}{_4^3T}{_5^4T}{_6^5T} $得到正运动学方程，将其提取为列向量：
+{\scriptsize
 $$
 X = \begin{bmatrix} X_P \\ r_1 \\ r_2 \\ \textcolor{red}{r_3} \end{bmatrix}
 =
@@ -827,13 +814,13 @@ d_3 c_2 \\
 \textcolor{red}{s_1(c_2 c_4 s_5 + s_2 c_5) + c_1 s_4 s_5} \\
 \textcolor{red}{-s_2 c_4 s_5 + c_2 c_5}
 \end{bmatrix}
-$$
+$$}
 
 雅可比矩阵为：
+{\scriptsize
 \begin{align*}
-J &= \begin{bmatrix} Z_1 \times P_{13} & Z_2 \times P_{23} & Z_3 & Z_4 \times 0 & Z_5 \times 0 & Z_6 \times 0 \\ Z_1 & Z_2 & 0 & Z_4 & Z_5 & Z_6 \end{bmatrix} \\
-^0 J 
-&= \begin{bmatrix} \frac{\partial}{\partial q_1} (^0 x_P) & \frac{\partial}{\partial q_2} (^0 x_P) & \frac{\partial}{\partial q_3} (^0 x_P) & 0 & 0 & 0 \\ ^0 Z_1 & ^0 Z_2 & 0 & ^0 Z_4 & ^0 Z_5 & \textcolor{red}{^0 Z_6} \end{bmatrix} \\
+J &= \begin{bmatrix} Z_1 \times P_{13} & Z_2 \times P_{23} & Z_3 & Z_4 \times 0 & Z_5 \times 0 & Z_6 \times 0 \\ Z_1 & Z_2 & 0 & Z_4 & Z_5 & Z_6 \end{bmatrix}
+= \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \frac{\partial X_P}{\partial q_3} & 0 & 0 & 0 \\ Z_1 & Z_2 & 0 & Z_4 & Z_5 & \textcolor{red}{Z_6} \end{bmatrix} \\
 &=
 \begin{bmatrix}
 -(d_3 s_1 s_2 + d_2 c_1) & c_1 c_2 d_3 & c_1 s_2 & 0 & 0 & 0 \\
@@ -843,11 +830,12 @@ d_3 c_1 s_2 - d_2 s_1 & s_1 c_2 d_3 & s_1 s_2 & 0 & 0 & 0 \\
 0 & c_1 & 0 & s_1 s_2 & -s_1 c_2 s_4 + c_1 c_4 & \textcolor{red}{s_1 c_2 c_4 s_5 + c_1 s_4 s_5 + s_1 s_2 c_5} \\
 1 & 0 & 0 & c_2 & s_2 s_4 & \textcolor{red}{-s_2 c_4 s_5 + c_2 c_5}
 \end{bmatrix}
-\end{align*}
+\end{align*}}
 
-以上省略了中间的齐次变换阵，它们旋转阵$ Z $列对应各$ ^0 Z_i $。
+以上省略了中间的齐次变换阵，它们旋转阵$ Z $列对应各$ Z_i $。
 
 在$ \theta_5 = k\pi $时，奇异，简化为（第4列和第6列相同）：
+{\scriptsize
 $$
 \begin{bmatrix}
 x & x & x& 0 & 0 & 0 \\
@@ -857,7 +845,7 @@ x & x & x& 0 & 0 & 0 \\
 0 & x & 0 & s_1 s_2 & x & s_1 s_2 \\
 x & 0 & 0 & c_2 & x& c_2
 \end{bmatrix}
-$$
+$$}
 %------------------------------------------------
 \subsubsection{虚功（Virtual Work）原理法}\tip{虚功原理法求雅可比}
 已知各连杆力和力矩（见\ref{sec:fn}），微小移动$ \delta x $下，各力/力矩作功之和为$ \delta W = \sum_i f_i \delta x_i $，在其等于$ 0 $时，各力/力矩所作功抵消，即：
@@ -865,8 +853,7 @@ $$ \tau^T \delta q + (-F)^T \delta x = 0 $$
 
 因为$ \delta x = J \delta q $，所以$ \tau = J^T F $。
 
-这里$ J $是末端雅可比，而非腕部雅可比，可根据如下矩阵回推（见\ref{sec:bmatrix}）。
-$$ ^i J_n = \begin{bmatrix} ^i_n R & -^i_n R \cdot ^n\hat{P}_{in} \cdot ^i_n R^T \\ 0 & ^i_n R \end{bmatrix} {}^n J_i $$
+这里$ J $是末端雅可比，而非腕部雅可比。
 %------------------------------------------------
 \paragraph{例题}\label{sec:example5.2}
 接\ref{sec:example5.1}。
@@ -875,6 +862,24 @@ $$ ^i J_n = \begin{bmatrix} ^i_n R & -^i_n R \cdot ^n\hat{P}_{in} \cdot ^i_n R^T
 $ J = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & -l_2 s_{12} \\ l_1 c_1 + l_2 c_{12} & l_2 c_{12} \end{bmatrix} $，
 
 进而由$ \tau = J^T F $可得$ \tau = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & l_1 c_1 + l_2 c_{12} \\ - l_2 s_{12} & l_2 c_{12} \end{bmatrix} \begin{bmatrix} 0 \\ -1 \end{bmatrix} $。
+%------------------------------------------------
+\subsubsection{雅可比转换}\tip{雅可比转换}
+一般求解基坐标系下的腕部雅可比$ ^0 J_j $。
+%------------------------------------------------
+\paragraph{位置转换}
+根据并行求解结论（见\ref{sec:bingxing}），换序+反对称：
+$$ 
+\begin{bmatrix} v_j \\ \omega_j \end{bmatrix} 
+=
+\begin{bmatrix} E & -\hat{P}_{ij} \\ 0 & E \end{bmatrix}
+\begin{bmatrix} v_i \\ \omega_i \end{bmatrix} 
+\Rightarrow 
+J_j = \begin{bmatrix} E & -\hat{P}_{ij} \\ 0 & E \end{bmatrix} J_i
+$$ 
+%------------------------------------------------
+\paragraph{坐标系转换}
+$ ^0\hat{P}_{ij} = ^0_n R \cdot ^n\hat{P}_{ij} \cdot ^0_n R^T $：
+$$ ^0 J_j = \begin{bmatrix} ^0_n R & -^0_n R \cdot ^n\hat{P}_{ij} \cdot ^0_n R^T \\ 0 & ^0_n R \end{bmatrix} {}^n J_i $$
 %------------------------------------------------
 \subsection{其他}
 %------------------------------------------------
