@@ -308,7 +308,7 @@ $ x_0 + \frac{1}{x^*} $为无穷超实数。
 \begin{table}[hbt]
 \caption{趋核运算（极限的四则运算）}
 \centering
-\begin{tabular}{lcc}
+\begin{tabular}{c|cc}
 \toprule
 $ f(x) $与$ g(x) $的核值 & \multicolumn{2}{c}{核值} \\
 \cmidrule(lr){2-3}
@@ -1209,7 +1209,7 @@ $ A \cong \begin{bmatrix} E_r & \mathbf{0} \\ \mathbf{0} & \mathbf{0} \end{bmatr
 \begin{table}[hbt]
 \caption{矩阵的秩}
 \centering
-\begin{tabular}{|p{3cm}|p{3cm}|c|p{3cm}|}
+\begin{tabular}{|p{3.8cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
 \hline
 $ AB $ & $ A + B $ & $ A^* $ & $ A^T $ \\
 \hline
@@ -1253,12 +1253,13 @@ $ \zeta $是其对应的特征向量（$ \zeta $是$ (\lambda E - A)x = 0 $的�
 \begin{table}[hbt]
 \caption{变换后的特征值与特征向量}
 \centering
-\begin{tabular}{cccccccc}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
 矩阵 & $ A $ & $ kA $ & $ A^k $ & $ f(A) $ & $ A^{-1} $ & $ A^* $ & $ P^{-1}AP $ \\
 \hline
 特征值 & $ \lambda $ & $ k\lambda $ & $ \lambda^k $ & $ f(\lambda) $ & $ \frac{1}{\lambda} $ & $ \frac{|A|}{\lambda} $ & $ \lambda $ \\
-特征向量 & $ \zeta $ & $ \zeta $ & $ \zeta $ & $ \zeta $ & $ \zeta $ & $ \zeta $ & $ P^{-1}\zeta $ \\
+\hline
+特征向量 & \multicolumn{6}{c|}{$ \zeta $} & $ P^{-1}\zeta $ \\
 \hline
 \end{tabular}
 \end{table} 
