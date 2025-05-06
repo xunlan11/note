@@ -134,7 +134,7 @@ $。
 %------------------------------------------------
 \subsubsection{刚体}
 \begin{itemize}
-\item 刚体上任意两点间相对距离保持不变，角速度、角加速度相同。
+\item 刚体上任意两点间相对距离保持不变，角（加）速度相同。
 \item 空间描述：位姿（Pose）=位置（Position）$ P $+姿态（Orientation）$ \{\vec x_B, \vec y_B, \vec z_B\} $。
 \end{itemize}
 
@@ -202,18 +202,20 @@ $$ \\
 \end{itemize}
 %------------------------------------------------
 \subsubsection{对比}\tip{映射与算子}
+\begin{minipage}{0.58\textwidth}
 \begin{figure}[H]
 \centering
-\subfloat[旋转映射（不同坐标系）]{\includegraphics[width=.3\textwidth]{Mapping_r}} \quad
-\subfloat[旋转算子（同一坐标系）]{\includegraphics[width=.3\textwidth]{Operator_r}} \\
-\subfloat[平移映射（不同坐标系）]{\includegraphics[width=.3\textwidth]{Mapping_p}} \quad
-\subfloat[平移算子（同一坐标系）]{\includegraphics[width=.3\textwidth]{Operator_p}}
+\subfloat[旋转映射（不同坐标系）]{\includegraphics[width=.45\textwidth]{Mapping_r}} \quad
+\subfloat[旋转算子（同一坐标系）]{\includegraphics[width=.45\textwidth]{Operator_r}}\\
+\subfloat[平移映射（不同坐标系）]{\includegraphics[width=.45\textwidth]{Mapping_p}} \quad
+\subfloat[平移算子（同一坐标系）]{\includegraphics[width=.45\textwidth]{Operator_p}}
 \caption[映射与算子对比]{映射与算子对比}
 \end{figure}
-
-\begin{table}[hbt]
-\caption{映射与算子对比}
+\end{minipage}
+\hfill
+\begin{minipage}{0.38\textwidth}
 \centering
+\captionof{table}{映射与算子对比}
 \begin{tabular}{c|cc}
 \hline
 & 映射 & 算子 \\
@@ -222,7 +224,7 @@ $$ \\
 连乘 & 右乘 & 左乘 \\
 \hline
 \end{tabular}
-\end{table}
+\end{minipage}
 %------------------------------------------------
 \subsubsection{复合变换}\tip{复合变换}
 \begin{itemize}
@@ -364,7 +366,7 @@ $
 
 \begin{minipage}{0.48\textwidth}
 \centering
-\captionof{table}{DH参数表示例}
+\captionof{table}{DH参数表}
 \begin{tabular}{c|cccc}
 \hline
 关节 & $ \alpha_{i - 1} $ & $ \vec a_{i - 1} $ & $ \theta_i $ & $ d_i $ \\
@@ -390,7 +392,7 @@ $
 \end{tabular}
 \end{minipage}
 %------------------------------------------------
-\subsubsection{求取}\tip{求取DH参数}
+\subsubsection{求解}\tip{DH参数求解}
 \begin{enumerate}
 \item $ Z_i $轴：关节$ i $轴延长线，标注正方向。
 \item $ X_i $轴：$ Z_{i - 1} $轴与$ Z_i $轴公垂线（由前者指向后者）或交点（垂直平面，一般指向末端）。
@@ -431,17 +433,17 @@ $
 \item 按关节逐次变换，最终得到腕部坐标，而非末端坐标。
 \end{itemize} 
 %------------------------------------------------
-\paragraph{例题}\label{sec:example2.1}
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.5\textwidth]{2.1} 
-\caption[正运动学方程例题]{正运动学方程例题}
-\end{figure}
+\paragraph{例题}\label{sec:example2.1}~\\
 
-其DH参数为：
-\begin{table}[H]
+\begin{minipage}{0.48\textwidth}
 \centering
-\caption{正运动学方程例题DH参数表}
+\includegraphics[width=0.95\textwidth]{2.1}
+\captionof{figure}{正运动学方程例题}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\captionof{table}{正运动学方程例题DH参数表}
 \begin{tabular}{c|cccc}
 \hline
 $ i $ & $ \alpha_{i - 1} $ & $ a_{i - 1} $ & $ \theta_i $ & $ d_i $ \\
@@ -452,7 +454,7 @@ $ i $ & $ \alpha_{i - 1} $ & $ a_{i - 1} $ & $ \theta_i $ & $ d_i $ \\
 4 & $ 0 $ & $ \sqrt{2} $ & $ \theta_4 $ & $ 0 $ \\
 \hline
 \end{tabular}
-\end{table}
+\end{minipage}
 
 由其转化得到各齐次阵：
 {\scriptsize
@@ -554,11 +556,8 @@ $$
 \section{雅可比}
 %------------------------------------------------
 \subsection{雅可比矩阵}
-关节（平移距离或旋转角度）变化$ q/\theta $引起末端位姿$ X $变化，雅可比矩阵$ J $用来描述关节速度与末端速度间的关系。
-
-关节变化向量$ q = (q_1, q_2, \dots, q_n) $，其中$ q_i = \overline{\epsilon}_i\theta_i + \epsilon_id_i $（$ \epsilon_i $与其非表示关节为平移关节或旋转关节之一）。
-
-由关节变化量与末端位姿的关系$ x = f(q) $，可得
+雅可比矩阵$ J $表示关节状态（平移距离或旋转角度）$ q/\theta $变化率与末端位姿$ X $变化率关系，
+$ X = f(q) $时有：
 $$
 \delta x_{(m \times 1)} = 
 \begin{bmatrix}
@@ -593,11 +592,7 @@ J =
 $$
 %------------------------------------------------
 \paragraph{线雅可比}
-\begin{itemize}
-\item 笛卡尔坐标系：$ X_P = \begin{bmatrix} x & y & z \end{bmatrix}^T, E_P = E $。
-\item 圆柱坐标系：$ X_P = \begin{bmatrix} r & \theta & z \end{bmatrix}^T, E_P = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\frac{\sin\theta}{\rho} & \frac{\cos\theta}{\rho} & 0 \\ 0 & 0 & 1 \end{bmatrix} $。
-\item 球坐标系：$ X_P = \begin{bmatrix} \rho & \theta & \phi \end{bmatrix}^T, E_P = \begin{bmatrix} \cos\theta \sin\phi & \sin\theta \sin\phi & \cos\phi \\ -\frac{\sin\theta}{\rho \sin\phi} & \frac{\cos\theta}{\rho \sin\phi} & 0 \\ \frac{\cos\theta \cos\phi}{\rho} & \frac{\sin\theta \cos\phi}{\rho} & -\frac{\sin\phi}{\rho} \end{bmatrix} $。
-\end{itemize} 
+雅可比矩阵
 %------------------------------------------------
 \paragraph{角雅可比}~\\
 
@@ -637,157 +632,21 @@ $$
 \Rightarrow 
 \begin{bmatrix} \dot{\alpha} \\ \dot{\beta} \\ \dot{\gamma} \end{bmatrix}
 =
-\underbrace{\left[
-\begin{array}{ccc}
+\underbrace{[\begin{array}{ccc}
 \frac{c\alpha c\beta}{s\beta} & -\frac{s\alpha c\beta}{s\beta} & 1 \\
 -\frac{s\alpha}{s\beta} & \frac{c\alpha}{s\beta} & 0 \\
 c\alpha & s\alpha & 0
-\end{array}
-\right]}_{E_R}
+\end{array}]}_{E_R}
 \begin{bmatrix} \Omega_x \\ \Omega_y \\ \Omega_z \end{bmatrix}
 $$
 %------------------------------------------------
-\subsection{速度传播}
-%------------------------------------------------
-\subsubsection{串行逐连杆求解}\tip{串行速度传播}
-由连杆$ k $起始端速度，求其末端速度，进而获得连杆$ k + 1 $起始端速度。
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.5\textwidth]{Velocity propagation} 
-\caption[串行速度传播]{串行速度传播}
-\end{figure}
-
+\subsection{求导法}\tip{求导求雅可比}
 \begin{itemize}
-\item 平移关节：线速度传导+角速度转换线速度+平移变化。
-$$
-v_{i + 1} = v_i + \omega_i \times P_{i + 1} + \dot{d}_{i + 1} \cdot Z_{i + 1}
-\overset{\text{换系}}{\Longrightarrow}
-{}^{i + 1}v_{i + 1} = ^{i + 1}_i R \cdot (^i v_i + ^i\omega_i \times ^i P_{i + 1}) + \dot{d}_{i + 1} \cdot ^{i + 1}Z_{i + 1}
-$$
-\item 旋转关节：角速度传导+旋转变化。
-$$
-\Omega_{i + 1} = \dot{\theta}_{i + 1} \cdot Z_{i + 1}, \omega_{i + 1} = \omega_i + \Omega_{i + 1}
-\overset{\text{换系}}{\Longrightarrow}
-{}^{i + 1}\omega_{i + 1} = ^{i + 1}_i R \cdot ^i\omega_i + \dot{\theta}_{i + 1} \cdot ^{i + 1}Z_{i + 1}
-$$
+\item 直接法：对正运动学方程直接求导。
+$$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \frac{\partial x_R}{\partial q_1} & \frac{\partial x_R}{\partial q_2} & \cdots & \frac{\partial x_R}{\partial q_N} \end{bmatrix} $$
+\item 旋转阵法：线雅可比直接求导，角雅可比提取各旋转阵$ Z $列（原理见\ref{sec:Terminal_function}）。
 \end{itemize} 
-%------------------------------------------------
-\subsubsection{并行末端作用求解}\tip{并行速度传播}\label{sec:Terminal_function}
-%------------------------------------------------
-\paragraph{单关节作用}\label{sec:bingxing}
-求一关节运动对末端运动影响时，将其他连杆固定，视为刚体。
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.6\textwidth]{Terminal function} 
-\caption[并行速度传播]{并行速度传播}
-\end{figure}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{c|cc}
-\hline
-& 平移关节 & 旋转关节 \\
-\hline
-线速度 & $ V_i $ & $ \Omega_i \times P_{in} $ \\
-角速度 & $ 0 $ & $ \Omega_i $ \\
-\hline
-\end{tabular}
-\caption{并行速度传播表}
-\end{table}
-
-\begin{itemize}
-\item 线速度由线速度传导和角速度转换线速度组成。
-\item 角速度只有角速度传导。
-\end{itemize} 
-%------------------------------------------------
-\paragraph{综合作用}
-基于基坐标系，由$ V_i = Z_i \dot{q}_i, \Omega_i = Z_i \dot{q}_i $，综合各关节运动，得到：
-\begin{align*}
-v &= \sum_{i = 1}^n [\epsilon_i V_i + \overline{\epsilon}_i (\Omega_i \times P_{in})] = \sum_{i = 1}^n [\epsilon_i Z_i + \overline{\epsilon}_i (Z_i \times P_{in})] \dot{q}_i \\
-\omega &= \sum_{i = 1}^n \overline{\epsilon}_i \Omega_i = \sum_{i = 1}^n (\overline{\epsilon}_i Z_i) \dot{q}_i
-\end{align*}
-%------------------------------------------------
-\subsection{静态力传播}
-%------------------------------------------------
-\subsubsection{力与力矩}\tip{力与力矩}\label{sec:fn}
-由末端往回推，根据各连杆力与力矩平衡进行求解。
-
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.3\textwidth]{force} 
-\caption[关节受力分析]{关节受力分析}
-\end{figure}
-
-对于连杆$ i $，$ f_i, n_i $表示自身受力（矩），$ -f_{i + 1}, -n_{i + 1} $表示下一连杆的反作用力（矩），$ P $表示其长度，有：
-$$
-\begin{cases}
-f_i = f_{i + 1} \\
-n_i = n_{i + 1} + P_{i + 1} \times f_{i + 1}
-\end{cases}
-\overset{\text{换系}}{\Longrightarrow}
-\begin{cases}
-^i f_i = ^i_{i + 1}R \cdot ^{i + 1} f_{i + 1} \\
-^i n_i = ^i_{i + 1}R \cdot ^{i + 1} n_{i + 1} + ^i P_{i + 1} \times ^i f_i
-\end{cases}
-$$
-
-\begin{figure}[H]
-\centering
-\subfloat[平移关节]{\includegraphics[width=.2\textwidth]{Prismatic Joint}} \quad
-\subfloat[旋转关节]{\includegraphics[width=.2\textwidth]{Revolute Joint}}
-\caption[力与力矩]{力与力矩}
-\end{figure}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{c|cc}
-\hline
-& 平移关节 & 旋转关节 \\
-\hline
-计算量 & 力 & 力矩 \\
-计算 & $ \tau_i = f_i^T Z_i $ & $ \tau_i = n_i^T Z_i $ \\
-内部平衡量 & 力矩 & 力 \\
-\hline
-\end{tabular}
-\caption{力与力矩}
-\end{table}
-%------------------------------------------------
-\subsubsection{速度与扭矩}
-\begin{figure}[H]
-\centering
-\subfloat[角速度与线速度]{\includegraphics[width=.15\textwidth]{wv}} \quad
-\subfloat[力与扭矩]{\includegraphics[width=.15\textwidth]{ft}} \quad
-\subfloat[例题]{\includegraphics[width=.3\textwidth]{5}}
-\caption[速度与扭矩]{速度与扭矩}
-\end{figure}
-
-\begin{align*}
-v &= \omega \times p = -\hat{p} \omega = J \dot{\theta} \\
-\tau &= p \times F = -\hat{p}^T F = J^T F
-\end{align*}
-%------------------------------------------------
-\paragraph{例题}\label{sec:example5.1}
-条件： $ l_1 = l_2 = 1, \theta_1 = 0, \theta_2 = 60^\circ, F = \begin{bmatrix} 0 & -1 & 0 \end{bmatrix}^T N $。
-\begin{itemize}
-\item 对于连杆2：$ f_2 = F, n_2 = \vec{l}_2 \times F = \begin{bmatrix} 0 & 0 & -l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
-\item 对于连杆1：$ f_1 = f_2 = F, n_1 = n_2 + \vec{l}_1 \times f_2 = \begin{bmatrix} 0 & 0 & -l_1 \cos\theta_1 - l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
-\end{itemize}
-
-续\ref{sec:example5.2}，雅可比矩阵与扭矩求解。
-%------------------------------------------------
-\subsection{雅可比矩阵求解}
-%------------------------------------------------
-\subsubsection{直接法}\tip{直接法求雅可比}
-对正运动学方程直接求导。
-$$
-J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \frac{\partial x_R}{\partial q_1} & \frac{\partial x_R}{\partial q_2} & \cdots & \frac{\partial x_R}{\partial q_N} \end{bmatrix}
-$$
-%------------------------------------------------
-\subsubsection{旋转阵法}\tip{旋转阵法求雅可比}
-线雅可比对正运动学方程直接求导，角雅可比提取各旋转阵$ Z $列（见\ref{sec:Terminal_function}）。
-$$
-J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \overline{\epsilon}_1 Z_1 & \overline{\epsilon}_2 Z_2 & \cdots & \overline{\epsilon}_n Z_n \end{bmatrix}
-$$
+$$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \overline{\epsilon}_1 Z_1 & \overline{\epsilon}_2 Z_2 & \cdots & \overline{\epsilon}_n Z_n \end{bmatrix} $$
 %------------------------------------------------
 \paragraph{例题}
 以下以斯坦福臂（2RP3R）为例：
@@ -847,23 +706,145 @@ x & 0 & 0 & c_2 & x& c_2
 \end{bmatrix}
 $$}
 %------------------------------------------------
-\subsubsection{虚功（Virtual Work）原理法}\tip{虚功原理法求雅可比}
-已知各连杆力和力矩（见\ref{sec:fn}），微小移动$ \delta x $下，各力/力矩作功之和为$ \delta W = \sum_i f_i \delta x_i $，在其等于$ 0 $时，各力/力矩所作功抵消，即：
+\subsection{速度传播法}
+%------------------------------------------------
+\subsubsection{串行逐连杆求解}\tip{串行速度传播求雅可比}
+由连杆$ k $起始端速度，求其末端速度，进而获得连杆$ k + 1 $起始端速度。
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.5\textwidth]{Velocity propagation} 
+\caption[串行速度传播]{串行速度传播}
+\end{figure}
+
+\begin{itemize}
+\item 平移关节：线速度传导+角速度转换线速度+平移变化。
+$$
+v_{i + 1} = v_i + \omega_i \times P_{i + 1} + \dot{d}_{i + 1} \cdot Z_{i + 1}
+\overset{\text{换系}}{\Longrightarrow}
+{}^{i + 1}v_{i + 1} = ^{i + 1}_i R \cdot (^i v_i + ^i\omega_i \times ^i P_{i + 1}) + \dot{d}_{i + 1} \cdot ^{i + 1}Z_{i + 1}
+$$
+\item 旋转关节：角速度传导+旋转变化。
+$$
+\Omega_{i + 1} = \dot{\theta}_{i + 1} \cdot Z_{i + 1}, \omega_{i + 1} = \omega_i + \Omega_{i + 1}
+\overset{\text{换系}}{\Longrightarrow}
+{}^{i + 1}\omega_{i + 1} = ^{i + 1}_i R \cdot ^i\omega_i + \dot{\theta}_{i + 1} \cdot ^{i + 1}Z_{i + 1}
+$$
+\end{itemize} 
+%------------------------------------------------
+\subsubsection{并行末端作用求解}\tip{并行速度传播求雅可比}\label{sec:Terminal_function}
+%------------------------------------------------
+\paragraph{单关节作用}\label{sec:bingxing}
+求一关节运动对末端运动影响时，将其他连杆固定，视为刚体。
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.6\textwidth]{Terminal function} 
+\caption[并行速度传播]{并行速度传播}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|cc}
+\hline
+& 平移关节 & 旋转关节 \\
+\hline
+线速度 & $ V_i $ & $ \Omega_i \times P_{in} $ \\
+角速度 & $ 0 $ & $ \Omega_i $ \\
+\hline
+\end{tabular}
+\caption{并行速度传播}
+\end{table}
+
+\begin{itemize}
+\item 线速度由线速度传导和角速度转换线速度组成。
+\item 角速度只有角速度传导。
+\end{itemize} 
+%------------------------------------------------
+\paragraph{综合作用}
+基于基坐标系，由$ V_i = Z_i \dot{q}_i, \Omega_i = Z_i \dot{q}_i $，综合各关节运动，得到：
+\begin{align*}
+v &= \sum_{i = 1}^n [\epsilon_i V_i + \overline{\epsilon}_i (\Omega_i \times P_{in})] = \sum_{i = 1}^n [\epsilon_i Z_i + \overline{\epsilon}_i (Z_i \times P_{in})] \dot{q}_i \\
+\omega &= \sum_{i = 1}^n \overline{\epsilon}_i \Omega_i = \sum_{i = 1}^n (\overline{\epsilon}_i Z_i) \dot{q}_i
+\end{align*}
+%------------------------------------------------
+\subsection{静态力传播法}\tip{静态力传播求雅可比}
+%------------------------------------------------
+\subsubsection{静态力与力矩}\label{sec:fn1}
+由末端往回推，根据各连杆力与力矩平衡进行求解。
+
+对于连杆$ i $，$ f_i, n_i $表示自身受力（矩），$ -f_{i + 1}, -n_{i + 1} $表示下一连杆的反作用力（矩），$ P $表示其长度，有：
+$$
+\begin{cases}
+f_i = f_{i + 1} \\
+n_i = n_{i + 1} + P_{i + 1} \times f_{i + 1}
+\end{cases}
+\overset{\text{换系}}{\Longrightarrow}
+\begin{cases}
+^i f_i = ^i_{i + 1}R \cdot ^{i + 1} f_{i + 1} \\
+^i n_i = ^i_{i + 1}R \cdot ^{i + 1} n_{i + 1} + ^i P_{i + 1} \times ^i f_i
+\end{cases}
+$$
+
+与动力学受力分析对比\ref{sec:fn2}
+
+\begin{figure}[H]
+\centering
+\subfloat[静力学受力分析]{\includegraphics[width=.25\textwidth]{force}} \quad
+\subfloat[平移关节]{\includegraphics[width=.2\textwidth]{Prismatic Joint}} \quad
+\subfloat[旋转关节]{\includegraphics[width=.2\textwidth]{Revolute Joint}}
+\caption[静态力与力矩]{静态力与力矩}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|cc}
+\hline
+& 平移关节 & 旋转关节 \\
+\hline
+计算量 & 力 & 力矩 \\
+计算 & $ \tau_i = f_i^T Z_i $ & $ \tau_i = n_i^T Z_i $ \\
+内部平衡量 & 力矩 & 力 \\
+\hline
+\end{tabular}
+\caption{力与力矩（动静一致）}
+\end{table}
+%------------------------------------------------
+\subsubsection{速度与扭矩}
+\begin{figure}[H]
+\centering
+\subfloat[角速度与线速度]{\includegraphics[width=.125\textwidth]{wv}} \quad
+\subfloat[力与扭矩]{\includegraphics[width=.125\textwidth]{ft}}
+\caption[速度与扭矩]{速度与扭矩}
+\end{figure}
+
+\begin{align*}
+v &= \omega \times p = -\hat{p} \omega = J \dot{\theta} \\
+\tau &= p \times F = -\hat{p}^T F = J^T F
+\end{align*}
+%------------------------------------------------
+\subsubsection{虚功（Virtual Work）原理}\tip{虚功原理}
+已知各连杆力（矩），微小移动$ \delta x $下，各力（矩）作功之和为$ \delta W = \sum_i f_i \delta x_i $，在其等于$ 0 $时，各力（矩）所作功抵消，即：
 $$ \tau^T \delta q + (-F)^T \delta x = 0 $$
 
 因为$ \delta x = J \delta q $，所以$ \tau = J^T F $。
 
 这里$ J $是末端雅可比，而非腕部雅可比。
 %------------------------------------------------
-\paragraph{例题}\label{sec:example5.2}
-接\ref{sec:example5.1}。
+\paragraph{例题}
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.25\textwidth]{5} 
+\caption[虚功原理例题]{虚功原理例题}
+\end{figure}
 
-根据$ \dot{x} = J \dot{\theta} $，由几何关系可得
-$ J = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & -l_2 s_{12} \\ l_1 c_1 + l_2 c_{12} & l_2 c_{12} \end{bmatrix} $，
-
-进而由$ \tau = J^T F $可得$ \tau = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & l_1 c_1 + l_2 c_{12} \\ - l_2 s_{12} & l_2 c_{12} \end{bmatrix} \begin{bmatrix} 0 \\ -1 \end{bmatrix} $。
+条件： $ l_1 = l_2 = 1, \theta_1 = 0, \theta_2 = 60^\circ, F = \begin{bmatrix} 0 & -1 & 0 \end{bmatrix}^T N $。
+\begin{itemize}
+\item 对于连杆2：$ f_2 = F, n_2 = \vec{l}_2 \times F = \begin{bmatrix} 0 & 0 & -l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
+\item 对于连杆1：$ f_1 = f_2 = F, n_1 = n_2 + \vec{l}_1 \times f_2 = \begin{bmatrix} 0 & 0 & -l_1 \cos\theta_1 - l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
+\item 根据$ \dot{x} = J \dot{\theta} $，由几何关系得$ J = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & -l_2 s_{12} \\ l_1 c_1 + l_2 c_{12} & l_2 c_{12} \end{bmatrix} $。
+\item 因此$ \tau = J^T F = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & l_1 c_1 + l_2 c_{12} \\ - l_2 s_{12} & l_2 c_{12} \end{bmatrix} \begin{bmatrix} 0 \\ -1 \end{bmatrix} $。
+\end{itemize}
 %------------------------------------------------
-\subsubsection{雅可比转换}\tip{雅可比转换}
+\subsection{雅可比转换}\tip{雅可比转换}
 一般求解基坐标系下的腕部雅可比$ ^0 J_j $。
 %------------------------------------------------
 \paragraph{位置转换}
@@ -883,22 +864,178 @@ $$ ^0 J_j = \begin{bmatrix} ^0_n R & -^0_n R \cdot ^n\hat{P}_{ij} \cdot ^0_n R^T
 %------------------------------------------------
 \subsection{其他}
 %------------------------------------------------
-\subsubsection{奇异}
+\subsubsection{雅可比奇异}\tip{雅可比奇异}
 \begin{itemize}
 \item 不同坐标系下雅可比矩阵不同，但是行列式相同，$ ^i J \neq ^j J, |^i J| = |^j J| $。
 \item $ |J(q)| = 0 $时，奇异，存在方向无法运动或旋转，控制失效。
 \end{itemize} 
 %------------------------------------------------
-\subsubsection{速率控制}
+\subsubsection{雅可比速率控制}
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.6\textwidth]{J_control} 
-\caption[速率控制]{速率控制}
+\caption[雅可比速率控制]{雅可比速率控制}
 \end{figure}
 
 $ \delta q = J(q)^{-1} \delta x $，为保证可逆，可采用伪逆$ J(q)^+ $。
 %------------------------------------------------
 \section{动力学}
+%------------------------------------------------
+\subsection{刚体动力学}
+%------------------------------------------------
+\subsubsection{受力种类分析}
+\begin{itemize}
+\item 惯性参考系
+\begin{itemize}
+\item 重力$ G $。
+\item 惯性力$ F_1 = ma $。
+\end{itemize} 
+\item 旋转参考系（非惯性参考系）：假想力。
+\begin{itemize}
+\item 离心力$ F_2 = m\omega^2r $：沿半径背离圆心。
+\item 科里奥利力$ F_3 = 2mv' \times \omega $：相对于参考系运动的惯性力（在惯性参考系下表现为物体保持直线运动）。
+\end{itemize} 
+\item 合力：$ \Gamma = ma + m\omega^2r + 2mv' \times \omega + G = M(q)\ddot{q} + V(q, \dot{q}) + G(q) $。 \\
+其中，$ \Gamma $为广义关节力矩矢量，$ q,\dot{q},\ddot{q} $为关节空间坐标、速度、加速度，$ M(q) $为惯性阵。
+\end{itemize} 
+%------------------------------------------------
+\subsubsection{运动分析}\tip{运动分析}
+\begin{figure}[H]
+\centering
+\subfloat[质点直线运动]{\includegraphics[width=.15\textwidth]{point_p}} \quad
+\subfloat[刚体直线运动]{\includegraphics[width=.15\textwidth]{rigid_p}} \quad
+\subfloat[质点旋转运动]{\includegraphics[width=.15\textwidth]{point_r}} \quad
+\subfloat[刚体旋转运动]{\includegraphics[width=.2\textwidth]{rigid_r}}
+\caption[运动分析]{运动分析}
+\end{figure}
+%------------------------------------------------
+\paragraph{直线运动}
+\begin{itemize}
+\item 动量守恒（合外力为零，系统总动量不变）：$ F = ma = m\dot{v} = \dot{Q} $。
+\item 动量变化率等于所受外力：
+$$ 
+Q = mv
+\overset{\text{质点到刚体}}{\Longrightarrow}
+Q = \int_V v_i \rho dV = (\int_V \rho dV) v = mv
+$$
+质量$ m = diag(m,m,m) $表明刚体空间运动的各向同性。
+\end{itemize} 
+%------------------------------------------------
+\paragraph{旋转运动}
+\begin{itemize}
+\item 角动量守恒（合外力为零/指向原点，系统总角动量不变）：$ \tau = \vec{p} \times m\dot{v} = \dot{L} $。
+\item 角动量变化量等于所受外力矩：
+$$ 
+L = \vec{p} \times mv = mp \times (\omega \times p)
+\overset{\text{质点到刚体}}{\Longrightarrow}
+L = \int_V p \times (\omega \times p) \rho dV = (\int_V -\hat{p}\hat{p}\rho dV) \omega = I\omega 
+$$
+\end{itemize} 
+%------------------------------------------------
+\subsubsection{惯性张量$ I $}\tip{惯性张量}
+%------------------------------------------------
+\paragraph{计算}
+$$
+-\hat{p}\hat{p} = (p^Tp)E_3 - pp^T = \begin{bmatrix} y^2 + z^2 & -xy & -xz \\ -xy & z^2 + x^2 & -yz \\ -xz & -yz & x^2 + y^2 \end{bmatrix}
+\Rightarrow
+I = \int_V -\hat{p}\hat{p}\rho dV = \begin{bmatrix} I_{xx} & -I_{xy} & -I_{xz} \\ -I_{xy} & I_{yy} & -I_{yz} \\ -I_{xz} & -I_{yz} & I_{zz} \end{bmatrix}
+$$
+
+三列分别表示沿$ x,y,z $三轴旋转时，对三轴产生的动量矩列向量，$ L = r \times m \omega \times r $。
+\begin{itemize}
+\item 惯量矩（绕主轴的转动惯量）：恒正，和（即惯性张量的迹）不变，绕质心转轴最小。
+$$ I_{xx} = \iiint (y^2 + z^2)\rho dxdydz \quad I_{yy} = \iiint (z^2 + x^2)\rho dxdydz \quad I_{zz} = \iiint (x^2 + y^2)\rho dxdydz $$
+\item 惯量积：可正可负可零。
+$$ I_{xy} = \iiint (xy)\rho dxdydz \quad I_{yz} = \iiint (yz)\rho dxdydz \quad I_{xz} = \iiint (xz)\rho dxdydz $$
+\end{itemize} 
+%------------------------------------------------
+\paragraph{性质}
+\begin{itemize}
+\item 平行轴定理：质量为$ m $的刚体，绕通过质心的轴的转动惯量为$ I_C $，移动旋转轴$ p_c $，绕新轴的转动惯量$ I_A = I_C + m[(p_c^Tp_c)E_3 - p_cp_c^T] $。
+\item 垂直轴定理：对于平面薄板刚体，绕垂直于平面的轴的转动惯量$ I_Z $为绕与其相交的平面正交轴的转动惯量$ I_X,I_Y $的和。
+\item 两坐标轴分别使刚体质量对称分布，垂直于二者组成的对称平面的第三轴参与的惯性积为$ 0 $。
+\item 惯性主轴：两个为零惯性积的公用坐标轴，为物体与转轴的固有属性，与坐标系选取无关。
+\item 惯性张量只取决于刚体形状、质量分布和转轴位置，和转动状态（如转速）无关。其特征值为刚体的主惯性矩，相应的特征矢量为主轴。
+\end{itemize}
+%------------------------------------------------
+\paragraph{例题}
+以下以长方体为例，其长宽高分别为$ L,W,H $，密度为$ \rho $：
+
+\begin{figure}[H]
+\centering
+\subfloat[位于中心]{\includegraphics[width=.2\textwidth]{6.1}} \quad
+\subfloat[位于一角]{\includegraphics[width=.2\textwidth]{6.2}}
+\caption[惯性张量例题]{惯性张量例题}
+\end{figure}
+
+位于中心：
+\begin{align*}
+I_{xx} &= \int_{-\frac{H}{2}}^{\frac{H}{2}} \int_{-\frac{L}{2}}^{\frac{L}{2}} \int_{-\frac{W}{2}}^{\frac{W}{2}} (y^2 + z^2)\rho dxdydz = \frac{H^2 + L^2}{12} LWH\rho = \frac{m}{12}(H^2 + L^2) \\
+I_{xy} &= \int_{-\frac{H}{2}}^{\frac{H}{2}} \int_{-\frac{L}{2}}^{\frac{L}{2}} \int_{-\frac{W}{2}}^{\frac{W}{2}} (xy)\rho dxdydz = 0
+\end{align*}
+
+位于一角，利用平行轴定理：
+\begin{align*}
+I_{Axx} &= I_{Cxx} + m(y_C^2 + z_C^2) = \frac{m}{12}(H^2 + L^2) + \frac{m}{4}(H^2 + L^2) = \frac{m}{3}(H^2 + L^2) \\
+I_{Axy} &= I_{Cxy} + m x_C y_C = \frac{m}{4}WL
+\end{align*}
+%------------------------------------------------
+\subsection{牛顿-欧拉动力学方程}
+%------------------------------------------------
+\paragraph{动力学受力分析}\label{sec:fn2}
+与静力学受力分析对比\ref{sec:fn1}
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.3\textwidth]{force2} 
+\caption[动力学受力分析]{动力学受力分析}
+\end{figure}
+
+$$
+\begin{cases}
+f_i &= f_{i + 1} + F_i \\
+n_i &= n_{i + 1} + P_{i + 1} \times f_{i + 1} + P_{C_i} \times F_i + N_i \\
+\end{cases}
+$$
+%------------------------------------------------
+\paragraph{牛顿-欧拉动力学方程}
+\begin{itemize}
+\item 牛顿方程：$ F = \dot{Q} = ma $。
+\item 欧拉方程：$ N = \dot{L} = \frac{d}{dt}(\vec{m}||\omega||) = \dot{\vec{m}}||\omega|| + \vec{m}||\dot{\omega}|| = \omega \times \vec{m}||\omega|| + I\dot{\omega} = \omega \times I\omega + I\dot{\omega} $。
+\end{itemize}
+%------------------------------------------------
+\paragraph{连杆分析}
+\begin{figure}[H]
+\centering
+\subfloat[速度与加速度]{\includegraphics[width=.5\textwidth]{Velocity propagation}} \quad
+\subfloat[受力]{\includegraphics[width=.28\textwidth]{Force Analysis}}
+\caption[连杆分析]{连杆分析}
+\end{figure}
+
+\begin{itemize}
+\item 速度：
+\begin{align*}
+v_{i + 1} &= v_i + \omega_i \times P_{i + 1} + \dot{d}_{i + 1} \cdot Z_{i + 1} \\
+\omega_{i + 1} &= \omega_i + \dot{\theta}_{i + 1} \cdot Z_{i + 1}
+\end{align*}
+\item 加速度：
+\begin{align*}
+\dot{v}_{i + 1} &= \dot{v}_i + \dot{\omega}_i \times P_{i + 1} + \ddot{d}_{i + 1} \cdot Z_{i + 1} + \omega_i \times \underbrace{\dot{P_{i + 1}}}_{\omega_i \times P_{i + 1}} + 2\dot{d}_{i + 1} \omega_i \times Z_{i + 1} \\
+\dot{\omega}_{i + 1} &= \dot{\omega}_i + \ddot{\theta}_{i + 1} \cdot Z_{i + 1} + \dot{\theta}_{i + 1} \cdot \underbrace{\dot{Z_{i + 1}}}_{\omega_i \times Z_{i + 1}}
+\end{align*}
+\item 质心处（加）速度：
+\item 连杆惯性力（矩）：
+\item 综合分析：
+\begin{itemize}
+\item 牛顿方程：
+\item 欧拉方程：
+\item 质心处受力分析：
+\end{itemize}
+\end{itemize}
+%------------------------------------------------
+\paragraph{牛顿-欧拉动力学方程建模}\tip{牛顿-欧拉动力学方程建模}
+%------------------------------------------------
+\subsection{拉格朗日动力学算法}\tip{拉格朗日动力学算法}
 %------------------------------------------------
 \section{轨迹规划}
 %------------------------------------------------
