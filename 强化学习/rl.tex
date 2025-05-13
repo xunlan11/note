@@ -31,34 +31,34 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \item 延迟收益：一个动作的收益可能无法短期体现，而是长期浮现。
 \item 环境不确定性：当前动作不但会影响当前收益，还会影响后续环境，进而影响后续收益。
 \item 影响未知性：无法预测动作的影响，需要与环境频繁交互。
-\item 目标可以判断进展，经验可以改进性能。
+\item 试探（开拓动作空间）与开发/贪心（根据经验获得收益）折中。
 \end{itemize}
 %------------------------------------------------
-\paragraph{机器学习范式}
+\paragraph{其他优化方法}
+\begin{itemize}
+\item 凸优化：状态空间较小，线性规划。
+\item 最优控制：已知模型，解析回报函数，动态规划。
+\item 进化算法：控制策略简单。
+\item 机器学习
 \begin{itemize}
 \item 有监督学习：有标签，注重推断与泛化能力。
 \item 无监督学习：无标签，寻找数据隐含结构。
-\item 强化学习：动作影响未知，适于在交互中学习。
 \end{itemize}
-
-区别特征：
-\begin{itemize}
-\item 试探（开拓动作空间）与开发/贪心（根据经验获得收益）折中。
-\item 智能体与不确定环境交互的完整性、实时性与目标导向性。
 \end{itemize}
 %------------------------------------------------
 \paragraph{要素}
 \begin{itemize}
-\item 状态：强化学习依赖的概念。
-\item 策略：在特定时间的行为方式。
-\item 收益：短期学习目标，环境给予智能体的信号。
-\item 价值函数：长期收益累计，需综合评估。
-\item 环境模型（非必需）：模拟环境的反应。
+\item 状态（state，S）：强化学习依赖的概念。
+\item 动作（A）：智能体做出的选择。
+\item 策略（policy，$ \pi $）：在特定时间的行为方式。
+\item 奖励（reward，R）：短期学习目标，环境给予智能体的信号。
+\item 值函数（value function）：长期收益累计，需综合评估。
+\item 环境模型（P）：模拟环境的反应。
 \end{itemize}
 %------------------------------------------------
 \paragraph{分类}
 \begin{enumerate}
-\item 模型
+\item 模型依赖性
 \begin{itemize}
 \item 有模型：规划。
 \item 无模型：试错。
@@ -66,37 +66,70 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \item 策略更新方法
 \begin{itemize}
 \item 值函数：求解值函数重构策略。
-\item 直接搜索：搜索策略空间。
-\item Actor-Critic方法：策略迭代，同时逼近值函数和策略。
+\item 直接策略搜索：搜索策略空间。
+\item Actor-Critic方法：类似于策略迭代，同时逼近值函数和策略。
 \end{itemize}
-\item 回报函数
+\item 回报函数是否已知
 \begin{itemize}
 \item 正向：从回报到策略。
 \item 逆向：从专家示例到回报。
 \end{itemize}
-\item 任务体量
+\item 任务体量：分层强化学习、元强化学习、多智能体强化学习、迁移学习等
+\end{enumerate}
+%------------------------------------------------
+\paragraph{发展}~\\
+
+值函数$ \rightarrow $直接策略搜索$ \rightarrow $深度强化学习。
+
+与深度学习结合，与专业知识结合，理论分析型增强，与认知科学结合，体量增大，与贝叶斯结合。
+%----------------------------------------------------------------------------------------
+\section{马尔可夫决策过程}
+%------------------------------------------------
+\subsection{策略}
+%------------------------------------------------
+\paragraph{多臂赌博机}
+摇动每个臂，得到不同概率分布的回报，求解多次摇动的最高回报。
+%------------------------------------------------
+\paragraph{贪婪策略}
+$ a = argmax_a q(a) $。
+%------------------------------------------------
+\paragraph{探索-利用平衡策略}
 \begin{itemize}
-\item 分层强化学习：大规模。
-\item 元强化学习、多目标强化学习、多任务强化学习：多任务。
-\item 多智能体强化学习：博弈。
-\item 迁移学习。
+\item $ \epsilon $-greedy策略\tip{$ \epsilon $-greedy策略}：
+$$
+a = 
+\begin{cases} 
+argmax_a q(a) &, p = 1 - \epsilon \\
+random(a) &, p = \epsilon
+\end{cases}
+\Rightarrow 
+\pi(a|s) = 
+\begin{cases} 
+1 - \epsilon + \frac{\epsilon}{|A|} &, a = argmax_a q(a) \\
+\frac{\epsilon}{|A|} &, otherwise
+\end{cases}
+$$
+
+靠近贪心策略，但所有动作概率不为零。
+\item UCB（upper confidence bound）策略：
+$$ UCB(a) = Q(a) + c\sqrt{\frac{\ln N}{n(a)}} $$
+
+其中，$ c $控制探索强度，$ N $是当前轮数，$ n(a) $是$ a $被选次数。
+
+可以自适应平衡探索与利用。
+\item 玻尔兹曼分布（Boltzmann）：
+$$ P(a) = \frac{e^{Q(a)/\tau}}{\sum_{a'} e^{Q(a)/\tau}} $$
+
+其中$ \tau $是温度参数，控制随机性程度，趋于$ 0 $时接近贪心策略，趋于$ \infty $时接近均匀随机选择。
+
+可以动态调整探索强度。
 \end{itemize}
-\end{enumerate}
 %------------------------------------------------
-\paragraph{历史}
-\begin{enumerate}
-\item 源于动物学习心理学的试错法：效应定律（Edward Thorndike），条件反射（巴普洛夫），快乐-痛苦系统（图灵），向“老师”学习到向“评论家”学习，自动学习机（M.L.Tsetlin），分类器系统（救火队算法和遗传算法）。
-\item 最优控制：贝尔曼方程与马尔可夫决策过程（Richard Bellman），维度灾难。
-\item 时序差分方法：次级强化物，广义强化（Klopf），与试错法结合（“行动器-评判器”结构，Sutton），与最优控制结合（Q-learning，Chris Watkins）。
-\end{enumerate}
-%------------------------------------------------
-\paragraph{发展}
-值函数$ \rightarrow $直接搜索策略$ \rightarrow $深度强化学习。
+\paragraph{增量式更新}\tip{增量式更新}
+将轮次更新的量化为递推关系，减少空间复杂度，如运行均值：
+$$ Q_{n + 1} = \frac{1}{n}\sum_{i = 1}^n R_i = Q_n + \frac{1}{n}(R_n - Q_n) $$
 %----------------------------------------------------------------------------------------
-\section{马尔可夫决策过程与贝尔曼方程}
-\tip{马尔可夫决策过程及其元素}
-%----------------------------------------------------------------------------------------
-\subsection{马尔可夫决策过程（Markov decision process，MDP）}
+\subsection{马尔可夫决策过程（Markov decision process，MDP）}\tip{马尔可夫决策过程及其元素}
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.5\textwidth]{Markov} 
@@ -362,14 +395,6 @@ $ v_{k + 1} = r_{\pi_{k + 1}} + \gamma P_{\pi_{k + 1}}v_k = max_a q_k(a, s) $。
 采取任何动作的概率都为正。
 \begin{enumerate}
 \item 试探性出发（ES）：为采样部分无法正常获得的状态-动作二元组，可设定所有二元组都有概率作为起始。满足充分探索的理论要求，但实际中很难实现。
-\item $ \epsilon $-贪心策略\tip{$ \epsilon $-贪心策略}：保证所有动作都有被选择的可能，同时靠近贪心策略。
-$$
-\pi(a|s) = 
-\begin{cases} 
-1 - \epsilon + \frac{\epsilon}{|A|}, &if a = argmax_{a'} Q(s, a') \\
-\frac{\epsilon}{|A|}, &otherwise
-\end{cases}
-$$
 \end{enumerate}
 %------------------------------------------------
 \subsubsection{重要度采样}\tip{重要度采样}
@@ -388,7 +413,7 @@ $$
 \item 每次决策型：$ E[\rho_{t:T - 1}G_t] = E[\tilde{G_t}] = E[\sum_{i = 1}^{T - t} \gamma^{i - 1} \rho_{t:t + i - 1}R_{t + i}] $。适用于普通重要度采样。
 \end{itemize}
 %------------------------------------------------
-\subsubsection{增量式更新}\tip{增量式更新}
+\subsubsection{增量式更新}
 \begin{align*}
 V_{n + 1} &\doteq V_n + \frac{W_n}{C_n}[G_n - V_n] \\
 C_{n + 1} &\doteq C_n + W_{n + 1}
@@ -1048,6 +1073,13 @@ $$
 \end{itemize}
 %----------------------------------------------------------------------------------------
 \section{附录}
+%------------------------------------------------
+\subsection{历史}
+\begin{enumerate}
+\item 源于动物学习心理学的试错法：效应定律（Edward Thorndike），条件反射（巴普洛夫），快乐-痛苦系统（图灵），向“老师”学习到向“评论家”学习，自动学习机（M.L.Tsetlin），分类器系统（救火队算法和遗传算法）。
+\item 最优控制：贝尔曼方程与马尔可夫决策过程（Richard Bellman），维度灾难。
+\item 时序差分方法：次级强化物，广义强化（Klopf），与试错法结合（“行动器-评判器”结构，Sutton），与最优控制结合（Q-learning，Chris Watkins）。
+\end{enumerate}
 %------------------------------------------------
 \subsection{贝尔曼最优方程求解}\label{sec:Scalability Mapping}
 %------------------------------------------------
