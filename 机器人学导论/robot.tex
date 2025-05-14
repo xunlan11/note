@@ -614,7 +614,7 @@ $。
 %------------------------------------------------
 \paragraph{角雅可比}
 \begin{itemize}
-\item 旋转阵推基础
+\item 旋转阵推基础\label{sec:Rotation_matrix}
 
 旋转阵导数为
 $ \dot{R} = \lim_{\Delta t \to 0} (\frac{R_K(\Delta\theta) - I_3}{\Delta t} R(t)) $，
@@ -632,6 +632,8 @@ $
 $，
 
 $ \Omega = \begin{bmatrix} \Omega_x & \Omega_y & \Omega_z \end{bmatrix}^T = \begin{bmatrix} k_x & k_y & k_z \end{bmatrix}^T $为瞬时旋转轴。
+
+例题\ref{sec:example4.2}。
 \item 基础推旋转角
 
 对于Z-Y-Z欧拉角（X-Y-Z固定角）$ X_R = \begin{bmatrix} \alpha & \beta & \gamma \end{bmatrix}^T $，有旋转阵：
@@ -670,7 +672,7 @@ $$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\
 \end{itemize} 
 $$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \overline{\epsilon}_1 Z_1 & \overline{\epsilon}_2 Z_2 & \cdots & \overline{\epsilon}_n Z_n \end{bmatrix} $$
 %------------------------------------------------
-\paragraph{例题}
+\paragraph{例题1}
 {\footnotesize
 以下以斯坦福臂（2RP3R）为例：
 
@@ -725,6 +727,24 @@ x & x & x& 0 & 0 & 0 \\
 x & 0 & 0 & c_2 & x& c_2
 \end{bmatrix}
 $$
+}
+%------------------------------------------------
+\paragraph{例题2}\label{sec:example4.2}
+{\footnotesize
+3R机器人正运动学齐次变换阵为：
+$$ \begin{bmatrix} c_1c_{23} & -c_1s_{23} & s_1 & l_1c_1 + l_2c_1c_2 \\ s_1c_{23} & -s_1s_{23} & -c_1 & l_1s_1 + l_2s_1c_2 \\ s_{23} & c_{23} & 0 & l_2s_2 \\ 0 & 0 & 0 & 1 \end{bmatrix} $$
+
+对平移向量和旋转阵分别求偏导，得到：
+\begin{align*}
+^0J_v(\theta) &= \begin{bmatrix} -l_1s_1 - l_2s_1c_2 & -l_2c_1s_2 & 0 \\ l_1c_1 + l_2c_1c_2 & -l_2s_1s_2 & 0 \\ 0 & l_2c_2 & 0 \end{bmatrix} \\
+^0J_R(\theta) &= \begin{bmatrix}
+-s_1c_{23} & -c_1s_{23} & -c_1s_{23} \\ s_1s_{23} & -c_1c_{23} & -c_1c_{23} \\ c_1 & 0 & 0 \\
+c_1c_{23} & -s_1s_{23} & -s_1s_{23} \\ -c_1s_{23} & -s_1c_{23} & -s_1c_{23} \\ s_1 & 0 & 0 \\
+0 & c_{23} & c_{23} \\ 0 & -s_{23} & -s_{23} \\ 0 & 0 & 0
+\end{bmatrix}
+\end{align*}
+
+可转化$ ^0J_R(\theta) $为基础角雅可比（见\ref{sec:Rotation_matrix}），结果略。
 }
 %------------------------------------------------
 \subsection{速度传播法}
