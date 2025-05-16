@@ -46,16 +46,6 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
-\paragraph{要素}
-\begin{itemize}
-\item 状态（state，S）：强化学习依赖的概念。
-\item 动作（A）：智能体做出的选择。
-\item 策略（policy，$ \pi $）：在特定时间的行为方式。
-\item 奖励（reward，R）：短期学习目标，环境给予智能体的信号。
-\item 值函数（value function）：长期收益累计，需综合评估。
-\item 环境模型（P）：模拟环境的反应。
-\end{itemize}
-%------------------------------------------------
 \paragraph{分类}
 \begin{enumerate}
 \item 模型依赖性
@@ -83,15 +73,62 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 
 与深度学习结合，与专业知识结合，理论分析型增强，与认知科学结合，体量增大，与贝叶斯结合。
 %----------------------------------------------------------------------------------------
-\section{马尔可夫决策过程}
+\section{马尔可夫决策过程与贝尔曼方程}
+%----------------------------------------------------------------------------------------
+\subsection{马尔可夫决策过程（Markov decision process，MDP）}
 %------------------------------------------------
-\subsection{策略}
+\subsubsection{要素}\tip{马尔可夫决策过程及其元素}
+\begin{itemize}
+\item 状态（state，S）：强化学习依赖的概念。
+\item 动作（action，A）：智能体做出的选择。
+\item 奖励/收益（reward，R）：短期学习目标，环境给予智能体的信号。
+\item 策略（policy，$ \pi $）：在特定状态下，动作集的分布$ \pi(a|s) = p[A_t = a|S_t = s] $。
+\item 回报（return，G）：长期收益累计，可能含有折扣，需综合评估。
+\item 折扣因子（$ \gamma $）。
+\item 值函数（value function，V）：一定状态下预估的期望回报。
+\item 行为值函数（Q）：一定状态-动作二元组下预估的期望回报。
+\item 环境模型（P）：模拟环境的反应。
+\end{itemize}
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.5\textwidth]{Markov} 
+\caption[马尔可夫决策过程]{马尔可夫决策过程}
+\end{figure}
 %------------------------------------------------
-\paragraph{多臂赌博机}
-摇动每个臂，得到不同概率分布的回报，求解多次摇动的最高回报。
+\subsubsection{状态、动作与收益}
+%------------------------------------------------
+\paragraph{序贯交互轨迹（trajectory）$ S_0, A_0, R_1, S_1, A_1, R_2, \dots $}~\\
+
+随机变量$ s',r $服从离散概率分布$ p(s', r|s, a) \doteq \Pr\{S_t = s', R_t = r|S_{t - 1} = s, A_{t - 1} = a\} $，即$ S_t,R_t $所有可能组合的概率和为1。
+%------------------------------------------------
+\paragraph{马尔可夫性}\tip{马尔可夫性}
+即“无记忆性”，指未来状态仅依赖于当前状态，而独立于过去状态，$ S_t,R_t $只依赖于$ S_{t - 1},A_{t - 1} $。
+%------------------------------------------------
+\paragraph{状态转移}~\\
+
+当前状态和动作下，转移到某状态的概率，包括该状态下各可能收益情况：
+$$
+p(s'|s, a) \doteq \Pr\{S_t = s'|S_{t - 1} = s, A_{t - 1} = a\} = \sum_{r \in R} p(s', r|s, a)
+$$
+
+以下给出了有无指定未来状态的两种期望收益：
+\begin{align*}
+r(s, a) &\doteq E[R_t|S_{t - 1} = s, A_{t - 1} = a] = \sum_{r \in R} r \sum_{s' \in S} p(s', r|s, a) \\
+r(s, a, s') &\doteq E[R_t|S_{t - 1} = s, A_{t - 1} = a, S_t = s'] = \sum_{r \in R} r \frac{p(s', r|s, a)}{p(s'|s, a)}  
+\end{align*}
+
+\begin{figure}[H]
+\centering
+\subfloat[状态转移图（节点不能重复）]{\includegraphics[width=.45\textwidth]{Transitions1}} \quad
+\subfloat[状态转移表]{\includegraphics[width=.45\textwidth]{Transitions2}}
+\caption[回收机器人状态转移]{回收机器人状态转移}
+\end{figure}
+%------------------------------------------------
+\subsubsection{策略}
 %------------------------------------------------
 \paragraph{贪婪策略}
-$ a = argmax_a q(a) $。
+$ \pi(a|s) = argmax_a q(a) $。
 %------------------------------------------------
 \paragraph{探索-利用平衡策略}
 \begin{itemize}
@@ -112,144 +149,118 @@ $$
 
 靠近贪心策略，但所有动作概率不为零。
 \item UCB（upper confidence bound）策略：
-$$ UCB(a) = Q(a) + c\sqrt{\frac{\ln N}{n(a)}} $$
+$$ \pi(a|s) = Q(a) + c\sqrt{\frac{\ln N}{n(a)}} $$
 
 其中，$ c $控制探索强度，$ N $是当前轮数，$ n(a) $是$ a $被选次数。
 
 可以自适应平衡探索与利用。
 \item 玻尔兹曼分布（Boltzmann）：
-$$ P(a) = \frac{e^{Q(a)/\tau}}{\sum_{a'} e^{Q(a)/\tau}} $$
+$$ \pi(a|s) = \frac{e^{Q(a)/\tau}}{\sum_{a'} e^{Q(a)/\tau}} $$
 
 其中$ \tau $是温度参数，控制随机性程度，趋于$ 0 $时接近贪心策略，趋于$ \infty $时接近均匀随机选择。
 
 可以动态调整探索强度。
+\item 高斯策略：
+$$ \pi = \mu + \epsilon, \epsilon \thicksim N(0, \sigma^2) $$
 \end{itemize}
 %------------------------------------------------
 \paragraph{增量式更新}\tip{增量式更新}
 将轮次更新的量化为递推关系，减少空间复杂度，如运行均值：
 $$ Q_{n + 1} = \frac{1}{n}\sum_{i = 1}^n R_i = Q_n + \frac{1}{n}(R_n - Q_n) $$
-%----------------------------------------------------------------------------------------
-\subsection{马尔可夫决策过程（Markov decision process，MDP）}\tip{马尔可夫决策过程及其元素}
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.5\textwidth]{Markov} 
-\caption[马尔可夫决策过程]{马尔可夫决策过程}
-\end{figure}
-
+%------------------------------------------------
+\subsubsection{回报与折扣}\tip{分幕与回报}
 \begin{itemize}
-\item 动作（A）：智能体做出的选择，集合构成动作空间。
-\item 状态（S）：选择的基础，集合构成状态空间。
-\item 收益（R）：目标。
-\end{itemize}
-%------------------------------------------------
-\paragraph{马尔可夫性（Markov Property）}~\\
-
-未来状态仅依赖于当前状态，而独立于过去状态，即“无记忆性”。
-
-$ S_t,R_t $只依赖于$ S_{t - 1},A_{t - 1} $，服从离散概率分布$ p(s', r|s, a) \doteq \Pr\{S_t = s', R_t = r|S_{t - 1} = s, A_{t - 1} = a\} $，即$ S_t,R_t $所有可能组合的概率和为1。
-%------------------------------------------------
-\paragraph{状态转移}
-当前状态和动作下，转移到某状态的概率，包括该状态下各可能收益情况：
-$$
-p(s'|s, a) \doteq \Pr\{S_t = s'|S_{t - 1} = s, A_{t - 1} = a\} = \sum_{r \in R} p(s', r|s, a)
-$$
-
-以下分别给出了期望收益，后者相较于前者，指定了未来状态：
-\begin{align*}
-r(s, a) &\doteq E[R_t|S_{t - 1} = s, A_{t - 1} = a] = \sum_{r \in R} r \sum_{s' \in S} p(s', r|s, a) \\
-r(s, a, s') &\doteq E[R_t|S_{t - 1} = s, A_{t - 1} = a, S_t = s'] = \sum_{r \in R} r \frac{p(s', r|s, a)}{p(s'|s, a)}  
-\end{align*}
-
-\begin{figure}[H]
-\centering
-\subfloat[状态转移图（节点不能重复）]{\includegraphics[width=.45\textwidth]{Transitions1}} \quad
-\subfloat[状态转移表]{\includegraphics[width=.45\textwidth]{Transitions2}}
-\caption[回收机器人状态转移]{回收机器人状态转移}
-\end{figure}
-%------------------------------------------------
-\paragraph{构建要点}
-\begin{itemize}
-\item 确定动作、状态、收益。
-\item 奖励与惩罚：相对的，可以全奖励或全惩罚。
-\item 同一问题可能有多层次MDP。
-\item 不同状态的可行动作设置：利用先验知识，人为排除愚蠢动作。
-\end{itemize}
-%------------------------------------------------
-\subsection{元素}
-%------------------------------------------------
-\subsubsection{目标和收益}
-\begin{itemize}
-\item 目标：最大化长期累计收益。
-\item 收益$ R_t $：不含先验知识，不为达到子目标而舍弃最终目标。
-\item 回报$ G_t $：收益的总和。
-\end{itemize}
-%------------------------------------------------
-\subsubsection{分幕回报与折扣}
-\begin{itemize}
+\item 幕（episode）：一次交互序列。
 \item 分幕式任务：具有分幕重复特性，下一幕开始状态与上一幕终结状态无关。
 $$ G_t = R_{t + 1} + R_{t + 2} + \cdots + R_T $$
 
 其中$ T $是最终时刻，由其划分非终结状态集$ S $和所有状态集$ S^+ $。
 \item 持续性任务：持续不断发生，不能自然分幕，最终时刻趋于无穷。
-$$ G_t = R_{t + 1} + \gamma R_{t + 2} + \gamma^2 R_{t + 3} + \cdots = \sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1} $$
+$$ G_t = R_{t + 1} + \gamma R_{t + 2} + \gamma^2 R_{t + 3} + \cdots = \sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1} \leq \frac{1}{1 - \gamma}max R_t $$
 
-其中，$ \gamma \in [0, 1] $是折扣率，其越大代表越考虑长期收益。
+其中，折扣率$ \gamma \in [0, 1] $越大代表长期收益越重要。
 \item 统一表示：有限项终止后，状态持续转移回自己，相当于无限项。
 $$ G_t \doteq \sum_{k = t + 1}^{T} \gamma^{k - t - 1} R_k $$
 \end{itemize}
 %------------------------------------------------
-\subsubsection{策略和价值函数}
+\subsubsection{值函数}
 %------------------------------------------------
-\paragraph{状态价值函数（策略$ \pi $下状态$ s $的价值）}
+\paragraph{值函数}
 \begin{align*}
 v_\pi(s) 
-&\doteq E_\pi[G_t|S_t = s] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s, A_t = a]\\
-&= E_\pi[R_{t + 1} + \gamma G_{t+1}|S_t = s] \\
-&= \sum_a \pi(a|s) \sum_{s'} \sum_r p(s', r|s, a)[r + \gamma E_\pi[G_{t + 1}|S_{t + 1} = s']] \\
-&= \underbrace{\sum_a \pi(a|s) \sum_{s', r} p(s', r|s, a)[r + \gamma v_\pi(s')]}_{贝尔曼方程}, s \in S
+&\doteq E_\pi[G_t|S_t = s] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s], s \in S \\
+&= E_\pi[R_{t + 1} + \gamma G_{t+1}|S_t = s] (\text{后继递推关系}) \\
+&= \sum_a \pi(a|s) \sum_{s'} \sum_r p(s', r|s, a)\{r + \gamma E_\pi[G_{t + 1}|S_{t + 1} = s']\} (\text{全概率条件期望展开}) \\
+&= \underbrace{\sum_a \pi(a|s) \sum_{s', r} p(s', r|s, a)[r + \gamma v_\pi(s')]}_{\text{贝尔曼方程}}
 \end{align*}
 %------------------------------------------------
-\paragraph{动作价值函数（策略$ \pi $下在状态$ s $采取动作$ a $的价值）}
-$$ q_\pi(s, a) \doteq E_\pi[G_t|S_t = s, A_t = a] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s, A_t = a] $$
-%------------------------------------------------
-\paragraph{回溯算法}
-后继状态的价值信息回传给当前状态。
+\paragraph{行为值函数}
+\begin{align*} 
+q_\pi(s, a) &\doteq E_\pi[G_t|S_t = s, A_t = a] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s, A_t = a], s \in S \\
+&= R(a|s) + \gamma \sum_{s' \in S} P(a|ss') \sum_{a' \in A} \pi(a'|s')q_{\pi}(s'|a')
+\end{align*}
 
+其与值函数有转化关系：
+$$ v_\pi(s) = \sum_{a \in A} \pi(a|s) q_\pi(s, a) $$
+%------------------------------------------------
+\paragraph{回溯算法}~\\
+\begin{minipage}{0.3\textwidth}
+\hspace{2em}
+后继状态的价值信息回传给当前状态。
+\end{minipage}
+\hfill
+\begin{minipage}{0.6\textwidth}
 \begin{figure}[H]
 \centering 
-\includegraphics[width=0.3\textwidth]{DP} 
+\includegraphics[width=0.5\textwidth]{DP} 
 \caption[DP回溯图]{DP回溯图（节点可以重复）}
 \end{figure}
+\end{minipage}
 %------------------------------------------------
-\paragraph{最优策略}~\\
+\paragraph{最优值函数}~\\
 
-价值函数定义了策略的偏序关系，最优策略存在且可能不唯一，它们共享最优价值函数：
-$$ v_*(s) \doteq \max_{\pi} v_{\pi}(s) \quad q_*(s, a) \doteq \max_{\pi} q_{\pi}(s, a) $$
+值函数定义了策略的偏序关系，最优策略存在且可能不唯一，它们共享最优值函数：
+\begin{align*}
+v^*(s) &\doteq \max_{\pi} v_{\pi}(s) \\
+q^*(s, a) &\doteq \max_{\pi} q_{\pi}(s, a) 
+\end{align*}
 
-将前者代入后者，得到状态-动作二元组$ q_*(s, a) = E[R_{t + 1} + \gamma v_*(S_{t + 1}), S_t = s, A_t = a] $。
+值函数最优和策略最优等价。
+%------------------------------------------------
+\subsubsection{构建要点}
+\begin{itemize}
+\item 确定动作、状态、收益（不含先验知识，不为达到子目标而舍弃最终目标）。
+\item 奖励与惩罚：相对的，可以全奖励或全惩罚。
+\item 同一问题可能有多层次MDP。
+\item 不同状态的可行动作设置：利用先验知识，人为排除愚蠢动作。
+\end{itemize}
 %----------------------------------------------------------------------------------------
 \subsection{贝尔曼方程}\tip{贝尔曼方程}
 %------------------------------------------------
 \subsubsection{贝尔曼方程}
-$$
-v_\pi(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r|s, a) [r + \gamma v_\pi(s')]
-$$
+$$ v_\pi(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r|s, a) [r + \gamma v_\pi(s')] $$
 
-可化简为$ v = r_\pi + \gamma P_\pi v $，其说明一个状态依赖其他状态值。
+可化简为$ v = r_\pi + \gamma P_\pi v' $，其说明一个状态依赖其他状态值。
 %------------------------------------------------
 \subsubsection{贝尔曼最优方程}
-作为一个方程组，方程数量对应状态数，如环境的动态变化特性$ p $已知，并具有马尔可夫性，则可以求解。但一般难以满足，且计算资源有限，求解近似解。
+方程组中方程数对应状态数，如环境模型$ P $已知，并具有马尔可夫性，则可求解。但一般难以满足，且计算资源有限，求近似解。
 %------------------------------------------------
 \paragraph{形式}
+\begin{itemize}
+\item 同一状态，最优动作：转移收益一定，递推最优值函数
 \begin{align*}
 v_*(s) 
 &= \max_{a \in A(s)} q_{\pi_*}(s, a) \\
-&= \max_a E[R_{t + 1} + \gamma v_*(S_{t + 1})  S_t = s, A_t = a] \\
-&= \max_a \sum_{s', r} p(s', r|s, a)[r + \gamma v_*(s')] \\
+&= \max_a E[R_{t + 1} + \gamma v_*(S_{t + 1}) | S_t = s, A_t = a] \\
+&= \max_a \sum_{s', r} p(s', r|s, a)[r + \gamma v_*(s')]
+\end{align*}
+\item 统一状态-动作对，最优下一状态-动作对：
+\begin{align*}
 q_*(s, a) 
-&= E[R_{t + 1} + \gamma \max_{a'} q_*(S_{t + 1}, a')  S_t = s, A_t = a] \\
+&= E[R_{t + 1} + \gamma \max_{a'} q_*(S_{t + 1}, a') | S_t = s, A_t = a] \\
 &= \sum_{s', r} p(s', r|s, a)[r + \gamma \max_{a'} q_*(s', a')]
 \end{align*}
+\end{itemize}
 
 \begin{figure}[H]
 \centering 
@@ -268,27 +279,18 @@ q_*(s, a)
 %------------------------------------------------
 \paragraph{贪婪最优策略}
 最优策略下，各状态价值一定等于其下最优动作的期望回报，可使用贪心策略求取（证明：凸组合最大值为最大一项）。
-$$
-\pi^*(a|s) = 
-\begin{cases}
-1, & a = a^*(s), \\
-0, & a \neq a^*(s).
-\end{cases}
-$$
-
-其中$ a^*(s) = argmax_a q^*(a, s), q^*(s, a) \doteq \sum_{r \in R} p(r|s, a) r + \gamma \sum_{s' \in S} p(s'|s, a) v^*(s') $。
 %----------------------------------------------------------------------------------------
 \section{动态规划（Dynamic Programming，DP）：期望更新}
-使用价值函数来结构化组织最优策略搜索，将贝尔曼方程转化成近似逼近理想价值函数的递归更新公式。
+使用值函数结构化组织最优策略搜索，将贝尔曼方程转化成近似逼近理想价值函数的递归更新公式，即将多阶段决策问题转化为多个单阶段决策问题。
 %------------------------------------------------
 \subsection{策略迭代}\tip{策略迭代（算法）}
 反复进行策略评估和策略迭代，得到改进的价值函数估计和策略，最后收敛到最优，收敛较快。
 %------------------------------------------------
 \paragraph{策略评估（PE）}
-计算策略$ \pi $的状态价值函数$ v_{\pi_k} = r_{\pi_k} + \gamma P_{\pi_k}v_{\pi_k} $。
+计算$ v_{\pi_k} $。
 \begin{itemize}
-\item 直接求解，$ v_{\pi_k} = (I - \gamma P_{\pi_k})^{-1} r_{\pi_k} $。
-\item 迭代求解，$ v_{\pi_k}^{(j + 1)} = r_{\pi_k} + \gamma P_{\pi_k} v_{\pi_k}^{(j)}, j = 0, 1, 2, \dots $。
+\item 直接求解：$ v_{\pi_k} = (I - \gamma P_{\pi_k})^{-1} r_{\pi_k} $。
+\item 迭代求解：$ v_{\pi_k}^{(j + 1)} = r_{\pi_k} + \gamma P_{\pi_k} v_{\pi_k}^{(j)}, j = 0, 1, 2, \dots $。
 \end{itemize}
 \begin{enumerate}
 \item 期望更新：基于后继可能状态的期望值。
@@ -300,25 +302,34 @@ $ \forall s \in S, q_{\pi}(s, \pi'(s)) = v_{\pi'}(s) \geq v_{\pi}(s) $，则称$
 $$ \pi_{k + 1} = argmax_{\pi}(r_{\pi} + \gamma P_{\pi}v_{\pi_k}) $$
 %------------------------------------------------
 \paragraph{策略迭代算法}
-\begin{itemize}
-\item 阈值$ \theta > 0 $确定估计精度
-\item $ \forall s \in S $，任意初始化$ v(s) \in R, \pi(s)\in A(s) $
-\item 策略评估：$ |v_{\pi_k}^{(j + 1)} - v_{\pi_k}^{(j)}| $大于阈值时：
-\begin{itemize}
-\item $ \forall s \in S $，$ v_{\pi_k}^{(j + 1)}(s) = \sum_a \pi_k(a|s)[\sum_r p(r|s, a)r + \gamma \sum_{s'}p(s'|s ,a)v_{\pi_k}^{(j)}(s')] $
-\end{itemize}
-\item 策略改进：
-\begin{itemize}
-\item  $ |v_{\pi_k}^{(j + 1)} - v_{\pi_k}^{(j)}| $大于阈值时：
-\begin{itemize}
-\item $ \forall s \in S $：
-\begin{itemize}
-\item $ \forall a \in A(s), q_{\pi_k}(s, a) = \sum_r p(r|s, a)r + \gamma \sum_{s'} p(s'|s, a)v_{\pi_k}(s') $。$ a^*_k(s) = argmax_a q_{\pi_k}(a, s) $
-\end{itemize}
-\end{itemize}
-\item 如改进后策略不变则终止，改变则再次进行策略评估。（为防止在多个最优结果间摇摆，需额外判断）
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[策略迭代算法]
+\State 阈值$\theta > 0$确定估计精度
+\State $\forall s \in S$，任意初始化$v(s) \in \mathbb{R}$, $\pi(s) \in A(s)$
+\Repeat
+    \State \textbf{策略评估：}
+    \Repeat
+        \State $\Delta \gets 0$
+        \For{每个$s \in S$}
+            \State $v \gets v_{\pi_k}(s)$
+            \State $v_{\pi_k}^{(j+1)}(s) \gets \sum_a \pi_k(a|s)[\sum_r p(r|s,a)r + \gamma \sum_{s'}p(s'|s,a)v_{\pi_k}^{(j)}(s')]$
+            \State $\Delta \gets \max(\Delta, |v - v_{\pi_k}^{(j+1)}(s)|)$
+        \EndFor
+    \Until{$\Delta < \theta$}
+    
+    \State \textbf{策略改进：}
+    \State 策略稳定 $\gets$ true
+    \For{每个$s \in S$}
+        \State 旧动作 $\gets \pi(s)$
+        \For{每个$a \in A(s)$}
+            \State $q_{\pi_k}(s,a) \gets \sum_r p(r|s,a)r + \gamma \sum_{s'} p(s'|s,a)v_{\pi_k}(s')$
+        \EndFor
+        \State $\pi(s) \gets \arg\max_a q_{\pi_k}(s,a)$
+        \If{旧动作 $\neq \pi(s)$}
+            \State 策略稳定 $\gets$ false
+        \EndIf
+    \EndFor
+\Until{策略稳定}
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{值迭代}\tip{值迭代（算法）}
 只进行一次策略评估的遍历，对每个状态更新一次，结合了策略改进和极端策略评估。
@@ -334,24 +345,24 @@ $ \pi_{k + 1} = argmax_{\pi}(r_{\pi} + \gamma P_{\pi}v_k) $，贪婪选取$ a^*_
 $ v_{k + 1} = r_{\pi_{k + 1}} + \gamma P_{\pi_{k + 1}}v_k = max_a q_k(a, s) $。
 %------------------------------------------------
 \paragraph{值迭代算法}
-\begin{itemize}
-\item 参数：阈值$ \theta > 0 $确定估计精度
-\item $ \forall s \in S^+ $，任意初始化$ v(s) $，其中$ v(\text{终止}) = 0 $
-\item 当$ |v_{k + 1} - v_k| > \theta $时：
-\begin{itemize}
-\item $ \forall s \in S $：
-\begin{itemize}
-\item $ \forall a \in A(s) $：
-\begin{itemize}
-\item $ q_k(s, a) = \sum_r p(r|s, a)r + \gamma \sum_{s'} p(s'|s, a)v_k(s') $
-\item $ a^*_k(s) = \arg\max_a q_k(s, a) $
-\item 策略更新：若$ a = a^*_k $且$ \pi_{k + 1}(a|s) = 0 $，则令$ \pi_{k + 1}(a|s) = 1 $
-\item 价值更新：$ v_{k + 1}(s) = \max_a q_k(s, a) $
-\end{itemize}
-\end{itemize}
-\end{itemize}
-\item 输出策略$ \pi(s) = \arg\max_a \sum_{s',r}p(s',r|s,a)[r + \gamma V(s')] $
-\end{itemize}
+\begin{myalgorithm}[值迭代算法]
+\State 参数：阈值 $\theta > 0$ 确定估计精度
+\State $\forall s \in S^+$，任意初始化 $v(s)$，其中 $v(\text{终止}) = 0$
+\Repeat
+    \State $\Delta \gets 0$
+    \For{每个 $s \in S$}
+        \State $v \gets v_k(s)$
+        \For{每个 $a \in A(s)$}
+            \State $q_k(s, a) \gets \sum_r p(r|s, a)r + \gamma \sum_{s'} p(s'|s, a)v_k(s')$
+        \EndFor
+        \State $a^*_k(s) \gets \arg\max_a q_k(s, a)$
+        \State $v_{k+1}(s) \gets \max_a q_k(s, a)$
+        \State 策略更新：若 $a = a^*_k$ 且 $\pi_{k+1}(a|s) = 0$，则令 $\pi_{k+1}(a|s) = 1$
+        \State $\Delta \gets \max(\Delta, |v_{k+1}(s) - v|)$
+    \EndFor
+\Until{$\Delta < \theta$}
+\State \Return 策略 $\pi(s) = \arg\max_a \sum_{s',r}p(s',r|s,a)[r + \gamma v(s')]$
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{其他内容}
 %------------------------------------------------
@@ -425,51 +436,58 @@ C_{n + 1} &\doteq C_n + W_{n + 1}
 采样并改进相同策略。
 %------------------------------------------------
 \paragraph{on-policy算法}
-\begin{itemize}
-\item 参数：$ \epsilon > 0 $
-\item 初始化：
-\begin{itemize}
-\item $ \forall s \in S, a \in A(s) $，任意初始化$ Q(s,a) \in R $，初始化$ Returns(s,a) $为空列表
-\item $ \epsilon $-greedy初始化策略$ \pi $
-\end{itemize}
-\item 循环（对每幕）：
-\begin{itemize}
-\item 根据$ \pi $生成一幕序列：$ S_0,A_0,R_1,S_1,A_1,R_2,\dots,S_{T - 1},A_{T - 1},R_T $
-\item $ G = 0 $
-\item 循环（对每步）：$ t = T - 1, T - 2, \dots, 0 $
-\begin{itemize}
-\item $ G = \gamma G + R_{t + 1} $ 
-\item 未出现过的$ S_t $，将$ G $加入$ Returns(S_t,A_t) $，$ Q(S_t,A_t) = \text{average}(Returns(S_t,A_t)) $
-\item $ A^* = \arg \max_a Q(S_t,a) $
-\item $ \forall a \in A(S_t) $，$ \pi(a|S_t) $由$ \epsilon $-greedy选取
-\end{itemize}
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[蒙特卡洛 On-policy (首次访问)]
+\State 参数：$\epsilon > 0$
+\State 初始化：
+\State \quad $\forall s \in S, a \in A(s)$，任意初始化 $Q(s,a) \in \mathbb{R}$
+\State \quad $\forall s \in S, a \in A(s)$，初始化 $\text{Returns}(s,a)$ 为空列表
+\State \quad $\epsilon$-greedy 初始化策略 $\pi$
+\Loop
+    \State 根据 $\pi$ 生成一幕序列：$S_0,A_0,R_1,S_1,A_1,R_2,\dots,S_{T-1},A_{T-1},R_T$
+    \State $G \gets 0$
+    \For{$t = T-1, T-2, \dots, 0$}
+        \State $G \gets \gamma G + R_{t+1}$
+        \If{$S_t$ 在此幕中首次出现}
+            \State 将 $G$ 加入 $\text{Returns}(S_t,A_t)$
+            \State $Q(S_t,A_t) \gets \text{average}(\text{Returns}(S_t,A_t))$
+            \State $A^* \gets \arg\max_a Q(S_t,a)$
+            \For{每个 $a \in A(S_t)$}
+                \If{$a = A^*$}
+                    \State $\pi(a|S_t) \gets 1-\epsilon+\frac{\epsilon}{|A(S_t)|}$
+                \Else
+                    \State $\pi(a|S_t) \gets \frac{\epsilon}{|A(S_t)|}$
+                \EndIf
+            \EndFor
+        \EndIf
+    \EndFor
+\EndLoop
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{off-policy（离轨）}\tip{off-policy（算法）}
 %------------------------------------------------
 采样与改进不同策略，前者称为行为策略$ b $（保证对所有可能动作的采样），后者称为目标策略$ \pi $，可视为特殊的离轨。
 %------------------------------------------------
 \paragraph{off-policy算法}
-\begin{itemize}
-\item 初始化：$ \forall s \in S, a \in A(s), Q(s,a) \in R, C(s,a) = 0, \pi(s) = \arg \max_a Q(s,a) $
-\item 循环（对每幕）：
-\begin{itemize}
-\item $ b $为任意柔性策略
-\item 根据$ b $生成一幕序列：$ S_0,A_0,R_1,S_1,A_1,R_2,\dots,S_{T - 1},A_{T - 1},R_T $
-\item $ G = 0 $
-\item $ W = 1 $
-\item 循环（对每步）：$ t = T - 1, T - 2, \dots, 0 $
-\begin{itemize}
-\item $ G = \gamma G + R_{t + 1} $ 
-\item $ C(S_t,A_t) = C(S_t,A_t) + W $
-\item $ Q(S_t,A_t) = Q(S_t,A_t) + \frac{W}{C(S_t,A_t)}[G - Q(S_t,A_t)] $
-\item $ \pi(S_t) = \arg \max_a Q(S_t,a) $
-\item 如果$ A_t \neq \pi(S_t) $，退出内层循环
-\item 否则，$ W = W\frac{1}{b(A_t|S_t)} $
-\end{itemize}
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[蒙特卡洛 Off-policy (每次访问)]
+\State 初始化：$\forall s \in S, a \in A(s)$，任意初始化 $Q(s,a) \in \mathbb{R}$，$C(s,a) = 0$
+\State $\forall s \in S$，初始化 $\pi(s) = \arg\max_a Q(s,a)$ \Comment{目标策略为贪心策略}
+\Loop
+    \State $b$ 为任意柔性策略 \Comment{行为策略，确保探索}
+    \State 根据 $b$ 生成一幕序列：$S_0,A_0,R_1,S_1,A_1,R_2,\dots,S_{T-1},A_{T-1},R_T$
+    \State $G \gets 0$
+    \State $W \gets 1$
+    \For{$t = T-1, T-2, \dots, 0$}
+        \State $G \gets \gamma G + R_{t+1}$
+        \State $C(S_t,A_t) \gets C(S_t,A_t) + W$
+        \State $Q(S_t,A_t) \gets Q(S_t,A_t) + \frac{W}{C(S_t,A_t)}[G - Q(S_t,A_t)]$
+        \State $\pi(S_t) \gets \arg\max_a Q(S_t,a)$
+        \If{$A_t \neq \pi(S_t)$}
+            \State \textbf{break} \Comment{如果不是最优动作则退出内层循环}
+        \EndIf
+        \State $W \gets W \cdot \frac{1}{b(A_t|S_t)}$ \Comment{更新重要度采样权重}
+    \EndFor
+\EndLoop
+\end{myalgorithm}
 
 潜在问题：贪心行为普遍，只会从幕的尾部学习；贪心行为不普遍，学习速度较慢。
 %----------------------------------------------------------------------------------------
@@ -498,23 +516,20 @@ MC误差可写成TD误差之和$ G_t - V(S_t) = \sum_{k = t}^{T - 1} \gamma^{k -
 \end{figure}
 %------------------------------------------------
 \paragraph{TD(0)算法}
-\begin{itemize}
-\item 输入：待评估策略$ \pi $
-\item 参数：步长$ \alpha \in (0,1] $
-\item $ \forall s \in S^+ $，任意初始化$ V(s) $，$ V(\text{终止状态}) = 0 $
-\item 对每幕：
-\begin{itemize}
-\item 初始化$ S $
-\item 对每步：
-\begin{itemize}
-\item $ A $为策略$ \pi $在状态$ S $下做出的决策动作
-\item 观察$ A $带来的$ R, S' $
-\item $ V(S) = V(S) + \alpha[R + \gamma V(S') - V(S)] $
-\item $ S = S' $
-\end{itemize}
-\item 直到$ S $为终止状态
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[TD(0)算法]
+\State 输入：待评估策略 $\pi$
+\State 参数：步长 $\alpha \in (0,1]$
+\State $\forall s \in S^+$，任意初始化 $V(s)$，其中 $V(\text{终止状态}) = 0$
+\For{每一幕}
+    \State 初始化 $S$
+    \While{$S$ 不是终止状态}
+        \State $A \gets$ 策略 $\pi$ 在状态 $S$ 下做出的决策动作
+        \State 执行动作 $A$，观察 $R, S'$
+        \State $V(S) \gets V(S) + \alpha[R + \gamma V(S') - V(S)]$
+        \State $S \gets S'$
+    \EndWhile
+\EndFor
+\end{myalgorithm}
 %------------------------------------------------
 \paragraph{随机游走}
 在随机任务实践中，TD(0)的收敛速度要比常量$ \alpha $MC快。这是因为前者的最优性与预测回报更相关，找出的是完全符合马尔可夫过程模型的最大似然估计参数，收敛到确定性等价估计；而后者只在有限方面最优，找出的是最小化训练集均方误差的估计。
@@ -537,23 +552,21 @@ $$
 \end{figure}
 %------------------------------------------------
 \paragraph{Sarsa算法}
-\begin{itemize}
-\item 参数：步长$ \alpha \in (0,1] $，$ \epsilon > 0 $
-\item $ \forall s \in S^+ $，任意初始化$ Q(s,a) $，$ Q(\text{终止状态,}) = 0 $
-\item 对每幕：
-\begin{itemize}
-\item 初始化$ S $
-\item 使用从$ Q $得到的策略，在$ S $处选择$ A $
-\item 对每步：
-\begin{itemize}
-\item 执行$ A $，观察$ R,S' $
-\item 使用从$ Q $得到的策略，在$ S' $处选择$ A' $
-\item $ Q(S, A) = Q(S, A) + \alpha [R + \gamma Q(S', A') - Q(S, A)] $
-\item $ S = S', A = A' $
-\end{itemize}
-\item 直到$ S $为终止状态
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[Sarsa算法]
+\State 参数：步长 $\alpha \in (0,1]$，$\epsilon > 0$
+\State $\forall s \in S^+$，任意初始化 $Q(s,a)$，$Q(\text{终止状态},\cdot) = 0$
+\For{每一幕}
+    \State 初始化 $S$
+    \State 使用从 $Q$ 得到的 $\epsilon$-greedy 策略，在 $S$ 处选择 $A$
+    \While{$S$ 不是终止状态}
+        \State 执行动作 $A$，观察 $R,S'$
+        \State 使用从 $Q$ 得到的 $\epsilon$-greedy 策略，在 $S'$ 处选择 $A'$
+        \State $Q(S, A) \gets Q(S, A) + \alpha [R + \gamma Q(S', A') - Q(S, A)]$
+        \State $S \gets S'$
+        \State $A \gets A'$
+    \EndWhile
+\EndFor
+\end{myalgorithm}
 %------------------------------------------------
 \paragraph{期望Sarsa}\tip{期望Sarsa}
 $$
@@ -582,22 +595,19 @@ $ \max_a Q(S_{t + 1}, a) - Q(S_t, A_t) $是更丰富地学习。
 \end{figure}
 %------------------------------------------------
 \paragraph{Q-learning算法}
-\begin{itemize}
-\item 参数：步长$ \alpha \in (0,1] $，$ \epsilon > 0 $
-\item $ \forall s \in S^+, a \in A(s) $，任意初始化$ Q(s,a) $，$ Q(\text{终止状态,}) = 0 $
-\item 对每幕：
-\begin{itemize}
-\item 初始化$ S $
-\item 对每步：
-\begin{itemize}
-\item 使用从$ Q $得到的策略，在$ S $处选择$ A $
-\item 执行$ A $，观察$ R,S' $
-\item $ Q(S, A) = Q(S, A) + \alpha [R + \gamma \max_a Q(S', a) - Q(S, A)] $
-\item $ S = S' $
-\end{itemize}
-\item 直到$ S $为终止状态
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[Q-learning 算法]
+\State 参数：步长 $\alpha \in (0,1]$，探索率 $\epsilon > 0$
+\State $\forall s \in S^+, a \in A(s)$，任意初始化 $Q(s,a)$，$Q(\text{终止状态},\cdot) = 0$
+\For{每一幕}
+    \State 初始化 $S$
+    \While{$S$ 不是终止状态}
+        \State 使用从 $Q$ 得到的 $\epsilon$-greedy 策略，在 $S$ 处选择 $A$
+        \State 执行动作 $A$，观察 $R,S'$
+        \State $Q(S, A) \gets Q(S, A) + \alpha [R + \gamma \max_a Q(S', a) - Q(S, A)]$
+        \State $S \gets S'$
+    \EndWhile
+\EndFor
+\end{myalgorithm}
 %------------------------------------------------
 \paragraph{双Q-learning}\tip{双Q-learning（算法）}
 \begin{itemize}
@@ -607,26 +617,23 @@ $ \max_a Q(S_{t + 1}, a) - Q(S_t, A_t) $是更丰富地学习。
 \end{itemize}
 %------------------------------------------------
 \paragraph{双Q-learning算法}
-\begin{itemize}
-\item 参数：步长$ \alpha \in (0,1] $，$ \epsilon > 0 $
-\item $ \forall s \in S^+, a \in A(s) $，任意初始化$ Q_1(s,a),Q_2(s,a) $，$ Q(\text{终止状态,}) = 0 $
-\item 对每幕：
-\begin{itemize}
-\item 初始化$ S $
-\item 对每步：
-\begin{itemize}
-\item 基于$ Q_1 + Q_2 $，使用策略在$ S $处选择$ A $
-\item 执行$ A $，观察$ R,S' $
-\item 分别以$ 0.5 $的概率执行：
-\begin{itemize}
-\item $ Q_1(S, A) = Q_1(S, A) + \alpha [R + \gamma Q_2(S', \arg \max_a Q_1(S',a)) - Q_1(S, A)] $
-\item $ Q_2(S, A) = Q_2(S, A) + \alpha [R + \gamma Q_1(S', \arg \max_a Q_2(S',a)) - Q_2(S, A)] $
-\end{itemize}
-\item $ S = S' $
-\end{itemize}
-\item 直到$ S $为终止状态
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[双Q-learning算法]
+\State 参数：步长 $\alpha \in (0,1]$，探索率 $\epsilon > 0$
+\State $\forall s \in S^+, a \in A(s)$，任意初始化 $Q_1(s,a),Q_2(s,a)$，$Q_1(\text{终止状态},\cdot) = Q_2(\text{终止状态},\cdot) = 0$
+\For{每一幕}
+    \State 初始化 $S$
+    \While{$S$ 不是终止状态}
+        \State 基于 $Q_1 + Q_2$，使用 $\epsilon$-greedy 策略在 $S$ 处选择 $A$
+        \State 执行动作 $A$，观察 $R,S'$
+        \If{以 0.5 的概率}
+            \State $Q_1(S, A) \gets Q_1(S, A) + \alpha [R + \gamma Q_2(S', \arg\max_a Q_1(S',a)) - Q_1(S, A)]$
+        \Else
+            \State $Q_2(S, A) \gets Q_2(S, A) + \alpha [R + \gamma Q_1(S', \arg\max_a Q_2(S',a)) - Q_2(S, A)]$
+        \EndIf
+        \State $S \gets S'$
+    \EndWhile
+\EndFor
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{DP、MC、TD总结对比}\tip{DP、MC、TD总结对比}
 \begin{figure}[H]
@@ -654,33 +661,35 @@ $$ G_{t:t + n} \doteq R_{t + 1} + \gamma R_{t + 2} + \dots + \gamma^{n - 1} R_{t
 其中$ V_{t + n}(S_t) \doteq V_{t + n - 1}(S_t) + \alpha[G_{t:t + n} - V_{t + n - 1}(S_t)] $。
 %------------------------------------------------
 \paragraph{n步TD算法}
-\begin{itemize}
-\item 输入：待评估策略$ \pi $
-\item 参数：步长$ \alpha \in (0,1] $，$ n \in N_+ $
-\item $ \forall s \in S $，任意初始化$ V(s) $
-\item 对每幕：
-\begin{itemize}
-\item 初始化$ S_0 $，其非终止状态
-\item $ T = \infty $
-\item 对$ t = 0, 1, 2, \dots $：
-\begin{itemize}
-\item $ t < T $时：
-\begin{itemize}
-\item 根据$ \pi(\cdot|S_t) $采取策略
-\item 观察$ R_{t + 1}, S_{t + 1} $
-\item 如果$ S_{t + 1} $是终止状态，则$ T = t + 1 $
-\end{itemize}
-\item $ \tau = t - n + 1 $
-\item 如果$ \tau \geq 0 $：
-\begin{itemize}
-\item $ G = \sum_{i = \tau + 1}^{\min(\tau + n, T)} \gamma^{i - \tau - 1}R_i $
-\item 如果$ \tau + n < T $，$ G = G + \gamma^n V(S_{\tau + n}) $
-\item $ V(S_{\tau}) = V(S_{\tau}) + \alpha[G - V(S_{\tau})] $
-\end{itemize}
-\end{itemize}
-\item 直到$ \tau = T - 1 $
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[n步TD预测算法]
+\State 输入：待评估策略 $\pi$
+\State 参数：步长 $\alpha \in (0,1]$，$n \in \mathbb{N}_+$
+\State $\forall s \in S$，任意初始化 $V(s)$
+\For{每一幕}
+    \State 初始化 $S_0$ 为非终止状态
+    \State $T \gets \infty$
+    \For{$t = 0, 1, 2, \dots$}
+        \If{$t < T$}
+            \State 根据 $\pi(\cdot|S_t)$ 采取动作 $A_t$
+            \State 观察下一状态和奖励 $R_{t+1}, S_{t+1}$
+            \If{$S_{t+1}$ 是终止状态}
+                \State $T \gets t+1$
+            \EndIf
+        \EndIf
+        \State $\tau \gets t-n+1$ \Comment{$\tau$ 是正在更新的状态的时间}
+        \If{$\tau \geq 0$}
+            \State $G \gets \sum_{i=\tau+1}^{\min(\tau+n,T)} \gamma^{i-\tau-1}R_i$
+            \If{$\tau+n < T$}
+                \State $G \gets G + \gamma^n V(S_{\tau+n})$
+            \EndIf
+            \State $V(S_{\tau}) \gets V(S_{\tau}) + \alpha[G - V(S_{\tau})]$
+        \EndIf
+        \If{$\tau = T-1$}
+            \State \textbf{break}
+        \EndIf
+    \EndFor
+\EndFor
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{n步Sarsa}\tip{n步Sarsa（算法）}
 n步Sarsa统一了Sarsa和MC，其节点转移全部基于采样得到的单独路径：
@@ -697,33 +706,37 @@ $$ G_{t:t + n} \doteq R_{t + 1} + \gamma R_{t + 2} + \dots + \gamma^{n - 1} R_{t
 \end{figure}
 %------------------------------------------------
 \paragraph{n步Sarsa算法}
-\begin{itemize}
-\item 参数：步长$ \alpha \in (0,1] $，$ \epsilon > 0 $，$ n \in N_+ $
-\item $ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $
-\item 初始化$ \pi $
-\item 对每幕：
-\begin{itemize}
-\item 初始化$ S_0 $，其非终止状态
-\item 根据$ \pi(\cdot|S_0) $选取$ A_0 $
-\item $ T = \infty $
-\item 对$ t = 0, 1, 2, \dots $：
-\begin{itemize}
-\item $ t < T $时：
-\begin{itemize}
-\item 采取$ A_t $，观察$ R_{t + 1}, S_{t + 1} $
-\item 如果$ S_{t + 1} $是终止状态，则$ T = t + 1 $；否则根据$ \pi(\cdot|S_{t + 1}) $选取$ A_{t + 1} $
-\end{itemize}
-\item $ \tau = t - n + 1 $
-\item 如果$ \tau \geq 0 $：
-\begin{itemize}
-\item $ G = \sum_{i = \tau + 1}^{\min(\tau + n, T)} \gamma^{i - \tau - 1}R_i $
-\item 如果$ \tau + n < T $，$ G = G + \gamma^n Q(S_{\tau + n}, A_{\tau + n}) $
-\item $ Q(S_{\tau},A_{\tau}) = Q(S_{\tau},A_{\tau}) + \alpha[G - Q(S_{\tau},A_{\tau})] $
-\end{itemize}
-\end{itemize}
-\item 直到$ \tau = T - 1 $
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[n步Sarsa算法]
+\State 参数：步长 $\alpha \in (0,1]$，探索率 $\epsilon > 0$，步数 $n \in \mathbb{N}_+$
+\State $\forall s \in S, a \in A$，任意初始化 $Q(s, a)$
+\State 初始化策略 $\pi$（例如，基于 $Q$ 的 $\epsilon$-greedy策略）
+\For{每一幕}
+    \State 初始化 $S_0$ 为非终止状态
+    \State 根据 $\pi(\cdot|S_0)$ 选取 $A_0$
+    \State $T \gets \infty$
+    \For{$t = 0, 1, 2, \dots$}
+        \If{$t < T$}
+            \State 执行动作 $A_t$，观察 $R_{t+1}, S_{t+1}$
+            \If{$S_{t+1}$ 是终止状态}
+                \State $T \gets t+1$
+            \Else
+                \State 根据 $\pi(\cdot|S_{t+1})$ 选取 $A_{t+1}$
+            \EndIf
+        \EndIf
+        \State $\tau \gets t-n+1$ \Comment{$\tau$ 是正在更新的状态的时间}
+        \If{$\tau \geq 0$}
+            \State $G \gets \sum_{i=\tau+1}^{\min(\tau+n,T)} \gamma^{i-\tau-1}R_i$
+            \If{$\tau+n < T$}
+                \State $G \gets G + \gamma^n Q(S_{\tau+n}, A_{\tau+n})$
+            \EndIf
+            \State $Q(S_{\tau},A_{\tau}) \gets Q(S_{\tau},A_{\tau}) + \alpha[G - Q(S_{\tau},A_{\tau})]$
+        \EndIf
+        \If{$\tau = T-1$}
+            \State \textbf{break}
+        \EndIf
+    \EndFor
+\EndFor
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{n步off-policy}\tip{n步off-policy（算法）}
 针对离线n步时序差分学习，有：
@@ -732,35 +745,39 @@ $$ V_{t + n}(S_t) \doteq V_{t + n - 1}(S_t) + \alpha \rho_{t:t + n - 1}[G_{t:t +
 $$ \rho_{t:h} \doteq \prod_{k = t}^{\min(h, T - 1)} \frac{\pi(A_k|S_k)}{b(A_k|S_k)} $$
 %------------------------------------------------
 \paragraph{n步期望Sarsa-off-policy算法}
-\begin{itemize}
-\item 输入：行为策略$ b, b(a|s) > 0 $
-\item 参数：步长$ \alpha \in (0,1] $，$ \epsilon > 0 $，$ n \in N_+ $
-\item $ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $
-\item 初始化$ \pi $
-\item 对每幕：
-\begin{itemize}
-\item 初始化$ S_0 $，其非终止状态
-\item 根据$ b(\cdot|S_0) $选取$ A_0 $
-\item $ T = \infty $
-\item 对$ t = 0, 1, 2, \dots $：
-\begin{itemize}
-\item $ t < T $时：
-\begin{itemize}
-\item 采取$ A_t $，观察$ R_{t + 1}, S_{t + 1} $
-\item 如果$ S_{t + 1} $是终止状态，则$ T = t + 1 $；否则根据$ b(\cdot|S_{t + 1}) $选取$ A_{t + 1} $
-\end{itemize}
-\item $ \tau = t - n + 1 $
-\item 如果$ \tau \geq 0 $：
-\begin{itemize}
-\item $ \rho = \prod_{i = \tau + 1}^{\min(\tau + n - 1,T - 1)} \frac{\pi(A_i|S_i)}{b(A_i|S_i)} $
-\item $ G = \sum_{i = \tau + 1}^{\min(\tau + n, T)} \gamma^{i - \tau - 1}R_i $
-\item 如果$ \tau + n < T $，$ G = G + \gamma^n Q(S_{\tau + n}, A_{\tau + n}) $ 
-\item $ Q(S_{\tau},A_{\tau}) = Q(S_{\tau},A_{\tau}) + \alpha \rho[G - Q(S_{\tau},A_{\tau})] $
-\end{itemize}
-\end{itemize}
-\item 直到$ \tau = T - 1 $
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[n步期望Sarsa-off-policy算法]
+\State 输入：行为策略 $b$，满足 $b(a|s) > 0$
+\State 参数：步长 $\alpha \in (0,1]$，探索率 $\epsilon > 0$，步数 $n \in \mathbb{N}_+$
+\State $\forall s \in S, a \in A$，任意初始化 $Q(s, a)$
+\State 初始化目标策略 $\pi$
+\For{每一幕}
+    \State 初始化 $S_0$ 为非终止状态
+    \State 根据 $b(\cdot|S_0)$ 选取 $A_0$
+    \State $T \gets \infty$
+    \For{$t = 0, 1, 2, \dots$}
+        \If{$t < T$}
+            \State 执行动作 $A_t$，观察 $R_{t+1}, S_{t+1}$
+            \If{$S_{t+1}$ 是终止状态}
+                \State $T \gets t+1$
+            \Else
+                \State 根据 $b(\cdot|S_{t+1})$ 选取 $A_{t+1}$
+            \EndIf
+        \EndIf
+        \State $\tau \gets t-n+1$ \Comment{$\tau$ 是正在更新的状态的时间}
+        \If{$\tau \geq 0$}
+            \State $\rho \gets \prod_{i=\tau+1}^{\min(\tau+n-1,T-1)} \frac{\pi(A_i|S_i)}{b(A_i|S_i)}$ \Comment{重要性采样权重}
+            \State $G \gets \sum_{i=\tau+1}^{\min(\tau+n,T)} \gamma^{i-\tau-1}R_i$
+            \If{$\tau+n < T$}
+                \State $G \gets G + \gamma^n \sum_a\pi(a|S_{\tau+n})Q(S_{\tau+n}, a)$ \Comment{期望Sarsa使用期望值}
+            \EndIf
+            \State $Q(S_{\tau},A_{\tau}) \gets Q(S_{\tau},A_{\tau}) + \alpha \rho[G - Q(S_{\tau},A_{\tau})]$
+        \EndIf
+        \If{$\tau = T-1$}
+            \State \textbf{break}
+        \EndIf
+    \EndFor
+\EndFor
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{n步树回溯}\tip{n步树回溯（算法）}
 %------------------------------------------------
@@ -794,33 +811,41 @@ $$ G_{t:t + n} \doteq R_{t + 1} + \gamma \sum_{a \neq A_{t + 1}} \pi(a|S_{t + 1}
 这个目标可以用于n步Sarsa的动作价值更新。
 %------------------------------------------------
 \paragraph{n步树回溯算法}
-\begin{itemize}
-\item 参数：步长$ \alpha \in (0,1] $，$ n \in N_+ $
-\item $ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $
-\item 初始化$ \pi $
-\item 对每幕：
-\begin{itemize}
-\item 初始化$ S_0 $，其非终止状态
-\item 根据$ S_0 $任意选取$ A_0 $
-\item $ T = \infty $
-\item 对$ t = 0, 1, 2, \dots $：
-\begin{itemize}
-\item $ t < T $时：
-\begin{itemize}
-\item 采取$ A_t $，观察$ R_{t + 1}, S_{t + 1} $
-\item 如果$ S_{t + 1} $是终止状态，则$ T = t + 1 $；否则根据$ S_{t + 1} $选取$ A_{t + 1} $
-\end{itemize}
-\item $ \tau = t - n + 1 $
-\item 如果$ \tau \geq 0 $：
-\begin{itemize}
-\item 如果$ t + 1 \geq T $，$ G = R_T $；否则$ G = R_{t + 1} + \gamma \sum_a \pi(a|S_{t + 1})Q(S_{t + 1},a) $
-\item 循环$ k = \min(t, T - 1) $递减到$ \tau + 1 $，$ G = R_k + \gamma \sum_{a \neq A_k} \pi(a|S_k)Q(S_k,a) + \gamma \pi(A_k|S_k)G $
-\item $ Q(S_{\tau},A_{\tau}) = Q(S_{\tau},A_{\tau}) + \alpha[G - Q(S_{\tau},A_{\tau})] $
-\end{itemize}
-\end{itemize}
-\item 直到$ \tau = T - 1 $
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[n步树回溯算法]
+\State 参数：步长 $\alpha \in (0,1]$，$n \in \mathbb{N}_+$
+\State $\forall s \in S, a \in A$，任意初始化 $Q(s, a)$
+\State 初始化策略 $\pi$
+\For{每一幕}
+    \State 初始化 $S_0$ 为非终止状态
+    \State 根据 $S_0$ 任意选取 $A_0$
+    \State $T \gets \infty$
+    \For{$t = 0, 1, 2, \dots$}
+        \If{$t < T$}
+            \State 执行动作 $A_t$，观察 $R_{t+1}, S_{t+1}$
+            \If{$S_{t+1}$ 是终止状态}
+                \State $T \gets t+1$
+            \Else
+                \State 根据 $S_{t+1}$ 选取 $A_{t+1}$
+            \EndIf
+        \EndIf
+        \State $\tau \gets t-n+1$ \Comment{$\tau$ 是正在更新的状态的时间}
+        \If{$\tau \geq 0$}
+            \If{$t + 1 \geq T$}
+                \State $G \gets R_T$
+            \Else
+                \State $G \gets R_{t+1} + \gamma \sum_a \pi(a|S_{t+1})Q(S_{t+1},a)$
+            \EndIf
+            \For{$k = \min(t, T-1)$ 递减到 $\tau+1$}
+                \State $G \gets R_k + \gamma \sum_{a \neq A_k} \pi(a|S_k)Q(S_k,a) + \gamma \pi(A_k|S_k)G$
+            \EndFor
+            \State $Q(S_{\tau},A_{\tau}) \gets Q(S_{\tau},A_{\tau}) + \alpha[G - Q(S_{\tau},A_{\tau})]$
+        \EndIf
+        \If{$\tau = T-1$}
+            \State \textbf{break}
+        \EndIf
+    \EndFor
+\EndFor
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{n步Q($ \sigma $)}\tip{n步Q($ \sigma $)（算法）}
 结合采样的Sarsa和展开的树回溯，在每个状态由参数$ \sigma $决定是采样还是展开，即n步Q$ (\sigma) $算法，其将两种线性情况组合起来：
@@ -833,35 +858,45 @@ $$ G_{t:h} \doteq R_{t + 1} + \gamma (\sigma_{t + 1} \rho_{t + 1} + (1 - \sigma_
 \end{figure}
 %------------------------------------------------
 \paragraph{n步Q($ \sigma $)-off-policy算法（n步Sarsa更新）}
-\begin{itemize}
-\item 输入：行为策略$ b, b(a|s) > 0 $
-\item 参数：步长$ \alpha \in (0,1] $，$ \epsilon > 0 $，$ n \in N_+ $
-\item $ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $
-\item 初始化$ \pi $
-\item 对每幕：
-\begin{itemize}
-\item 初始化$ S_0 $，其非终止状态
-\item 根据$ b(\cdot|S_0) $选取$ A_0 $
-\item $ T = \infty $
-\item 对$ t = 0, 1, 2, \dots $：
-\begin{itemize}
-\item $ t < T $时：
-\begin{itemize}
-\item 采取$ A_t $，观察$ R_{t + 1}, S_{t + 1} $
-\item 如果$ S_{t + 1} $是终止状态，则$ T = t + 1 $；否则根据$ b(\cdot|S_{t + 1}) $选取$ A_{t + 1} $，选择$ \sigma_{t + 1} $，计算$ \rho_{t + 1} = \frac{\pi(A_{t + 1}|S_{t + 1})}{b(A_{t + 1}|S_{t + 1})} $
-\end{itemize}
-\item $ \tau = t - n + 1 $
-\item 如果$ \tau \geq 0 $：
-\begin{itemize}
-\item $ G = 0 $
-\item 循环$ k = \min(t, T - 1) $递减到$ \tau + 1 $：
-\item $ k = T $，则$ G = R_T $；否则，$ \bar{V} = \sum_a \pi(a|S_k)Q(S_k,a) $。$ G = R_k + \gamma[\sigma_k \rho_k + (1 - \sigma_k)\pi(A_k|S_k)][G - Q(S_k,A_k)] + \gamma\bar{V} $
-\item $ Q(S_{\tau},A_{\tau}) = Q(S_{\tau},A_{\tau}) + \alpha[G - Q(S_{\tau},A_{\tau})] $
-\end{itemize}
-\end{itemize}
-\item 直到$ \tau = T - 1 $
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[n步Q($\sigma$)-off-policy算法]
+\State 输入：行为策略 $b$，满足 $b(a|s) > 0$
+\State 参数：步长 $\alpha \in (0,1]$，探索率 $\epsilon > 0$，步数 $n \in \mathbb{N}_+$
+\State $\forall s \in S, a \in A$，任意初始化 $Q(s, a)$
+\State 初始化目标策略 $\pi$
+\For{每一幕}
+    \State 初始化 $S_0$ 为非终止状态
+    \State 根据 $b(\cdot|S_0)$ 选取 $A_0$
+    \State $T \gets \infty$
+    \For{$t = 0, 1, 2, \dots$}
+        \If{$t < T$}
+            \State 执行动作 $A_t$，观察 $R_{t+1}, S_{t+1}$
+            \If{$S_{t+1}$ 是终止状态}
+                \State $T \gets t+1$
+            \Else
+                \State 根据 $b(\cdot|S_{t+1})$ 选取 $A_{t+1}$
+                \State 选择 $\sigma_{t+1}$ \Comment{指示是采样还是展开}
+                \State $\rho_{t+1} \gets \frac{\pi(A_{t+1}|S_{t+1})}{b(A_{t+1}|S_{t+1})}$ \Comment{计算重要性采样比率}
+            \EndIf
+        \EndIf
+        \State $\tau \gets t-n+1$ \Comment{$\tau$ 是正在更新的状态的时间}
+        \If{$\tau \geq 0$}
+            \State $G \gets 0$
+            \For{$k = \min(t, T-1)$ 递减到 $\tau+1$}
+                \If{$k = T$}
+                    \State $G \gets R_T$
+                \Else
+                    \State $\bar{V} \gets \sum_a \pi(a|S_k)Q(S_k,a)$ \Comment{计算期望状态值}
+                    \State $G \gets R_k + \gamma[\sigma_k \rho_k + (1 - \sigma_k)\pi(A_k|S_k)][G - Q(S_k,A_k)] + \gamma\bar{V}$
+                \EndIf
+            \EndFor
+            \State $Q(S_{\tau},A_{\tau}) \gets Q(S_{\tau},A_{\tau}) + \alpha[G - Q(S_{\tau},A_{\tau})]$
+        \EndIf
+        \If{$\tau = T-1$}
+            \State \textbf{break} \Comment{达到终止条件，结束内层循环}
+        \EndIf
+    \EndFor
+\EndFor
+\end{myalgorithm}
 %----------------------------------------------------------------------------------------
 \section{基于表格型方法的规划和学习}
 基于模型的方法（DP、启发式搜索）主要进行规划，无模型的方法（MC、TD）则主要进行学习，二者的核心都是价值函数的计算。
@@ -889,14 +924,13 @@ $$ \text{模型} \Longrightarrow \text{模拟经验} \overset{\text{回溯}}{\Lo
 各算法的差异集中在回溯操作、执行操作顺序、回溯信息保留时长上。极小步长适于大尺度规划问题。
 %------------------------------------------------
 \paragraph{随机采样单步表格型Q规划算法}
-\begin{itemize}
-\item 循环：
-\begin{itemize}
-\item 随机选择$ s \in S, a \in A(s) $
-\item 采样$ (s, a) $的$ r,s' $
-\item 规划：$ Q(s, a) = Q(s, a) + \alpha[r + \gamma \max_aQ(s', a) - Q(s, a)] $
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[随机采样单步表格型Q规划算法]
+\Loop
+    \State 随机选择 $s \in S, a \in A(s)$
+    \State 采样 $(s, a)$ 的 $r,s'$
+    \State $Q(s, a) \gets Q(s, a) + \alpha[r + \gamma \max_a Q(s', a) - Q(s, a)]$ \Comment{规划更新}
+\EndLoop
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{Dyna-Q}
 学习和规划由相同算法完成，真实经验用于学习，模拟经验用于规划。
@@ -908,23 +942,21 @@ $$ \text{模型} \Longrightarrow \text{模拟经验} \overset{\text{回溯}}{\Lo
 \end{itemize}
 %------------------------------------------------
 \paragraph{表格型Dyna-Q算法}
-\begin{itemize}
-\item $ \forall s \in S, a \in A(s) $，初始化$ Q(s, a),Model(s, a) $（基于$ (s, a) $预测的后继状态和收益）
-\item 循环：
-\begin{itemize}
-\item $ S $为当前状态，其非终止状态
-\item 基于$ (S, Q) $选取$ A $
-\item 采取$ A $，观察$ R,S' $
-\item $ Q(s, a) = Q(s, a) + \alpha[R + \gamma \max_aQ(s', a) - Q(s, a)] $
-\item $ Model(s, a) = R,S' $
-\item 循环n次：
-\begin{itemize}
-\item 随机选择观测过的$ S $和其下采取过的$ A $
-\item $ R,S' = Model(S, A) $
-\item $ Q(s, a) = Q(s, a) + \alpha[R + \gamma \max_aQ(s', a) - Q(s, a)] $
-\end{itemize}
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[表格型Dyna-Q算法]
+\State $\forall s \in S, a \in A(s)$，初始化$Q(s, a)$和$Model(s, a)$ \Comment{基于$(s, a)$预测的后继状态和收益}
+\Loop
+    \State $S \gets$ 当前状态（非终止状态）
+    \State 基于$(S, Q)$选取$A$ \Comment{例如使用$\epsilon$-greedy策略}
+    \State 执行动作$A$，观察$R,S'$
+    \State $Q(S, A) \gets Q(S, A) + \alpha[R + \gamma \max_a Q(S', a) - Q(S, A)]$ \Comment{直接强化学习更新}
+    \State $Model(S, A) \gets R,S'$ \Comment{更新模型}
+    \For{$i = 1$ 到 $n$} \Comment{规划}
+        \State 随机选择已观测过的状态$S$和在该状态下采取过的动作$A$
+        \State $R,S' \gets Model(S, A)$ \Comment{从模型获取预测}
+        \State $Q(S, A) \gets Q(S, A) + \alpha[R + \gamma \max_a Q(S', a) - Q(S, A)]$ \Comment{规划更新}
+    \EndFor
+\EndLoop
+\end{myalgorithm}
 %------------------------------------------------
 \subsection{改进方法}
 %------------------------------------------------
@@ -935,25 +967,37 @@ $$ \text{模型} \Longrightarrow \text{模拟经验} \overset{\text{回溯}}{\Lo
 相比于均匀采样无长期收益的动作，集中更新有收益的动作会更有意义。反向聚焦提供了相应的思路。关联前导动作和前导状态，在后续动作有收益时先更新前导动作的价值，进行有效更新。按照价值改变多少对状态-动作二元组进行优先级排序，并由后至前反向传播出高影响序列。优先遍历为提高规划效率分配了计算量，但由于采用期望更新而在随机环境中有所局限。
 %------------------------------------------------
 \paragraph{确定性环境下的优先级遍历算法}
-\begin{itemize}
-\item $ \forall s \in S, a \in A(s) $，初始化$ Q(s, a),Model(s, a) $，初始化$ PQuene $为空
-\item 循环：
-\begin{itemize}
-\item $ S $为当前状态，其非终止状态
-\item 基于$ (S, Q) $选取$ A $
-\item 采取$ A $，观察$ R,S' $
-\item $ Model(s, a) = R,S' $
-\item $ P = |R + \gamma \max_a Q(S',a) - Q(S,a)| $
-\item $ P > 0 $将$ (S,A) $以优先级$ P $插入$ PQuene $
-\item 循环n次（$ PQuene $非空）：
-\begin{itemize}
-\item $ S,A = PQuene(0) $ 
-\item $ R,S' = Model(S, A) $
-\item $ Q(s, a) = Q(s, a) + \alpha[R + \gamma \max_aQ(s', a) - Q(s, a)] $
-\item 对可达$ S $的$ \bar{S},\bar{A} $进行上述迭代
-\end{itemize}
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[确定性环境下的优先级遍历算法]
+\State $\forall s \in S, a \in A(s)$，初始化 $Q(s, a)$ 和 $Model(s, a)$
+\State 初始化优先级队列 $PQueue$ 为空
+\Loop
+    \State $S \gets$ 当前状态（非终止状态）
+    \State 基于 $(S, Q)$ 选取 $A$ \Comment{例如使用 $\epsilon$-greedy 策略}
+    \State 执行动作 $A$，观察 $R, S'$
+    \State $Model(S, A) \gets R, S'$ \Comment{更新模型}
+    \State $P \gets |R + \gamma \max_a Q(S', a) - Q(S, A)|$ \Comment{计算优先级}
+    \If{$P > 0$}
+        \State 将 $(S, A)$ 以优先级 $P$ 插入 $PQueue$
+    \EndIf
+    \For{$i = 1$ 到 $n$} \Comment{进行n次规划更新}
+        \If{$PQueue$ 为空}
+            \State \textbf{break}
+        \EndIf
+        \State $(S, A) \gets PQueue(0)$ \Comment{取出优先级最高的状态-动作对}
+        \State $R, S' \gets Model(S, A)$ \Comment{从模型获取预测}
+        \State $Q(S, A) \gets Q(S, A) + \alpha[R + \gamma \max_a Q(S', a) - Q(S, A)]$ \Comment{规划更新}
+        \For{每个可达到 $S$ 的状态-动作对 $(\bar{S}, \bar{A})$} \Comment{反向传播更新}
+            \State $\bar{R}, \bar{S'} \gets Model(\bar{S}, \bar{A})$
+            \If{$\bar{S'} = S$}
+                \State $P \gets |\bar{R} + \gamma \max_a Q(S, a) - Q(\bar{S}, \bar{A})|$
+                \If{$P > 0$}
+                    \State 将 $(\bar{S}, \bar{A})$ 以优先级 $P$ 插入 $PQueue$
+                \EndIf
+            \EndIf
+        \EndFor
+    \EndFor
+\EndLoop
+\end{myalgorithm}
 %------------------------------------------------
 \paragraph{轨迹采样}
 借助模拟生成经验来进行回溯更新称为轨迹采样。同轨策略轨迹采样对于大尺度问题有一定优势，能够跳过无关状态，获得最优部分策略。
@@ -1061,16 +1105,28 @@ $$
 \end{itemize}
 %------------------------------------------------
 \paragraph{深度Q学习（离线）算法}
-\begin{itemize}
-\item 初始化主网络参数$ \omega $、目标网络参数$ \omega^- $，经验回放缓冲区$ B = \{(s, a, r, s')\} $
-\item 循环：
-\begin{itemize}
-\item 从$ B $中均匀采样小批量样本$ \{(s, a, r, s')\} $
-\item 计算目标值：$ y = r + \gamma \max_{a'} \hat{q}(s', a', \omega^-) $
-\item 用小批量样本$ \{(s, a, y)\} $更新主网络，最小化$ (y - \hat{q}(s, a, \omega))^2 $
-\item 每隔$ C $步令$ \omega^- = \omega $
-\end{itemize}
-\end{itemize}
+\begin{myalgorithm}[深度Q学习(DQN)算法]
+\State 初始化主网络参数 $\omega$ 和目标网络参数 $\omega^-$
+\State 初始化经验回放缓冲区 $B = \{(s, a, r, s')\}$
+\State 初始化计数器 $t \gets 0$
+\Loop
+    \State 从 $B$ 中均匀采样小批量样本 $\{(s, a, r, s')\}$
+    \For{每个样本 $(s, a, r, s')$}
+        \If{$s'$ 是终止状态}
+            \State $y \gets r$
+        \Else
+            \State $y \gets r + \gamma \max_{a'} \hat{q}(s', a', \omega^-)$ \Comment{计算目标值}
+        \EndIf
+    \EndFor
+    \State 使用小批量样本 $\{(s, a, y)\}$ 更新主网络参数 $\omega$，最小化损失 $(y - \hat{q}(s, a, \omega))^2$
+    \State $t \gets t + 1$
+    \If{$t \mod C = 0$} \Comment{每隔C步更新目标网络}
+        \State $\omega^- \gets \omega$
+    \EndIf
+\EndLoop
+\end{myalgorithm}
+%----------------------------------------------------------------------------------------
+\section{策略梯度}
 %----------------------------------------------------------------------------------------
 \section{附录}
 %------------------------------------------------
@@ -1149,15 +1205,14 @@ f(v_1) - f(v_2)
 \item 离散型
 \begin{itemize}
 \item 概率质量函数(PMF)：$ P(X = x) = p(x) $，满足 $ \sum_{x} p(x) = 1 $。
-\item 期望：$ E[X] = \sum_{x} x p(x) $。
-\item 方差：$ Var(X) = E[(X - E[X])^2] $。
+\item 期望：$ E[X] = \sum_{x} x \cdot p(x) $。
 \end{itemize}
 \item 连续型
 \begin{itemize}
 \item 概率密度函数(PDF)：$ f(x) \geq 0 $，满足$ \int_{-\infty}^{\infty} f(x) dx = 1 $。
-\item 期望：$ E[X] = \int_{-\infty}^{\infty} x f(x) dx $。
-\item 方差：$ Var(X) = E[(X - E[X])^2] $。
+\item 期望：$ E[X] = \int_{-\infty}^{\infty} x \cdot f(x) dx $。
 \end{itemize}
+\item 方差：$ Var(X) = E[(X - E[X])^2] $。
 \end{itemize}
 %------------------------------------------------
 \paragraph*{条件概率与独立性}
@@ -1171,9 +1226,8 @@ f(v_1) - f(v_2)
 %------------------------------------------------
 \paragraph*{马尔可夫链与转移概率}
 \begin{itemize}
-\item 马尔可夫性：$ P(S_{t + 1}|S_t, S_{t - 1}, \dots, S_0) = P(S_{t + 1}|S_t) $。
+\item 马尔可夫性（无记忆性）：$ P(S_{t + 1}|S_t, S_{t - 1}, \dots, S_0) = P(S_{t + 1}|S_t) $。
 \item 转移矩阵：$ P \in [0, 1]^{S \times S}, P(s'|s) = \sum_{a} P(s'|s, a) P(a|s) $。
-\item 平稳分布：$ \pi = \pi P $，即$ \pi(s') = \sum_{s} \pi(s) P(s'|s) $。
 \end{itemize}
 %------------------------------------------------
 \paragraph*{大数定律与中心极限定理}

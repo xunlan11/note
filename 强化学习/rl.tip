@@ -1,23 +1,25 @@
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 1} $ \epsilon $-greedy策略}{6}{tips.1}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 2} 增量式更新}{6}{tips.2}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 3} 马尔可夫决策过程及其元素}{6}{tips.3}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 4} 贝尔曼方程}{10}{tips.4}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 5} 策略迭代（算法）}{11}{tips.5}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 6} 值迭代（算法）}{12}{tips.6}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 7} 蒙特卡洛}{13}{tips.7}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 8} 重要度采样}{14}{tips.8}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 9} on-policy（算法）}{15}{tips.9}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 10} off-policy（算法）}{16}{tips.10}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 11} 时序差分（TD(0)算法）}{17}{tips.11}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 12} Sarsa（算法）}{18}{tips.12}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 13} 期望Sarsa}{19}{tips.13}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 14} Q-learning（算法）}{19}{tips.14}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 15} 双Q-learning（算法）}{20}{tips.15}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 16} DP、MC、TD总结对比}{21}{tips.16}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 17} n步TD（算法）}{22}{tips.17}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 18} n步Sarsa（算法）}{23}{tips.18}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 19} n步off-policy（算法）}{24}{tips.19}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 20} n步树回溯（算法）}{25}{tips.20}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 21} n步Q($ \sigma $)（算法）}{27}{tips.21}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 22} 表格型方法总结对比}{31}{tips.22}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 23} DQN（算法）}{34}{tips.23}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 1} 马尔可夫决策过程及其元素}{6}{tips.1}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 2} 马尔可夫性}{7}{tips.2}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 3} $ \epsilon $-greedy策略}{8}{tips.3}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 4} 增量式更新}{9}{tips.4}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 5} 分幕与回报}{9}{tips.5}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 6} 贝尔曼方程}{11}{tips.6}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 7} 策略迭代（算法）}{13}{tips.7}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 8} 值迭代（算法）}{14}{tips.8}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 9} 蒙特卡洛}{15}{tips.9}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 10} 重要度采样}{16}{tips.10}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 11} on-policy（算法）}{17}{tips.11}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 12} off-policy（算法）}{18}{tips.12}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 13} 时序差分（TD(0)算法）}{19}{tips.13}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 14} Sarsa（算法）}{20}{tips.14}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 15} 期望Sarsa}{21}{tips.15}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 16} Q-learning（算法）}{22}{tips.16}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 17} 双Q-learning（算法）}{22}{tips.17}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 18} DP、MC、TD总结对比}{23}{tips.18}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 19} n步TD（算法）}{24}{tips.19}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 20} n步Sarsa（算法）}{26}{tips.20}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 21} n步off-policy（算法）}{27}{tips.21}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 22} n步树回溯（算法）}{29}{tips.22}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 23} n步Q($ \sigma $)（算法）}{31}{tips.23}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 24} 表格型方法总结对比}{36}{tips.24}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 25} DQN（算法）}{39}{tips.25}%

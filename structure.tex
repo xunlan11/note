@@ -71,6 +71,38 @@ includeheadfoot
     breakatwhitespace=false,   
     escapeinside={`}{`},          % 转义（中文注释）
 }
+\usepackage{algorithm} % 算法
+\usepackage{algpseudocode}
+\usepackage{mdframed} % 跨页框架
+% 不浮动算法环境
+\newcounter{myalgorithm}
+\renewcommand{\themyalgorithm}{\arabic{myalgorithm}}
+\newenvironment{myalgorithm}[1][]{
+  \refstepcounter{myalgorithm}
+  \begin{mdframed}[
+    skipabove=\topskip,
+    skipbelow=\topskip,
+    needspace=3\baselineskip,
+    linewidth=0.4pt,
+    frametitlefont=\normalfont\bfseries,
+    frametitle={算法 \themyalgorithm\if\relax\detokenize{#1}\relax\else：#1\fi},
+    frametitlerule=true,
+    frametitlerulewidth=0.4pt,
+    repeatframetitle=true
+  ]
+  \begin{algorithmic}[1]
+}{
+  \end{algorithmic}
+  \end{mdframed}
+}
+% 关键词
+\algrenewcommand{\algorithmicwhile}{\textbf{当}}
+\algrenewcommand{\algorithmicdo}{\textbf{执行}}
+\algrenewcommand{\algorithmicend}{\textbf{结束}}
+\algrenewcommand{\algorithmicif}{\textbf{如果}}
+\algrenewcommand{\algorithmicthen}{\textbf{那么}}
+\algrenewcommand{\algorithmicelse}{\textbf{否则}}
+\algrenewcommand{\algorithmicfor}{\textbf{对于}}
 %----------------------------------------------------------------------------------------
 % 超链接与PDF信息
 \usepackage{hyperref} 
