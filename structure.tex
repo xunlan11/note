@@ -91,18 +91,30 @@ includeheadfoot
     repeatframetitle=true
   ]
   \begin{algorithmic}[1]
+  \ifx\relax\detokenize{#1}\relax
+    \addcontentsline{alg}{algorithms}{\makebox[7em][l]{算法~\themyalgorithm} }
+  \else
+    \addcontentsline{alg}{algorithms}{\makebox[7em][l]{算法~\themyalgorithm} #1}
+  \fi
 }{
   \end{algorithmic}
   \end{mdframed}
 }
 % 关键词
-\algrenewcommand{\algorithmicwhile}{\textbf{当}}
-\algrenewcommand{\algorithmicdo}{\textbf{执行}}
-\algrenewcommand{\algorithmicend}{\textbf{结束}}
-\algrenewcommand{\algorithmicif}{\textbf{如果}}
-\algrenewcommand{\algorithmicthen}{\textbf{那么}}
-\algrenewcommand{\algorithmicelse}{\textbf{否则}}
-\algrenewcommand{\algorithmicfor}{\textbf{对于}}
+\algrenewcommand{\algorithmicwhile}{当}
+\algrenewcommand{\algorithmicdo}{执行}
+\algrenewcommand{\algorithmicend}{结束}
+\algrenewcommand{\algorithmicif}{如果}
+\algrenewcommand{\algorithmicthen}{那么}
+\algrenewcommand{\algorithmicelse}{否则}
+\algrenewcommand{\algorithmicfor}{对于}
+\algrenewcommand{\algorithmicrepeat}{循环}
+\algrenewcommand{\algorithmicuntil}{直到}
+\algrenewcommand{\algorithmicloop}{循环}
+\algnotext{EndFor}
+\algnotext{EndIf}
+\algnotext{EndLoop}
+\algnotext{EndWhile}
 %----------------------------------------------------------------------------------------
 % 超链接与PDF信息
 \usepackage{hyperref} 
@@ -122,7 +134,7 @@ pdfcreator={pdfLaTeX},
 pdfproducer={LaTeX with hyperref and ClassicThesis} 
 }
 %----------------------------------------------------------------------------------------
-% 章节与项目标题
+% 目录与标题
 \usepackage{titlesec} 
 \AtBeginDocument{
     \renewcommand{\contentsname}{目\hspace{1em}录}
@@ -140,9 +152,12 @@ pdfproducer={LaTeX with hyperref and ClassicThesis}
 \newtheorem{remark}{备注}
 \newtheorem{example}{样例}
 \usepackage{tocloft} % 目录
-\newlistof{tips}{tip}{要\hspace{1em}点} % 要点目录
+% 要点目录
+\newlistof{tips}{tip}{要\hspace{1em}点}
 \newcommand{\tip}[1]{
   \refstepcounter{tips}
   \textsuperscript{\textcolor{orange}{\textbf{\thetips}}}
   \addcontentsline{tip}{tips}{\makebox[7em][l]{要点~\thetips} #1}
 }
+% 算法目录
+\newlistof{algorithms}{alg}{算\hspace{1em}法}
