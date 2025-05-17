@@ -1058,6 +1058,9 @@ $$ J(\omega) = E[(R + \gamma \max_{a'} \hat{q}(S', a', \omega^-) - \hat{q}(S, A,
 \State 初始化经验回放缓冲区$ B = \{(s, a, r, s')\} $
 \State 初始化计数器$ t \gets 0 $
 \Loop
+\If{$ t \mod C = 0 $} \Comment{每隔C步更新目标网络}
+\State $ \omega^- \gets \omega $
+\EndIf
 \State 从$ B $中均匀采样小批量样本$ \{(s, a, r, s')\} $
 \For{每个样本$ (s, a, r, s') $}
 \If{$ s' $ 是终止状态}
@@ -1068,9 +1071,6 @@ $$ J(\omega) = E[(R + \gamma \max_{a'} \hat{q}(S', a', \omega^-) - \hat{q}(S, A,
 \EndFor
 \State 使用小批量样本$ \{(s, a, y)\} $更新主网络参数$ \omega $，最小化损失$ (y - \hat{q}(s, a, \omega))^2 $
 \State $ t \gets t + 1 $
-\If{$ t \mod C = 0 $} \Comment{每隔C步更新目标网络}
-\State $ \omega^- \gets \omega $
-\EndIf
 \EndLoop
 \end{myalgorithm}
 %------------------------------------------------
