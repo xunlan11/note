@@ -7,18 +7,21 @@
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 7} 贝尔曼方程}{13}{tips.7}%
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 8} 策略迭代}{15}{tips.8}%
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 9} 值迭代}{16}{tips.9}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 10} 蒙特卡洛}{17}{tips.10}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 10} 蒙特卡洛}{18}{tips.10}%
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 11} on-policy}{18}{tips.11}%
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 12} off-policy}{19}{tips.12}%
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 13} 重要度采样}{19}{tips.13}%
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 14} 时序差分（TD($ 0 $)）}{21}{tips.14}%
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 15} Sarsa（on-policy-TD）}{22}{tips.15}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 16} 期望Sarsa}{22}{tips.16}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 16} 期望Sarsa}{23}{tips.16}%
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 17} Q-learning（off-policy-TD）}{23}{tips.17}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 18} 双Q-learning}{23}{tips.18}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 19} n-TD}{24}{tips.19}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 20} n-Sarsa}{25}{tips.20}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 18} 双Q-learning}{24}{tips.18}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 19} n-TD}{25}{tips.19}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 20} n-Sarsa}{26}{tips.20}%
 \contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 21} n-树回溯}{28}{tips.21}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 22} n-Q($ \sigma $)}{29}{tips.22}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 23} 表格型方法总结对比}{31}{tips.23}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 24} DQN}{34}{tips.24}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 22} n-Q($ \sigma $)}{30}{tips.22}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 23} 表格型方法总结对比}{32}{tips.23}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 24} 随机梯度下降}{35}{tips.24}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 25} DQN及其关键技术}{36}{tips.25}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 26} 策略梯度}{38}{tips.26}%
+\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 27} REINFORCE}{39}{tips.27}%
