@@ -24,9 +24,10 @@ headheight=20pt,
 includeheadfoot 
 ]{geometry} % 页面
 \usepackage{scrlayer-scrpage} % 页眉页脚
-\renewcommand{\sectionmark}[1]{\markright{\spacedlowsmallcaps{#1}}} % 偶数页页眉
-\renewcommand{\subsectionmark}[1]{\markright{\thesubsection~#1}} % 奇数页页眉
+\renewcommand{\sectionmark}[1]{\markright{\spacedlowsmallcaps{#1}}}
+\renewcommand{\subsectionmark}[1]{\markright{\thesubsection~#1}}
 \lehead{\mbox{\llap{\small\thepage\kern1em\color{halfgray} \vline}\color{halfgray}\hspace{0.5em}\rightmark\hfil}} % 标题旁边标记页码
+\cfoot{\hyperlink{toc}{\color{RoyalBlue}返回目录}} % 页脚返回目录链接
 \pagestyle{scrheadings}
 %----------------------------------------------------------------------------------------
 % 图表和引用
