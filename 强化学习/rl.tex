@@ -1058,7 +1058,7 @@ $$ J(\omega) = E[(R + \gamma \max_{a'} \hat{q}(S', a', \omega^-) - \hat{q}(S, A,
 \State 初始化经验回放缓冲区$ B = \{(s, a, r, s')\} $
 \State 初始化计数器$ t \gets 0 $
 \Loop
-\If{$ t \mod C = 0 $} \Comment{每隔C步更新目标网络}
+\If{$ t \mod C = 0 $} \Comment{每隔C步更新目标网络（初始化一致）}
 \State $ \omega^- \gets \omega $
 \EndIf
 \State 从$ B $中均匀采样小批量样本$ \{(s, a, r, s')\} $
