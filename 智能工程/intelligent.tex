@@ -64,6 +64,7 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 
 \begin{enumerate}
 \item 求正运动学模型\ref{sec:example1}。
+\item 设计运动控制器\ref{sec:motion_control}。
 \end{enumerate}
 %------------------------------------------------
 \section{机器人运动形态}
@@ -254,9 +255,7 @@ $$
 $$
 
 惯性参考坐标系旋转得到机器人参考坐标系：
-$$
-\dot{\xi}_R = R\theta \dot{\xi}_I
-$$
+$$ \dot{\xi}_R = R\theta \dot{\xi}_I $$
 
 旋转阵
 $ R(\theta) = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} $
@@ -410,11 +409,201 @@ $$ \delta_M = \delta_m + \delta_s $$
 %----------------------------------------------------------------------------------------
 \section{机器人运动控制}
 %------------------------------------------------
-\subsection{定点控制器}
+\subsection{运动控制}\label{sec:motion_control}
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.8\textwidth]{controller} 
+\caption[运动控制器]{运动控制器}
+\end{figure}
+
+误差（惯性系下给定与反馈）$ \overset{\text{变换}}{\Longrightarrow} $输入（机器人系下控制输入）。 
 %------------------------------------------------
-\subsection{轨迹跟踪控制器}
+\paragraph{特点}
+\begin{itemize}
+\item 大多存在滑动约束，是非完整系统，有侧向偏差和姿态偏差。
+\item 非线性，控制器设计复杂，还需要根据可获得的反馈信号选取，按顺序调节控制参数，并且不能同时实现定点控制和跟踪控制。
+\item 不存在能完成控制目标的连续时不变（静态）反馈控制率。
+\item 受标定精度影响大，且由于执行单元性能约束，控制输入要合理限幅。
+\end{itemize}
 %------------------------------------------------
-\subsection{路径跟踪控制器}
+\paragraph{分类}
+\begin{itemize}
+\item 定点（镇定）控制（Regulation Control）：以指定姿态到达指定位置。
+\item 跟踪控制：
+\begin{itemize}
+\item 轨迹跟踪控制（Trajectory Tracking Control）：跟随给定轨迹（包含速度、姿态信息）。
+\item 路径跟踪控制（Path Tracking Control）：跟随给定路线。
+\end{itemize}
+\end{itemize}
+%------------------------------------------------
+\paragraph{开环控制}
+将运动轨迹分割成直线和圆弧，存在以下问题：
+\begin{itemize}
+\item 直线和圆弧的曲率不一致，不连续。
+\item 难以实现定义若干合适轨迹。
+\item 速度加速度约束。
+\item 无法自适应调整轨迹来面对环境变化。
+\item 所得轨迹不光滑。
+\end{itemize}
+%------------------------------------------------
+\paragraph{控制器性能评价}
+取正定李雅普诺夫函数，其导数负定则系统渐进稳定。
+%------------------------------------------------
+\paragraph{两轮差速机器人运动控制}
+以下以两轮差速机器人（见\ref{sec:two_wheel}）为例。
+$$ 
+\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r-\dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v_1 \\ 0 \\ v_2 \end{bmatrix} 
+\overset{\text{变换}}{\Longrightarrow}
+\dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix} = \begin{bmatrix} \cos\theta & 0 \\ \sin\theta & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} 
+$$
+%------------------------------------------------
+\subsection{定点控制器}\tip{定点控制器}
+%------------------------------------------------
+\paragraph{控制目标}~\\
+
+机器人参考坐标系下误差$ e = \begin{bmatrix} x & y & \theta \end{bmatrix}^T $，
+
+设计控制阵$ K = \begin{bmatrix} k_{11} & k_{12} & k_{13} \\ k_{21} & k_{22} & k_{23} \end{bmatrix} $，其中$ k_{ij} = k(t, e) $，
+
+得到控制输入$ \begin{bmatrix} v(t) \\ \omega(t) \end{bmatrix} = Ke $，
+使$ \lim_{t \to \infty} e(t) = 0 $。
+%------------------------------------------------
+\paragraph{误差信号转换}~\\
+
+惯性系下，实际状态$ q = \begin{bmatrix} x & y & \theta \end{bmatrix}^T $与参考状态$ q_r \begin{bmatrix} x_r & y_r & \theta_r \end{bmatrix}^T $之差为开环误差：
+$$ \tilde{q} = \begin{bmatrix} \tilde{x} & \tilde{y} & \tilde{\theta} \end{bmatrix}^T = \begin{bmatrix} x - x_r & y - y_r & \theta - \theta_r \end{bmatrix}^T $$
+\begin{enumerate}
+\item 转换到机器人系
+$$ 
+e = \begin{bmatrix} e_1 \\ e_2 \\ e_3 \end{bmatrix} = R(\theta)^T \tilde{q} = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \tilde{x} \\ \tilde{y} \\ \tilde{\theta} \end{bmatrix}
+\overset{\text{闭环}}{\Longrightarrow}
+\dot{e} = \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = R(\theta)\dot{\tilde{q}} + \dot{R(\theta)}\tilde{q} = \begin{bmatrix} v_1 + v_2 e_2 \\ -v_2 e_1 \\ v_2 \end{bmatrix} 
+$$
+\item 转换到极坐标系
+$$ 
+\begin{cases}
+\rho &= \sqrt{\tilde{x}^2 + \tilde{y}^2} \\
+\beta &= -\arctan2(-\tilde{y},-\tilde{x}) \\
+\alpha &= -\beta - \tilde{\theta} \\
+\end{cases}
+\overset{\text{闭环}}{\Longrightarrow}
+\begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = 
+\begin{bmatrix} 
+-\cos\alpha & 0 \\
+\frac{\sin\alpha}{\rho} & 0 \\
+\frac{\sin\alpha}{\rho} & -1
+\end{bmatrix}
+\begin{bmatrix} v_1 \\ v_2 \end{bmatrix}
+$$ 
+\end{enumerate}
+%------------------------------------------------
+\paragraph{机器人系非线性控制器}~\\
+
+设计控制器$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 \\ -k_2 e_2 + e_2^2 \sin(t) \end{bmatrix} $，
+代入得$ \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 + v_2 e_2 \\ -v_2 e_1 \\ -k_2 e_2 + e_2^2 \sin(t) \end{bmatrix} $。
+
+其有误差时扰动，效果不佳。
+%------------------------------------------------
+\paragraph{极坐标系线性控制器}~\\
+
+设计控制器
+$ 
+\begin{cases}
+v_1 &= k_\rho \rho \\
+v_2 &= k_\alpha \alpha + k_\beta \beta
+\end{cases}
+$，
+代入得
+$$
+\begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = \begin{bmatrix} -k_\rho \rho \cos\alpha \\ -k_\rho \sin\alpha \\ k_\rho \sin\alpha - k_\alpha \alpha - k_\beta \beta \end{bmatrix}
+\overset{\alpha \to 0}{\Longrightarrow}
+\begin{bmatrix} -k_\rho \rho \\ -k_\rho \alpha \\ k_\rho \alpha - k_\alpha \alpha - k_\beta \beta \end{bmatrix}
+$$
+
+其中前两行非线性耦合，在$ \alpha \to 0 $时指数性稳定，非全局稳定。
+%------------------------------------------------
+\paragraph{极坐标系线性控制器}~\\
+
+设计控制器
+$
+\begin{cases}
+v_1 &= k_\rho \rho \cos\alpha \\
+v_2 &= k_\alpha \alpha + \frac{k_\rho \sin \alpha \cos\alpha}{\alpha}(\alpha - k_\beta\beta)
+\end{cases}
+$，
+代入得
+$$ \begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = \begin{bmatrix} -k_\rho \rho \cos\alpha \cos\alpha \\ -k_\rho \cos\alpha \sin\alpha \\ k_\rho \cos\alpha \sin\alpha - k_\alpha \alpha - \underbrace{\frac{k_\rho \sin\alpha \cos\alpha}{\alpha}}_{\alpha \to 0, \frac{\sin\alpha}{\alpha} = 1}(\alpha - k_\beta\beta) \end{bmatrix} $$
+
+其全局渐近稳定。
+%------------------------------------------------
+\subsection{轨迹跟踪控制器}\tip{轨迹跟踪控制器}
+%------------------------------------------------
+\paragraph{控制目标与误差变换}~\\
+
+惯性系下，实际轨迹$ q(t) = \begin{bmatrix} x(t) & y(t) & \theta(t) \end{bmatrix}^T $与参考轨迹$ q_r \begin{bmatrix} x_r(t) & y_r(t) & \theta_r(t) \end{bmatrix}^T $之差为开环误差：
+$$ \tilde{q}(t) = \begin{bmatrix} \tilde{x}(t) & \tilde{y}(t) & \tilde{\theta}(t) \end{bmatrix}^T = \begin{bmatrix} x(t) - x_r(t) & y(t) - y_r(t) & \theta(t) - \theta_r(t) \end{bmatrix}^T $$
+
+控制目标为$ \lim_{n \to \infty} \tilde{q}(t) = 0 $。
+
+开环误差转换坐标系后求闭环误差，进而得到辅助误差信号：
+$$ 
+e = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \tilde{x} \\ \tilde{y} \\ \tilde{\theta} \end{bmatrix}
+\overset{\text{闭环}}{\Longrightarrow}
+\dot{e} = \begin{bmatrix} v_1 + v_2 e_2 - v_{1r} \cos e_3 \\ - v_2 e_1 + v_{1r} \sin e_3 \\ v_2 - v_{2r} \end{bmatrix} 
+$$
+%------------------------------------------------
+\paragraph{控制器}~\\
+
+设计控制器$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 + v_{1r} \cos e_3 \\ -v_{1r} \frac{\sin e_3}{e_3} e_2 - k_2 e_3 + v_{r2} \end{bmatrix} $，代入得
+$$ \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 + v_2 e_2 \\ -v_2 e_1 + v_{1r} \sin e_3 \\ -k_2 e_3 - v_{1r} \frac{\sin e_3}{e_3} e_2 \end{bmatrix} $$
+%------------------------------------------------
+\subsection{路径跟踪控制器}\tip{路径跟踪控制器}
+%------------------------------------------------
+\paragraph{控制目标与误差变换}~\\
+
+惯性系下，实际路径$ q(s) = \begin{bmatrix} x(s) & y(s) & \theta(s) \end{bmatrix}^T $与参考路径$ q_r \begin{bmatrix} x_r(s) & y_r(s) & \theta_r(s) \end{bmatrix}^T $之差为开环误差：
+$$ \tilde{q}(s) = \begin{bmatrix} \tilde{x}(s) & \tilde{y}(s) & \tilde{\theta}(s) \end{bmatrix}^T = \begin{bmatrix} x(s) - x_r(s) & y(s) - y_r(s) & \theta(s) - \theta_r(s) \end{bmatrix}^T $$
+
+其中$ s \in [0,1] $为路径参考变量，控制目标为$ \lim_{n \to \infty} \tilde{q}(s) = 0 $。
+
+作变换
+$
+\begin{cases}
+y_1 &= x + b\cos\theta \\
+y_2 &= y + b\sin\theta
+\end{cases}
+$，
+
+进而得到闭环误差$ \begin{bmatrix} \dot{y}_1 \\ \dot{y}_2 \end{bmatrix} = \begin{bmatrix} \cos\theta & -b\sin\theta \\ \sin\theta & b\cos\theta \end{bmatrix} \begin{bmatrix} v \\ \omega \end{bmatrix} = T(\theta) \begin{bmatrix} v \\ \omega \end{bmatrix} $。
+
+逆运算得到$ \begin{bmatrix} v \\ \omega \end{bmatrix} = T^{-1}(\theta) \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} = \begin{bmatrix} \cos\theta & \sin\theta \\ -\frac{\sin\theta}{b} & \frac{\cos\theta}{b} \end{bmatrix} \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} $，
+
+故
+$
+\begin{cases}
+\dot{y}_1 &= u_1 \\
+\dot{y}_2 &= u_2 \\
+\dot{\theta} &= \frac{u_2 \cos\theta - u_1 \sin\theta}{b}
+\end{cases}
+$。
+%------------------------------------------------
+\paragraph{控制器}~\\
+
+设计控制器
+$ 
+\begin{cases}
+u_1 = \dot{y}_{1d} + k_1(y_{1d} - y_1) \\
+u_2 = \dot{y}_{2d} + k_2(y_{2d} - y_2)
+\end{cases} 
+$
+，有
+$
+\begin{cases}
+\dot{\tilde{y}}_1 = -k_1\tilde{y}_1 \\
+\dot{\tilde{y}}_2 = -k_2\tilde{y}_2
+\end{cases}
+$
+，系统指数性收敛。
 %----------------------------------------------------------------------------------------
 \section{机器人感知}
 %------------------------------------------------
@@ -431,7 +620,5 @@ $$ \delta_M = \delta_m + \delta_s $$
 \subsection{SLAM}
 %----------------------------------------------------------------------------------------
 \section{机器人轨迹规划}
-%----------------------------------------------------------------------------------------
-\section{数理补充}
 %----------------------------------------------------------------------------------------
 \end{document}
