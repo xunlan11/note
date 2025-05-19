@@ -16,7 +16,11 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \maketitle
 \newpage
 \hypertarget{toc}{}
-\tableofcontents 
+\begingroup
+\begin{multicols}{2}
+\tableofcontents
+\end{multicols}
+\endgroup
 \newpage
 \listoffigures
 \listoftables
