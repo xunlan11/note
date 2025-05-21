@@ -22,8 +22,18 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \end{multicols}
 \endgroup
 \newpage
+\begingroup
+\begin{multicols}{2}
 \listoffigures
+\end{multicols}
+\endgroup
+\hrule
+\begingroup
+\begin{multicols}{2}
 \listoftables
+\end{multicols}
+\endgroup
+\hrule
 \listoftips
 \newpage
 %----------------------------------------------------------------------------------------
@@ -75,6 +85,7 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \begin{enumerate}
 \item 求正运动学模型\ref{sec:example1}。
 \item 设计运动控制器\ref{sec:motion_control}。
+\item 里程计模型\ref{sec:odometer}。
 \end{enumerate}
 %------------------------------------------------
 \section{机器人运动形态}
@@ -260,9 +271,7 @@ $$
 惯性参考坐标系旋转得到机器人参考坐标系：
 $$ \dot{\xi}_R = R\theta \dot{\xi}_I $$
 
-旋转阵
-$ R(\theta) = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} $
-为单位正交阵，$ R^T = R^{-1} $。
+旋转阵$ R(\theta) = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} $为单位正交阵，$ R^T = R^{-1} $。
 %------------------------------------------------
 \subsubsection[ICR法]{ICR法\tip{ICR法运动学建模}}
 %------------------------------------------------
@@ -309,15 +318,15 @@ $ R(\theta) = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\
 \hline
 \multirow{2}{*}{\parbox[c]{0.9cm}{标\\准\\轮}} & 纯滚动 & $ \begin{bmatrix} \sin(\alpha + \beta(t)) & -\cos(\alpha + \beta(t)) & -l\cos\beta(t) \end{bmatrix} R\theta \dot{\xi}_I \newline = r\dot{\varphi} $ & $ \surd $ & x \\
 \cline{2-5}
- & 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta(t)) & \sin(\alpha + \beta(t)) & l\sin\beta(t) \end{bmatrix} R\theta \dot{\xi}_I = 0 $ & $ \surd $ & $ \surd $ \\
+& 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta(t)) & \sin(\alpha + \beta(t)) & l\sin\beta(t) \end{bmatrix} R\theta \dot{\xi}_I = 0 $ & $ \surd $ & $ \surd $ \\
 \hline
 \multirow{2}{*}{\parbox[c]{0.9cm}{脚\\轮}} & 纯滚动 & $ \begin{bmatrix} \sin(\alpha + \beta) & -\cos(\alpha + \beta) & -l\cos\beta \end{bmatrix} R\theta \dot{\xi}_I = r\dot{\varphi} $ & $ \surd $ & x \\
 \cline{2-5}
- & 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta) & \sin(\alpha + \beta) & d + l\sin\beta \end{bmatrix} R\theta \dot{\xi}_I = -d\dot{\beta} $ & $ \surd $ & x \\
+& 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta) & \sin(\alpha + \beta) & d + l\sin\beta \end{bmatrix} R\theta \dot{\xi}_I = -d\dot{\beta} $ & $ \surd $ & x \\
 \hline
 \multirow{2}{*}{\parbox[c]{0.9cm}{瑞\\典\\轮}} & 纯滚动 & $ \begin{bmatrix} \cos(\alpha + \beta + \gamma) & \sin(\alpha + \beta + \gamma) & l\sin(\beta + \gamma) \end{bmatrix} R\theta \dot{\xi}_I \newline = r\dot{\varphi}\sin\gamma + r_{sw}\dot{\varphi}_{sw} $ & $ \surd $ & x \\
 \cline{2-5}
- & 无滑动 & $ \begin{bmatrix} \sin(\alpha + \beta + \gamma) & -\cos(\alpha + \beta + \gamma) & -l\cos(\beta + \gamma) \end{bmatrix} R\theta \dot{\xi}_I \newline = r\dot{\varphi}\cos\gamma $ & $ \surd $ \newline（小轮） & x \\
+& 无滑动 & $ \begin{bmatrix} \sin(\alpha + \beta + \gamma) & -\cos(\alpha + \beta + \gamma) & -l\cos(\beta + \gamma) \end{bmatrix} R\theta \dot{\xi}_I \newline = r\dot{\varphi}\cos\gamma $ & $ \surd $ \newline（小轮） & x \\
 \hline
 \end{tabular}
 \end{table}
@@ -330,12 +339,7 @@ $ R(\theta) = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\
 \item 滚动约束
 $$ J_1(\beta_s) R(\theta) \dot{\xi}_I - J_2 \dot{\varphi} = 0 $$
 
-其中
-$ 
-J_1(\beta_s) =  \begin{bmatrix} {J_{1f}}_{(N_f \times 3)} \\ {J_{1s}(\beta_s)}_{(N_s \times 3)} \end{bmatrix},
-\varphi(t) = \begin{bmatrix} \varphi_f(t) \\ \varphi_s(t) \end{bmatrix},
-J_2 = diag(r_1, \cdots, r_N)\text{为轮径对角阵}
-$。
+其中$ J_1(\beta_s) =  \begin{bmatrix} {J_{1f}}_{(N_f \times 3)} \\ {J_{1s}(\beta_s)}_{(N_s \times 3)} \end{bmatrix}, \varphi(t) = \begin{bmatrix} \varphi_f(t) \\ \varphi_s(t) \end{bmatrix}, J_2 = diag(r_1, \cdots, r_N)\text{为轮径对角阵} $。
 \item 滑动约束
 $$ C_1(\beta_s) R(\theta) \dot{\xi}_I = 0 $$
 
@@ -464,8 +468,7 @@ $$
 
 设计控制阵$ K = \begin{bmatrix} k_{11} & k_{12} & k_{13} \\ k_{21} & k_{22} & k_{23} \end{bmatrix} $，其中$ k_{ij} = k(t, e) $，
 
-得到控制输入$ \begin{bmatrix} v(t) \\ \omega(t) \end{bmatrix} = Ke $，
-使$ \lim_{t \to \infty} e(t) = 0 $。
+得到控制输入$ \begin{bmatrix} v(t) \\ \omega(t) \end{bmatrix} = Ke $，使$ \lim_{t \to \infty} e(t) = 0 $。
 %------------------------------------------------
 \paragraph{误差信号转换}~\\
 
@@ -487,19 +490,14 @@ $$
 \end{cases}
 \overset{\text{闭环}}{\Longrightarrow}
 \begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = 
-\begin{bmatrix} 
--\cos\alpha & 0 \\
-\frac{\sin\alpha}{\rho} & 0 \\
-\frac{\sin\alpha}{\rho} & -1
-\end{bmatrix}
+\begin{bmatrix} -\cos\alpha & 0 \\ \frac{\sin\alpha}{\rho} & 0 \\ \frac{\sin\alpha}{\rho} & -1 \end{bmatrix}
 \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}
 $$ 
 \end{enumerate}
 %------------------------------------------------
 \paragraph{机器人系非线性控制器}~\\
 
-设计控制器$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 \\ -k_2 e_2 + e_2^2 \sin(t) \end{bmatrix} $，
-代入得$ \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 + v_2 e_2 \\ -v_2 e_1 \\ -k_2 e_2 + e_2^2 \sin(t) \end{bmatrix} $。
+设计控制器$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 \\ -k_2 e_2 + e_2^2 \sin(t) \end{bmatrix} $，代入得$ \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 + v_2 e_2 \\ -v_2 e_1 \\ -k_2 e_2 + e_2^2 \sin(t) \end{bmatrix} $。
 
 其有误差时扰动，效果不佳。
 %------------------------------------------------
@@ -662,6 +660,119 @@ $
 %------------------------------------------------
 \subsection[里程计]{里程计}
 %------------------------------------------------
+\subsubsection[里程计模型]{里程计模型}\label{sec:odometer}
+%------------------------------------------------
+\paragraph{两轮差速机器人里程计模型}
+以下以两轮差速机器人（见\ref{sec:two_wheel}）为例。
+$$ 
+\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r-\dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v \\ 0 \\ \omega \end{bmatrix} 
+\overset{\text{转换到惯性系}}{\Longrightarrow}
+\begin{cases}
+\dot{x} &= v \cos \theta \\
+\dot{y} &= v \sin \theta \\
+\dot{\theta} &= \omega   
+\end{cases}
+$$
+
+码盘读数为：
+$$ 
+\begin{cases}
+\Delta s = \frac{r}{2}(\Delta \phi_R + \Delta \phi_L) \\
+\Delta \theta = \frac{r}{2d}(\Delta \phi_R - \Delta \phi_L)
+\end{cases}
+\overset{\text{小时间变化}}{\Longrightarrow}
+\begin{cases}
+\Delta s &= v_k T_s \\
+\Delta \theta &= \omega_k T_s    
+\end{cases}   
+$$ 
+%------------------------------------------------
+\paragraph{建模方法}
+\begin{figure}[H]
+\centering
+\subfloat[欧拉法]{\includegraphics[width=.3\textwidth]{euler}} \quad
+\subfloat[二阶Runge-Kutta法]{\includegraphics[width=.3\textwidth]{rk2}} \quad
+\subfloat[解析积分法]{\includegraphics[width=.3\textwidth]{exact}}
+\caption[里程计建模方法]{里程计建模方法}
+\end{figure}
+
+\begin{itemize}
+\item 欧拉法
+$$
+\begin{cases}
+x_{k + 1} = x_k + v_k T_s \cos \theta_k \\
+y_{k + 1} = y_k + v_k T_s \sin \theta_k \\
+\theta_{k + 1} = \theta_k + \omega_k T_s
+\end{cases}   
+$$
+\item 二阶Runge-Kutta法
+$$
+\begin{cases}
+x_{k + 1} = x_k + v_k T_s \cos(\theta_k + \frac{\omega_k T_s}{2}) \\
+y_{k + 1} = y_k + v_k T_s \sin(\theta_k + \frac{\omega_k T_s}{2}) \\
+\theta_{k + 1} = \theta_k + \omega_k T_s
+\end{cases}  
+$$
+\item 解析积分法
+$$
+\begin{cases}
+x_{k + 1} = x_k + \frac{v_k}{\omega_k} (\sin \theta_{k + 1} - \sin \theta_k) \\
+y_{k + 1} = y_k - \frac{v_k}{\omega_k} (\cos \theta_{k + 1} - \cos \theta_k) \\
+\theta_{k + 1} = \theta_k + \omega_k T_s
+\end{cases} 
+\overset{\omega_k = 0}{\Longrightarrow}
+\begin{cases}
+x_{k + 1} = x_k + v_k T_s \\
+y_{k + 1} = y_k \\
+\end{cases}  
+$$
+\end{itemize}
+%------------------------------------------------
+\subsubsection[里程计误差]{里程计误差}
+%------------------------------------------------
+\paragraph{误差来源}
+\begin{itemize}
+\item 数值积分误差。
+\item 运动学参数误差：速度不恒定，半径误差。
+\item 打滑。
+\end{itemize}
+%------------------------------------------------
+\paragraph{误差传播}\label{sec:error back}~\\
+
+二阶Runge-Kutta法的位姿更新为：
+$$
+p' = f(x, y, \theta, \Delta\phi_R, \Delta\phi_L) = 
+\begin{bmatrix} x \\ y \\ \theta \end{bmatrix} + 
+\begin{bmatrix} \frac{r(\Delta\phi_R + \Delta\phi_L)}{2} \cos(\theta_k + \frac{r[\Delta\phi_R - \Delta\phi_L]}{4d}) \\ \frac{r(\Delta\phi_R + \Delta\phi_L)}{2} \sin(\theta_k + \frac{r[\Delta\phi_R - \Delta\phi_L]}{4d}) \\ \frac{r(\Delta\phi_R - \Delta\phi_L)}{2d} \end{bmatrix}
+$$
+
+其中$ \Delta\phi_R,\Delta\phi_L $是控制输入量，有误差协方差矩阵迭代公式：
+$$ \sum_{p'} = \underbrace{\nabla_p f \cdot \sum_p \cdot \nabla_p f^T}_{\text{位姿}} + \underbrace{\nabla_{r|l}f \cdot \sum_{\Delta} \cdot \nabla_{r|l}f^T}_{\text{控制输入量}} $$
+
+初始化姿态协方差矩阵$ \sum_{p'} $（可零初始化），其更新量为：
+$$
+\nabla_p f = \begin{bmatrix}\frac{\partial f}{\partial x} & \frac{\partial f}{\partial y} & \frac{\partial f}{\partial \theta}\end{bmatrix} = 
+\begin{bmatrix} 1 & 0 & -\Delta s \sin(\theta_k + \frac{\Delta\theta}{2}) \\ 0 & 1 & \Delta s \cos(\theta_k + \frac{\Delta\theta}{2}) \\ 0 & 0 & 1 \end{bmatrix}
+$$
+
+假设$ \Delta\phi_R,\Delta\phi_L $的误差相互独立，有控制输入量协方差矩阵：
+$$ \sum_{\Delta} = covar(\Delta\phi_R, \Delta\phi_L) = \begin{bmatrix} k_r||\Delta\phi_R|| & 0 \\ 0 & k_l||\Delta\phi_L|| \end{bmatrix} $$
+
+其更新量为：
+$$ \nabla_{rl}f = \begin{bmatrix} \frac{\partial f}{\partial \Delta\phi_R} & \frac{\partial f}{\partial \Delta\phi_L} \end{bmatrix} = \begin{bmatrix} \frac{r}{2}\cos(\theta_k + \frac{\Delta\theta}{2}) - \frac{r}{4d}\Delta s \sin(\theta_k + \frac{\Delta\theta}{2}) & \frac{r}{2}\cos(\theta_k + \frac{\Delta\theta}{2}) + \frac{r}{4d}\Delta s \sin(\theta_k + \frac{\Delta\theta}{2}) \\ \frac{r}{2}\sin(\theta_k + \frac{\Delta\theta}{2}) + \frac{r}{4d}\Delta s \cos(\theta_k + \frac{\Delta\theta}{2}) & \frac{r}{2}\sin(\theta_k + \frac{\Delta\theta}{2}) - \frac{r}{4d}\Delta s \cos(\theta_k + \frac{\Delta\theta}{2}) \\ \frac{r}{2d} & -\frac{r}{2d} \end{bmatrix} $$
+%------------------------------------------------
+\paragraph{误差转化展示}
+原理见\ref{sec:error}。
+
+\begin{figure}[H]
+\centering
+\subfloat[直线运动]{\includegraphics[width=.3\textwidth]{line}} \quad
+\subfloat[曲线运动]{\includegraphics[width=.3\textwidth]{circle}}
+\caption[里程计误差转化展示]{里程计误差转化展示}
+\end{figure}
+
+直线运动时误差方向与运动方向垂直，曲线运动时则不垂直。
+%------------------------------------------------
 \subsection[激光传感器]{激光传感器}
 %------------------------------------------------
 \subsection[点云匹配与定位]{点云匹配与定位}
@@ -673,5 +784,22 @@ $
 \subsection[SLAM]{SLAM}
 %----------------------------------------------------------------------------------------
 \section{机器人轨迹规划}
+%----------------------------------------------------------------------------------------
+\section{附录}
+%------------------------------------------------
+\subsection[误差转化展示]{误差转化展示}\label{sec:error}
+将误差传播协方差矩阵$ \sum_p $转化成椭圆展示。
+%------------------------------------------------
+\paragraph{计算}
+取$ \sum_p $左上二阶子阵$ \sum_{p_{xy}} = \begin{bmatrix} \sigma_{xx} & \sigma_{xy} \\ \sigma_{xy} & \sigma_{yy} \end{bmatrix} $，计算特征值$ \lambda_1,\lambda_2 $和特征向量$ \overrightarrow{p}_1,\overrightarrow{p}_2 $，其分别表示长短轴的大小和方向，圆心是$ (x_k, y_k) $（直接对$ \sum_p $求取特征根和特征向量，再取前两个，结果与其不同）。
+%------------------------------------------------
+\paragraph{意义}
+\begin{itemize}
+\item 长短轴表示误差在不同方向上的大小，可通过开根号、乘系数等方法调节。
+\item 方向角表示误差传播的主要方向，体现了误差传播的各向异性。
+\item 椭圆大小反映了系统的误差范围，可按置信度缩放。
+\end{itemize}
+
+返回里程计\ref{sec:error back}
 %----------------------------------------------------------------------------------------
 \end{document}

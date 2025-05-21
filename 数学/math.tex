@@ -31,20 +31,15 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 %------------------------------------------------
 \paragraph{充要条件}
 \begin{itemize}
-\item $ A \Rightarrow B $则$ \overline{B} \Rightarrow \overline{A} $，
-A是B的充分条件，B是A的必要条件；$ A \Leftrightarrow B $，A是B的充要条件；
-$ A \nLeftrightarrow  B $，A是B的无关条件。
+\item $ A \Rightarrow B $则$ \overline{B} \Rightarrow \overline{A} $，A是B的充分条件，B是A的必要条件；$ A \Leftrightarrow B $，A是B的充要条件；$ A \nLeftrightarrow  B $，A是B的无关条件。
 \item 证明充要条件：充分性+必要性。
 \end{itemize}
 %------------------------------------------------
 \paragraph{对立判断}
-$ \overline{A \bigcup B} = \overline{A} \bigcap \overline{B}$，
-$ \overline{A \bigcap B} = \overline{A} \bigcup \overline{B}$。
+$ \overline{A \bigcup B} = \overline{A} \bigcap \overline{B}$，$ \overline{A \bigcap B} = \overline{A} \bigcup \overline{B}$。
 %------------------------------------------------
-\paragraph{数学归纳法}\tip{数学归纳法}~\\
-
-$ T(n) $是$ n \in N $的命题,先判断$ T(n_0) $成立，再假设$ T(k) $成立
-（即$ n_0 $到$ k $都成立），推断$ T(k+1) $成立。
+\paragraph{数学归纳法}\tip{数学归纳法}
+$ T(n) $是$ n \in N $的命题,先判断$ T(n_0) $成立，再假设$ T(k) $成立（即$ n_0 $到$ k $都成立），推断$ T(k+1) $成立。
 %------------------------------------------------
 \subsection[解析式]{解析式}
 %------------------------------------------------
@@ -106,18 +101,11 @@ $$ \prod_{i = 1}^{n}x_i = (-1)^n \frac{a_0}{a_n} $$
 \paragraph{常用不等式}\tip{常用不等式}
 \begin{itemize}
 \item 绝对值不等式。
-\item 均值不等式（$ x_i > 0 $）：
-$
-\frac{n}{\Sigma_{i = 1}^n \frac{1}{x_i}}
-\leq \sqrt[n]{\Pi_{i = 1}^n x_i}
-\leq \frac{\Sigma_{i = 1}^n x_i}{n}
-\leq \sqrt{\frac{\Sigma_{i = 1}^n {x_i}^2}{n}}
-$，
-
+\item 均值不等式（$ x_i > 0 $）：$ \frac{n}{\Sigma_{i = 1}^n \frac{1}{x_i}} \leq \sqrt[n]{\Pi_{i = 1}^n x_i} \leq \frac{\Sigma_{i = 1}^n x_i}{n} \leq \sqrt{\frac{\Sigma_{i = 1}^n {x_i}^2}{n}} $， \\
 依次为调和平均数(HM)、几何平均数(GM)、算术平均数(AM)和平方平均数(RMS)。
 \item 三角不等式：$ ||a|-|b|| \leq |a + b| \leq |a| + |b|$， \\
 应用：$ |b| = |b - a + a| \leq |b - a| + |a| $，两个$ a $可以是相等的不同量。
-\item 柯西不等式：$ (\Sigma_{i = 1}^n {a_i}^2)(\Sigma_{i = 1}^n {b_i}^2)\geq (\Sigma_{i=1}^n {a_i}{b_i})^2 $。 \\
+\item 柯西不等式：$ (\Sigma_{i = 1}^n {a_i}^2)(\Sigma_{i = 1}^n {b_i}^2) \geq (\Sigma_{i=1}^n {a_i}{b_i})^2 $。 \\
 应用：$ (A + B)^2 = (a_1 a_2 + b_1 b_2)^2 \leq (a_1^2 + b_1^2)(a_2^2 + b_2^2) $。
 \end{itemize}
 %------------------------------------------------
@@ -143,15 +131,23 @@ $，
 \end{itemize}
 %------------------------------------------------
 \paragraph{坐标系转化}~\\
-
-$ x = r\cos\theta $，$ y = r\sin\theta $。
-
-$ r = \sqrt{x^2 + y^2} $，$ \sin\theta = \frac{y}{\sqrt{x^2 + y^2}} $，$ \cos\theta = \frac{x}{\sqrt{x^2 + y^2}} $。
+$$
+\begin{cases}
+x = r\cos\theta \\
+y = r\sin\theta
+\end{cases}
+\Longrightarrow
+\begin{cases}
+r = \sqrt{x^2 + y^2} \\
+\sin\theta = \frac{y}{\sqrt{x^2 + y^2}} \\
+\cos\theta = \frac{x}{\sqrt{x^2 + y^2}}
+\end{cases}
+$$
 %------------------------------------------------
 \subsection[常数]{常数}
 \begin{itemize}
-\item $ \pi = 3.1415926 \dots $。
-\item $ e = 2.71828 \dots $。
+\item $ \pi = 3.1415926 \dots $
+\item $ e = 2.71828 \dots $
 \end{itemize}
 %----------------------------------------------------------------------------------------
 \section{极限与无穷级数}
@@ -223,36 +219,42 @@ $ log_a 1 $代换$ 0 $。$ u^v = e^{v ln u} $（$ x^x = e^{x ln x} $是初等函
 \item $ \sin^2\alpha + \cos^2\alpha = 1 $：$ \sqrt{\sin^2\alpha - \cos^2\beta} = \sqrt{\sin^2\beta - \cos^2\alpha} $。
 \item 和差化积（积化和差）：
 \begin{align*}
-\sin\alpha + \sin\beta &= 2 \sin(\frac{\alpha + \beta}{2}) \cos(\frac{\alpha - \beta}{2}) \\
+\sin\alpha + \sin\beta &= 2 \sin(\frac{\alpha + \beta}{2}) \cos(\frac{\alpha - \beta}{2}) \quad &
 \sin\alpha - \sin\beta &= 2 \cos(\frac{\alpha + \beta}{2}) \sin(\frac{\alpha - \beta}{2}) \\
-\cos\alpha + \cos\beta &= 2 \cos(\frac{\alpha + \beta}{2}) \cos(\frac{\alpha - \beta}{2}) \\
+\cos\alpha + \cos\beta &= 2 \cos(\frac{\alpha + \beta}{2}) \cos(\frac{\alpha - \beta}{2}) \quad &
 \cos\alpha - \cos\beta &= -2 \sin(\frac{\alpha + \beta}{2}) \sin(\frac{\alpha - \beta}{2})
 \end{align*}
 \item 和角公式：
 \begin{align*}
-\sin(\alpha \pm \beta) &= \sin\alpha \cos\beta \pm \cos\alpha \sin\beta \\
-\cos(\alpha \pm \beta) &= \cos\alpha \cos\beta \mp \sin\alpha \sin\beta \\
+\sin(\alpha \pm \beta) = \sin\alpha \cos\beta \pm \cos\alpha \sin\beta & \quad
+\cos(\alpha \pm \beta) = \cos\alpha \cos\beta \mp \sin\alpha \sin\beta \\
 \tan(\alpha \pm \beta) &= \frac{\tan\alpha \pm \tan\beta}{1 \mp \tan\alpha \tan\beta}
 \end{align*}
-\item 正弦公式：$ \frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} $。 \\
-余弦公式：$ c^2 = a^2 + b^2 - 2ab\cos C $。
-\item $ \csc\theta = \frac{1}{\sin\theta} $，$ \sec\theta = \frac{1}{\cos\theta} $，$ \cot\theta = \frac{1}{\tan\theta} $。 \\
-$ 1 + \tan^2\alpha = \sec^2\alpha $，$ 1+\cot^2\alpha = \csc^2\alpha $。
+\item 
+\begin{itemize}
+\item 正弦公式：$ \frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} $。
+\item 余弦公式：$ c^2 = a^2 + b^2 - 2ab\cos C $。
+\end{itemize}
+\item $ \csc\theta = \frac{1}{\sin\theta} $，$ \sec\theta = \frac{1}{\cos\theta} $，$ \cot\theta = \frac{1}{\tan\theta} $。
+\item $ 1 + \tan^2\alpha = \sec^2\alpha $，$ 1+\cot^2\alpha = \csc^2\alpha $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{反三角函数}
 \begin{itemize}
-\item 主值区间：
-$ \arcsin\theta $为$ [-\frac{\pi}{2}, \frac{\pi}{2}] $，
-$ \arccos\theta $为$ [0, \pi] $，
-$ \arctan\theta $为$ (-\frac{\pi}{2}, \frac{\pi}{2}) $。
+\item 主值区间：$ \arcsin\theta $为$ [-\frac{\pi}{2}, \frac{\pi}{2}] $，$ \arccos\theta $为$ [0, \pi] $，$ \arctan\theta $为$ (-\frac{\pi}{2}, \frac{\pi}{2}) $。
 \item 代换：$ \arcsin x = t $，则$ x = \sin t $，$ \cos t = \sqrt{1 - x^2} $。
-\item $ \sin(\arcsin x) = \cos(\arccos x) = x, x \in [-1, 1]$, \\
-$ \sin(\arccos x) = \cos(\arcsin x) = \sqrt{1 - x^2}, x \in [-1, 1]$, \\
-$ \arcsin(\sin x) =x, x \in [-\frac{\pi}{2}, \frac{\pi}{2}] $, \\
-$ \arccos(\cos x) =x, x \in [0, \pi] $。
-\item $ \arcsin x + \arccos x = \frac{\pi}{2}, x \in [-1, 1] $， \\
-$ \arctan x + arccot x = \frac{\pi}{2}, x \in R $。
+\item 
+\begin{itemize}
+\item $ \sin(\arcsin x) = \cos(\arccos x) = x, x \in [-1, 1] $。
+\item $ \sin(\arccos x) = \cos(\arcsin x) = \sqrt{1 - x^2}, x \in [-1, 1] $。
+\item $ \arcsin(\sin x) =x, x \in [-\frac{\pi}{2}, \frac{\pi}{2}] $。
+\item $ \arccos(\cos x) =x, x \in [0, \pi] $。
+\end{itemize}
+\item 
+\begin{itemize}
+\item $ \arcsin x + \arccos x = \frac{\pi}{2}, x \in [-1, 1] $。
+\item $ \arctan x + arccot x = \frac{\pi}{2}, x \in R $。
+\end{itemize}
 \end{itemize}
 %------------------------------------------------
 \paragraph{双曲函数与反双曲函数}
@@ -264,8 +266,7 @@ $ \arctan x + arccot x = \frac{\pi}{2}, x \in R $。
 \paragraph{初等函数}
 \begin{itemize}
 \item 基本初等函数：常函数、幂函数、指数函数、对数函数、三角函数、反三角函数。
-\item 初等函数：初等函数经有限次四则运算以及复合得到的可以由一个式子表示的函数。
-定义域可以是孤立点集。
+\item 初等函数：初等函数经有限次四则运算以及复合得到的可以由一个式子表示的函数。定义域可以是孤立点集。
 \end{itemize}
 %------------------------------------------------
 \paragraph{分段函数}
@@ -288,28 +289,27 @@ $ \arctan x + arccot x = \frac{\pi}{2}, x \in R $。
 \item 左/右$ \delta $邻域$ U^{\mp}(x_0, \delta) = \{x|0 < \mp (x - x_0) < \delta\} $。
 \end{itemize}
 %------------------------------------------------
-\paragraph{极限}~\\
-$ \lim_{x \to x_0} f(x) = A \Leftrightarrow \forall \varepsilon > 0, \exists \delta > 0, $当$ 0 < |x - x_0|< \delta $时，有$ |f(x) - A| < \varepsilon $。 \\
-$ \lim_{x \to x_0} f(x) = \infty \Leftrightarrow \forall M > 0, \exists \delta > 0, $当$ 0 < |x - x_0|< \delta $时，有$ |f(x)| > M $。 \\
-$ \lim_{x \to \infty} f(x) = A \Leftrightarrow \forall \varepsilon > 0, \exists X > 0, $当$ |x|> X $时，有$ |f(x) - A| < \varepsilon $。
+\paragraph{极限}
+\begin{itemize}
+\item $ \lim_{x \to x_0} f(x) = A \Leftrightarrow \forall \varepsilon > 0, \exists \delta > 0, $当$ 0 < |x - x_0|< \delta $时，有$ |f(x) - A| < \varepsilon $。
+\item $ \lim_{x \to x_0} f(x) = \infty \Leftrightarrow \forall M > 0, \exists \delta > 0, $当$ 0 < |x - x_0|< \delta $时，有$ |f(x)| > M $。
+\item $ \lim_{x \to \infty} f(x) = A \Leftrightarrow \forall \varepsilon > 0, \exists X > 0, $当$ |x|> X $时，有$ |f(x) - A| < \varepsilon $。
+\end{itemize}
 %------------------------------------------------
 \paragraph{无穷与超实数}
 \begin{itemize}
-\item 非零无穷小量$ x^* $：$ \forall n \in N, |x^*| < \frac{1}{n} $；
-无穷大量$ \frac{1}{x^*} $。
-\item 超实数$ X^* = x_0 + x^* = std(X^*) + [X^* - std(X^*)](x_0 \in R) $，
-其中$ std(X^*) $是超实数的标准实数部分。$ x_0 + x^* $为有限超实数，
-$ x_0 + \frac{1}{x^*} $为无穷超实数。
+\item 非零无穷小量$ x^* $：$ \forall n \in N, |x^*| < \frac{1}{n} $；无穷大量$ \frac{1}{x^*} $。
+\item 超实数$ X^* = x_0 + x^* = std(X^*) + [X^* - std(X^*)](x_0 \in R) $，其中$ std(X^*) $是超实数的标准实数部分。$ x_0 + x^* $为有限超实数，$ x_0 + \frac{1}{x^*} $为无穷超实数。
 \item 超实数系$ R^* $：由$ R $与$ x^*, \frac{1}{x^*} $构成。
 \end{itemize}
 %------------------------------------------------
 \paragraph{核与趋核运算}
 \begin{itemize}
 \item 实数核$ x_0 $周围的超实数光环$ x_0 + x^* $有无穷多个。
-\item 极限计算\tip{极限计算}：先对求极限部分做实数运算，再进行求极限的趋核运算
-（替换等价无穷小属于后者，故要在通分后才能做替换）。
+\item 极限计算\tip{极限计算}：先对求极限部分做实数运算，再进行求极限的趋核运算（替换等价无穷小属于后者，故要在通分后才能做替换）。
 \item 趋核速度：
 \end{itemize}
+
 \begin{table}[hbt]
 \caption{趋核运算（极限的四则运算）}
 \centering
@@ -329,8 +329,7 @@ $ f(x) $与$ g(x) $的核值 & \multicolumn{2}{c}{核值} \\
 \subsubsection[性质]{性质}
 %------------------------------------------------
 \paragraph{唯一性}
-极限存在则唯一，若左右极限（$ x \to \infty $为$ x \to \infty^\pm $，
-$ x \to x_0 $为$ x \to x_0^\pm $。）不同，则不存在极限（指数函数、绝对值函数、断点）。
+极限存在则唯一，若左右极限（$ x \to \infty $为$ x \to \infty^\pm $，$ x \to x_0 $为$ x \to x_0^\pm $。）不同，则不存在极限（指数函数、绝对值函数、断点）。
 %------------------------------------------------
 \paragraph{局部有界性}
 \begin{itemize}
@@ -351,8 +350,7 @@ $ x \to x_0 $为$ x \to x_0^\pm $。）不同，则不存在极限（指数函�
 %------------------------------------------------
 \paragraph{运算}
 \begin{itemize}
-\item 有限个无穷小的和是无穷小，无限个无穷小的和不一定是无穷小
-（$ \lim_{x \to \infty}(\sum_{i = 1}^{n}  \frac{1}{n + i}) = ln 2 $）。
+\item 有限个无穷小的和是无穷小，无限个无穷小的和不一定是无穷小（$ \lim_{x \to \infty}(\sum_{i = 1}^{n}  \frac{1}{n + i}) = ln 2 $）。
 \item 有界函数与无穷小的乘积是无穷小，有限个无穷小的乘积是无穷小。
 \item 无穷小（余项）运算：加减法取低阶，乘除法阶数做加减，非零常系数不影响阶数。
 \end{itemize}
@@ -360,7 +358,7 @@ $ x \to x_0 $为$ x \to x_0^\pm $。）不同，则不存在极限（指数函�
 \paragraph{比阶}
 \begin{itemize}
 \item 
-$$
+$
 \lim \frac{\alpha(x)}{\beta(x)}=
 \begin{cases}
 0 &, \alpha(x) \text{是} \beta(x) \text{的高阶无穷小，记} \alpha(x) = o(\beta(x)) \\
@@ -368,9 +366,8 @@ $$
 c \neq 0 &, \alpha(x) \text{是} \beta(x) \text{的同价无穷小} \\
 1 &, \alpha(x) \text{是} \beta(x) \text{的等价无穷小，记} \alpha(x) \sim \beta(x)
 \end{cases}
-$$
-\item $ \lim \frac{\alpha(x)}{[\beta(x)]^k} = c \neq 0, k > 0 $，
-则称$ \alpha(x) $是$ \beta(x) $的$ k $阶无穷小。
+$
+\item $ \lim \frac{\alpha(x)}{[\beta(x)]^k} = c \neq 0, k > 0 $，则称$ \alpha(x) $是$ \beta(x) $的$ k $阶无穷小。
 \item 不是任意两个无穷小都可以比阶。
 \end{itemize}
 %------------------------------------------------
@@ -386,13 +383,11 @@ $$
 
 根据需要的阶数选择替换等价无穷小还是泰勒展开。
 %------------------------------------------------
-\paragraph{无穷大}~\\
-
-$ \lim_{x \to \cdot} f(x) = \infty $，自变量的同一变化过程中，
-无穷大的倒数是无穷小，非零无穷小的倒数是无穷大。
-
-$ x \rightarrow + \infty, ln^\alpha n \leq x^\beta \leq a^x \leq x! \leq x^x $
-（后两者$ x \in N_+ $）。
+\paragraph{无穷大}
+\begin{itemize}
+\item $ \lim_{x \to \cdot} f(x) = \infty $，自变量的同一变化过程中，无穷大的倒数是无穷小，非零无穷小的倒数是无穷大。
+\item $ x \rightarrow + \infty, ln^\alpha n \leq x^\beta \leq a^x \leq x! \leq x^x $（后两者$ x \in N_+ $）。
+\end{itemize}
 %------------------------------------------------
 \subsubsection[计算]{计算}
 %------------------------------------------------
@@ -401,19 +396,14 @@ $ \lim_{x \to 0} (1 + x)^{\frac{1}{x}} = e $，$ \lim_{x \to \infty} (1 + \frac{
 %------------------------------------------------
 \paragraph{洛必达法则}\tip{洛必达法则}
 \begin{itemize}
-\item 使用条件：
-$ \lim_{x \to \cdot} f(x) $与$ \lim_{x \to \cdot} F(x) $同时为$ 0 $或$ \infty $，
-$ \lim_{x \to \cdot} \frac{f'(x)}{F'(x)}(F'(x) \neq 0) $存在或为无穷大
-（区间内$ f(x), F(x) $可导，$ \lim_{x \to \cdot} \frac{f(x)}{F(x)} $有极限$ \nRightarrow $$ \lim_{x \to \cdot} \frac{f'(x)}{F'(x)} $有极限）。
-\item $ \lim_{x \to \cdot} \frac{f(x)}{F(x)} = \lim_{x \to \cdot} \frac{f'(x)}{F'(x)} $
-（仍满足条件可继续使用）。
+\item 使用条件：$ \lim_{x \to \cdot} f(x) $与$ \lim_{x \to \cdot} F(x) $同时为$ 0 $或$ \infty $，$ \lim_{x \to \cdot} \frac{f'(x)}{F'(x)}(F'(x) \neq 0) $存在或为无穷大（区间内$ f(x), F(x) $可导，$ \lim_{x \to \cdot} \frac{f(x)}{F(x)} $有极限$ \nRightarrow $$ \lim_{x \to \cdot} \frac{f'(x)}{F'(x)} $有极限）。
+\item $ \lim_{x \to \cdot} \frac{f(x)}{F(x)} = \lim_{x \to \cdot} \frac{f'(x)}{F'(x)} $（仍满足条件可继续使用）。
 \item 证明：柯西中值定理。
 \end{itemize}
 %------------------------------------------------
 \paragraph{泰勒公式}
 \begin{itemize}
-\item $ f(x) $在$ x = a $处$ n $阶可导，则$ \forall x \in U(a, \delta) $，
-$ f(x) = \sum_{n = 0}^{\infty} \frac{f^{(n)}(a)}{n!}(x - a)^n + \underbrace{o(x^n)}_{\text{佩里亚诺余项}} $。
+\item $ f(x) $在$ x = a $处$ n $阶可导，则$ \forall x \in U(a, \delta) $，$ f(x) = \sum_{n = 0}^{\infty} \frac{f^{(n)}(a)}{n!}(x - a)^n + \underbrace{o(x^n)}_{\text{佩里亚诺余项}} $。
 \item 可以用多项式表达任何一个可导性好的函数，且函数的展开式唯一。
 \item 常用麦克劳林展开\tip{常用麦克劳林展开}\label{sec:taylor}
 \begin{align*}
@@ -432,9 +422,7 @@ $ f(x) = \sum_{n = 0}^{\infty} \frac{f^{(n)}(a)}{n!}(x - a)^n + \underbrace{o(x^
 \end{itemize}
 %------------------------------------------------
 \paragraph{夹逼定理（隐式上下界）}
-$ h(x) \leq f(x) \leq g(x) $，而$ \lim g(x) = \lim h(x) = A $，
-则$ \lim f(x) = A $（条件换为$ \lim [g(x) - h(x)] = 0 $，
-无法说明$ \lim g(x) $和$ \lim h(x) $存在）。
+$ h(x) \leq f(x) \leq g(x) $，而$ \lim g(x) = \lim h(x) = A $，则$ \lim f(x) = A $（条件换为$ \lim [g(x) - h(x)] = 0 $，无法说明$ \lim g(x) $和$ \lim h(x) $存在）。
 %------------------------------------------------
 \paragraph{过程}
 \begin{itemize}
@@ -444,8 +432,7 @@ $ h(x) \leq f(x) \leq g(x) $，而$ \lim g(x) = \lim h(x) = A $，
 %------------------------------------------------
 \paragraph{情形}\tip{极限计算的情形}
 \begin{itemize}
-\item $ \lim_{x \to \cdot} \frac{a_n x^n + \dots + a_1x + a_0}{b_m x^m + \dots + b_1x + b_0} $，
-趋于无穷时看最高次项，趋于0时看最低次项。
+\item $ \lim_{x \to \cdot} \frac{a_n x^n + \dots + a_1x + a_0}{b_m x^m + \dots + b_1x + b_0} $，趋于无穷时看最高次项，趋于0时看最低次项。
 \item $ 0 \cdot \infty $：倒换简单因式。
 \item $ \infty \cdot \infty $：通分或倒换。
 \item $ \infty^0 $或$ 0^0 $：$ u^{v} = e^{vlnu} $。
@@ -457,27 +444,23 @@ $ h(x) \leq f(x) \leq g(x) $，而$ \lim g(x) = \lim h(x) = A $，
 \subsubsection[连续]{连续}
 %------------------------------------------------
 \paragraph{函数存在与函数连续}
-$ f(x) $在$ x_0 $处连续$ \Leftrightarrow $$ f(x) $在$ U(x_0, \delta) $内有定义，\\
-且$ \lim_{x \to x_0}f(x) = (\lim_{x \to x_0^+}f(x) = \lim_{x \to x_0^-}f(x) =) f(x_0) $。
+$ f(x) $在$ x_0 $处连续$ \Leftrightarrow $$ f(x) $在$ U(x_0, \delta) $内有定义，且\\$ \lim_{x \to x_0}f(x) = (\lim_{x \to x_0^+}f(x) = \lim_{x \to x_0^-}f(x) =) f(x_0) $。
 %------------------------------------------------
 \paragraph{连续性运算法则}
 \begin{itemize}
 \item 在$ x_0 $处连续的函数的四则运算（被除数不为$ 0 $）也在$ x_0 $处连续。
-\item $ \varphi (x) $在$ x_0 $处连续，$ f(u) $在$ u_0 $处连续，且$ u_0 = \varphi (x_0) $,
-则$ f[\varphi (x)] $在$ x_0 $处连续。
+\item $ \varphi (x) $在$ x_0 $处连续，$ f(u) $在$ u_0 $处连续，且$ u_0 = \varphi (x_0) $，则$ f[\varphi (x)] $在$ x_0 $处连续。
 \item 区间内单调且连续的函数，在对应区间的反函数单调且连续，且二者单调性相同。
 \end{itemize}
 %------------------------------------------------
 \paragraph{连续函数邻域保号}
-$ f(x) $在$ x_0 $处连续，$ f(x_0) >/< 0 $，则$ \exists \delta $使$ U(x_0, \delta) $内，
-$ f(x) >/< 0 $。
+$ f(x) $在$ x_0 $处连续，$ f(x_0) >/< 0 $，则$ \exists \delta $使$ U(x_0, \delta) $内，$ f(x) >/< 0 $。
 %------------------------------------------------
 \subsubsection[间断]{间断\tip{间断点分类}}
 \begin{itemize}
 \item 第一类间断点：
 \begin{itemize}
-\item 可去/补间断点：$ \lim_{x \to x_0}f(x) = A \neq f(x_0) $，
-补充$ f(x_0) = A $即可连续。
+\item 可去/补间断点：$ \lim_{x \to x_0}f(x) = A \neq f(x_0) $，补充$ f(x_0) = A $即可连续。
 \item 跳跃间断点：$ \lim_{x \to x_0^+}f(x) $和$ \lim_{x \to x_0^-}f(x) $存在但不等。
 \end{itemize}
 \item 第二类间断点：
@@ -493,8 +476,7 @@ $ f(x) >/< 0 $。
 \begin{itemize}
 \item 无穷多项的整标函数。
 \item 通项$ a_n $：递推$ a_n = S_n - S_{n - 1} $。
-\item 前$ n $项和$ S_n $（有限项，不会发散）：$ \frac{\text{等差数列}}{\text{等比数列}} $，
-错位$ (1-q) S_n = S_n - q S_n $。
+\item 前$ n $项和$ S_n $（有限项，不会发散）：$ \frac{\text{等差数列}}{\text{等比数列}} $，错位$ (1-q) S_n = S_n - q S_n $。
 \item 子列$ \{a_{n_k}\} $。
 \end{itemize}
 %------------------------------------------------
@@ -502,91 +484,74 @@ $ f(x) >/< 0 $。
 \begin{itemize}
 \item 等差数列：$ a_n = a_1 +(n - 1)d $，$ S_n = \frac{n}{2}(a_1 + a_n) $。
 \item 等比数列：$ a_n = a_{1}q^{n - 1} $，$ S_n = \frac{a_1(1 - q^n)}{1 - q}(q \neq 1) $。
-\item 
-$ \sum_{k = 1}^{n} k = \frac{n(n + 1)}{2} $， \\
-$ \sum_{k = 1}^{n} k^2 = \frac{n(n + 1)(2n + 1)}{6} $， \\
-$ \sum_{k = 1}^{n} \frac{1}{k(k + 1)} = \frac{n}{n + 1} $。 \\
+\item $ \sum_{k = 1}^{n} k = \frac{n(n + 1)}{2} $，$ \sum_{k = 1}^{n} k^2 = \frac{n(n + 1)(2n + 1)}{6} $，$ \sum_{k = 1}^{n} \frac{1}{k(k + 1)} = \frac{n}{n + 1} $。 \\
 \end{itemize}
 %------------------------------------------------
 \paragraph{性质}
 \begin{itemize}
-\item 单调性：单调递增（减）与单调不减（增），
-可用作差、作比、数学归纳法、不等式和导数等方法证明。
-\item 有界性：$ \forall n \in N_+ ,\exists M > 0, |a_n| \neq M $，
-可用放缩、最值和基本不等式等方法证明。
+\item 单调性：单调递增（减）与单调不减（增），可用作差、作比、数学归纳法、不等式和导数等方法证明。
+\item 有界性：$ \forall n \in N_+ ,\exists M > 0, |a_n| \neq M $，可用放缩、最值和基本不等式等方法证明。
 \end{itemize}
 %------------------------------------------------
 \subsection[数列极限]{数列极限}
 %------------------------------------------------
 \subsubsection[收敛与发散]{收敛与发散}
-$ \lim_{n \to \infty} x_n = a(x_n \to a(n \to \infty)) $，
-$ a = 0 $时，$ x_n $为$ n \to \infty $的无穷小量；
-$ a = \infty $时，$ x_n $为$ n \to \infty $的无穷大量。
+$ \lim_{n \to \infty} x_n = a(x_n \to a(n \to \infty)) $，$ a = 0 $时，$ x_n $为$ n \to \infty $的无穷小量；$ a = \infty $时，$ x_n $为$ n \to \infty $的无穷大量。
 %------------------------------------------------
 \paragraph{收敛数列性质}
 \begin{itemize}
 \item 唯一性：极限存在则唯一。
 \item 全局有界性：极限存在则有界。
-\item 保号性：$ \lim_{n \to \infty} x_n = a >(<) b $，则$ \exists N > 0 $，
-当$ n > N $时，$ x_n >(<) b $； $ \{x_n\} $从某项开始$ x_n \geq(\leq) b $，
-且$ \lim_{n \to \infty} x_n = a $，则$ a \geq(\leq) b $。
+\item 保号性：$ \lim_{n \to \infty} x_n = a >(<) b $，则$ \exists N > 0 $，当$ n > N $时，$ x_n >(<) b $； $ \{x_n\} $从某项开始$ x_n \geq(\leq) b $，且$ \lim_{n \to \infty} x_n = a $，则$ a \geq(\leq) b $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{数列收敛与子列收敛}
 \begin{itemize}
 \item $ \{a_n\} $收敛则$ \forall \{a_{n_k}\} $收敛，且极限一致。
 \item 证明发散：$ \{a_{n_k}\} $发散或不同$ \{a_{n_k}\} $收敛到不同值。
-\item 证明$ \lim_{n \to \infty} a_n = 0 $：对$ \lim_{n \to \infty} |a_n| $
-使用夹逼定理，证明其上界为$ 0 $。
+\item 证明$ \lim_{n \to \infty} a_n = 0 $：对$ \lim_{n \to \infty} |a_n| $使用夹逼定理，证明其上界为$ 0 $。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[计算]{计算}
 %------------------------------------------------
 \paragraph{四则运算}
-$ \lim_{n \to \infty} a_n + b_n $存在$ \nRightarrow $$ \lim_{n \to \infty} a_n, \lim_{n \to \infty} b_n $存在；
-$ \lim_{n \to \infty} a_n, \lim_{n \to \infty} b_n $存在$ \Rightarrow $$ \lim_{n \to \infty} a_n + b_n $存在。
+$ \lim_{n \to \infty} a_n + b_n $存在$ \nRightarrow $$ \lim_{n \to \infty} a_n, \lim_{n \to \infty} b_n $存在；$ \lim_{n \to \infty} a_n, \lim_{n \to \infty} b_n $存在$ \Rightarrow $$ \lim_{n \to \infty} a_n + b_n $存在。
 %------------------------------------------------
-\paragraph{海涅定理（数列极限与函数极限的联系）}\tip{海涅定理（数列极限与函数极限的联系）}~\\
-
-$ \mathring{U}(x_0, \delta) $内定义的$ f(x) $，$ \lim_{n \to \infty} f(x) = A $
-$ \Leftrightarrow $$ \forall \mathring{U}(x_0, \delta) $内以$ x_0 $为极限的数列
-$ \{x_n\}(x_n \neq x_0) $，$ \lim_{n \to \infty} f(x) = A $存在。
-常用$ \lim_{x \to 0} f(x) = A $与$ \lim_{n \to \infty} f(\frac{1}{n}) = A $。
+\paragraph{海涅定理（数列极限与函数极限的联系）}\tip{海涅定理（数列极限与函数极限的联系）}
+$ \mathring{U}(x_0, \delta) $内定义的$ f(x) $，$ \lim_{n \to \infty} f(x) = A $$ \Leftrightarrow $$ \forall \mathring{U}(x_0, \delta) $内以$ x_0 $为极限的数列$ \{x_n\}(x_n \neq x_0) $，$ \lim_{n \to \infty} f(x) = A $存在。常用$ \lim_{x \to 0} f(x) = A $与$ \lim_{n \to \infty} f(\frac{1}{n}) = A $。
 %------------------------------------------------
 \paragraph{夹逼定理}
-$ \exists n_0 \in N_+, n > n_0 $时，$ y_n \leq x_n \leq z_n $，
-且$ \lim_{n \to \infty} y_n = \lim_{n \to \infty} z_n = a $，则$ \lim_{n \to \infty} x_n = a $。
+$ \exists n_0 \in N_+, n > n_0 $时，$ y_n \leq x_n \leq z_n $，且$ \lim_{n \to \infty} y_n = \lim_{n \to \infty} z_n = a $，则$ \lim_{n \to \infty} x_n = a $。
 %------------------------------------------------
 \paragraph{常用放缩}\tip{常用数列缩放}
 \begin{itemize}
-\item $ n u_{min} \leq u_1 + u_2 + \dots +u_n \leq n u_{max} $， \\
+\item 
+$ n u_{min} \leq u_1 + u_2 + \dots +u_n \leq n u_{max} $， \\
 当$ u_i \geq  0 $时，$ u_{max} \leq u_1 + u_2 + \dots +u_n \leq n u_{max} $。
 \item 三角不等式、均值不等式。
 \item 同号元素幂放缩。
-\item 反向作比：如$ n \pi < x < (n + 1)\pi, 2n < S(x) < 2(n + 1) $，
-则$ \frac{2n}{(n + 1)\pi} < \frac{S(x)}{x} < \frac{2(n + 1)}{n \pi} $。
-\item $ \frac{2}{\pi}x < \sin x < x < \tan x < \frac{4}{\pi}x $，
-四个$ < $的区间分别是$ (0, \frac{\pi}{2}), (0, \infty), (0, \frac{\pi}{2}), (0, \frac{\pi}{4}) $。 \\
-$ \arctan x < x < \arcsin x, [0, 1] $。 \\
-$ ln(x + 1) \leq x \leq e^{x - 1} $。 \\
-$ \frac{1}{1 + x} < ln(1 + \frac{1}{x}) < \frac{1}{x}, \frac{x}{1 + x} < ln(1 + x) < x, x > 0 $。
+\item 反向作比：如$ n \pi < x < (n + 1)\pi, 2n < S(x) < 2(n + 1) $，则$ \frac{2n}{(n + 1)\pi} < \frac{S(x)}{x} < \frac{2(n + 1)}{n \pi} $。
+\item 
+\begin{itemize}
+\item $ \frac{2}{\pi}x < \sin x < x < \tan x < \frac{4}{\pi}x $，四个$ < $的区间分别是$ (0, \frac{\pi}{2}), (0, \infty), (0, \frac{\pi}{2}), (0, \frac{\pi}{4}) $。
+\item $ \arctan x < x < \arcsin x, [0, 1] $。
+\item $ ln(x + 1) \leq x \leq e^{x - 1} $。
+\item $ \frac{1}{1 + x} < ln(1 + \frac{1}{x}) < \frac{1}{x}, \frac{x}{1 + x} < ln(1 + x) < x, x > 0 $。
+\end{itemize}
 \item 闭区间上函数最值。
 \item 压缩映射原理（$ n = 1, 2, \dots $）：
 \begin{itemize}
-\item $ \exists k \in (0, 1), |x_{n + 1} - a| \leq k|x_n - a| $，
-则$ \{x_n\} $收敛于$ a $。
-\item $ x_{n + 1} = f(x_n) $，$ f(x) $可导且$ \forall x \in R, |f'(x)| \leq k < 1 $，
-$ a $是$ f(x) = x $的唯一解，则$ \{x_n\} $收敛于$ a $。
+\item $ \exists k \in (0, 1), |x_{n + 1} - a| \leq k|x_n - a| $，则$ \{x_n\} $收敛于$ a $。
+\item $ x_{n + 1} = f(x_n) $，$ f(x) $可导且$ \forall x \in R, |f'(x)| \leq k < 1 $，$ a $是$ f(x) = x $的唯一解，则$ \{x_n\} $收敛于$ a $。
 \end{itemize}
 \item $ \lim_{n \to \infty} (a^n + b^n)^{\frac{1}{n}} = min\{a, b\} $。
 \end{itemize}
 %------------------------------------------------
-\paragraph{单调有界准则}$ \{x_n\} $单调增加/减少且有上/下界$ \Rightarrow $
-$ \lim_{n \to \infty} x_n $存在。即$ x_n \leq x_{n + 1} \leq a $或
-$ a \leq x_{n + 1} \leq x_n $，$ \lim_{n \to \infty} x_n $存在。
+\paragraph{单调有界准则}
+$ \{x_n\} $单调增加/减少且有上/下界$ \Rightarrow $$ \lim_{n \to \infty} x_n $存在。即$ x_n \leq x_{n + 1} \leq a $或$ a \leq x_{n + 1} \leq x_n $，$ \lim_{n \to \infty} x_n $存在。
 %------------------------------------------------
-\paragraph{收敛速度}$ \{x_n\} $与$ \{y_n\} $在$ n \to \infty $时都趋于$ a $
-，$ u_n = |x_n - a| $，$ v_n = |y_n - a| $，无穷小量阶数高的收敛速度快。
+\paragraph{收敛速度}
+$ \{x_n\} $与$ \{y_n\} $在$ n \to \infty $时都趋于$ a $，$ u_n = |x_n - a| $，$ v_n = |y_n - a| $，无穷小量阶数高的收敛速度快。
 %------------------------------------------------
 \subsection[无穷级数]{无穷级数}
 %----------------------------------------------------------------------------------------
@@ -605,8 +570,7 @@ f'(x_0) &= \frac{dy}{dx}|_{x = x_0} = \frac{d[f(x)]}{dx}|_{x = x_0} = y'(x_0) = 
 = \lim_{\vartriangle x \to 0}\frac{f(x_0 + \vartriangle x) - f(x_0)}{(x_0 + \vartriangle x) - x_0} \text{，增量式} \\
 &= \lim_{x \to x_0}\frac{f(x) - f(x_0)}{(x) - x_0} \text{，函数式}
 \end{align*}
-\item $ y = f(x) $在$ x_0 $处可导$ \Leftrightarrow $$ y = f(x) $在$ x_0 $处导数存在
-$ \Leftrightarrow $$ f'(x) = A $。
+\item $ y = f(x) $在$ x_0 $处可导$ \Leftrightarrow $$ y = f(x) $在$ x_0 $处导数存在$ \Leftrightarrow $$ f'(x) = A $。
 \item 两个单侧导数存在且相等$ \Leftrightarrow $可导。
 \item 可导$ \Rightarrow $连续。
 \end{itemize}
@@ -617,18 +581,16 @@ $ \Leftrightarrow $$ f'(x) = A $。
 \item $ f(x) $与$ |f(x)| $：
 \begin{itemize}
 \item 连续性：$ f(x) $在$ x_0 $连续$ \Rightarrow $$ |f(x)| $在$ x_0 $连续。
-\item 可导性：$ f(x) $在$ x_0 $可导，当$ f(x_0) \neq 0 $时，$ |f(x)| $在$ x_0 $可导；
-当$ f(x_0) = 0 $时，$ f'(x_0) = 0 $则$ |f(x)| $在$ x_0 $可导，
-$ f'(x_0) \neq 0 $则$ |f(x)| $在$ x_0 $不可导。
+\item 可导性：$ f(x) $在$ x_0 $可导，当$ f(x_0) \neq 0 $时，$ |f(x)| $在$ x_0 $可导；当$ f(x_0) = 0 $时，$ f'(x_0) = 0 $则$ |f(x)| $在$ x_0 $可导，$ f'(x_0) \neq 0 $则$ |f(x)| $在$ x_0 $不可导。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
 \paragraph{几何意义}
 \begin{itemize}
-\item 驻点：导数为$ 0 $的点。\\
+\item 
+驻点：导数为$ 0 $的点。\\
 角点：$ f'(x_0^+) \neq f'(x_0^-) $，不可导，无切线。
-\item 切线斜率$ f'(x_0) = k $：切线方程$ y - y_0 = f'(x_0)(x - x_0) $，
-法线方程$ y - y_0 = -\frac{1}{f'(x_0)}(x - x_0),(f'(x_0) \neq 0) $。
+\item 切线斜率$ f'(x_0) = k $：切线方程$ y - y_0 = f'(x_0)(x - x_0) $，法线方程$ y - y_0 = -\frac{1}{f'(x_0)}(x - x_0),(f'(x_0) \neq 0) $。
 \item 切线存在$ \Rightarrow $导数存在（无穷导数处有切线，但视为无导数）。
 \end{itemize}
 %------------------------------------------------
@@ -638,9 +600,7 @@ $ f^{n}(x_0) $存在$ \Rightarrow $$ f^{n - 1}(x_0) $在$ x_0 $附近有定义�
 \subsubsection[微分]{微分}
 %------------------------------------------------
 \paragraph{可微与微分}
-$ \exists$与$ \vartriangle x $无关的常数$ A $，
-使$ \vartriangle y = f(x_0 + \vartriangle x) - f(x) = A \vartriangle x + o(\vartriangle x) $，
-则称$ f(x) $在$ x_0 $可微，线性主部$ dy|_{x = x_0} = A \vartriangle x = f'(x_0)dx $称为$ f(x) $在$ x_0 $的微分。
+$ \exists$与$ \vartriangle x $无关的常数$ A $，使$ \vartriangle y = f(x_0 + \vartriangle x) - f(x) = A \vartriangle x + o(\vartriangle x) $，则称$ f(x) $在$ x_0 $可微，线性主部$ dy|_{x = x_0} = A \vartriangle x = f'(x_0)dx $称为$ f(x) $在$ x_0 $的微分。
 %------------------------------------------------
 \paragraph{判别}
 \begin{itemize}
@@ -655,33 +615,30 @@ $ \exists$与$ \vartriangle x $无关的常数$ A $，
 通过$ f'(x_0) = \lim_{x \to x_0}\frac{f(x)-f(x_0)}{(x) - x_0} $，反向凑形式求$ f'(x_0) $。
 %------------------------------------------------
 \paragraph{$ \vartriangle y $与$ dy $}
-$ \lim_{\vartriangle x \to 0} \frac{\vartriangle y - dy}{dy} = \lim_{\vartriangle x \to 0} \frac{o(\vartriangle x)}{f'(x_0)\vartriangle x} = 0 $，
-$ \vartriangle y - dy $是$ dy $的高阶无穷小。
+$ \lim_{\vartriangle x \to 0} \frac{\vartriangle y - dy}{dy} = \lim_{\vartriangle x \to 0} \frac{o(\vartriangle x)}{f'(x_0)\vartriangle x} = 0 $，$ \vartriangle y - dy $是$ dy $的高阶无穷小。
 %------------------------------------------------
 \subsection[导数的计算]{导数的计算}
 %------------------------------------------------
-\subsubsection[求导公式]{求导公式}
+\subsubsection[求导公式]{求导公式\tip{（不同函数的）求导法则}}
 %------------------------------------------------
 \paragraph{常用求导公式}\tip{常用求导公式}
 \begin{align*}
 &(x^a)' = ax^{a - 1} \\
-&(a^x)' = a^x lna,(a > 0, a \neq 1) &(e^x)' = e^x \\
-&(log_a x)' = \frac{1}{x lna},(a > 0, a \neq 1) &(ln x)' = \frac{1}{x}\\
-&(\sin x)' = \cos x &(\cos x)' = -\sin x \\
-&(\tan x)' = \frac{1}{\cos^2 x} = \sec^2 x &(\cot x)' = -\frac{1}{\sin^2 x} = -\csc^2 x \\
-&(\sec x)' = \sec x \tan x &(\csc x)' = -\csc x \cot x \\
-&(\arcsin x)' = \frac{1}{\sqrt{1 - x^2}} &(\arccos x)' = -\frac{1}{\sqrt{1 - x^2}} \\
-&(arctan x)' = \frac{1}{1 + x^2} &(arccot x)' = -\frac{1}{1 + x^2} \\
+&(a^x)' = a^x lna,(a > 0, a \neq 1)& &(e^x)' = e^x \\
+&(log_a x)' = \frac{1}{x lna},(a > 0, a \neq 1)& &(ln x)' = \frac{1}{x} \\
+&(\sin x)' = \cos x& &(\cos x)' = -\sin x \\
+&(\tan x)' = \frac{1}{\cos^2 x} = \sec^2 x& &(\cot x)' = -\frac{1}{\sin^2 x} = -\csc^2 x \\
+&(\sec x)' = \sec x \tan x& &(\csc x)' = -\csc x \cot x \\
+&(\arcsin x)' = \frac{1}{\sqrt{1 - x^2}}& &(\arccos x)' = -\frac{1}{\sqrt{1 - x^2}} \\
+&(arctan x)' = \frac{1}{1 + x^2}& &(arccot x)' = -\frac{1}{1 + x^2} \\
 &(\sqrt{x^2 + a^2})' = \frac{x}{\sqrt{x^2 + a^2}} \\
-&[ln(x + \sqrt{x^2 + 1})]' = \frac{1}{\sqrt{x^2 + 1}} &[ln(x + \sqrt{x^2 - 1})]' = \frac{1}{\sqrt{x^2 - 1}} 
+&[ln(x + \sqrt{x^2 + 1})]' = \frac{1}{\sqrt{x^2 + 1}}& &[ln(x + \sqrt{x^2 - 1})]' = \frac{1}{\sqrt{x^2 - 1}} 
 \end{align*}
-\tip{（不同函数的）求导法则}
 %------------------------------------------------
 \paragraph{四则运算}
 \begin{itemize}
 \item 线性。
-\item 积：$ [u(x)v(x)]' = u'(x)v(x) + u(x)v'(x) $。多项连乘求导问题，
-可化为一项与剩余项的积，通过该项值为$ 0 $消去剩余项求导。
+\item 积：$ [u(x)v(x)]' = u'(x)v(x) + u(x)v'(x) $。多项连乘求导问题，可化为一项与剩余项的积，通过该项值为$ 0 $消去剩余项求导。
 \item 商：$ [\frac{u(x)}{v{x}}]' = \frac{u'(x)v(x) - u(x)v'(x)}{v^2(x)}, v(x) \neq 0 $。
 \end{itemize}
 %------------------------------------------------
@@ -704,8 +661,7 @@ x = \varphi (t) \\
 y = \psi (t)
 \end{cases}
 $，
-$ \frac{dy}{dx} = \frac{\psi' (t)}{\varphi' (t)} $，
-$ \frac{d^2y}{dx^2} = \frac{\frac{dy}{dx}}{dt} \frac{dt}{dx} = \frac{\psi'' (t) \varphi' (t) - \varphi'' (t) \psi' (t)}{[\varphi' (t)]^3} $。
+$ \frac{dy}{dx} = \frac{\psi' (t)}{\varphi' (t)} $，$ \frac{d^2y}{dx^2} = \frac{\frac{dy}{dx}}{dt} \frac{dt}{dx} = \frac{\psi'' (t) \varphi' (t) - \varphi'' (t) \psi' (t)}{[\varphi' (t)]^3} $。
 %------------------------------------------------
 \paragraph{技巧}
 \begin{itemize}
@@ -727,8 +683,7 @@ $ \frac{d^2y}{dx^2} = \frac{\frac{dy}{dx}}{dt} \frac{dt}{dx} = \frac{\psi'' (t) 
 反复求导得到通项。
 %------------------------------------------------
 \paragraph{莱布尼茨公式}\tip{莱布尼茨公式（高阶导数计算）}
-$ (u \pm v)^{(n)} = u^{(n)} \pm v^{(n)} $，
-$ (uv)^{(n)} = \sum_{i = 0}^n C_n^i u^{(n - i)}v^{(i)} $。
+$ (u \pm v)^{(n)} = u^{(n)} \pm v^{(n)} $，$ (uv)^{(n)} = \sum_{i = 0}^n C_n^i u^{(n - i)}v^{(i)} $。
 %------------------------------------------------
 \paragraph{泰勒展开}
 见\ref{sec:taylor}。
@@ -745,8 +700,7 @@ $ \frac{dA}{dB} = \frac{dA}{dC} \cdot \frac{dC}{dB} $。
 %------------------------------------------------
 \paragraph{极值}
 \begin{itemize}
-\item $ \forall x \in U(x_0, \delta), f(x) \leq/\geq f(x_0) $，
-则$ f(x) $在$ x_0 $取极大/小值。
+\item $ \forall x \in U(x_0, \delta), f(x) \leq/\geq f(x_0) $，则$ f(x) $在$ x_0 $取极大/小值。
 \item 局部非端点，间断点可能是。
 \item 常函数处处极值。
 \end{itemize}
@@ -754,20 +708,16 @@ $ \frac{dA}{dB} = \frac{dA}{dC} \cdot \frac{dC}{dB} $。
 \paragraph{极值点条件}
 \begin{itemize}
 \item $ f(x) $在$ x_0 $可导并取极值$ \Rightarrow $$ f'(x) = 0 $。
-\item $ U^\pm (x_0, \delta) $内$ f'(x) $异号（$ x_0 $处不一定可导）
-$ \Rightarrow $$ f(x) $在$ x_0 $取极值。
-\item $ f'(x_0) = 0 , f''(x) </> 0 $$ \Rightarrow $
-$ f(x) $在$ x_0 $取极大/小值（可推广到偶数阶）。
+\item $ U^\pm (x_0, \delta) $内$ f'(x) $异号（$ x_0 $处不一定可导）$ \Rightarrow $$ f(x) $在$ x_0 $取极值。
+\item $ f'(x_0) = 0 , f''(x) </> 0 $$ \Rightarrow $$ f(x) $在$ x_0 $取极大/小值（可推广到偶数阶）。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[凹凸性与拐点]{凹凸性与拐点}
 %------------------------------------------------
 \paragraph{凹凸性}
 \begin{itemize}
-\item 连续区间内，$ \forall x_1,x_2, f(\frac{x_1}{2} + \frac{x_2}{2}) </> \frac{f(x_1)}{2} + \frac{f(x_2)}{2} $
-$ \Rightarrow $凹/凸弧（可将$ \frac{1}{2} + \frac{1}{2} $拓展为任意非负凸组合）。
-\item 可导区间内，$ \forall x,x_0, x \neq x_0, f(x_0) + f'(x_0) (x - x_0) </> f(x) $
-$ \Rightarrow $凹/凸弧。
+\item 连续区间内，$ \forall x_1,x_2, f(\frac{x_1}{2} + \frac{x_2}{2}) </> \frac{f(x_1)}{2} + \frac{f(x_2)}{2} $$ \Rightarrow $凹/凸弧（可将$ \frac{1}{2} + \frac{1}{2} $拓展为任意非负凸组合）。
+\item 可导区间内，$ \forall x,x_0, x \neq x_0, f(x_0) + f'(x_0) (x - x_0) </> f(x) $$ \Rightarrow $凹/凸弧。
 \item 二阶可导区间内，$ f''(x) >/< 0 $$ \Rightarrow $凹/凸弧。
 \end{itemize}
 %------------------------------------------------
@@ -782,12 +732,8 @@ $ \Rightarrow $凹/凸弧。
 \paragraph{极值点与拐点讨论}
 \begin{itemize}
 \item 曲线的可导点不可同时为极值点和拐点，但不可导点可以。
-\item $ f(x) = (x - a)^n g(x), n > 1, g(a) \neq 0 $，$ n $为偶数时，
-$ x = a $是$ f(x) $的极值点；$ n $为奇数时，$ x = a $是$ f(x) $的拐点。
-\item $ f(x) = \Pi_{i = 1}^k (x - a_i)^{ni} $，$ a_i $两两不等，
-$ n_i $为正整数，为$ 1 $的有$ k_1 $个，为偶数的有$ k_2 $个，
-为非$ 1 $奇数的有$ k_3 $个，则$ f(x) $的极值点数为$ k_1 + 2K_2 + k_3 - 1 $，
-拐点数为$ k_1 + 2K_2 + 3k_3 - 2 $。
+\item $ f(x) = (x - a)^n g(x), n > 1, g(a) \neq 0 $，$ n $为偶数时，$ x = a $是$ f(x) $的极值点；$ n $为奇数时，$ x = a $是$ f(x) $的拐点。
+\item $ f(x) = \Pi_{i = 1}^k (x - a_i)^{ni} $，$ a_i $两两不等，$ n_i $为正整数，为$ 1 $的有$ k_1 $个，为偶数的有$ k_2 $个，为非$ 1 $奇数的有$ k_3 $个，则$ f(x) $的极值点数为$ k_1 + 2K_2 + k_3 - 1 $，拐点数为$ k_1 + 2K_2 + 3k_3 - 2 $。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[其他]{其他}
@@ -815,8 +761,7 @@ $ n_i $为正整数，为$ 1 $的有$ k_1 $个，为偶数的有$ k_2 $个，
 %------------------------------------------------
 \paragraph{曲率}
 \begin{itemize}
-\item 曲率$ k = \frac{|y^n|}{[1 + (y')^2]^{\frac{3}{2}}} $，
-曲率半径$ R = \frac{1}{k} $。
+\item 曲率$ k = \frac{|y^n|}{[1 + (y')^2]^{\frac{3}{2}}} $，曲率半径$ R = \frac{1}{k} $。
 \item 弯曲程度越大，曲率越大，曲率半径越小。
 \end{itemize}
 %------------------------------------------------
@@ -849,8 +794,7 @@ $ f(x) $在$ x_0 $处可导并取得极值，则$ f'(x_0) = 0 $。
 $ f(x) $在$ [a, b] $上可导，$ f'_+(a)f'_-(b) < 0 $时，$ \exists \xi \in (a, b), f'(\xi) = 0 $。
 %------------------------------------------------
 \paragraph{罗尔定理}\tip{罗尔定理（导数为零）}
-$ f(x) $在$ [a, b] $上连续，$ (a, b) $上可导，且$ f(a) = f(b) / \lim_{x \to a^+} f(x) = \lim_{x \to b^-} f(x) $，
-则$ \exists \xi \in (a, b), f'(\xi) = 0 $。
+$ f(x) $在$ [a, b] $上连续，$ (a, b) $上可导，且$ f(a) = f(b) / \lim_{x \to a^+} f(x) = \lim_{x \to b^-} f(x) $，则$ \exists \xi \in (a, b), f'(\xi) = 0 $。
 \begin{itemize}
 \item 二阶导数则要三个点函数值相等。
 \item 高阶导数为零用罗尔定理，不为零用泰勒公式。
@@ -866,9 +810,10 @@ $ f(x) $在$ [a, b] $上连续，$ (a, b) $上可导，且$ f(a) = f(b) / \lim_{
 \end{itemize}
 %------------------------------------------------
 \paragraph{拉格朗日中值定理}\tip{拉格朗日中值定理}
-$ f(x) $在$ [a, b] $上连续，$ (a, b) $上可导，则$ \exists \xi \in (a, b), f'(\xi) = \frac{f(b) - f(a)}{b - a} $。
-
-$ |f(x)| = |f(x_0) + f'(\xi)(x - x_0)| \leq |f(x_0)| + |f'(\xi)||(x - x_0)| $，区间内$ f'(x) $有界则$ f(x) $有界。
+\begin{itemize}
+\item $ f(x) $在$ [a, b] $上连续，$ (a, b) $上可导，则$ \exists \xi \in (a, b), f'(\xi) = \frac{f(b) - f(a)}{b - a} $。
+\item 应用：$ |f(x)| = |f(x_0) + f'(\xi)(x - x_0)| \leq |f(x_0)| + |f'(\xi)||(x - x_0)| $，区间内$ f'(x) $有界则$ f(x) $有界。
+\end{itemize}
 %------------------------------------------------
 \paragraph{柯西中值定理}
 $ f(x),g(x) $在$ [a, b] $上连续，$ (a, b) $上可导，$ g'(x) \neq 0 $，则$ \exists \xi \in (a, b), \frac{f'(\xi)}{g'(\xi)} = \frac{f(b) - f(a)}{g(b) - g(a)} $。
@@ -929,10 +874,8 @@ $$
 %------------------------------------------------
 \paragraph{逆序数}
 \begin{itemize}
-\item 排列$ i_i i_2 \dots i_s \dots i_r \dots i_n $中，$ s < r, i_s > i_r $
-称为逆序，$ \tau $为逆序（总）数，根据$ \tau $的奇/偶划分奇/偶排列，无逆序称为自然排序。
-\item $ |a|_{n \times n} = \sum_{j_1 j_2 \dots j_n}(-1)^{\tau(j_1 j_2 \dots j_n)} a_{1 j_{1}} a_{2 j_{2}} \dots a_{n j_{n}} $，
-$ n! $项之和。
+\item 排列$ i_i i_2 \dots i_s \dots i_r \dots i_n $中，$ s < r, i_s > i_r $称为逆序，$ \tau $为逆序（总）数，根据$ \tau $的奇/偶划分奇/偶排列，无逆序称为自然排序。
+\item $ |a|_{n \times n} = \sum_{j_1 j_2 \dots j_n}(-1)^{\tau(j_1 j_2 \dots j_n)} a_{1 j_{1}} a_{2 j_{2}} \dots a_{n j_{n}} $，$ n! $项之和。
 \end{itemize}
 %------------------------------------------------
 \paragraph{展开定理（降阶计算）}
@@ -940,8 +883,7 @@ $ n! $项之和。
 \item 余子式$ M_{ij} $为去掉$ i $行$ j $列的剩余行列式；代数余子式$ A_{ij} = (-1)^{i+j} M_{ij} $。
 \item 展开公式：$ |A| = \sum_{i/j = 1}^n a_{ij}A_{ij}, j/i = 1, 2, \dots, n $。
 \item 某行/列元素乘以另一行/列元素对应的代数余子式之和为$ 0 $。
-\item （代数）余子式的线性组合：某行/列代数余子式的线性组合相当于将该行/列替换为
-相应系数后的行列式。
+\item （代数）余子式的线性组合：某行/列代数余子式的线性组合相当于将该行/列替换为相应系数后的行列式。
 \end{itemize}
 %------------------------------------------------
 \paragraph{性质}
@@ -956,65 +898,24 @@ $ n! $项之和。
 %------------------------------------------------
 \paragraph{重要行列式}
 \begin{itemize}
-\item 对角线行列式（上/下三角形行列式）： \\
-$
-\begin{vmatrix}
-a_{1 1} & 0 & \dots & 0 \\
-0 & a_{2 2} & \dots & 0 \\
-\vdots & \vdots & & \vdots \\
-0 & 0 & \dots & a_{n n}
-\end{vmatrix} = 
-\begin{vmatrix}
-a_{1 1} & a_{1 2} & \dots & a_{1 n} \\
-0 & a_{2 2} & \dots & a_{2 n} \\
-\vdots & \vdots & & \vdots \\
-0 & 0 & \dots & a_{n n}
-\end{vmatrix} = 
-\begin{vmatrix}
-a_{1 1} & 0 & \dots & 0 \\
-a_{2 1} & a_{2 2} & \dots & 0 \\
-\vdots & \vdots & & \vdots \\
-a_{n 1} & a_{n 2} & \dots & a_{n n}
-\end{vmatrix} = 
-a_{1 1} a_{2 2} \dots a_{n n}
-$， \\
-$
-\begin{vmatrix}
-0 & \dots & 0 & a_{1 n} \\
-0 & \dots & a_{2 n - 1} & 0 \\
-\vdots & & \vdots & \vdots \\
-a_{n 1} & \dots & 0 & 0
-\end{vmatrix} = 
-\begin{vmatrix}
-a_{1 1} & \dots & a_{1 n - 1} & a_{1 n} \\
-a_{2 1} & \dots & a_{2 n - 1} & 0 \\
-\vdots & & \vdots & \vdots \\
-a_{n 1} & \dots & 0 & 0
-\end{vmatrix} = 
-\begin{vmatrix}
-0 & \dots & 0 & a_{1 n} \\
-0 & \dots & a_{2 n - 1} & a_{2 n} \\
-\vdots & & \vdots & \vdots \\
-a_{n 1} & \dots & a_{n n - 1} & a_{n n}
-\end{vmatrix} \\
+\item 对角线行列式（上/下三角形行列式）：
+{\footnotesize
+\begin{align*}
+&\begin{vmatrix} a_{1 1} & 0 & \dots & 0 \\ 0 & a_{2 2} & \dots & 0 \\ \vdots & \vdots & & \vdots \\ 0 & 0 & \dots & a_{n n} \end{vmatrix} 
+= \begin{vmatrix} a_{1 1} & a_{1 2} & \dots & a_{1 n} \\ 0 & a_{2 2} & \dots & a_{2 n} \\ \vdots & \vdots & & \vdots \\ 0 & 0 & \dots & a_{n n} \end{vmatrix} 
+= \begin{vmatrix} a_{1 1} & 0 & \dots & 0 \\ a_{2 1} & a_{2 2} & \dots & 0 \\ \vdots & \vdots & & \vdots \\ a_{n 1} & a_{n 2} & \dots & a_{n n} \end{vmatrix}
+= a_{1 1} a_{2 2} \dots a_{n n} \\  
+&\begin{vmatrix} 0 & \dots & 0 & a_{1 n} \\ 0 & \dots & a_{2 n - 1} & 0 \\ \vdots & & \vdots & \vdots \\ a_{n 1} & \dots & 0 & 0 \end{vmatrix} 
+= \begin{vmatrix} a_{1 1} & \dots & a_{1 n - 1} & a_{1 n} \\ a_{2 1} & \dots & a_{2 n - 1} & 0 \\ \vdots & & \vdots & \vdots \\ a_{n 1} & \dots & 0 & 0 \end{vmatrix} 
+= \begin{vmatrix} 0 & \dots & 0 & a_{1 n} \\ 0 & \dots & a_{2 n - 1} & a_{2 n} \\ \vdots & & \vdots & \vdots \\ a_{n 1} & \dots & a_{n n - 1} & a_{n n} \end{vmatrix}
 = (-1)^{\frac{n(n - 1)}{2}} a_{1 1} a_{2 2} \dots a_{n n}
-$。
+\end{align*}
+}
 \item 拉普拉斯展开式：分块矩阵的对角线（三角形）行列式。
-\item 范德蒙德行列式：
-$
-V = 
-\begin{vmatrix}
-1 & x_1 & x_1^2 & \dots & x_1^{n-1} \\
-1 & x_2 & x_2^2 & \dots & x_2^{n-1} \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-1 & x_n & x_n^2 & \dots & x_n^{n-1}
-\end{vmatrix} = 
-\prod_{1 \leq i < j \leq n} (x_j - x_i)
-$。
+\item 范德蒙德行列式：$ V = \begin{vmatrix} 1 & x_1 & x_1^2 & \dots & x_1^{n - 1} \\ 1 & x_2 & x_2^2 & \dots & x_2^{n - 1} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_n & x_n^2 & \dots & x_n^{n - 1} \end{vmatrix} = \prod_{1 \leq i < j \leq n} (x_j - x_i) $。
 \item $ |A + B_{n \times m}C_{m \times n}| = |A||E_m + CA^{-1}B| $：
 \begin{itemize}
-\item 向量：$ |A + \alpha\beta^T| = \begin{vmatrix} A & \alpha \\ -\beta^T & 1 \end{vmatrix} = |A|(1 + \beta^TA^{-1}\alpha) $，
-提取易算行列式$ |A| $（如对角阵），剩余部分满秩分解。特例为爪型行列式。
+\item 向量：$ |A + \alpha\beta^T| = \begin{vmatrix} A & \alpha \\ -\beta^T & 1 \end{vmatrix} = |A|(1 + \beta^TA^{-1}\alpha) $，提取易算行列式$ |A| $（如对角阵），剩余部分满秩分解。特例为爪型行列式。
 \item 分块矩阵：$ \begin{vmatrix} A & B \\ C & D \end{vmatrix} = |A||D - CA^{-1}B| $。
 \end{itemize}
 \end{itemize}
@@ -1024,16 +925,14 @@ $。
 \item 生成$ 0 $，展开定理。
 \item 归结为常用形式或分块矩阵形式。
 \item 归纳法，递推法。
-\item 改写成线性组合的形式（$ |AB| = |BA| = |A||B| $）；
-$ AB \neq BA $；$ AB = 0 $，则$ A,B $必有一个为$ 0 $。
+\item 改写成线性组合的形式（$ |AB| = |BA| = |A||B| $）；$ AB \neq BA $；$ AB = 0 $，则$ A,B $必有一个为$ 0 $。
 \item 各行/列和相同，提取归$ 1 $。
 \item 对$ A_{n \times m},B_{m \times n} $，有$ x^n|xE_m - BA| = x^m|xE_n - AB| $（可用于求特征值）。
 \end{itemize}
 %------------------------------------------------
 \paragraph{克拉默法则（解线性方程组）}
 \begin{itemize}
-\item 非齐次（$ Dx = b, b \neq 0 $）：$ x_i = \frac{D_i}{D} $，
-其中$ D_i $是把$ D $中第$ i $列替换为$ b $（$ D = 0 $，方程组无解或有无穷多解）。
+\item 非齐次（$ Dx = b, b \neq 0 $）：$ x_i = \frac{D_i}{D} $，其中$ D_i $是把$ D $中第$ i $列替换为$ b $（$ D = 0 $，方程组无解或有无穷多解）。
 \item 齐次（$ Dx = 0 $）： $ D \neq 0 $只有零解，$ D = 0 $有非零解。
 \end{itemize}
 %------------------------------------------------
@@ -1055,8 +954,7 @@ $ AB \neq BA $；$ AB = 0 $，则$ A,B $必有一个为$ 0 $。
 \end{itemize}
 \item 乘法：满足结合律（连乘括号移动）、分配律，一般不满足交换律。
 \begin{itemize}
-\item $ A_{m \times s}B_{s \times n} = C_{m \times n}, c_{ij} = \sum_{k = 1}^s a_{ik}b_{kj} $
-（$ C $的列向量是$ A $的列向量的线性组合，$ C $的行向量是$ B $的行向量的线性组合）。
+\item $ A_{m \times s}B_{s \times n} = C_{m \times n}, c_{ij} = \sum_{k = 1}^s a_{ik}b_{kj} $（$ C $的列向量是$ A $的列向量的线性组合，$ C $的行向量是$ B $的行向量的线性组合）。
 \item $ AB = \mathbf{0} \nRightarrow A/B = \mathbf{0}; AB = AC \nRightarrow B = C $。
 \item 满秩分解：将矩阵变成行列向量之积。
 \end{itemize}
@@ -1102,20 +1000,9 @@ $ f(x) = a_0 + a_1x + \dots + a_mx^m $，则$ f(A) = a_0E + a_1A + \dots + a_mA^
 %------------------------------------------------
 \paragraph{分块矩阵}
 \begin{itemize}
-\item 幂：
-$ \begin{bmatrix} A & 0 \\ 0 & B \end{bmatrix}^n = \begin{bmatrix} A^n & 0 \\ 0 & B^n \end{bmatrix} $。  
-\item 行列式：
-$ \begin{vmatrix} A & 0 \\ 0 & B \end{vmatrix} = |A||B| $，
-$ \begin{vmatrix} 0 & A_{n \times n} \\ B_{m \times m} & 0 \end{vmatrix} = (-1)^{(n + m)}|A||B| $。
-\item 逆：
-$
-\begin{bmatrix} A & 0 \\ 0 & B \end{bmatrix}^{-1} =
-\begin{bmatrix} A^{-1} & 0 \\ 0 & B^{-1} \end{bmatrix},
-\begin{bmatrix} 0 & A \\ B & 0 \end{bmatrix}^{-1} =
-\begin{bmatrix} 0 & B^{-1} \\ A^{-1} & 0 \end{bmatrix}, \\
-\begin{bmatrix} B & 0 \\ D & C \end{bmatrix}^{-1} =
-\begin{bmatrix} B^{-1} & 0 \\ -C^{-1}DB^{-1} & C^{-1} \end{bmatrix}
-$。
+\item 幂：$ \begin{bmatrix} A & 0 \\ 0 & B \end{bmatrix}^n = \begin{bmatrix} A^n & 0 \\ 0 & B^n \end{bmatrix} $。  
+\item 行列式：$ \begin{vmatrix} A & 0 \\ 0 & B \end{vmatrix} = |A||B| $，$ \begin{vmatrix} 0 & A_{n \times n} \\ B_{m \times m} & 0 \end{vmatrix} = (-1)^{(n + m)}|A||B| $。
+\item 逆：$ \begin{bmatrix} A & 0 \\ 0 & B \end{bmatrix}^{-1} = \begin{bmatrix} A^{-1} & 0 \\ 0 & B^{-1} \end{bmatrix}, \begin{bmatrix} 0 & A \\ B & 0 \end{bmatrix}^{-1} = \begin{bmatrix} 0 & B^{-1} \\ A^{-1} & 0 \end{bmatrix}, \begin{bmatrix} B & 0 \\ D & C \end{bmatrix}^{-1} = \begin{bmatrix} B^{-1} & 0 \\ -C^{-1}DB^{-1} & C^{-1} \end{bmatrix} $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{总结}\tip{矩阵运算总结}
@@ -1185,14 +1072,10 @@ $ (A + B)^T = A^T + B^T $ & $ (A + B)^2 \neq A^2 + 2AB + B^2 $ & $ (A + B)^* \ne
 \end{itemize}
 %------------------------------------------------
 \paragraph{行阶梯形矩阵}
-零行全部位于非零行下方，非零行按首个非零元素位序排序，为行阶梯形矩阵。
-进而，非零行首个非零元素为$ 1 $，且所在列其他元素为$ 0 $，为行最简阶梯形矩阵。
-非零矩阵可以经有限次初等行变换化为行最简阶梯形矩阵。
+零行全部位于非零行下方，非零行按首个非零元素位序排序，为行阶梯形矩阵。进而，非零行首个非零元素为$ 1 $，且所在列其他元素为$ 0 $，为行最简阶梯形矩阵。非零矩阵可以经有限次初等行变换化为行最简阶梯形矩阵。
 %------------------------------------------------
 \paragraph{等价矩阵}
-$ PAQ = B, |P|,|Q| \neq 0 $，则$ A \cong B, r(A) = r(B) $，$ A,B $为等价矩阵。
-$ A \cong \begin{bmatrix} E_r & \mathbf{0} \\ \mathbf{0} & \mathbf{0} \end{bmatrix}, r = r(A) $，
-后者为唯一的等价标准形。
+$ PAQ = B, |P|,|Q| \neq 0 $，则$ A \cong B, r(A) = r(B) $，$ A,B $为等价矩阵。$ A \cong \begin{bmatrix} E_r & \mathbf{0} \\ \mathbf{0} & \mathbf{0} \end{bmatrix}, r = r(A) $，后者为唯一的等价标准形。
 %------------------------------------------------
 \paragraph{矩阵方程}
 %------------------------------------------------
@@ -1225,10 +1108,8 @@ $ A_{n \times n}\zeta = \lambda\zeta $，其中$ \lambda $是特征值，$ \zeta
 \paragraph{求法}\tip{求解特征值与特征向量}
 \begin{itemize}
 \item 求特征矩阵$ \lambda E - A $的特征行列式$ |\lambda E - A| $。
-\item 解特征方程（特征多项式$ = 0 $）$ |\lambda E - A| = (\lambda - \lambda_1)(\lambda - \lambda_2)\dots(\lambda - \lambda_n) = 0 $，
-得到$ \lambda $。
-\item 解$ (\lambda E - A)x = 0 $（列向量组合得$ 0 $），得到$ \zeta $（$ k $重$ \lambda $
-对应的线性无关$ \zeta $不多于$ k $个）。
+\item 解特征方程（特征多项式$ = 0 $）$ |\lambda E - A| = (\lambda - \lambda_1)(\lambda - \lambda_2)\dots(\lambda - \lambda_n) = 0 $，得到$ \lambda $。
+\item 解$ (\lambda E - A)x = 0 $（列向量组合得$ 0 $），得到$ \zeta $（$ k $重$ \lambda $对应的线性无关$ \zeta $不多于$ k $个）。
 \end{itemize}
 %------------------------------------------------
 \paragraph{其他表述}
@@ -1240,11 +1121,9 @@ $ A_{n \times n}\zeta = \lambda\zeta $，其中$ \lambda $是特征值，$ \zeta
 \paragraph{相关结论}
 \begin{itemize}
 \item 只有特征值是特征方程的解。
-\item 行列式$ |A| = \lambda_1 \lambda_2 \dots \lambda_n $，
-迹$ tr(A) = \sum_{i = 1}^n \lambda_i = \sum_{i = 1}^n a_{ii} $。
+\item 行列式$ |A| = \lambda_1 \lambda_2 \dots \lambda_n $，迹$ tr(A) = \sum_{i = 1}^n \lambda_i = \sum_{i = 1}^n a_{ii} $。
 \item 不同特征值对应的特征向量线性无关，一个特征向量只对应一个特征值。
-\item 同一特征值对应的特征向量的线性组合还是特征向量，
-不同特征值对应的特征向量的线性组合不是特征向量。
+\item 同一特征值对应的特征向量的线性组合还是特征向量，不同特征值对应的特征向量的线性组合不是特征向量。
 \end{itemize}
 %------------------------------------------------
 \paragraph{变换后的特征值与特征向量}
@@ -1266,8 +1145,7 @@ $ A_{n \times n}\zeta = \lambda\zeta $，其中$ \lambda $是特征值，$ \zeta
 %------------------------------------------------
 \paragraph{概念}
 \begin{itemize}
-\item $ n $阶方阵$ A,B $，$ \exists P_{n \times n}, |P| \neq 0 $，
-使$ P^{-1}AP = B $，则$ A $相似于$ B $，记为$ A \sim B $。
+\item $ n $阶方阵$ A,B $，$ \exists P_{n \times n}, |P| \neq 0 $，使$ P^{-1}AP = B $，则$ A $相似于$ B $，记为$ A \sim B $。
 \item 等价的特殊化：$ A,B $为方阵，$ Q = P^{-1} $。
 \item 反身性、对称性和传递性。
 \item 判别：定义法，传递性。
@@ -1295,17 +1173,13 @@ $ A \sim B, C \sim D, |A|,|B| \neq 0 $：
 %------------------------------------------------
 \paragraph{相似对角化}
 \begin{itemize}
-\item $ n $阶方阵$ A $，$ \exists P_{n \times n}, |P| \neq 0 $，使$ P^{-1}AP = \varLambda $，
-则$ A $可以相似对角化，$ \varLambda $是其相似标准形。
+\item $ n $阶方阵$ A $，$ \exists P_{n \times n}, |P| \neq 0 $，使$ P^{-1}AP = \varLambda $，则$ A $可以相似对角化，$ \varLambda $是其相似标准形。
 \item 条件：
 \begin{itemize}
-\item $ A $有$ n $个线性无关特征向量（重根对应特征向量都线性无关）
-$ \Leftrightarrow $可相似对角化。
+\item $ A $有$ n $个线性无关特征向量（重根对应特征向量都线性无关）$ \Leftrightarrow $可相似对角化。
 \item $ A $有$ n $个不同特征值$ \Rightarrow $可相似对角化。
 \end{itemize} 
-\item 求解\tip{相似对角化}：$ P = [\zeta_1, \zeta_2, \dots, \zeta_n] $可使$ P^{-1}AP = diag(\lambda_1, \lambda_2, \dots ,\lambda_n) $。
-$ P $不唯一，注意$ \zeta $与$ \lambda $的对应性（一个特征根对应的多个线性无关特征向量的线性组合，
-也对应这一特征根）。
+\item 求解\tip{相似对角化}：$ P = [\zeta_1, \zeta_2, \dots, \zeta_n] $可使$ P^{-1}AP = diag(\lambda_1, \lambda_2, \dots ,\lambda_n) $。$ P $不唯一，注意$ \zeta $与$ \lambda $的对应性（一个特征根对应的多个线性无关特征向量的线性组合，也对应这一特征根）。
 \item 实对称阵：可以相似对角化，不同特征值对应的特征向量相互正交，存在正交矩阵使其相似对角化。
 \end{itemize} 
 %------------------------------------------------
@@ -1324,33 +1198,28 @@ $ P $不唯一，注意$ \zeta $与$ \lambda $的对应性（一个特征根对�
 %------------------------------------------------
 \paragraph{合同变换与标准型}\tip{合同变换}
 \begin{itemize}
-\item 合同变换：$ f(x) = x^TAx $（$ A $为对称阵），取$ x = Cy $，
-则$ f(x) = y^T(C^TAC)y = y^TBy = g(y) $，$ B $也为对称阵。
+\item 合同变换：$ f(x) = x^TAx $（$ A $为对称阵），取$ x = Cy $，则$ f(x) = y^T(C^TAC)y = y^TBy = g(y) $，$ B $也为对称阵。
 \begin{itemize}
 \item $ A,B $合同，记为$ A \overset{\sim}{-} B $，$ f(x),g(y) $为合同二次型。
 \item 反身性、对称性、传递性。
 \item 合同$ \Rightarrow $$ r(A) = r(B) $。
-\item 惯性定理：合同变换不改变惯性指数（正$ _p $负$ _q $零特征根数）。
-合同$ \Leftrightarrow $$ p_A = p_B, q_A = q_B $。
+\item 惯性定理：合同变换不改变惯性指数（正$ _p $负$ _q $零特征根数）。合同$ \Leftrightarrow $$ p_A = p_B, q_A = q_B $。
 \item 与相似比较：相似变换不改变特征值（惯性指数），合同变换只保证惯性指数，因此相似一定合同。
 \end{itemize}
-\item $ f(x) = \sum_{i = 1}^n d_ix_i^2 $为标准型，进而$ d_i \in \{1, -1, 0\} $为规范型，
-其余为一般型。
+\item $ f(x) = \sum_{i = 1}^n d_ix_i^2 $为标准型，进而$ d_i \in \{1, -1, 0\} $为规范型，其余为一般型。
 \begin{itemize}
 \item 合同矩阵的规范型一致。
-\item （拉格朗日）配方法：配方得到完全平方，补足完全完全平方项数，确保可逆，
-并用原变量线性表示新变量。任何二次型均可由此化成标准型和规范型（不唯一）。
+\item （拉格朗日）配方法：配方得到完全平方，补足完全完全平方项数，确保可逆，并用原变量线性表示新变量。任何二次型均可由此化成标准型和规范型（不唯一）。
 \item 一般型：可以采用中间变量（可逆线性变换），使只有交叉项的部分获得平方项。
-\item 正交变换法：$ C $为特征向量阵（另外使其正交），标准型为特征值对角阵，等同于相似。
-任何二次型均可由此化成标准型。
+\item 正交变换法：$ C $为特征向量阵（另外使其正交），标准型为特征值对角阵，等同于相似。任何二次型均可由此化成标准型。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
-\paragraph{正定二次型}
+\paragraph{正定二次型}\tip{正定二次型判断}
 二次型无论变量取值（除了全为$ 0 $），恒正，其$ A $阵为正定矩阵。
 \begin{itemize}
 \item 几何意义：封闭几何图形。
-\item 正定\tip{正定二次型判断} \\
+\item 正定 \\
 $ \Leftrightarrow $$ \forall x \neq 0, x^TAx > 0 $； \\
 $ \Leftrightarrow $$ \lambda_i > 0 $（正惯性指数$ p = n $）； \\
 $ \Leftrightarrow $$ \exists D, |D| \neq 0 $，使$ A = D^TD $； \\
@@ -1379,7 +1248,8 @@ $ m $个$ n $维向量组成的向量组$ \{\alpha_i\} $：
 \begin{itemize}
 \item 线性组合$ \sum_{i = 1}^m k_i \alpha_i $。
 \item 线性表示：$ \exists k_i, \beta = \sum_{i = 1}^m k_i \alpha_i $，则$ \beta $可被向量组线性表示。
-\item 线性相关：存在不全为$ 0 $的$ k_i $，使$ \sum_{i = 1}^m k_i \alpha_i = 0 $，则向量组线性相关。 \\
+\item 
+线性相关：存在不全为$ 0 $的$ k_i $，使$ \sum_{i = 1}^m k_i \alpha_i = 0 $，则向量组线性相关。 \\
 线性无关：只有$ k_i = 0 $时，$ \sum_{i = 1}^m k_i \alpha_i = 0 $。
 \item 空间：$ m $个$ n $维向量张成$ n $维空间的$ m $维子空间（$ m \leq n $）。
 \end{itemize}
@@ -1388,40 +1258,36 @@ $ m $个$ n $维向量组成的向量组$ \{\alpha_i\} $：
 \begin{itemize}
 \item 向量数大于维数/含有零向量/有向量对应成比例$ \Rightarrow $线性相关。
 \item 至少有一个向量能用剩余向量线性表示$ \Leftrightarrow $线性相关。
-\item 一个向量组（$ t $个向量）可由另一个向量组（$ s $个向量）线性表示。
-若$ t > s $，则前者线性相关；若前者线性无关，则$ t \leq s $。
+\item 一个向量组（$ t $个向量）可由另一个向量组（$ s $个向量）线性表示。若$ t > s $，则前者线性相关；若前者线性无关，则$ t \leq s $。
 \item 部分向量线性相关，则向量组线性相关；向量组线性无关，则部分向量线性无关。
 \item 线性无关向量组升维仍线性无关，线性相关向量组降维仍线性相关。
-\item 向量数$ = $维数： \\
-$ |A| = 0 $$ \Leftrightarrow $$ A $不满秩$ \Leftrightarrow $$ AX = 0 $有非零解$ \Leftrightarrow $线性相关； \\
-$ |A| \neq 0 $$ \Leftrightarrow $$ A $满秩$ \Leftrightarrow $$ AX = 0 $只有零解$ \Leftrightarrow $线性无关。
+\item 向量数$ = $维数：
+\begin{itemize}
+\item $ |A| = 0 $$ \Leftrightarrow $$ A $不满秩$ \Leftrightarrow $$ AX = 0 $有非零解$ \Leftrightarrow $线性相关；
+\item $ |A| \neq 0 $$ \Leftrightarrow $$ A $满秩$ \Leftrightarrow $$ AX = 0 $只有零解$ \Leftrightarrow $线性无关。
+\end{itemize}
 \end{itemize}
 %------------------------------------------------
 \paragraph{相关结论}
 \begin{itemize}
 \item 向量组线性无关，加入一个新向量后线性相关，则新向量可用向量组唯一线性表示。
-\item $ \beta $可由向量组$ \{\alpha_i\} $线性表示 \\
-$ \Leftrightarrow $$ [\alpha_1, \dots, \alpha_m]X^T = \beta $有解 \\
-$ \Leftrightarrow $$ r([\alpha_1, \dots, \alpha_m]) = r([\alpha_1, \dots, \alpha_m, \beta]) $； \\
-$ \beta $不能由向量组$ \{\alpha_i\} $线性表示 \\
-$ \Leftrightarrow $$ [\alpha_1, \dots, \alpha_m]X^T = \beta $无解 \\
-$ \Leftrightarrow $$ r([\alpha_1, \dots, \alpha_m]) \neq r([\alpha_1, \dots, \alpha_m, \beta]) $。
+\item 
+\begin{itemize}
+\item $ \beta $可由向量组$ \{\alpha_i\} $线性表示$ \Leftrightarrow $$ [\alpha_1, \dots, \alpha_m]X^T = \beta $有解$ \Leftrightarrow $$ r([\alpha_1, \dots, \alpha_m]) = r([\alpha_1, \dots, \alpha_m, \beta]) $。
+\item $ \beta $不能由向量组$ \{\alpha_i\} $线性表示$ \Leftrightarrow $$ [\alpha_1, \dots, \alpha_m]X^T = \beta $无解$ \Leftrightarrow $$ r([\alpha_1, \dots, \alpha_m]) \neq r([\alpha_1, \dots, \alpha_m, \beta]) $。
+\end{itemize}
 \end{itemize}
 %------------------------------------------------
 \paragraph{等价向量组}
 \begin{itemize}
-\item 向量组$ \{\alpha_i\} $中所有向量都能被向量组$ \{\beta_i\} $中向量线性表示，
-则称$ \{\alpha_i\} $可以被$ \{\beta_i\} $线性表示。若两个向量组能相互线性表示，
-则二者是等价向量组，记为$ \{\alpha_i\} \cong \{\beta_i\} $。
+\item 向量组$ \{\alpha_i\} $中所有向量都能被向量组$ \{\beta_i\} $中向量线性表示，则称$ \{\alpha_i\} $可以被$ \{\beta_i\} $线性表示。若两个向量组能相互线性表示，则二者是等价向量组，记为$ \{\alpha_i\} \cong \{\beta_i\} $。
 \item 不需要同型，只需要同维。
 \item 反身性、对称性和传递性。
 \item 初等行变换前后的行向量组是等价向量组，任何相应的部分列向量组具有相同的线性相关性。
 \end{itemize}
 %------------------------------------------------
 \paragraph{极大线性无关组}
-向量组的部分向量线性无关，且能线性表示向量组中所有向量，则该部分向量为极大线性无关组，
-一般不唯一。零向量不存在极大线性无关组，线性无关向量组的极大线性无关组是其本身。
-向量组和其最大线性无关组是等价向量组。
+向量组的部分向量线性无关，且能线性表示向量组中所有向量，则该部分向量为极大线性无关组，一般不唯一。零向量不存在极大线性无关组，线性无关向量组的极大线性无关组是其本身。向量组和其最大线性无关组是等价向量组。
 %------------------------------------------------
 \paragraph{秩}
 极大线性无关组向量数。
@@ -1437,23 +1303,19 @@ $ \Leftrightarrow $$ r([\alpha_1, \dots, \alpha_m]) \neq r([\alpha_1, \dots, \al
 \subsubsection[向量空间]{向量空间$ R^n $}
 %------------------------------------------------
 \paragraph{基与坐标}
-$ R^n $中的$ n $维线性无关有序向量组$ \xi_i $，
-可线性表示空间中任意向量$ \alpha = \sum_{i = 1}^n a_i \xi_i $。
-$ \xi_i $称为$ R^n $的一个基，$ [a_1, a_2, \dots, a_n] $称为$ \alpha $在$ \xi_i $下的坐标。
+$ R^n $中的$ n $维线性无关有序向量组$ \xi_i $，可线性表示空间中任意向量$ \alpha = \sum_{i = 1}^n a_i \xi_i $。$ \xi_i $称为$ R^n $的一个基，$ [a_1, a_2, \dots, a_n] $称为$ \alpha $在$ \xi_i $下的坐标。
 %------------------------------------------------
 \paragraph{基变换与坐标变换}
-$ [\xi_1, \xi_2, \dots, \xi_n]C = [\eta_1, \eta_2, \dots, \eta_n] $是$ R^n $下基$ \xi_i $到基$ \eta_i $的基变换公式，
-矩阵$ C $为可逆过渡矩阵。向量$ \alpha $在基$ \xi_i,\eta_i $下的坐标分别为$ x,y $，
-则$ x = Cy $是坐标变换公式。
+$ [\xi_1, \xi_2, \dots, \xi_n]C = [\eta_1, \eta_2, \dots, \eta_n] $是$ R^n $下基$ \xi_i $到基$ \eta_i $的基变换公式，矩阵$ C $为可逆过渡矩阵。向量$ \alpha $在基$ \xi_i,\eta_i $下的坐标分别为$ x,y $，则$ x = Cy $是坐标变换公式。
 %------------------------------------------------
 \paragraph{张成}
 $ V = span\{\alpha_i\} $指向量空间$ V $由向量组$ \alpha_i $张成。
 %------------------------------------------------
-\paragraph{规范正交基（标准正交向量，单位正交向量）}
+\paragraph{规范正交基（标准正交向量，单位正交向量）}~\\
+
 施密特正交化$ + $单位化。
 
-$ \beta_2 = \alpha_2 - \frac{(\alpha_2, \alpha_1)}{(\alpha_1, \alpha_1)}\alpha_1 $，
-可利用$ \alpha_1,\alpha_2 $构建垂直于$ \alpha_1 $的向量。
+$ \beta_2 = \alpha_2 - \frac{(\alpha_2, \alpha_1)}{(\alpha_1, \alpha_1)}\alpha_1 $，可利用$ \alpha_1,\alpha_2 $构建垂直于$ \alpha_1 $的向量。
 
 \begin{figure}[H]
 \centering 
@@ -1462,8 +1324,7 @@ $ \beta_2 = \alpha_2 - \frac{(\alpha_2, \alpha_1)}{(\alpha_1, \alpha_1)}\alpha_1
 \end{figure}
 %------------------------------------------------
 \subsection[线性方程组]{线性方程组}
-$ A_{m \times n}x = b_{m \times 1} $，系数矩阵$ A $，解向量$ x $，增广矩阵$ [A \vdots b] $。
-$ b = 0 $时为齐次线性方程组，$ b \neq 0 $时为非齐次线性方程组。
+$ A_{m \times n}x = b_{m \times 1} $，系数矩阵$ A $，解向量$ x $，增广矩阵$ [A \vdots b] $。$ b = 0 $时为齐次线性方程组，$ b \neq 0 $时为非齐次线性方程组。
 %------------------------------------------------
 \subsubsection[齐次线性方程组]{齐次线性方程组$ Ax = 0 $}
 %------------------------------------------------
@@ -1497,8 +1358,7 @@ $ b = 0 $时为齐次线性方程组，$ b \neq 0 $时为非齐次线性方程�
 \end{itemize}
 %------------------------------------------------
 \paragraph{$ Ax = 0 $与$ Ax = b $解的关系}
-非齐次解的仿射组合（系数和为$ 1 $）是非齐次解，非齐次解与任意倍数齐次解的组合是非齐次解，
-非齐次解系数和为$ 0 $的组合是齐次解。
+非齐次解的仿射组合（系数和为$ 1 $）是非齐次解，非齐次解与任意倍数齐次解的组合是非齐次解，非齐次解系数和为$ 0 $的组合是齐次解。
 %------------------------------------------------
 \paragraph{广义基础解系}
 $ Ax = 0 $对应的基础解系和$ Ax = b $的一个特解能线性表示后者任意解。
@@ -1514,8 +1374,7 @@ $ Ax = 0 $对应的基础解系和$ Ax = b $的一个特解能线性表示后者
 %------------------------------------------------
 \paragraph{公共解}
 \begin{itemize}
-\item $ \begin{bmatrix} A \\ B \end{bmatrix} x = \begin{bmatrix} \alpha \\ \beta \end{bmatrix} $存在公共解
-$ \Leftrightarrow $$ r(\begin{bmatrix} A \\ B \end{bmatrix}) = r(\begin{bmatrix} A & \alpha \\ B & \beta \end{bmatrix}) $。
+\item $ \begin{bmatrix} A \\ B \end{bmatrix} x = \begin{bmatrix} \alpha \\ \beta \end{bmatrix} $存在公共解$ \Leftrightarrow $$ r(\begin{bmatrix} A \\ B \end{bmatrix}) = r(\begin{bmatrix} A & \alpha \\ B & \beta \end{bmatrix}) $。
 \item $ \alpha = \beta = 0 $时，可用二者通解相等的等式求公共解（解系数关系），也可用一方通解代入另一方解系数关系。
 \end{itemize}
 %------------------------------------------------
