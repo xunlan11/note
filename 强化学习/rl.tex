@@ -1079,30 +1079,54 @@ $$ J(\omega) = E\{[R + \gamma \max_{a'} \hat{q}(S', a', \underbrace{\omega^-}_{\
 两个值函数逼近网络，一个选择动作，一个评估值函数。
 %----------------------------------------------------------------------------------------
 \section[策略梯度]{策略梯度（policy gradient）}
-将策略参数化，在策略空间进行搜索。
 %------------------------------------------------·
 \subsection[概念]{概念\tip{策略梯度}}
-$$ \pi(a|s, \theta) $$
+将策略参数化，在策略空间进行搜索：
+$$ \pi(a|s, \theta) = \pi_{\theta}(a|s) $$
+
+是同轨策略。
 %------------------------------------------------
 \paragraph{目标}
-学习$ \theta $使$ U(\theta) = \sum_{\tau} P(\tau, \theta) \underbrace{\sum_{t = 0}^H R(s_t, u_t)}_{R(\tau)} $最大，可使用梯度上升算法。
+学习$ \theta $使以下指标最大。
+
+\begin{itemize}
+\item 平均状态价值：
+$$ \bar{v}_\pi = \sum_{s\in S} d(s) v_\pi(s) = E[d(S)v_\pi(S)] $$
+
+其中$ d(s) \geq 0 $为$ s $的权重，$ \sum_{s \in S} d(s) = 1 $，其可以由以下方法选取：
+\begin{itemize}
+\item 同等重要：$ d(s) = \frac{1}{|S|} $。
+\item 只关心$ s_0 $：$ d(s_0) = 1, d(s \neq s_0) = 0 $。
+\item 平稳分布：$ d_{\pi}^T P_{\pi} = d_{\pi}^T $，根据访问频次赋予概率。
+\end{itemize}
+\item 平均单步奖励：
+\begin{align*}
+\bar{r}_\pi &= \sum_{s\in S} d_{\pi}(s) \underbrace{r_\pi(s)}_{\sum_{a \in A}\pi(a|s)r(s, a)} = E[d_{\pi}(S)r_\pi(S)] \\
+&= \lim_{n \to \infty} \frac{1}{n}E[\sum_{k = 1}^{n} R_{t + k}] = \lim_{n \to \infty} \frac{1}{n}E[\sum_{k = 1}^{n} R_{t + k}|S_t = s_0]
+\end{align*}
+
+其中$ d_{\pi}(s) $为平稳分布。
+\end{itemize}
 %------------------------------------------------
-\paragraph{似然率策略梯度}
+\paragraph{梯度}
 \begin{align*}
-\nabla_\theta U(\theta) &= \nabla_\theta \sum_{\tau} P(\tau, \theta) R(\tau) = \sum_{\tau} \nabla_\theta P(\tau, \theta) R(\tau) \\
-&= \sum_{\tau} P(\tau, \theta) \frac{\nabla_\theta P(\tau, \theta)}{P(\tau, \theta)} R(\tau) \\
-&= \sum_{\tau} P(\tau, \theta) \nabla_\theta \log P(\tau, \theta) R(\tau)
+\nabla_\theta J(\theta) &= \sum_{s \in S} d(s) \sum_{a \in A} \nabla_\theta \pi(a|s, \theta) q_\pi(s, a) \\
+&= \sum_s d(s) \sum_a \pi(a|s, \theta) \nabla_\theta \ln \pi(a|s, \theta) q_\pi(s, a) \\
+&= E_{S \sim d, A \sim \pi}[\nabla_\theta \ln \pi(A|S, \theta) q_\pi(S, A)]
 \end{align*}
 
-利用经验平均后为：
-$$ \nabla_\theta U(\theta) \approx \hat{g} = \frac{1}{m} \sum_{i=1}^m \nabla_\theta \log P(\tau, \theta) R(\tau) $$
-
-其无偏但方差很大，其中
+为确保$ \pi(a|s, \theta) > 0 $，使用softmax函数，$ \pi(a|s, \theta) = \frac{e^{h(s, a, \theta)}}{\sum_{a' \in A} e^{h(s, a', \theta)}} $。
+%------------------------------------------------
+\paragraph{梯度上升算法}
 \begin{align*}
-\nabla_\theta\log P(\tau^{(i)}, \theta) &= \nabla_\theta\log[\prod_{t = 0}^{H} P(s_{t + 1}^{(i)}|s_t^{(i)},u_t^{(i)}) \cdot \pi_\theta(u_t^{(i)}|s_t^{(i)})] \\
-&= \nabla_\theta[\underbrace{\sum_{t = 0}^{H} \log P(s_{t + 1}^{(i)}|s_t^{(i)},u_t^{(i)})}_{\text{与动力学无关}} + \underbrace{\sum_{t = 0}^{H}\log\pi_\theta(u_t^{(i)}|s_t^{(i)})}_{\text{只与策略相关}}] \\
-&= \nabla_\theta[\sum_{t = 0}^{H} \log\pi_\theta(u_t^{(i)}|s_t^{(i)})] = \underbrace{\sum_{t = 0}^{H} \nabla_\theta\log\pi_\theta(u_t^{(i)}|s_t^{(i)})}_{\text{策略梯度，根据具体情况计算}}
-\end{align*}
+\theta_{t + 1} &= \theta_t + \alpha\nabla_\theta J(\theta) = \theta_t + \alpha E[\nabla_\theta \ln \pi(A|S, \theta_t) q_\pi(S, A)] \\
+&= \theta_t + \alpha \underbrace{\nabla_\theta \ln \pi(a_t|s_t, \theta_t)}_{\beta_t = \frac{q_\pi(s_t, a_t)}{\pi(a_t|s_t, \theta_t)}} \underbrace{q_\pi(s_t, a_t)}_{q(s_t, a_t)\text{近似}} (\text{随机梯度})
+\end{align*}    
+
+\begin{itemize}
+\item $ \alpha\beta_t $足够小时，若$ \beta_t > 0 $，则选择$ (s_t, a_t) $的概率增加，且幅度与$ \beta_t $正相关。
+\item $ \beta_t $与$ q_{\pi}(s_t, a_t) $正相关，与$ \pi(a_t|s_t, \theta_t) $负相关，倾向于选择高价值动作，探索低概率动作。
+\end{itemize}
 %------------------------------------------------
 \paragraph{优势}
 \begin{itemize}
@@ -1110,44 +1134,128 @@ $$ \nabla_\theta U(\theta) \approx \hat{g} = \frac{1}{m} \sum_{i=1}^m \nabla_\th
 \item 可以逼近任意概率分布，不受$ q(s, a) $限制。
 \item 策略是更简单的函数逼近，如PID控制。
 \item 策略参数化更容易加入先验知识。
+\item 在状态空间大时，存储和泛化能力强。
 \end{itemize}
 %------------------------------------------------·
 \subsection[REINFORCE]{REINFORCE（MC-policy gradient）\tip{REINFORCE}}
-$$ \theta_{t + 1} \doteq \theta_t + \alpha G_t \nabla\log \pi (a_t|s_t; \theta_t) $$
-%------------------------------------------------
-\paragraph{减小方差的方法}
-\begin{enumerate}
-\item 基线：
-\begin{align*}
-\nabla_\theta U(\theta) \approx \hat{g} &= \frac{1}{m}\sum_{i = 1}^{m} \nabla_\theta \log P(\tau^{(i)}, \theta)R(\tau^{(i)}) \\
-&= \frac{1}{m}\sum_{i = 1}^{m} \nabla_\theta \log P(\tau^{(i)}, \theta)[R(\tau^{(i)}) - b] \text{添加无关常数}
-\end{align*}
-
-其中$ E[\nabla_\theta\log P(\tau, \theta)b] = 0 $，
-
-为使$ Var\{\nabla_\theta\log P(\tau^{(i)}, \theta)[R(\tau^{(i)}) - b]\} $最小，取：
-$$ b = \frac{E_p[(\sum_{t = 0}^{H} \nabla_\theta\log\pi_\theta(u_t^{(i)}|s_t^{(i)}))^2 R(\tau)]}{E_p[(\sum_{t = 0}^{H} \nabla_\theta\log\pi_\theta(u_t^{(i)}|s_t^{(i)}))^2]} $$
-\item 修改值函数：当前动作与过去回报无关，只与过去动作有关。
-\begin{align*}
-\nabla_\theta U(\theta) &\approx \frac{1}{m}\sum_{i = 1}^{m}\sum_{t = 0}^{H - 1}\nabla_\theta\log\pi_\theta(u_t^{(i)}|s_t^{(i)})(\sum_{k = t}^{H - 1}(R(s_k^{(i)}) - b)) \\
-&\approx \frac{1}{m}\sum_{i = 1}^{m}\sum_{j = 0}^{H - 1}(\sum_{t = 0}^{j}\nabla_\theta\log\pi_\theta(u_t^{(i)}|s_t^{(i)})(r_j - b_j))
-\end{align*}
-\end{enumerate}
+用蒙特卡洛方法估计$ q_\pi(s, a) $，使用与$ \theta $无关的$ G_t $代替$ q_\pi(s_t, a_t) $：
+$$ \theta_{t + 1} \doteq \theta_t + \alpha G_t \nabla_{\theta} ln \pi (a_t|s_t, \theta_t) $$
 %------------------------------------------------·
 \begin{myalgorithm}[REINFORCE]
 \State 输入：可微分的参数化策略$ \pi(a|s, \theta) $
-\State 参数：步长$ \alpha > 0 $
+\State 参数：步长$ \alpha > 0 $，折扣因子$ \gamma \in (0, 1) $
 \State 初始化：初始化策略参数$ \theta \in R^{d'} $
 \Loop \Comment{对每一幕循环}
 \State 按照$ \pi(\cdot|\cdot, \theta) $生成一幕$ S_0, A_0, R_1, \ldots, S_{T - 1}, A_{T - 1}, R_T $
 \For{$ t = 0, 1, \ldots, T - 1 $}
-\State $ G \gets \sum_{k = t + 1}^{T} \gamma^{k - t - 1}R_k $ \Comment{$ (G_t) $}
-\State $ \theta \gets \theta + \alpha\gamma^t G \nabla \ln \pi(A_t|S_t, \theta) $
+\State $ G_t \gets \sum_{k = t + 1}^{T} \gamma^{k - t - 1}R_k $ \Comment{$ (G_t) $}
+\State $ \theta \gets \theta + \alpha G_t \nabla_{\theta} \ln \pi(a_t|s_t, \theta_t) $
 \EndFor
 \EndLoop
 \end{myalgorithm}
 %----------------------------------------------------------------------------------------
 \section{Actor-Critic方法}
+%------------------------------------------------·
+\subsection[概念]{概念\tip{Actor-Critic方法}}
+结合策略梯度和价值方法。
+$$ \theta_{t + 1} = \theta_t + \alpha \nabla_\theta \ln \pi(a_t|s_t, \theta_t) q_\pi(s_t, a_t) $$
+\begin{itemize}
+\item 演员（Actor）：策略更新，用于采取行动，对应算法更新。
+\item 评论家（Critic）：策略评估或价值估计，用于评判策略，对应估计$ q_{\pi}(s, a) $，采用TD方法。
+\end{itemize}
+%------------------------------------------------·
+\begin{myalgorithm}[QAC]
+\State 初始化：策略参数$ \theta $和评论家参数$ w $
+\For{每个回合}
+\For{$ t = 0, 1, 2, \ldots, T - 1 $}
+\State 根据策略$ \pi(a|s_t, \theta_t) $选择$ a_t $，观察$ r_{t + 1}, s_{t + 1} $，再根据策略$ \pi(a|s_{t + 1}, \theta_t) $选择$ a_{t + 1} $
+\State $ \delta_t = r_{t + 1} + \gamma q(s_{t + 1}, a_{t + 1}, w_t) - q(s_t, a_t, w_t) $ \Comment{TD误差}
+\State $ w_{t + 1} = w_t + \alpha_w \delta_t \nabla_w q(s_t, a_t, w_t) $ \Comment{评论家价值更新}
+\State $ \theta_{t + 1} = \theta_t + \alpha_\theta \nabla_\theta \ln \pi(a_t|s_t, \theta_t) q(s_t, a_t, w_{t + 1}) $ \Comment{演员策略更新}
+\EndFor
+\EndFor
+\end{myalgorithm}
+%------------------------------------------------·
+\subsection[优势Actor-Critic方法]{优势Actor-Critic方法（A2C）\tip{优势Actor-Critic方法}}
+基本的Actor-Critic方法有较大方差，引入基线降低。
+%------------------------------------------------
+\subsubsection[基线]{基线\tip{基线}}
+$$ \nabla_\theta J(\theta) = E_{S \sim \eta, A \sim \pi}\{\nabla_\theta \ln \pi(A|S, \theta_t) [q_\pi(S, A) - b(S)]\} $$
+%------------------------------------------------
+\paragraph{策略梯度不变}
+\begin{align*}
+E_{S\sim\eta,A\sim\pi}[\nabla_\theta\ln\pi(A|S,\theta_t)b(S)] &= \sum_{s\in S}\eta(s)\sum_{a\in A}\nabla_\theta\pi(a|s,\theta_t)b(s) \\
+&= \sum_{s\in S}\eta(s)b(s)\sum_{a\in A}\nabla_\theta\pi(a|s,\theta_t) \\
+&= \sum_{s\in S}\eta(s)b(s)\nabla_\theta 1 (\text{交换求和与求导}) \\
+&= 0
+\end{align*}
+%------------------------------------------------
+\paragraph{策略梯度方差最小化}
+求偏导获得：
+\begin{align*}
+b^*(s) &= \frac{E_{A\sim\pi}[||\nabla_\theta\ln\pi(A|s,\theta_t)||^2 q_\pi(s,A)]}{E_{A\sim\pi}[||\nabla_\theta\ln\pi(A|s,\theta_t)||^2]} \\
+&= E_{A\sim\pi}[q_\pi(s,A)] (\text{省略权重}) \\
+&= v_{\pi}(s)
+\end{align*}
+
+如果直接用$ b(s) = q_{\pi}(s, a) $，会导致策略梯度为$ 0 $。
+%------------------------------------------------
+\paragraph{优势函数}
+$$ \theta_{t + 1} = \theta_t + \alpha E\{\nabla_\theta \ln \pi(A|S, \theta_t) \underbrace{[q_\pi(S, A) - v_{\pi}(s)]}_{\text{优势函数}\delta_{\pi}(S, A)}\} $$
+
+此时，$ \beta_t = \frac{\delta_{\pi}(s_t, s_t)}{\pi(a_t|s_t, \theta_t)} $，正相关项为相对值，而非绝对值，更合理，仍能平衡探索和利用。
+
+使用TD方法进行近似，有：
+$$ \delta_t = q_t(s_t, a_t) - v_t(s_t) \approx r_{t + 1} + \gamma v_t(s_{t + 1}) - v_t(s_t) $$
+
+这时只需要一个网络进行估计。
+%------------------------------------------------
+\begin{myalgorithm}[A2C]
+\State 初始化：策略参数$ \theta $和评论家参数$ w $
+\For{每个回合}
+\For{$ t = 0, 1, 2, \ldots, T - 1 $}
+\State 根据策略$ \pi(a|s_t, \theta_t) $选择$ a_t $，执行后观察$ r_{t + 1}, s_{t + 1} $
+\State $ \delta_t = r_{t + 1} + \gamma v(s_{t + 1}, w_t) - v(s_t, w_t) $ \Comment{优势函数}
+\State $ w_{t + 1} = w_t + \alpha_w \delta_t \nabla_w v(s_t, w_t) $ \Comment{评论家价值更新}
+\State $ \theta_{t + 1} = \theta_t + \alpha_\theta \delta_t \nabla_\theta \ln \pi(a_t|s_t, \theta_t) $ \Comment{演员策略更新}
+\EndFor
+\EndFor
+\end{myalgorithm}
+%------------------------------------------------·
+\subsection[离轨Actor-Critic方法]{离轨Actor-Critic方法\tip{离轨Actor-Critic方法}}
+加入重要性采样变成离轨方法：
+$$ \nabla_\theta J(\theta) = E_{S \sim \rho, A \sim \beta}[\frac{\pi(A|S,\theta)}{\beta(A|S)}\nabla_\theta\ln\pi(A|S,\theta)q_\pi(S,A)] $$
+
+其中$ \beta $是行为策略，$ \rho $是状态分布。其也可以采用上述基线$ b^*(s) $。
+%------------------------------------------------·
+\begin{myalgorithm}[重要性采样离轨Actor-Critic]
+\State 初始化：给定行为策略$ \beta(a|s) $、目标策略$ \pi(a|s,\theta_0) $、值函数$ v(s,w_0) $
+\For{每个回合}
+\For{$ t = 0, 1, 2, \ldots, T - 1 $}
+\State 根据$ \beta(s_t) $选择$ a_t $，观察$ r_{t + 1}, s_{t + 1} $。
+\State $ \delta_t = r_{t + 1} + \gamma v(s_{t + 1}, w_t) - v(s_t, w_t) $ \Comment{优势函数}
+\State $ w_{t + 1} = w_t + \alpha_w \frac{\pi(a_t|s_t,\theta_t)}{\beta(a_t|s_t)} \delta_t \nabla_w v(s_t, w_t) $ \Comment{评论家价值更新}
+\State $ \theta_{t + 1} = \theta_t + \alpha_\theta \frac{\pi(a_t|s_t,\theta_t)}{\beta(a_t|s_t)} \delta_t \nabla_\theta \ln \pi(a_t|s_t, \theta_t) $ \Comment{演员策略更新}
+\EndFor
+\EndFor
+\end{myalgorithm}
+%------------------------------------------------·
+\subsection[确定性策略Actor-Critic方法]{确定性策略Actor-Critic方法（DPG）\tip{确定性策略Actor-Critic方法}}
+$$ \nabla_\theta J(\theta) = \sum_{s\in S} \rho_\mu(s)\nabla_\theta\mu(s)(\nabla_a q_\mu(s, a))\bigg|_{a=\mu(s)} = E_{S\sim\rho_\mu}[\nabla_\theta\mu(S)(\nabla_a q_\mu(S, a))\bigg|_{a=\mu(S)}] $$
+
+其中，$ \rho_\mu $是一种状态分布。
+%------------------------------------------------·
+\begin{myalgorithm}[确定性策略离轨Actor-Critic]
+\State 初始化：给定行为策略$ \beta(a|s) $、确定性目标策略$ \mu(s,\theta_0) $、值函数$ q(s,a,w_0) $。
+\For{每个回合}
+\For{$ t = 0, 1, 2, \ldots, T - 1 $}
+\State 根据$ \beta(s_t) $生成$ a_t $，观察$ r_{t + 1}, s_{t + 1} $
+\State $ \delta_t = r_{t+1} + \gamma q(s_{t+1}, \mu(s_{t+1},\theta_t), w_t) - q(s_t, a_t, w_t) $ \Comment{优势函数}
+\State $ w_{t + 1} = w_t + \alpha_w \delta_t \nabla_w q(s_t, a_t, w_t) $ \Comment{评论家价值更新}
+\State $ \theta_{t + 1} = \theta_t + \alpha_\theta \nabla_\theta \mu(s_t, \theta_t) (\nabla_a q(s_t, a, w_{t + 1}))|_{a = \mu(s_t)} $ \Comment{演员策略更新}
+\EndFor
+\EndFor
+\end{myalgorithm}
 %----------------------------------------------------------------------------------------
 \section{策略搜索方法总结对比}
 $$
