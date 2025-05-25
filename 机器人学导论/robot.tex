@@ -822,16 +822,23 @@ $$ \tau^T \delta q + (-F)^T \delta x = 0 $$
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.25\textwidth]{5} 
-\caption[虚功原理例题]{虚功原理例题}
+\caption[扭矩与虚功原理例题]{扭矩与虚功原理例题}
 \end{figure}
 
 {\footnotesize
 条件： $ l_1 = l_2 = 1, \theta_1 = 0, \theta_2 = 60^\circ, F = \begin{bmatrix} 0 & -1 & 0 \end{bmatrix}^T N $。
 \begin{enumerate}
+\item 求力矩：
+\begin{itemize}
 \item 对于连杆2：$ f_2 = F, n_2 = \vec{l}_2 \times F = \begin{bmatrix} 0 & 0 & -l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
 \item 对于连杆1：$ f_1 = f_2 = F, n_1 = n_2 + \vec{l}_1 \times f_2 = \begin{bmatrix} 0 & 0 & -l_1 \cos\theta_1 - l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
-\item 根据$ \dot{x} = J \dot{\theta} $，由几何关系得$ J = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & -l_2 s_{12} \\ l_1 c_1 + l_2 c_{12} & l_2 c_{12} \end{bmatrix} $。
-\item 因此$ \tau = J^T F = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & l_1 c_1 + l_2 c_{12} \\ - l_2 s_{12} & l_2 c_{12} \end{bmatrix} \begin{bmatrix} 0 \\ -1 \end{bmatrix} $。
+\end{itemize} 
+\item 求扭矩：
+\begin{itemize}
+\item 由几何关系得$ P = \begin{bmatrix} l_1 c_1 + l_2 c_{12} \\ l_1 s_1 + l_2 s_{12} \end{bmatrix} $。
+\item 求偏导得$ J = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & -l_2 s_{12} \\ l_1 c_1 + l_2 c_{12} & l_2 c_{12} \end{bmatrix} $。
+\item $ \tau = J^T F = \begin{bmatrix} -(l_1 s_1 + l_2 s_{12}) & l_1 c_1 + l_2 c_{12} \\ - l_2 s_{12} & l_2 c_{12} \end{bmatrix} \begin{bmatrix} 0 \\ -1 \end{bmatrix} $。
+\end{itemize} 
 \end{enumerate}
 }
 %------------------------------------------------
@@ -1099,7 +1106,7 @@ $$ ^0\omega_0 = 0, ^0v_0 = 0, ^0\dot{v}_0 = g $$
 \item 动能$ K(q, \dot{q}, t) = \frac{1}{2}\dot{q}^T M(q)\dot{q} $（其中$ q $为$ v/\omega $，$ M $为$ m/I $）：瞬时性，正标量
 \begin{itemize}
 \item 与速度：（角）动量，$ \textcolor{orange}{\frac{\partial K}{\partial \dot{q}} = Q(q, \dot{q})} $，其变化率为惯性力$ \textcolor{orange}{F = \frac{d Q(q, \dot{q})}{d t}} $。
-\item 与位移（构型变化）：内力做功，$ \textcolor{blue}{\frac{\partial K}{\partial q} = \frac{\partial M(q)}{\partial q}}  $。
+\item 与位移（构型变化）：内力做功，$ \textcolor{blue}{\frac{\partial K}{\partial q} = \frac{\partial M(q)}{\partial q}} $。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
@@ -1346,16 +1353,61 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 \end{enumerate}
 %------------------------------------------------
 \paragraph{例题2}
-1
+
 %------------------------------------------------
 \paragraph{牛顿-欧拉动力学方程法}
-1
+
 %------------------------------------------------
 \paragraph{拉格朗日动力学法}
-1
+
 }
 %----------------------------------------------------------------------------------------
 \section{轨迹规划}
+%----------------------------------------------------------------------------------------
+\subsection[概念]{概念}
+%------------------------------------------------
+\paragraph{特点}
+\begin{itemize}
+\item 
+\end{itemize}
+%------------------------------------------------
+\paragraph{分类}
+\begin{itemize}
+\item 
+\end{itemize}
+%----------------------------------------------------------------------------------------
+\subsection[多项式规划]{多项式规划\tip{多项式轨迹规划}}
+%------------------------------------------------
+\paragraph{概念}
+
+%------------------------------------------------
+\paragraph{三次多项式}
+
+%------------------------------------------------
+\paragraph{五次多项式}
+
+%----------------------------------------------------------------------------------------
+\subsection[分段函数规划]{分段函数规划\tip{分段函数轨迹规划}}
+%------------------------------------------------
+\paragraph{三段规划}
+
+%------------------------------------------------
+\paragraph{最小时间规划算法}
+
+%------------------------------------------------
+\paragraph{七段规划（加速度规划）}
+
+%----------------------------------------------------------------------------------------
+\subsection[多轨迹规划]{多轨迹规划\tip{多轨迹规划}}
+%------------------------------------------------
+\paragraph{多段3-5-3法规划}
+
+%------------------------------------------------
+\paragraph{基于样条曲线函数规划}
+
+%----------------------------------------------------------------------------------------
+\subsection[笛卡尔空间规划]{笛卡尔空间规划\tip{笛卡尔空间规划}}
+
 %------------------------------------------------
 \section{机器人控制}
 %----------------------------------------------------------------------------------------
