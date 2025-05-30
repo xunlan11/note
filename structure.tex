@@ -29,6 +29,15 @@ includeheadfoot
 \lehead{\mbox{\llap{\small\thepage\kern1em\color{halfgray} \vline}\color{halfgray}\hspace{0.5em}\rightmark\hfil}} % 标题旁边标记页码
 \cfoot{\hyperlink{toc}{\color{RoyalBlue}返回目录}} % 页脚返回目录链接
 \pagestyle{scrheadings}
+% 颜色
+\usepackage{xcolor}
+\definecolor{mybg}{RGB}{250,250,245}
+\definecolor{mygray}{RGB}{120,120,120}
+\definecolor{mygreen}{RGB}{34,139,34}
+\definecolor{myblue}{RGB}{0,102,204}
+\definecolor{myred}{RGB}{200,0,0}
+\definecolor{myorange}{RGB}{255,140,0}
+\definecolor{mypurple}{RGB}{153,51,255}
 %----------------------------------------------------------------------------------------
 % 图表和引用
 \usepackage{graphicx} % 图像
@@ -42,36 +51,76 @@ includeheadfoot
 % 代码
 \usepackage{listings}
 \lstset{
-    language=Matlab,
-    basicstyle=\ttfamily\small,   % 字体
-    numbers=left,                 % 行号
-    numberstyle=\tiny\color{gray},
+    language=C++,                     
+    basicstyle=\ttfamily\small,    % 字体
+    numbers=left,                  % 行号
+    numberstyle=\tiny\color{mygray},  
     stepnumber=5,
     numbersep=5pt,
-    backgroundcolor=\color{white},% 背景
-    tabsize=2,                    % 制表符宽度
-    frame=single,                 % 边框
-    captionpos=t,                 % 标题
+    backgroundcolor=\color{mybg},  % 背景
+    showspaces=false,              % 空格与制表符
+    showstringspaces=false,
+    tabsize=4,                    
+    frame=single,                  % 边框
+    captionpos=t,                  % 标题
     title=\lstname,
-    breaklines=true,              % 换行
+    breaklines=true,               % 换行
     breakatwhitespace=true,
-    escapeinside={`}{`},          % 转义（中文注释）
+    escapeinside={`}{`},           % 转义（中文注释）
 }
 \lstset{
     language=Python,            
-    basicstyle=\ttfamily\small,   % 字体
-    numbers=left,                 % 行号
-    numberstyle=\tiny\color{gray}, 
+    basicstyle=\ttfamily\small,    % 字体
+    numbers=left,                  % 行号
+    numberstyle=\tiny\color{mygray}, 
     stepnumber=5,             
     numbersep=5pt,            
-    backgroundcolor=\color{white},% 背景
-    tabsize=4,                    % 制表符宽度            
-    frame=single,                 % 边框
-    captionpos=t,                 % 标题
+    backgroundcolor=\color{mybg},  % 背景
+    showspaces=false,              % 空格与制表符
+    showstringspaces=false,
+    tabsize=4,                     
+    frame=single,                  % 边框
+    captionpos=t,                  % 标题
     title=\lstname, 
-    breaklines=true,              % 换行
+    breaklines=true,               % 换行
     breakatwhitespace=false,   
-    escapeinside={`}{`},          % 转义（中文注释）
+    escapeinside={`}{`},           % 转义（中文注释）
+}
+\lstset{
+    language=Matlab,
+    basicstyle=\ttfamily\small,    % 字体
+    numbers=left,                  % 行号
+    numberstyle=\tiny\color{mygray},
+    stepnumber=5,
+    numbersep=5pt,
+    backgroundcolor=\color{mybg},  % 背景
+    showspaces=false,              % 空格与制表符
+    showstringspaces=false,
+    tabsize=2,                     
+    frame=single,                  % 边框
+    captionpos=t,                  % 标题
+    title=\lstname,
+    breaklines=true,               % 换行
+    breakatwhitespace=true,
+    escapeinside={`}{`},           % 转义（中文注释）
+}
+\lstset{
+    language=bash,
+    basicstyle=\ttfamily\small,    % 字体
+    numbers=left,                  % 行号
+    numberstyle=\tiny\color{mygray},
+    stepnumber=5,
+    numbersep=5pt,
+    backgroundcolor=\color{mybg},  % 背景
+    showspaces=false,              % 空格与制表符
+    showstringspaces=false,
+    tabsize=4,                                
+    frame=single,                  % 边框
+    captionpos=t,                  % 标题
+    title=\lstname,
+    breaklines=true,               % 换行
+    breakatwhitespace=true,
+    escapeinside={`}{`},           % 转义（中文注释）
 }
 \usepackage{algorithm} % 算法
 \usepackage{algpseudocode}
@@ -137,7 +186,7 @@ pdfproducer={LaTeX with hyperref and ClassicThesis}
 }
 %----------------------------------------------------------------------------------------
 % 目录与标题
-\usepackage{tocloft} % 目录
+\usepackage{tocloft}
 \usepackage{titlesec} 
 \AtBeginDocument{
     \renewcommand{\contentsname}{目\hspace{1em}录}
@@ -163,5 +212,4 @@ pdfproducer={LaTeX with hyperref and ClassicThesis}
   \textsuperscript{\textcolor{orange}{\textbf{\thetips}}}
   \addcontentsline{tip}{tips}{\makebox[7em][l]{要点~\thetips} #1}
 }
-% 算法
-\newlistof{algorithms}{alg}{算\hspace{1em}法}
+\newlistof{algorithms}{alg}{算\hspace{1em}法} % 算法
