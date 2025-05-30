@@ -142,11 +142,7 @@ includeheadfoot
     repeatframetitle=true
   ]
   \begin{algorithmic}[1]
-  \ifx\relax\detokenize{#1}\relax
-    \addcontentsline{alg}{algorithms}{\makebox[7em][l]{算法~\themyalgorithm} }
-  \else
-    \addcontentsline{alg}{algorithms}{\makebox[7em][l]{算法~\themyalgorithm} #1}
-  \fi
+    \addcontentsline{alg}{algorithms}{\makebox[4em][l]{算法~\themyalgorithm} #1}
 }{
   \end{algorithmic}
   \end{mdframed}
@@ -191,12 +187,14 @@ pdfproducer={LaTeX with hyperref and ClassicThesis}
 \AtBeginDocument{
     \renewcommand{\contentsname}{目\hspace{1em}录}
     \renewcommand{\listfigurename}{图\hspace{1em}片}
+    \setlength{\cftfignumwidth}{4em}
     \renewcommand{\listtablename}{表\hspace{1em}格}
+    \setlength{\cfttabnumwidth}{4em}
     \renewcommand{\figurename}{图}
     \renewcommand{\tablename}{表}
     \setcounter{tocdepth}{3} % 目录深度
 }
-% 重定义subsection、subsubsection使之可以接受tip，但保留section
+% \subsection[a]{a\tip{a}}
 \let\oldsubsection\subsection
 \renewcommand{\subsection}[2][]{
   \oldsubsection[#1]{#2}
@@ -210,6 +208,6 @@ pdfproducer={LaTeX with hyperref and ClassicThesis}
 \newcommand{\tip}[1]{
   \refstepcounter{tips}
   \textsuperscript{\textcolor{orange}{\textbf{\thetips}}}
-  \addcontentsline{tip}{tips}{\makebox[7em][l]{要点~\thetips} #1}
+  \addcontentsline{tip}{tips}{\makebox[4em][l]{要点~\thetips} #1}
 }
 \newlistof{algorithms}{alg}{算\hspace{1em}法} % 算法

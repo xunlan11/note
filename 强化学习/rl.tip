@@ -1,32 +1,32 @@
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 1} 马尔可夫决策过程及其元素}{6}{tips.1}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 2} 马尔可夫性}{7}{tips.2}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 3} $ \epsilon $-greedy策略}{8}{tips.3}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 4} 增量式更新}{9}{tips.4}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 5} 分幕与回报}{9}{tips.5}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 6} 值函数与回溯算法}{10}{tips.6}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 7} 贝尔曼方程}{11}{tips.7}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 8} 策略迭代}{13}{tips.8}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 9} 值迭代}{14}{tips.9}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 10} 蒙特卡洛}{15}{tips.10}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 11} on-policy}{16}{tips.11}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 12} off-policy}{17}{tips.12}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 13} 重要度采样}{17}{tips.13}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 14} 时序差分（TD($ 0 $)）}{18}{tips.14}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 15} Sarsa（on-policy-TD）}{20}{tips.15}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 16} 期望Sarsa}{20}{tips.16}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 17} Q-learning（off-policy-TD）}{21}{tips.17}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 18} 双Q-learning}{21}{tips.18}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 19} n-TD}{23}{tips.19}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 20} n-Sarsa}{24}{tips.20}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 21} n-树回溯}{26}{tips.21}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 22} n-Q($ \sigma $)}{28}{tips.22}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 23} 表格型方法总结对比}{29}{tips.23}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 24} 随机梯度下降}{32}{tips.24}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 25} DQN及其关键技术}{33}{tips.25}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 26} 策略梯度}{35}{tips.26}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 27} REINFORCE}{36}{tips.27}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 28} Actor-Critic方法}{37}{tips.28}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 29} 优势Actor-Critic方法}{37}{tips.29}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 30} 基线}{37}{tips.30}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 31} 离轨Actor-Critic方法}{39}{tips.31}%
-\contentsline {tips}{\makebox [7em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 32} 确定性策略Actor-Critic方法}{39}{tips.32}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 1} 马尔可夫决策过程及其元素}{6}{tips.1}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 2} 马尔可夫性}{7}{tips.2}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 3} $ \epsilon $-greedy策略}{8}{tips.3}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 4} 增量式更新}{9}{tips.4}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 5} 分幕与回报}{9}{tips.5}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 6} 值函数与回溯算法}{10}{tips.6}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 7} 贝尔曼方程}{11}{tips.7}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 8} 策略迭代}{13}{tips.8}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 9} 值迭代}{14}{tips.9}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 10} 蒙特卡洛}{15}{tips.10}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 11} on-policy}{16}{tips.11}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 12} off-policy}{17}{tips.12}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 13} 重要度采样}{17}{tips.13}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 14} 时序差分（TD($ 0 $)）}{19}{tips.14}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 15} Sarsa（on-policy-TD）}{20}{tips.15}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 16} 期望Sarsa}{20}{tips.16}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 17} Q-learning（off-policy-TD）}{21}{tips.17}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 18} 双Q-learning}{21}{tips.18}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 19} n-TD}{23}{tips.19}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 20} n-Sarsa}{24}{tips.20}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 21} n-树回溯}{26}{tips.21}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 22} n-Q($ \sigma $)}{28}{tips.22}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 23} 表格型方法总结对比}{29}{tips.23}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 24} 随机梯度下降}{32}{tips.24}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 25} DQN及其关键技术}{33}{tips.25}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 26} 策略梯度}{35}{tips.26}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 27} REINFORCE}{36}{tips.27}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 28} Actor-Critic方法}{37}{tips.28}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 29} 优势Actor-Critic方法}{37}{tips.29}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 30} 基线}{37}{tips.30}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 31} 离轨Actor-Critic方法}{39}{tips.31}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 32} 确定性策略Actor-Critic方法}{39}{tips.32}%
