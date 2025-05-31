@@ -39,12 +39,8 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \listofalgorithms
 \end{multicols}
 \endgroup
-\hrule
-\begingroup
-\begin{multicols}{2}
+\newpage
 \listoftips
-\end{multicols}
-\endgroup
 \newpage
 %----------------------------------------------------------------------------------------
 \section{导论}
@@ -236,7 +232,7 @@ $ s' $的价值信息回传给$ s $。
 \caption[DP回溯图]{DP回溯图（节点可以重复）}
 \end{figure}
 %------------------------------------------------
-\paragraph{最优值函数与最优策略}~\\
+\paragraph{最优值函数与最优策略}
 \begin{itemize}
 \item $ \forall s \in S, q_{\pi}(s, \pi'(s)) = v_{\pi'}(s) \geq v_{\pi}(s) $，则称$ \pi' $优于或等于$ \pi $。
 \item $ v_\pi(s) $定义了$ \pi $的偏序关系，$ \pi^* $存在且可能不唯一，它们共享：
@@ -467,8 +463,7 @@ $ N(s) $是$ s $的访问次数，$ N(s) \to \infty, \hat{q}(s, a) \to q_{\pi}(s
 \subsection[off-policy]{off-policy（离轨）\tip{off-policy}}
 采样与改进不同策略，前者称为行为策略（Behavior Policy）$ b $（保证对所有可能动作的采样），后者称为目标策略（Target Policy）$ \pi $。
 %------------------------------------------------
-\paragraph{重要度采样（importance sampling）}\tip{重要度采样}\label{sec:MC back}~\\
-
+\paragraph{重要度采样（importance sampling）}\tip{重要度采样}\label{sec:MC back}
 计算$ G $时，对轨迹在$ \pi $和$ b $中出现的相对概率进行加权：
 $$ \rho_{t:T - 1} = \Pi_{k = t}^{T - 1} \frac{\pi(A_k|S_k)}{b(A_k|S_k)} (\text{约去相同的转移概率}) $$
 \begin{itemize}
@@ -544,6 +539,7 @@ $$ v_{t + 1}(s_t) = v_t(s_t) + \alpha_t(s_t)[\overbrace{\underbrace{r_{t + 1} + 
 \item 不需要$ P,R $。
 \item 更新快：MC须等到幕尾确定增量，更新$ G_t $；而TD只需等到下一时刻，更新TD目标。
 \item 方差小：MC更新依赖很多随机动作，TD更新仅依赖一个随机动作，因此TD目标的方差比$ G_t $的方差要小很多。
+\item 随机任务中，TD($ 0 $)收敛速度要比常量$ \alpha $MC快。前者的最优性与预测回报更相关，找出的是完全符合马尔可夫过程的最大似然估计参数，收敛到确定性等价估计；而后者只在有限方面最优，找出的是最小化训练集均方误差的估计。
 \item 自举性：TD需要初始猜测值，MC没有进行初始猜测。
 \item 只评估当前动作，与后续动作无关。
 \end{itemize}
@@ -555,8 +551,7 @@ $$ v_{t + 1}(s_t) = v_t(s_t) + \alpha_t(s_t)[\overbrace{\underbrace{r_{t + 1} + 
 \For{每一幕}
 \State 初始化$ s $
 \While{$ s $不是终止状态}
-\State $ a \gets \pi(s) $
-\State 执行动作$ a $，观察$ r, s' $
+\State 由$ \pi(s) $获得$ a $并执行，观察$ r, s' $
 \State $ v(s) \gets v(s) + \alpha[r + \gamma v(s') - v(s)] $
 \State $ s \gets s' $
 \EndWhile
@@ -588,7 +583,7 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma q
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------
-\paragraph{期望Sarsa}\tip{期望Sarsa}
+\paragraph{期望Sarsa}
 $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} + \gamma[\underbrace{\sum_a \pi(a|s_{t + 1}) q_t(s_{t + 1}, a)}_{v_t(s_{t + 1})}] - q_t(s_t, a_t)\} $$
 
 \begin{minipage}{0.6\textwidth}
@@ -623,16 +618,14 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma \
 \For{每一幕}
 \State 初始化$ s $
 \While{$ s $不是终止状态}
-\State 使用从$ q $得到的$ \epsilon $-greedy策略，在$ s $选择$ a $
-\State 执行$ a $，观察$ r, s' $
+\State 使用从$ q $得到的$ \epsilon $-greedy策略，在$ s $选择$ a $并执行，观察$ r, s' $
 \State $ q(s, a) \gets q(s, a) + \alpha [r + \gamma \max_a q(s', a) - q(s, a)] $
 \State $ s \gets s' $
 \EndWhile
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------
-\paragraph{双Q-learning}\tip{双Q-learning}~\\
-
+\paragraph{双Q-learning}
 双学习：划分样本，学习两个独立的估计$ q_1(a), q_2(a) $，确定$ a^* = argmax_a q_1(a) $，再计算$ q_2(a*) = q_2(argmax_a q_1(a)) $，后者是无偏的（可以交换再来一次）。需要双倍内存，但是计算量不会增大。
 $$ q_{1_{t + 1}}(s_t, a_t) = q_{1_t}(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} + \gamma q_{2_t}[s_{t + 1}, argmax_a q_{1_t}(s_{t + 1}, a)] - q_{1_t}(s_t, a_t)\} $$
 
@@ -648,8 +641,7 @@ $$ q_{1_{t + 1}}(s_t, a_t) = q_{1_t}(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} +
 \For{每一幕}
 \State 初始化$ s $
 \While{$ s $不是终止状态}
-\State 基于$ q_1 + q_2 $，使用$ \epsilon $-greedy策略在$ s $选择$ a $
-\State 执行$ a $，观察$ r, s' $
+\State 基于$ q_1 + q_2 $，使用$ \epsilon $-greedy策略在$ s $选择$ a $并执行，观察$ r, s' $
 \If{以$ 0.5 $的概率}
 \State $ q_1(s, a) \gets q_1(s, a) + \alpha [r + \gamma q_2(s', argmax_a Q_1(s',a)) - Q_1(s, a)] $
 \Else
@@ -660,13 +652,6 @@ $$ q_{1_{t + 1}}(s_t, a_t) = q_{1_t}(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} +
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------
-\subsection[对比与补充]{对比与补充}\label{sec:TD back}
-Sarsa较为保守，在存在风险的任务中，会避开低回报动作； Q-learning较为乐观，更倾向于探索并找到最优解。在存在陷阱的任务中，Sarsa会比Q-learning取得更好的结果。
-
-补充见\ref{sec:TD}。
-%----------------------------------------------------------------------------------------
-\section{n步自举法}
-%------------------------------------------------
 \subsection[n-TD]{n-TD\tip{n-TD}}
 n-TD作为MC和TD的一般推广，在两种极端方法间找到了性能更好的平衡点。n-TD在$ n $步后进行更新，截断得到$ n $步回报。
 $$ G_{t:t + n} \doteq r_{t + 1} + \gamma r_{t + 2} + \dots + \gamma^{n - 1} r_{t + n} + \gamma^n v_{t + n - 1}(s_{t + n}) $$
@@ -676,14 +661,13 @@ $$ G_{t:t + n} \doteq r_{t + 1} + \gamma r_{t + 2} + \dots + \gamma^{n - 1} r_{t
 \begin{myalgorithm}[n-TD]
 \State 输入：待评估策略$ \pi $
 \State 参数：步长$ \alpha \in (0,1], n \in N_+ $
-\State 初始化：$ \forall s \in S $，任意初始化$ V(s) $
+\State 初始化：$ \forall s \in S $，任意初始化$ v(s) $
 \For{每一幕}
-\State 初始化$ S_0 $为非终止状态
+\State 初始化$ s_0 $为非终止状态
 \State $ T \gets \infty $
 \For{$ t = 0, 1, 2, \dots $}
 \If{$ t < T $}
-\State 根据$ \pi(\cdot|S_t) $采取动作$ A_t $
-\State 观察$ R_{t + 1},S_{t + 1} $
+\State 根据$ \pi(\cdot|s_t) $获得$ a_t $并执行，观察$ r_{t + 1}, s_{t + 1} $
 \If{$ S_{t + 1} $是终止状态}
 \State $ T \gets t + 1 $
 \EndIf
@@ -721,25 +705,24 @@ $$ G_{t:t + n} \doteq r_{t + 1} + \gamma r_{t + 2} + \dots + \gamma^{n - 1} r_{t
 \State 参数：步长$ \alpha \in (0,1] $，探索率$ \epsilon > 0 $，步数$ n \in N_+ $
 \State 初始化：$ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $，初始化$ \pi $（如基于$ Q $的$ \epsilon $-greedy策略）
 \For{每一幕}
-\State 初始化$ S_0 $为非终止状态
-\State 根据$ \pi(\cdot|S_0) $选取$ A_0 $
+\State 初始化$ s_0 $为非终止状态，根据$ \pi(\cdot|s_0) $选取$ a_0 $
 \State $ T \gets \infty $
 \For{$ t = 0, 1, 2, \dots $}
 \If{$ t < T $}
-\State 执行动作$ A_t $，观察$ R_{t + 1},S_{t + 1} $
-\If{$ S_{t + 1} $是终止状态}
+\State 执行$ a_t $，观察$ r_{t + 1}, s_{t + 1} $
+\If{$ s_{t + 1} $是终止状态}
 \State $ T \gets t + 1 $
 \Else
-\State 根据$ \pi(\cdot|S_{t + 1}) $选取$ A_{t + 1} $
+\State 根据$ \pi(\cdot|s_{t + 1}) $选取$ a_{t + 1} $
 \EndIf
 \EndIf
 \State $ \tau \gets t - n + 1$ \Comment{$ \tau $是正在更新的状态的时间}
 \If{$ \tau \geq 0 $}
 \State $ G \gets \sum_{i = \tau + 1}^{\min(\tau + n,T)} \gamma^{i - \tau - 1}R_i $
 \If{$ \tau + n < T $}
-\State $ G \gets G + \gamma^n Q(S_{\tau + n}, A_{\tau + n}) $
+\State $ G \gets G + \gamma^n Q(s_{\tau + n}, a_{\tau + n}) $
 \EndIf
-\State $ Q(S_{\tau}, A_{\tau}) \gets Q(S_{\tau}, A_{\tau}) + \alpha[G - Q(S_{\tau}, A_{\tau})] $
+\State $ Q(S_{\tau}, A_{\tau}) \gets Q(s_{\tau}, a_{\tau}) + \alpha[G - Q(s_{\tau}, a_{\tau})] $
 \EndIf
 \If{$ \tau = T - 1 $}
 \State break
@@ -755,20 +738,19 @@ $$ v_{t + n}(s_t) \doteq v_{t + n - 1}(s_t) + \alpha \rho_{t:t + n - 1}[G_{t:t +
 $$ \rho_{t:h} \doteq \prod_{k = t}^{\min(h, T - 1)} \frac{\pi(a_k|s_k)}{b(a_k|s_k)} $$
 %------------------------------------------------
 \begin{myalgorithm}[n-期望Sarsa-off-policy]
-\State 输入：行为策略$ b $，满足$ b(a|s) > 0 $
+\State 输入：$ b(a|s) > 0 $
 \State 参数：步长$ \alpha \in (0,1] $，探索率$ \epsilon > 0 $，步数$ n \in N_+ $
-\State 初始化：$ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $，初始化目标策略$ \pi $
+\State 初始化：$ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $，初始化$ \pi $
 \For{每一幕}
-\State 初始化$ S_0 $为非终止状态
-\State 根据$ b(\cdot|S_0) $选取$ A_0 $
+\State 初始化$ s_0 $为非终止状态，根据$ b(\cdot|s_0) $选取$ a_0 $
 \State $ T \gets \infty $
 \For{$ t = 0, 1, 2, \dots $}
 \If{$ t < T $}
-\State 执行动作$ A_t $，观察$ R_{t + 1},S_{t + 1} $
-\If{$ S_{t + 1} $是终止状态}
+\State 执行$ a_t $，观察$ r_{t + 1}, s_{t + 1} $
+\If{$ s_{t + 1} $是终止状态}
 \State $ T \gets t + 1 $
 \Else
-\State 根据 $ b(\cdot|S_{t + 1}) $选取$A_{t + 1} $
+\State 根据 $ b(\cdot|s_{t + 1}) $选取$ a_{t + 1} $
 \EndIf
 \EndIf
 \State $ \tau \gets t - n + 1 $ \Comment{$ \tau $是正在更新的状态的时间}
@@ -776,76 +758,9 @@ $$ \rho_{t:h} \doteq \prod_{k = t}^{\min(h, T - 1)} \frac{\pi(a_k|s_k)}{b(a_k|s_
 \State $ \rho \gets \prod_{i = \tau + 1}^{\min(\tau + n - 1,T - 1)} \frac{\pi(A_i|S_i)}{b(A_i|S_i)}$ \Comment{重要性采样权重}
 \State $ G \gets \sum_{i = \tau + 1}^{\min(\tau + n,T)} \gamma^{i - \tau - 1}R_i $
 \If{$ \tau + n < T $}
-\State $ G \gets G + \gamma^n \sum_a \pi(a|S_{\tau + n})Q(S_{\tau + n}, a)$ \Comment{期望Sarsa使用期望值}
+\State $ G \gets G + \gamma^n \sum_a \pi(a|s_{\tau + n})Q(s_{\tau + n}, a)$ \Comment{期望Sarsa使用期望值}
 \EndIf
-\State $ Q(S_{\tau}, A_{\tau}) \gets Q(S_{\tau}, A_{\tau}) + \alpha \rho[G - Q(S_{\tau}, A_{\tau})] $
-\EndIf
-\If{$ \tau = T - 1 $}
-\State break
-\EndIf
-\EndFor
-\EndFor
-\end{myalgorithm}
-%------------------------------------------------
-\subsection[n-树回溯]{n-树回溯\tip{n-树回溯}}
-%------------------------------------------------
-\paragraph{带控制变量的每次决策模型}~\\
-
-为保证不被选择的动作不会因$ \rho_t = 0 $而回报为$ 0 $，使方差较大，采取以下n步回报off-policy方法：
-$$ G_{t:h} \doteq \rho_t (r_{t + 1} + \gamma G_{t + 1:h}) + \underbrace{(1 - \rho_t) v_{h - 1}(s_t)}_{\text{控制变量}} $$
-
-其中控制变量保证$ \rho_t = 0 $时估计值不收缩，且不改变更新期望。
-
-可写为以下递归形式：
-\begin{align*}
-G_{t:h} 
-&\doteq r_{t + 1} + \gamma[\rho_{t + 1} G_{t + 1:h} + \bar{v}_{h - 1}(s_{t + 1}) - \rho_{t + 1} Q_{h - 1}(s_{t + 1}, a_{t + 1})] \\
-&= r_{t + 1} + \gamma \rho_{t + 1}[G_{t + 1:h} - Q_{h - 1}(s_{t + 1}, a_{t + 1})] + \gamma \bar{v}_{h - 1}(s_{t + 1})
-\end{align*}
-%------------------------------------------------
-\paragraph{n-树回溯}~\\
-
-off-policy因所学内容相关性小，比on-policy慢，一些方法可以缓解这一问题，比如不使用重要度采样的树回溯算法。相比于前面以沿途收益和底部节点估计价值为更新目标的算法，树回溯的更新源于整个树的行为值估计，即各叶子节点的行为值估计按出现概率加权。
-
-单步回溯树：
-$$ G_{t:t + 1} \doteq r_{t + 1} + \gamma \sum_{a} \pi(a|s_{t + 1}) Q_t(s_{t + 1}, a) $$
-
-拓展到n-回溯树的递归形式，其对路径可能分支进行展开，不进行采样：
-$$ G_{t:t + n} \doteq r_{t + 1} + \gamma \sum_{a \neq a_{t + 1}} \pi(a|s_{t + 1}) Q_{t + n - 1}(s_{t + 1}, a) + \gamma \pi(a_{t + 1}|s_{t + 1}) G_{t + 1:t + n} $$
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.6\textwidth]{ntree}
-\caption[n-树回溯回溯图]{n-树回溯回溯图}
-\end{figure}
-%------------------------------------------------
-\begin{myalgorithm}[n-树回溯]
-\State 参数：步长$ \alpha \in (0,1], n \in N_+ $
-\State 初始化：$ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $，初始化$ \pi $
-\For{每一幕}
-\State 初始化$ S_0 $为非终止状态
-\State 根据$ S_0 $任意选取$ A_0 $
-\State $ T \gets \infty $
-\For{$ t = 0, 1, 2, \dots $}
-\If{$ t < T $}
-\State 执行动作$ A_t $，观察$ R_{t + 1},S_{t + 1} $
-\If{$ S_{t + 1} $是终止状态}
-\State $ T \gets t + 1 $
-\Else
-\State 根据$ S_{t + 1} $选取$ A_{t + 1} $
-\EndIf
-\EndIf
-\State $ \tau \gets t - n + 1 $ \Comment{$ \tau $是正在更新的状态的时间}
-\If{$ \tau \geq 0 $}
-\If{$ t + 1 \geq T $}
-\State $ G \gets R_T $ 
-\Else
-\State $ G \gets R_{t + 1} + \gamma \sum_a \pi(a|S_{t + 1})Q(S_{t + 1}, a) $
-\EndIf
-\For{$ k = \min(t, T - 1) $递减到$ \tau + 1 $}
-\State $ G \gets R_k + \gamma \sum_{a \neq A_k} \pi(a|S_k)Q(S_k,a) + \gamma \pi(A_k|S_k)G $
-\EndFor
-\State $ Q(S_{\tau}, A_{\tau}) \gets Q(S_{\tau}, A_{\tau}) + \alpha[G - Q(S_{\tau}, A_{\tau})] $
+\State $ Q(s_{\tau}, a_{\tau}) \gets Q(s_{\tau}, a_{\tau}) + \alpha \rho[G - Q(s_{\tau}, a_{\tau})] $
 \EndIf
 \If{$ \tau = T - 1 $}
 \State break
@@ -854,62 +769,18 @@ $$ G_{t:t + n} \doteq r_{t + 1} + \gamma \sum_{a \neq a_{t + 1}} \pi(a|s_{t + 1}
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------
-\subsection[n-Q($ \sigma $)]{n-Q($ \sigma $)\tip{n-Q($ \sigma $)}}
-结合采样的Sarsa和展开的树回溯，在每个状态由参数$ \sigma $决定是采样还是展开，将两种线性情况组合起来：
-$$ G_{t:h} \doteq r_{t + 1} + \gamma (\sigma_{t + 1}\rho_{t + 1} + (1 - \sigma_{t + 1})\pi(a_{t + 1}|s_{t + 1}))(G_{t + 1:h} - Q_{h - 1}(s_{t + 1}, a_{t + 1})) + \gamma \bar{v}_{h - 1}(s_{t + 1}) $$
+\subsection[对比与补充]{对比与补充}\label{sec:TD back}
+Sarsa较为保守，在存在风险的任务中，会避开低回报动作； Q-learning较为乐观，更倾向于探索并找到最优解。在存在陷阱的任务中，Sarsa会比Q-learning取得更好的结果。
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.6\textwidth]{Qsigma}
-\caption[Q(sigma)回溯图]{Q(sigma)回溯图}
-\end{figure}
-%------------------------------------------------
-\begin{myalgorithm}[n-Q($ \sigma $)-off-policy]
-\State 输入：行为策略$ b $，满足$ b(a|s) > 0 $
-\State 参数：步长$ \alpha \in (0,1] $，探索率$ \epsilon > 0 $，步数$ n \in N_+ $
-\State 初始化：$ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $，初始化目标策略$ \pi $
-\For{每一幕}
-\State 初始化$ S_0 $为非终止状态
-\State 根据$ b(\cdot|S_0) $选取$ A_0 $
-\State $ T \gets \infty $
-\For{$ t = 0, 1, 2, \dots $}
-\If{$ t < T $}
-\State 执行动作$ A_t $，观察$ R_{t + 1},S_{t + 1} $
-\If{$ S_{t + 1} $是终止状态}
-\State $ T \gets t + 1 $
-\Else
-\State 根据$ b(\cdot|S_{t + 1}) $选取$ A_{t + 1} $
-\State 选择$ \sigma_{t + 1} $ \Comment{指示是采样还是展开}
-\State $ \rho_{t + 1} \gets \frac{\pi(A_{t + 1}|S_{t + 1})}{b(A_{t + 1}|S_{t + 1})}$ \Comment{重要性采样比率}
-\EndIf
-\EndIf
-\State $ \tau \gets t - n + 1 $ \Comment{$ \tau $是正在更新的状态的时间}
-\If{$ \tau \geq 0 $}
-\State $ G \gets 0 $
-\For{$ k = \min(t, T - 1) $递减到$ \tau + 1 $}
-\If{$ k = T $}
-\State $ G \gets R_T $
-\Else
-\State $ \bar{V} \gets \sum_a \pi(a|S_k)Q(S_k, a) $ \Comment{计算期望状态值}
-\State $ G \gets R_k + \gamma[\sigma_k \rho_k + (1 - \sigma_k)\pi(A_k|S_k)][G - Q(S_k,A_k)] + \gamma\bar{V} $
-\EndIf
-\EndFor
-\State $ Q(S_{\tau},A_{\tau}) \gets Q(S_{\tau},A_{\tau}) + \alpha[G - Q(S_{\tau},A_{\tau})] $
-\EndIf
-\If{$ \tau = T - 1 $}
-\State break
-\EndIf
-\EndFor
-\EndFor
-\end{myalgorithm}
+补充见\ref{sec:TD}。
 %----------------------------------------------------------------------------------------
-\section{表格型方法总结对比}
+\section{表格型方法总结对比}\tip{表格型方法总结对比}
 基于模型的方法（DP、启发式搜索）主要进行规划，无模型的方法（MC、TD）主要进行学习，二者的核心都是值函数的计算。
 %------------------------------------------------
 \paragraph{表格型方法介绍}\label{sec:table back}
 见\ref{sec:table}
 %------------------------------------------------
-\paragraph{三个维度}\tip{表格型方法总结对比}
+\paragraph{三个维度}
 \begin{itemize}
 \item 更新：期望更新能产生更好的估计，但是需要更多的计算。
 \item 自举程度。
@@ -919,19 +790,14 @@ $$ G_{t:h} \doteq r_{t + 1} + \gamma (\sigma_{t + 1}\rho_{t + 1} + (1 - \sigma_{
 \begin{figure}[H]
 \centering
 \subfloat[总结对比]{\includegraphics[width=.4\textwidth]{all}} \quad
-\subfloat[更新对比]{\includegraphics[width=.4\textwidth]{compare_update}}
+\subfloat[更新对比]{\includegraphics[width=.4\textwidth]{compare_update}} \\
+\subfloat[DP表达式]{\includegraphics[width=.3\textwidth]{compare_DP}} \quad
+\subfloat[MC表达式]{\includegraphics[width=.3\textwidth]{compare_MC}} \quad
+\subfloat[TD表达式]{\includegraphics[width=.3\textwidth]{compare_TD}}
 \caption[表格型方法对比]{表格型方法对比}
 \end{figure}
 %------------------------------------------------
 \paragraph{表达式对比}
-\begin{figure}[H]
-\centering
-\subfloat[DP]{\includegraphics[width=.3\textwidth]{compare_DP}} \quad
-\subfloat[MC]{\includegraphics[width=.3\textwidth]{compare_MC}} \quad
-\subfloat[TD]{\includegraphics[width=.3\textwidth]{compare_TD}}
-\caption[表达式对比]{表达式对比}
-\end{figure}
-
 统一格式：
 $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[\bar{q}_t - q_t(s_t, a_t)] $$
 
@@ -957,21 +823,41 @@ MC & $ r_{t + 1} + \gamma r_{t + 2} + \cdots $ & 贝尔曼方程 \\
 %----------------------------------------------------------------------------------------
 \section{值函数近似}
 %------------------------------------------------
-\subsection[函数近似]{函数近似}
-$$ \hat{v}(s, w) \approx v_{\pi}(s), w \in R^d, d \ll |S| $$
+\subsection[值函数近似]{值函数近似\tip{值函数近似与随机梯度下降}}
+$$ \hat{v}(s, \omega) \approx v_{\pi}(s), \omega \in R^d, d \ll |S| $$
 %------------------------------------------------
 \paragraph{目标函数}
-$$ J(\omega) = E[(v_{\pi}(S) - \hat{v}(S, \omega))^2] $$
+$$ J(\omega) = E[(v_{\pi}(s) - \hat{v}(s, \omega))^2] $$
 
-在对状态按重要程度进行加权后，可得到均方值误差：
-$$ \overline{VE} (w) \doteq \sum_{s \in S} \mu(s) [v_\pi(s) - \hat{v}(s, w)]^2 $$
+对$ s $按重要程度加权：
+$$ \overline{VE}(\omega) \doteq \sum_{s \in S} \mu(s) [v_\pi(s) - \hat{v}(s, w)]^2 $$
 
 一般无法保证最优，求解局部最优。
 %------------------------------------------------
-\paragraph{状态分布}
+\paragraph{近似方法}\label{sec:kernal back}
 \begin{itemize}
-\item 均匀分布（各状态同等重要）：$ J(\omega) = \frac{1}{|S|}\sum_{s \in S} [v_{\pi}(s) - \hat{v}(s, \omega)]^2 $。
-\item 平稳分布（马氏过程长期行为）：$ J(\omega) = \sum_{s \in S} d_{\pi}(s)[v_{\pi}(s) - \hat{v}(s, \omega)]^2 $。
+\item $ v_\pi(s_t) $：
+\begin{itemize}
+\item MC：$ G_t $。
+\item TD：$ r_{t + 1} + \gamma \hat{v}(s_{t + 1}, \omega_t) $。
+\end{itemize}
+\item $ \hat{v}(s, \omega) $：
+\begin{itemize}
+\item 线性参数：$ \hat{v}(s, \omega) = \phi(s)^T \omega $，$ \phi(s) $为特征函数。
+\begin{itemize}
+\item 多项式基函数。
+\item 傅里叶基函数$ \phi_i(s) = \cos(i \pi s), s \in [0, 1] $。
+\item 径向基函数$ \phi_i(s) = e^{-\frac{||s - c_i||^2}{2\sigma_i^2}} $。
+\item 表格法可视为特殊情况。
+\end{itemize}
+\item 非线性参数：
+\begin{itemize}
+\item 神经网络：输入状态，网络参数为$ \omega $，输出$ \hat{v}(s, \omega) $。
+\item 决策树。
+\item 模糊网络。
+\end{itemize}
+\item 非参数方法：核函数（见\ref{sec:kernal}）、高斯回归等。
+\end{itemize}
 \end{itemize}
 %------------------------------------------------
 \paragraph{优势}
@@ -980,82 +866,70 @@ $$ \overline{VE} (w) \doteq \sum_{s \in S} \mu(s) [v_\pi(s) - \hat{v}(s, w)]^2 $
 \item 曲线拟合：用少量参数储存状态，阶数越高越近似。
 \end{itemize}
 %------------------------------------------------
-\subsection[随机梯度下降]{随机梯度下降（SGD）\tip{随机梯度下降}}
+\subsection[随机梯度下降]{随机梯度下降（SGD）}
 $$ \omega_{k + 1} = \omega_k - \alpha_k \nabla_\omega J(\omega_k) $$
 
 其中，
 \begin{align*}
 \nabla_\omega J(\omega)
-&= \nabla_\omega E[(v_\pi(S) - \hat{v}(S, \omega))^2] \\
-&= E[\nabla_\omega (v_\pi(S) - \hat{v}(S, \omega))^2] (\text{有界可换求导与期望顺序}) \\
-&= -2E[(v_\pi(S) - \hat{v}(S, \omega)) \nabla_\omega \hat{v}(S, \omega)]
+&= \nabla_\omega E[(v_\pi(s) - \hat{v}(s, \omega))^2] \\
+&= E[\nabla_\omega (v_\pi(s) - \hat{v}(s, \omega))^2] (\text{有界可换求导与期望顺序}) \\
+&= -2E[(v_\pi(s) - \hat{v}(s, \omega)) \nabla_\omega \hat{v}(s, \omega)]
 \end{align*}
 
-因此$ \omega_{k + 1} = \omega_k + \alpha (v_\pi(s_k) - \hat{v}(s_k, \omega_k)) \nabla_\omega \hat{v}(s_k, \omega_k) $。
+因此$ \omega_{k + 1} = \omega_k + \underbrace{\alpha}_{\text{步长}}[v_\pi(s_k) - \hat{v}(s_k, \omega_k)]\nabla_\omega \hat{v}(s_k, \omega_k) $。
 %------------------------------------------------
 \paragraph{负梯度方向降速最快}
 梯度方向增长最快，负梯度方向下降最快。
 %------------------------------------------------
-\paragraph{步长$ \alpha $}
+\begin{myalgorithm}[梯度MC]
+\State 输入：待评估$ \pi $，可微函数$ \hat{v}:S \times R^d \to R $
+\State 参数：步长$ \alpha > 0 $
+\State 初始化：任意初始化$ w \in R^d $
+\Loop \Comment{对每一幕}
+\State 根据$ \pi $生成一幕交互数据$ s_0, a_0, r_1, s_1, a_1, \cdots, r_T, s_T $
+\For{$ t = 0, 1, \cdots, T - 1 $}
+\State $ w_{t + 1} \gets w_t + \alpha_t[G_t - \hat{v}(s_t, w_t)]\nabla_{\omega} \hat{v}(s_t, w_t)$
+\EndFor
+\EndLoop
+\end{myalgorithm}
 %------------------------------------------------
-\paragraph{近似方法}\label{sec:kernal back}
-\begin{itemize}
-\item $ v_\pi(s_t) $：
-\begin{itemize}
-\item 蒙特卡洛：$ g_t $。
-\item 时序差分：$ r_{t + 1} + \gamma \hat{v}(s_{t + 1}, \omega_t) $。
-\end{itemize}
-\item $ \hat{v}(S, \omega) $：
-\begin{itemize}
-\item 线性参数：$ \hat{v}(S, \omega) = \phi(S)^T \omega $，$ \phi(S) $为特征函数。可采用多项式基函数、傅里叶基函数或径向基函数，表格法可视为其特殊情况。可以使用最小二乘法来减少迭代产生的计算量。
-\item 非线性参数：神经网络，输入状态，网络参数为$ \omega $，输出$ \hat{v}(S, \omega) $。
-\item 核函数（见\ref{sec:kernal}）、高斯回归等非参数方法。
-\end{itemize}
-\end{itemize}
-%------------------------------------------------
-\paragraph{半梯度方法}
-只考虑$ w_t $对估计值的影响，而忽略对目标的影响。在使用自举目标时，目标本身依赖于当前$ w $，这使得它们有偏。
+\paragraph{半梯度下降}
+只考虑$ w_t $对估计值的影响，而忽略对目标的影响。在使用自举目标时，目标本身依赖于$ w $，有偏。
 \begin{itemize}
 \item 优势：学习速度较快，支持持续在线学习，无需等待幕结束。
 \item 局限：稳健性差，在非线性函数近似中可能不稳定。
 \end{itemize}
 %------------------------------------------------
-\begin{myalgorithm}[梯度蒙特卡洛]
-\State 输入：待评估$ \pi $，可微函数$ \hat{v}:S \times R^d \to R $
-\State 参数：步长$ \alpha > 0 $
-\State 初始化：任意初始化$ w \in R^d $
-\Loop \Comment{对每一幕}
-\State 根据$ \pi $生成一幕交互数据$ S_0, A_0, R_1, S_1, A_1, \cdots, R_T, S_T $
-\For{$ t = 0, 1, \cdots, T - 1 $}
-\State $ w \gets w + \alpha[G_t - \hat{v}(S_t, w)]\nabla\hat{v}(S_t, w)$
-\EndFor
-\EndLoop
-\end{myalgorithm}
-%------------------------------------------------
-\begin{myalgorithm}[半梯度TD(0)]
+\begin{myalgorithm}[半梯度TD($ 0 $)]
 \State 输入：待评估$ \pi $，可微函数$ \hat{v}:S^+ \times R^d \to R, \hat{v}(\text{终止}, \cdot) = 0 $
 \State 参数：步长$ \alpha > 0 $
 \State 初始化：任意初始化$ w \in R^d $
 \Loop \Comment{对每一幕}
-\State 初始化$ S $
+\State 初始化$ s $
 \For{$ t = 0, 1, \cdots, T - 1 $}
-\State 选取$ A \sim \pi(\cdot|S) $并采取，观察$ R,S' $
-\State $ w \gets w + \alpha[R + \gamma\hat{v}(S', w) - \hat{v}(S, w)]\nabla\hat{v}(S, w) $
-\State $ S \gets S' $
-\If{$ S' $ 为终止状态}
+\State 选取$ a_t \sim \pi(\cdot|s_t) $并采取，观察$ r_t, s_{t + 1} $
+\State $ w_{t + 1} \gets w_t + \alpha_t[r_{t + 1} + \gamma\hat{v}(s_{t + 1}, w_t) - \hat{v}(s_t, w_t)]\nabla_{\omega} \hat{v}(s_t, w_t) $
+\If{$ s_{t + 1} $ 为终止状态}
 \State break
 \EndIf
 \EndFor
 \EndLoop
 \end{myalgorithm}
 %------------------------------------------------
-\subsection[DQN]{DQN（Deep Q-Network）\tip{DQN及其关键技术}}
-DQN用神经网络作为非线性函数近似器，最小化损失函数（贝尔曼最优性误差），适用于高维空间的状态和动作问题：
-$$ J(\omega) = E\{[R + \gamma \max_{a'} \hat{q}(S', a', \underbrace{\omega^-}_{\text{目标网络}}) - \hat{q}(S, A, \underbrace{\omega}_{\text{主网络}})]^2\} $$
+\subsection[批方法]{批方法}
+最小二乘法减少迭代计算量：
+$$ LS(\omega) = \sum_{t = 1}^{T}[q_t^{\pi} - \hat{q}(s_t, a, \omega)]^2 = E_D[(q^{\pi} - \hat{q}(s, a, \omega))^2] $$
+%------------------------------------------------
+\subsection[DQN]{DQN（Deep Q-Network，深度Q网络）\tip{DQN}}
+利用卷积神经网络作为非线性函数近似器，最小化损失函数，适用于高维空间：
+$$ J(\omega) = E\{[R + \gamma \max_{a' \in A(S')} \hat{q}(S', a', \underbrace{\omega^-}_{\text{目标网络}}) - \hat{q}(S, A, \underbrace{\omega}_{\text{主网络}})]^2\} $$
+
+目标网络：$ y^{DQN} = r + \gamma \max_{a'} Q(s', a'; \theta^-) $。
 %------------------------------------------------
 \paragraph{主要技术}
 \begin{itemize}
-\item 两个网络：主网络$ \hat{q}(S, A, \omega) $和目标网络$ \hat{q}(S', a', \omega^-) $，后者参数阶段性从前者同步。
+\item 两个网络：主网络$ \hat{q}(s, a, \omega) $和目标网络$ \hat{q}(s', a', \omega^-) $，后者参数阶段性从前者同步。
 \begin{itemize}
 \item 防止过拟合：
 \begin{itemize}
@@ -1069,75 +943,70 @@ $$ J(\omega) = E\{[R + \gamma \max_{a'} \hat{q}(S', a', \underbrace{\omega^-}_{\
 \item 硬更新：直接复制。
 \end{itemize}
 \end{itemize}
-\item 经验回放（Experience Replay）：存储经验到固定大小的回放缓冲区，训练时从中随机选取。可以打乱样本相关性，提升训练稳定性，可改进为优先经验回放。
+\item 经验回放（Experience Replay）\tip{经验回放}：存储经验到固定大小的回放缓冲区，训练时从中随机选取。可以打乱样本相关性，提升训练稳定性。可改进为优先经验回放。
 \item 帧堆叠：将图像作为神经网络输入时，堆叠多帧图像作为输入，并跳帧选取放入帧，增加时间信息。
 \item 奖励裁剪（Reward Clipping）：将奖励限制在特定范围内（甚至使用符号函数），避免大奖励幅度波动，提升训练稳定性，适用于奖励范围差异大的环境。
 \end{itemize}
 %------------------------------------------------
 \begin{myalgorithm}[DQN]
-\State 初始化主网络参数$ \omega $和目标网络参数$ \omega^- $
-\State 初始化经验回放缓冲区$ B = \{(s, a, r, s')\} $
-\State 初始化计数器$ t \gets 0 $
+\State 初始化：$ \omega, \omega^- $，经验回放缓冲区$ B = \{(s, a, r, s')\} $，计数器$ t \gets 0 $
 \Loop
 \If{$ t \mod C = 0 $} \Comment{每隔C步更新目标网络（初始化一致）}
 \State $ \omega^- \gets \omega $
 \EndIf
 \State 从$ B $中均匀采样小批量样本$ \{(s, a, r, s')\} $
-\For{每个样本$ (s, a, r, s') $}
+\For{每个样本}
 \If{$ s' $ 是终止状态}
 \State $ y \gets r $
 \Else
 \State $ y \gets r + \gamma \max_{a'} \hat{q}(s', a', \omega^-) $ \Comment{计算目标值}
 \EndIf
 \EndFor
-\State 使用小批量样本$ \{(s, a, y)\} $更新主网络参数$ \omega $，最小化损失$ (y - \hat{q}(s, a, \omega))^2 $
+\State 使用小批量样本$ \{(s, a, y)\} $更新主网络参数$ \omega $，最小化损失$ [y - \hat{q}(s, a, \omega)]^2 $
 \State $ t \gets t + 1 $
 \EndLoop
 \end{myalgorithm}
 %------------------------------------------------
 \paragraph{double-DQN}
 两个值函数逼近网络，一个选择动作，一个评估值函数。
+
+目标网络：$ y^{DDQN} = r + \gamma Q[s', argmax_a Q(s_{t + 1}, a, \theta_t), \theta^-] $。
 %----------------------------------------------------------------------------------------
 \section[策略梯度]{策略梯度（policy gradient）}
 %------------------------------------------------·
 \subsection[概念]{概念\tip{策略梯度}}
-将策略参数化，在策略空间进行搜索：
+将策略参数化，搜索策略空间，是同轨策略：
 $$ \pi(a|s, \theta) = \pi_{\theta}(a|s) $$
-
-是同轨策略。
 %------------------------------------------------
-\paragraph{目标}
-学习$ \theta $使以下指标最大。
+\paragraph{梯度与梯度上升（倪推导）}~\\
 
+学习$ \theta $使以下指标最大。
 \begin{itemize}
 \item 平均状态价值：
-$$ \bar{v}_\pi = \sum_{s\in S} d(s) v_\pi(s) = E[d(S)v_\pi(S)] $$
+$$ \bar{v}_\pi = \sum_{s \in S} d(s) v_\pi(s) = E[v_\pi(S)] $$
 
-其中$ d(s) \geq 0 $为$ s $的权重，$ \sum_{s \in S} d(s) = 1 $，其可以由以下方法选取：
+其中$ d(s) \geq 0 $为$ s $的权重，$ \sum_{s \in S} d(s) = 1 $，其可由以下方法选取：
 \begin{itemize}
-\item 同等重要：$ d(s) = \frac{1}{|S|} $。
+\item 均匀分布：$ d(s) = \frac{1}{|S|} $。
 \item 只关心$ s_0 $：$ d(s_0) = 1, d(s \neq s_0) = 0 $。
 \item 平稳分布：$ d_{\pi}^T P_{\pi} = d_{\pi}^T $，根据访问频次赋予概率。
 \end{itemize}
 \item 平均单步奖励：
 \begin{align*}
-\bar{r}_\pi &= \sum_{s\in S} d_{\pi}(s) \underbrace{r_\pi(s)}_{\sum_{a \in A} \pi(a|s)r(s, a)} = E[d_{\pi}(S)r_\pi(S)] \\
+\bar{r}_\pi &= \sum_{s \in S} \underbrace{d_{\pi}(s)}_{\text{平稳分布}} \underbrace{r_\pi(s)}_{\sum_{a \in A} \pi(a|s)\underbrace{r(s, a)}_{\sum_{r \in R} r p(r|s, a)}} = E[r_\pi(S)] \\
 &= \lim_{n \to \infty} \frac{1}{n}E[\sum_{k = 1}^{n} R_{t + k}] = \lim_{n \to \infty} \frac{1}{n}E[\sum_{k = 1}^{n} R_{t + k}|S_t = s_0]
 \end{align*}
-
-其中$ d_{\pi}(s) $为平稳分布。
 \end{itemize}
-%------------------------------------------------
-\paragraph{梯度}
+
+梯度为：
 \begin{align*}
-\nabla_\theta J(\theta) &= \sum_{s \in S} d(s) \sum_{a \in A} \nabla_\theta \pi(a|s, \theta) q_\pi(s, a) \\
-&= \sum_s d(s) \sum_a \pi(a|s, \theta) \nabla_\theta \ln \pi(a|s, \theta) q_\pi(s, a) \\
-&= E_{S \sim d, A \sim \pi}[\nabla_\theta \ln \pi(A|S, \theta) q_\pi(S, A)]
+\nabla_\theta J(\theta) &= \sum_{s \in S} \eta(s) \sum_{a \in A} \nabla_\theta \pi(a|s, \theta) q_\pi(s, a) \\
+&= \sum_{s \in S} \eta(s) \sum_{a \in A} \pi(a|s, \theta) \nabla_\theta \ln \pi(a|s, \theta) q_\pi(s, a) \\
+&= E[\nabla_\theta \ln \pi(A|S, \theta) q_\pi(S, A)] \\
+&\approx \nabla_\theta \ln \pi(a|s, \theta) q_\pi(s, a) (\text{采样近似})
 \end{align*}
 
 为确保$ \pi(a|s, \theta) > 0 $，使用softmax函数，$ \pi(a|s, \theta) = \frac{e^{h(s, a, \theta)}}{\sum_{a' \in A} e^{h(s, a', \theta)}} $。
-%------------------------------------------------
-\paragraph{梯度上升算法}
 \begin{align*}
 \theta_{t + 1} &= \theta_t + \alpha\nabla_\theta J(\theta) = \theta_t + \alpha E[\nabla_\theta \ln \pi(A|S, \theta_t) q_\pi(S, A)] \\
 &= \theta_t + \alpha \underbrace{\nabla_\theta \ln \pi(a_t|s_t, \theta_t)}_{\beta_t = \frac{q_\pi(s_t, a_t)}{\pi(a_t|s_t, \theta_t)}} \underbrace{q_\pi(s_t, a_t)}_{q(s_t, a_t)\text{近似}} (\text{随机梯度})
@@ -1148,27 +1017,49 @@ $$ \bar{v}_\pi = \sum_{s\in S} d(s) v_\pi(s) = E[d(S)v_\pi(S)] $$
 \item $ \beta_t $与$ q_{\pi}(s_t, a_t) $正相关，与$ \pi(a_t|s_t, \theta_t) $负相关，倾向于选择高价值动作，探索低概率动作。
 \end{itemize}
 %------------------------------------------------
+\paragraph{似然率策略梯度（郭推导）}~\\
+
+记$ R(\tau) = \sum_{t = 0}^H R(s_t, u_t) $，目标函数为$ U(\theta) = \sum_{\tau} P(\tau, \theta) R(\tau) $，其梯度为：
+\begin{align*}
+\nabla_\theta U(\theta) &= \nabla_\theta \sum_{\tau} P(\tau, \theta) R(\tau) = \sum_{\tau} \nabla_\theta P(\tau, \theta) R(\tau) (\text{运算换序}) \\
+&= \sum_{\tau} P(\tau, \theta) \frac{\nabla_\theta P(\tau, \theta)}{P(\tau, \theta)} R(\tau) = \sum_{\tau} P(\tau, \theta) \nabla_\theta \ln P(\tau, \theta) R(\tau) (\text{复合求导})
+\end{align*}
+
+经验平均为：
+$$ \nabla_\theta U(\theta) \approx \hat{g} = \frac{1}{m} \sum_{i = 1}^m \nabla_\theta \ln P(\tau, \theta) R(\tau) $$
+
+其无偏但方差很大，其中
+\begin{align*}
+\nabla_\theta\ln P(\tau^{(i)}, \theta) &= \nabla_\theta\ln[\prod_{t = 0}^{H} P(s_{t + 1}^{(i)}|s_t^{(i)}, u_t^{(i)}) \cdot \pi_\theta(u_t^{(i)}|s_t^{(i)})] \\
+&= \nabla_\theta[\underbrace{\sum_{t = 0}^{H} \ln P(s_{t + 1}^{(i)}|s_t^{(i)}, u_t^{(i)})}_{\text{与动力学无关}} + \underbrace{\sum_{t = 0}^{H}\ln\pi_\theta(u_t^{(i)}|s_t^{(i)})}_{\text{只与策略相关}}] \\
+&= \nabla_\theta[\sum_{t = 0}^{H} \ln\pi_\theta(u_t^{(i)}|s_t^{(i)})] = \underbrace{\sum_{t = 0}^{H} \nabla_\theta\ln\pi_\theta(u_t^{(i)}|s_t^{(i)})}_{\text{策略梯度}} 
+\end{align*}
+
+减小方差：
+\begin{itemize}
+\item 基线。
+\item 修改值函数。
+\end{itemize}
+%------------------------------------------------
 \paragraph{优势}
 \begin{itemize}
-\item 可以逼近确定性策略。
-\item 可以逼近任意概率分布，不受$ q(s, a) $限制。
-\item 策略是更简单的函数逼近，如PID控制。
+\item 可以逼近确定性策略，可以逼近任意概率分布，不受$ q(s, a) $限制，策略是更简单的函数逼近。
 \item 策略参数化更容易加入先验知识。
 \item 在状态空间大时，存储和泛化能力强。
 \end{itemize}
 %------------------------------------------------·
 \subsection[REINFORCE]{REINFORCE（MC-policy gradient）\tip{REINFORCE}}
-用蒙特卡洛方法估计$ q_\pi(s, a) $，使用与$ \theta $无关的$ G_t $代替$ q_\pi(s_t, a_t) $：
+用MC估计$ q_\pi(s, a) $，使用与$ \theta $无关的$ G_t $代替$ q_\pi(s_t, a_t) $：
 $$ \theta_{t + 1} \doteq \theta_t + \alpha G_t \nabla_{\theta} ln \pi (a_t|s_t, \theta_t) $$
 %------------------------------------------------·
 \begin{myalgorithm}[REINFORCE]
-\State 输入：可微分的参数化策略$ \pi(a|s, \theta) $
+\State 输入：可微分的$ \pi(a|s, \theta) $
 \State 参数：步长$ \alpha > 0 $，折扣因子$ \gamma \in (0, 1) $
-\State 初始化：初始化策略参数$ \theta \in R^{d'} $
-\Loop \Comment{对每一幕循环}
-\State 按照$ \pi(\cdot|\cdot, \theta) $生成一幕$ S_0, A_0, R_1, \ldots, S_{T - 1}, A_{T - 1}, R_T $
-\For{$ t = 0, 1, \ldots, T - 1 $}
-\State $ G_t \gets \sum_{k = t + 1}^{T} \gamma^{k - t - 1}R_k $ \Comment{$ (G_t) $}
+\State 初始化：初始化$ \theta \in R^{d'} $
+\Loop
+\State 按照$ \pi(\cdot|\cdot, \theta) $生成一幕$ s_0, a_0, r_1, \cdots, s_{T - 1}, a_{T - 1}, r_T $
+\For{$ t = 0, 1, \cdots, T - 1 $}
+\State $ G_t \gets \sum_{k = t + 1}^{T} \gamma^{k - t - 1}R_k $
 \State $ \theta \gets \theta + \alpha G_t \nabla_{\theta} \ln \pi(a_t|s_t, \theta_t) $
 \EndFor
 \EndLoop
@@ -1188,7 +1079,7 @@ $$ \theta_{t + 1} = \theta_t + \alpha \nabla_\theta \ln \pi(a_t|s_t, \theta_t) q
 \State 初始化：策略参数$ \theta $和评论家参数$ w $
 \For{每个回合}
 \For{$ t = 0, 1, 2, \ldots, T - 1 $}
-\State 根据策略$ \pi(a|s_t, \theta_t) $选择$ a_t $，观察$ r_{t + 1}, s_{t + 1} $，再根据策略$ \pi(a|s_{t + 1}, \theta_t) $选择$ a_{t + 1} $
+\State 根据$ \pi(a|s_t, \theta_t) $选择$ a_t $，观察$ r_{t + 1}, s_{t + 1} $，再根据$ \pi(a|s_{t + 1}, \theta_t) $选择$ a_{t + 1} $
 \State $ \delta_t = r_{t + 1} + \gamma q(s_{t + 1}, a_{t + 1}, w_t) - q(s_t, a_t, w_t) $ \Comment{TD误差}
 \State $ w_{t + 1} = w_t + \alpha_w \delta_t \nabla_w q(s_t, a_t, w_t) $ \Comment{评论家价值更新}
 \State $ \theta_{t + 1} = \theta_t + \alpha_\theta \nabla_\theta \ln \pi(a_t|s_t, \theta_t) q(s_t, a_t, w_{t + 1}) $ \Comment{演员策略更新}
@@ -1196,22 +1087,21 @@ $$ \theta_{t + 1} = \theta_t + \alpha \nabla_\theta \ln \pi(a_t|s_t, \theta_t) q
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------·
-\subsection[优势Actor-Critic方法]{优势Actor-Critic方法（A2C）\tip{优势Actor-Critic方法}}
+\subsection[基线优势]{基线优势\tip{基线优势}}
 基本的Actor-Critic方法有较大方差，引入基线降低。
 %------------------------------------------------
-\subsubsection[基线]{基线\tip{基线}}
+\paragraph{基线}
 $$ \nabla_\theta J(\theta) = E_{S \sim \eta, A \sim \pi}\{\nabla_\theta \ln \pi(A|S, \theta_t) [q_\pi(S, A) - b(S)]\} $$
-%------------------------------------------------
-\paragraph{策略梯度不变}
+
+策略梯度期望不变：
 \begin{align*}
 E_{S\sim\eta,A\sim\pi}[\nabla_\theta\ln\pi(A|S,\theta_t)b(S)] &= \sum_{s \in S} \eta(s) \sum_{a \in A} \nabla_\theta\pi(a|s,\theta_t)b(s) \\
 &= \sum_{s \in S} \eta(s) b(s) \sum_{a\in A} \nabla_\theta\pi(a|s,\theta_t) \\
 &= \sum_{s \in S} \eta(s) b(s) \nabla_\theta 1 (\text{交换求和与求导}) \\
 &= 0
 \end{align*}
-%------------------------------------------------
-\paragraph{策略梯度方差最小化}
-求偏导获得：
+
+为使策略梯度方差最小化，求偏导得：
 \begin{align*}
 b^*(s) &= \frac{E_{A\sim\pi}[||\nabla_\theta\ln\pi(A|s,\theta_t)||^2 q_\pi(s,A)]}{E_{A\sim\pi}[||\nabla_\theta\ln\pi(A|s,\theta_t)||^2]} \\
 &= E_{A\sim\pi}[q_\pi(s,A)] (\text{省略权重}) \\
@@ -1223,9 +1113,9 @@ b^*(s) &= \frac{E_{A\sim\pi}[||\nabla_\theta\ln\pi(A|s,\theta_t)||^2 q_\pi(s,A)]
 \paragraph{优势函数}
 $$ \theta_{t + 1} = \theta_t + \alpha E\{\nabla_\theta \ln \pi(A|S, \theta_t) \underbrace{[q_\pi(S, A) - v_{\pi}(s)]}_{\text{优势函数}\delta_{\pi}(S, A)}\} $$
 
-此时，$ \beta_t = \frac{\delta_{\pi}(s_t, s_t)}{\pi(a_t|s_t, \theta_t)} $，正相关项为相对值，而非绝对值，更合理，仍能平衡探索和利用。
+此时，$ \beta_t = \frac{\delta_{\pi}(s_t, s_t)}{\pi(a_t|s_t, \theta_t)} $，正相关项为相对值，而非绝对值，更合理。
 
-使用TD方法进行近似，有：
+使用TD进行近似：
 $$ \delta_t = q_t(s_t, a_t) - v_t(s_t) \approx r_{t + 1} + \gamma v_t(s_{t + 1}) - v_t(s_t) $$
 
 这时只需要一个网络进行估计。
@@ -1234,22 +1124,22 @@ $$ \delta_t = q_t(s_t, a_t) - v_t(s_t) \approx r_{t + 1} + \gamma v_t(s_{t + 1})
 \State 初始化：策略参数$ \theta $和评论家参数$ w $
 \For{每个回合}
 \For{$ t = 0, 1, 2, \ldots, T - 1 $}
-\State 根据策略$ \pi(a|s_t, \theta_t) $选择$ a_t $，执行后观察$ r_{t + 1}, s_{t + 1} $
+\State 根据$ \pi(a|s_t, \theta_t) $选择$ a_t $，执行后观察$ r_{t + 1}, s_{t + 1} $
 \State $ \delta_t = r_{t + 1} + \gamma v(s_{t + 1}, w_t) - v(s_t, w_t) $ \Comment{优势函数}
 \State $ w_{t + 1} = w_t + \alpha_w \delta_t \nabla_w v(s_t, w_t) $ \Comment{评论家价值更新}
 \State $ \theta_{t + 1} = \theta_t + \alpha_\theta \delta_t \nabla_\theta \ln \pi(a_t|s_t, \theta_t) $ \Comment{演员策略更新}
 \EndFor
 \EndFor
 \end{myalgorithm}
-%------------------------------------------------·
-\subsection[离轨Actor-Critic方法]{离轨Actor-Critic方法\tip{离轨Actor-Critic方法}}
-加入重要性采样变成离轨方法：
+%------------------------------------------------
+\paragraph{off-policy}
+加入重要性采样由on-policy变成off-policy：
 $$ \nabla_\theta J(\theta) = E_{S \sim \rho, A \sim \beta}[\frac{\pi(A|S,\theta)}{\beta(A|S)}\nabla_\theta\ln\pi(A|S,\theta)q_\pi(S,A)] $$
 
 其中$ \beta $是行为策略，$ \rho $是状态分布。其也可以采用上述基线$ b^*(s) $。
 %------------------------------------------------·
 \begin{myalgorithm}[重要性采样离轨Actor-Critic]
-\State 初始化：给定行为策略$ \beta(a|s) $、目标策略$ \pi(a|s,\theta_0) $、值函数$ v(s,w_0) $
+\State 初始化：$ \beta(a|s), \pi(a|s,\theta_0), v(s,w_0) $
 \For{每个回合}
 \For{$ t = 0, 1, 2, \ldots, T - 1 $}
 \State 根据$ \beta(s_t) $选择$ a_t $，观察$ r_{t + 1}, s_{t + 1} $。
@@ -1260,41 +1150,178 @@ $$ \nabla_\theta J(\theta) = E_{S \sim \rho, A \sim \beta}[\frac{\pi(A|S,\theta)
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------·
-\subsection[确定性策略Actor-Critic方法]{确定性策略Actor-Critic方法（DPG）\tip{确定性策略Actor-Critic方法}}
-$$ \nabla_\theta J(\theta) = \sum_{s \in S} \rho_\mu(s)\nabla_\theta\mu(s)(\nabla_a q_\mu(s, a))\bigg|_{a=\mu(s)} = E_{S\sim\rho_\mu}[\nabla_\theta\mu(S)(\nabla_a q_\mu(S, a))\bigg|_{a=\mu(S)}] $$
-
-其中，$ \rho_\mu $是一种状态分布。
+\subsection[TRPO与PPO]{TRPO与PPO\tip{TRPO与PPO}}
 %------------------------------------------------·
-\begin{myalgorithm}[确定性策略离轨Actor-Critic]
-\State 初始化：给定行为策略$ \beta(a|s) $、确定性目标策略$ \mu(s,\theta_0) $、值函数$ q(s,a,w_0) $。
+\subsubsection[TRPO]{TRPO（Trust Region Policy Optimization，信赖域策略优化）}
+限制每次策略更新的幅度，保证稳定性和单调提升。
+%------------------------------------------------
+\paragraph{替代回报函数}
+\begin{align*}
+\eta(\tilde{\pi}) &= \eta(\pi) + \underbrace{E_{s_0, a_0, \cdots \sim \tilde{\pi}}[\sum_{t = 0}^{\infty} \gamma^t A_{\pi}(s_t, a_t)]}_{\text{新旧策略回报差}} \\
+&= \eta(\pi) + \sum_{s} \rho_{\tilde{\pi}}(s) \sum_{a} \tilde{\pi}(a|s) A^{\pi}(s, a) \\
+L_{\pi}(\tilde{\pi}) &= \eta(\pi) + \sum_{s} \textcolor{red}{\rho_{\pi}(s)} \sum_{a} \tilde{\pi}(a|s) A^{\pi}(s, a) (\text{忽略状态分布变化}) \\
+&= \eta(\pi) + E_{s \sim \rho_{\theta_{old}}, a \sim \pi_{\theta_{old}}}[\frac{\tilde{\pi}_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)] (\text{重要性采样动作分布})
+\end{align*}
+
+有$ L_{\pi_{\theta_{old}}}(\pi_{\theta_{old}}) = \eta(\pi_{\theta_{old}}), \nabla_{\theta} L_{\pi_{\theta_{old}}}(\pi_{\theta}) \big|_{\theta = \theta_{old}} = \nabla_{\theta} \eta(\pi_{\theta}) \big|_{\theta = \theta_{old}} $。
+
+令$ \alpha = D^{\max}_{TV}(\pi, \tilde{\pi}), \epsilon = \max_{s, a}|A_{\pi}(s, a)|$，惩罚因子$ C = \frac{2\epsilon\gamma}{(1 - \gamma)^2} $，则有：
+$$ \eta(\tilde{\pi}) \geq L_{\pi}(\tilde{\pi}) - \frac{4\epsilon}{(1 - \gamma)^2} \alpha^2 \quad \eta(\tilde{\pi}) \geq L_{\pi}(\tilde{\pi}) - C D^{\max}_{KL}(\pi, \tilde{\pi}) $$
+%------------------------------------------------
+\paragraph{优化：共轭梯度搜索}
+问题转化为：
+\begin{align*}
+&\max_{\theta}[L_{\theta_{old}}(\theta) - C D^{\max}_{KL}(\theta_{old}, \theta)] \\
+\overset{\text{迭代步长较小}}{\Longrightarrow} 
+&\max_{\theta} E_{s \sim \rho_{\theta_{old}}, a \sim \pi_{\theta_{old}}}[\frac{\pi_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)], \quad D^{\max}_{KL}(\theta_{old}, \theta) \leq \delta \\
+\underset{\text{平均KL散度}}{\overset{\text{策略状态空间分布}}{\Longrightarrow}}
+&\max_{\theta} E_{s \sim \textcolor{red}{\pi_{\theta_{old}}}, a \sim \pi_{\theta_{old}}}[\frac{\pi_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)], \quad E_{s \sim \pi_{\theta_{old}}}\{D_{KL}[\pi_{\theta_{old}}(\cdot|s)\pi_{\theta}(\cdot|s)]\} \leq \delta \\
+\underset{\text{约束二次逼近}}{\overset{\text{目标线性逼近}}{\Longrightarrow}}
+&\max_{\theta}[\nabla_{\theta} L_{\theta_{old}}(\theta) \big|_{\theta = \theta_{old}} \cdot (\theta - \theta_{old})], \quad \frac{1}{2}(\theta_{old} - \theta)^T \underbrace{A(\theta_{old})}_{Fisher \text{信息矩阵}} (\theta_{old} - \theta) \leq \delta
+\end{align*}
+%------------------------------------------------·
+\subsubsection[PPO]{PPO（Proximal Policy Optimization，近端策略优化）}
+限制新旧策略的变化幅度，保证策略更新的稳定性，简化TRPO的实现并提升效率。
+\begin{align*}
+L^{CLIP}(\theta) &= E_t[\min\{r_t(\theta) \hat{A}_t, clip[r_t(\theta), 1 - \epsilon, 1 + \epsilon]\hat{A}_t\}] \\
+L_t^{CLIP + VF + S}(\theta) &= \hat{E}_t\{L_t^{CLIP}(\theta) - c_1 L_t^{VF}(\theta) + c_2 S[\pi_\theta](s_t)\}
+\end{align*}
+
+其中，
+\begin{itemize}
+\item 值函数损失函数$ L_t^{VF} $。
+\item 熵$ S $。
+\item 优势函数估计$ \hat{A}_t = \delta_t + (\gamma\lambda)\delta_{t + 1} + \dots + (\gamma\lambda)^{T - t + 1}\delta_{T - 1} $，$ \delta $为TD误差。
+\end{itemize}
+%------------------------------------------------·
+\begin{myalgorithm}[PPO]
+\State 初始化$ \theta, \theta_{old} $
+\For{每个回合}
+\For{$ actor = 1, 2, \ldots, N $}
+\State 用$ \pi_{\theta_{old}} $采集$ T $步序列$ \{(s_t, a_t, r_t, s_{t + 1})\}_{t = 1}^T $
+\State 优势估计$ \hat{A}_t $
+\State 回报$ \hat{R}_t $
+\EndFor
+\State 汇总所有样本，数量为$ NT $
+\For{$ k = 1, 2, \ldots, K $}
+\State 随机采样$ M $个minibatch
+\State 概率比$ r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)} $
+\State clip损失：$ L^{CLIP} = \min(r_t(\theta)\hat{A}_t, clip(r_t(\theta), 1 - \epsilon, 1 + \epsilon)\hat{A}_t) $
+\State 值函数损失$ L^{VF} $和熵正则项$ S[\pi_\theta](s_t) $
+\State 总损失$ L = E[L^{CLIP} - c_1 L^{VF} + c_2 S] $
+\State 对$ \theta $梯度下降优化$ L $
+\EndFor
+\State $ \theta_{old} \gets \theta $
+\EndFor
+\end{myalgorithm}
+%------------------------------------------------·
+\subsection[确定性策略Actor-Critic方法]{确定性策略Actor-Critic方法（DPG）}
+在策略是确定性时，有off-policy方法：
+$$ \nabla_\theta J(\theta) = \sum_{s \in S} \underbrace{\rho_\mu(s)}_{\text{状态分布}} \nabla_\theta \mu(s)[\nabla_a q_\mu(s, a)]\bigg|_{a = \mu(s)} = E_{S \sim \rho_\mu}\{\nabla_\theta \mu(S)[\nabla_a q_\mu(S, a)]\bigg|_{a =\mu(S)}\} $$
+%------------------------------------------------·
+\begin{myalgorithm}[确定性策略Actor-Critic（DPG）]
+\State 初始化：$ \beta(a|s), \mu(s, \theta_0), q(s, a, w_0) $。\Comment{$ \beta $可用$ \mu $+噪声替代}
 \For{每个回合}
 \For{$ t = 0, 1, 2, \ldots, T - 1 $}
 \State 根据$ \beta(s_t) $生成$ a_t $，观察$ r_{t + 1}, s_{t + 1} $
-\State $ \delta_t = r_{t+1} + \gamma q(s_{t+1}, \mu(s_{t+1},\theta_t), w_t) - q(s_t, a_t, w_t) $ \Comment{优势函数}
+\State $ \delta_t = r_{t + 1} + \gamma q(s_{t + 1}, \mu(s_{t + 1}, \theta_t), w_t) - q(s_t, a_t, w_t) $ \Comment{优势函数}
 \State $ w_{t + 1} = w_t + \alpha_w \delta_t \nabla_w q(s_t, a_t, w_t) $ \Comment{评论家价值更新}
-\State $ \theta_{t + 1} = \theta_t + \alpha_\theta \nabla_\theta \mu(s_t, \theta_t) (\nabla_a q(s_t, a, w_{t + 1}))|_{a = \mu(s_t)} $ \Comment{演员策略更新}
+\State $ \theta_{t + 1} = \theta_t + \alpha_\theta \nabla_\theta \mu(s_t, \theta_t)[\nabla_a q(s_t, a, w_{t + 1})]|_{a = \mu(s_t)} $ \Comment{演员策略更新}
+\EndFor
+\EndFor
+\end{myalgorithm}
+%------------------------------------------------
+\paragraph{DDPG}\tip{DDPG}
+结合DQN和DPG，演员、评论家各有主网络和目标网络，一共四个网络。
+%------------------------------------------------
+\begin{myalgorithm}[DDPG]
+\State 初始化：随机初始化评论家网络$ Q(s, a|\theta^Q) $和演员网络$ \mu(s|\theta^\mu) $，初始化目标网络$ Q', \mu' $，使$ \theta^{Q'} \gets \theta^Q, \theta^{\mu'} \gets \theta^\mu $，初始化经验回放池$ R $
+\For{每个回合}
+\State 初始化探索噪声过程$ N $
+\State 接收初始状态$ s_1 $
+\For{$ t = 1, \dots, T $}
+\State 选择$ a_t = \mu(s_t|\theta^\mu) + N_t $ \Comment{带噪声的确定性策略}
+\State 执行$ a_t $，观察$ r_t, s_{t + 1} $
+\State 存储转移$ (s_t, a_t, r_t, s_{t + 1}) $到$ R $ \Comment{经验回放}
+\State 从$ R $中随机采样$ N $个小批量$ (s_i, a_i, r_i, s_{i + 1}) $
+\State 目标值$ y_i = r_i + \gamma Q'(s_{i + 1}, \mu'(s_{i + 1}|\theta^{\mu'})|\theta^{Q'}) $ \Comment{目标网络}
+\State 更新评论家：最小化损失$ L = \frac{1}{N}\sum_i (y_i - Q(s_i, a_i|\theta^Q))^2 $
+\State 更新演员：$\nabla_{\theta^\mu} J \approx \frac{1}{N} \sum_i \nabla_a Q(s, a|\theta^Q)|_{s = s_i, a = \mu(s_i)} \nabla_{\theta^\mu} \mu(s|\theta^\mu)|_{s_i} $
+\State 软更新目标网络参数
 \EndFor
 \EndFor
 \end{myalgorithm}
 %----------------------------------------------------------------------------------------
-\section{策略搜索方法总结对比}
+\section{策略搜索方法总结对比}\tip{策略搜索方法总结对比}
 $$
 \text{策略搜索方法} \begin{cases} 
 \text{无模型} \begin{cases} 
 \text{随机策略} \begin{cases} 
-\text{策略梯度：TRPO} \\ 
-\text{统计学习} \\ 
-\text{路径积分} 
-\end{cases} \\ 
-\text{确定性策略：DDPG}
-\end{cases} \\ 
-\text{基于模型：指导策略搜索(GPS)，传统控制器+监督学习}
-\end{cases}
+\text{策略梯度：TRPO} \\ \text{统计学习} \\ \text{路径积分} \end{cases} \\ 
+\text{确定性策略：DDPG} \\ \text{EM方法} \\ \text{粒子滤波方法} \end{cases} \\ 
+\text{基于模型：指导策略搜索(GPS)，传统控制器+监督学习} \end{cases}
 $$
+%----------------------------------------------------------------------------------------
+\section{多智能体强化学习}\tip{多智能体强化学习}
+%------------------------------------------------
+\subsection[概念]{概念}
+\begin{minipage}{0.3\textwidth}
+\paragraph{分类}
+\begin{itemize}
+\item 完全协作。
+\item 完全竞争。
+\item 混合策略。
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}{0.6\textwidth}
+\paragraph{挑战}
+\begin{itemize}
+\item 单智能体视角下，其它智能体是动态的，值函数为相互依赖的联合值函数。
+\item 智能体间存在博弈关系，求均衡解。
+\end{itemize}
+\end{minipage}
+%------------------------------------------------
+\paragraph{博弈论}
+\begin{itemize}
+\item 参与人行动先后顺序：
+\begin{itemize}
+\item 静态博弈：同时行动。
+\item 动态博弈：有先后行动顺序，常用博弈树拓展表述。
+\end{itemize}
+\item 参与人知识储备：
+\begin{itemize}
+\item 完美信息博弈：已知相关信息。
+\item 非完美信息博弈：不完全知道相关信息。
+\end{itemize}
+\end{itemize}
+%------------------------------------------------
+\paragraph{完美信息静态博弈的纳什均衡策略（Nash equilibrium）}
+所有智能体以最佳策略应对，全理性，没有智能体能单独偏离自身策略来改善自身回报。所有智能体采取纳什均衡策略应比部分智能体采取纳什均衡策略的价值高。
+%------------------------------------------------
+\paragraph{非完美信息博弈的扩展式博弈}
+七元组$ \{H, Z, P, p, u, I ,\sigma_c\} $，分别是当前节点已知所有信息（包含个人私有信息），终止状态集合，玩家集合，非终止状态到玩家映射，非终止状态到实数映射，终止状态到实数映射（玩家到终止状态时获得的回报），信息集，策略。
+%------------------------------------------------
+\subsection[算法]{算法}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{many}
+\caption[多智能体强化学习]{多智能体强化学习}
+\end{figure}
+
+\begin{itemize}
+\item 完全协作。
+\item 完全竞争：MinimaxQ-learning算法。
+\item 混合策略：纳什Q-learning算法，Friend-or-foe Q-learning算法，wolf策略爬山算法。
+\item 基于微分对策略。
+\item 深度强化学习算法。
+\end{itemize}
 %----------------------------------------------------------------------------------------
 \section{附录}
 %------------------------------------------------
-\subsection[历史]{历史与发展}\label{sec:history}
+\subsection[概念与原理]{概念与原理}
+%------------------------------------------------
+\subsubsection[历史与发展]{历史与发展}\label{sec:history}
 \begin{enumerate}
 \item 源于动物学习心理学的试错法：效应定律（Edward Thorndike），条件反射（巴普洛夫），快乐-痛苦系统（图灵），向“老师”学习到向“评论家”学习，自动学习机（M.L.Tsetlin），分类器系统（救火队算法和遗传算法）。
 \item 最优控制：贝尔曼方程与马尔可夫决策过程（Richard Bellman），维度灾难。
@@ -1303,7 +1330,7 @@ $$
 
 返回正文\ref{sec:history back}。
 %------------------------------------------------
-\subsection[贝尔曼最优方程求解]{贝尔曼最优方程求解}\label{sec:Scalability Mapping}
+\subsubsection[贝尔曼最优方程求解]{贝尔曼最优方程求解}\label{sec:Scalability Mapping}
 %------------------------------------------------
 \paragraph{收缩映射定理}
 若$ f(x) $是收缩映射，则存在唯一一个不动点$ x^* $满足$ f(x^*) = x^* $。针对$ x_{k + 1} = f(x_k) $，在$ x_k \to x^*, k \to \infty $的过程中，收敛速度成指数级增长。
@@ -1361,12 +1388,127 @@ f(v_1) - f(v_2)
 返回正文\ref{sec:MC back}。
 %------------------------------------------------
 \subsubsection[TD补充]{TD补充}\label{sec:TD}
+%------------------------------------------------
+\paragraph{改进方法}
 \begin{itemize}
-\item 随机游走：在随机任务实践中，TD($ 0 $)的收敛速度要比常量$ \alpha $MC快。这是因为前者的最优性与预测回报更相关，找出的是完全符合马尔可夫过程模型的最大似然估计参数，收敛到确定性等价估计；而后者只在有限方面最优，找出的是最小化训练集均方误差的估计。
 \item 批量更新：值函数根据增量和改变，在处理整批数据后才更新。
 \item 最大化偏差：贪心策略和柔性策略都在隐式估计最大值，会产生正偏差，致使回报值偏离，带来明显错误决策。
 \item 后位状态：利用先验知识，知晓动作后状态，并有后位值函数。在后位状态相同的时候可以迁移，减少计算量。
 \end{itemize}
+%------------------------------------------------
+\paragraph{带控制变量的每次决策模型}~\\
+
+为保证不被选择的动作不会因$ \rho_t = 0 $而回报为$ 0 $，使方差较大，采取以下n步回报off-policy方法：
+$$ G_{t:h} \doteq \rho_t (r_{t + 1} + \gamma G_{t + 1:h}) + \underbrace{(1 - \rho_t) v_{h - 1}(s_t)}_{\text{控制变量}} $$
+
+其中控制变量保证$ \rho_t = 0 $时估计值不收缩，且不改变更新期望。
+
+可写为以下递归形式：
+\begin{align*}
+G_{t:h} 
+&\doteq r_{t + 1} + \gamma[\rho_{t + 1} G_{t + 1:h} + \bar{v}_{h - 1}(s_{t + 1}) - \rho_{t + 1} Q_{h - 1}(s_{t + 1}, a_{t + 1})] \\
+&= r_{t + 1} + \gamma \rho_{t + 1}[G_{t + 1:h} - Q_{h - 1}(s_{t + 1}, a_{t + 1})] + \gamma \bar{v}_{h - 1}(s_{t + 1})
+\end{align*}
+%------------------------------------------------
+\paragraph{树回溯}~\\
+
+树回溯不使用重要度采样，缓解了off-policy因所学内容相关性小比on-policy慢的问题。相比以沿途收益和底部节点估计值为更新目标的算法，树回溯的更新源于整个树的行为值估计，即各叶子节点的行为值估计按出现概率加权。
+
+单步回溯树：
+$$ G_{t:t + 1} \doteq r_{t + 1} + \gamma \sum_{a} \pi(a|s_{t + 1}) Q_t(s_{t + 1}, a) $$
+
+n-回溯树（递归形式），其对路径可能分支进行展开，不进行采样：
+$$ G_{t:t + n} \doteq r_{t + 1} + \gamma \sum_{a \neq a_{t + 1}} \pi(a|s_{t + 1}) Q_{t + n - 1}(s_{t + 1}, a) + \gamma \pi(a_{t + 1}|s_{t + 1}) G_{t + 1:t + n} $$
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{ntree}
+\caption[n-树回溯回溯图]{n-树回溯回溯图}
+\end{figure}
+%------------------------------------------------
+\begin{myalgorithm}[n-树回溯]
+\State 参数：步长$ \alpha \in (0,1], n \in N_+ $
+\State 初始化：$ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $，初始化$ \pi $
+\For{每一幕}
+\State 初始化$ s_0 $为非终止状态，根据它任意选取$ a_0 $
+\State $ T \gets \infty $
+\For{$ t = 0, 1, 2, \dots $}
+\If{$ t < T $}
+\State 执行$ a_t $，观察$ r_{t + 1}, s_{t + 1} $
+\If{$ s_{t + 1} $是终止状态}
+\State $ T \gets t + 1 $
+\Else
+\State 根据$ s_{t + 1} $选取$ a_{t + 1} $
+\EndIf
+\EndIf
+\State $ \tau \gets t - n + 1 $ \Comment{$ \tau $是正在更新的状态的时间}
+\If{$ \tau \geq 0 $}
+\If{$ t + 1 \geq T $}
+\State $ G \gets r_T $ 
+\Else
+\State $ G \gets r_{t + 1} + \gamma \sum_a \pi(a|s_{t + 1})Q(s_{t + 1}, a) $
+\EndIf
+\For{$ k = \min(t, T - 1) $递减到$ \tau + 1 $}
+\State $ G \gets r_k + \gamma \sum_{a \neq a_k} \pi(a|s_k)Q(s_k,a) + \gamma \pi(a_k|s_k)G $
+\EndFor
+\State $ Q(s_{\tau}, a_{\tau}) \gets Q(s_{\tau}, a_{\tau}) + \alpha[G - Q(s_{\tau}, a_{\tau})] $
+\EndIf
+\If{$ \tau = T - 1 $}
+\State break
+\EndIf
+\EndFor
+\EndFor
+\end{myalgorithm}
+%------------------------------------------------
+\paragraph{n-Q($ \sigma $)}
+结合采样的Sarsa和展开的树回溯，在每个状态由参数$ \sigma $决定是采样还是展开，将两种线性情况组合起来：
+$$ G_{t:h} \doteq r_{t + 1} + \gamma [\sigma_{t + 1}\rho_{t + 1} + (1 - \sigma_{t + 1})\pi(a_{t + 1}|s_{t + 1})][G_{t + 1:h} - Q_{h - 1}(s_{t + 1}, a_{t + 1})] + \gamma \bar{v}_{h - 1}(s_{t + 1}) $$
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{Qsigma}
+\caption[Q(sigma)回溯图]{Q(sigma)回溯图}
+\end{figure}
+%------------------------------------------------
+\begin{myalgorithm}[n-Q($ \sigma $)-off-policy]
+\State 输入：$ b(a|s) > 0 $
+\State 参数：步长$ \alpha \in (0,1] $，探索率$ \epsilon > 0 $，步数$ n \in N_+ $
+\State 初始化：$ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $，初始化$ \pi $
+\For{每一幕}
+\State 初始化$ s_0 $为非终止状态
+\State 根据$ b(\cdot|s_0) $选取$ a_0 $
+\State $ T \gets \infty $
+\For{$ t = 0, 1, 2, \dots $}
+\If{$ t < T $}
+\State 执行$ a_t $，观察$ r_{t + 1}, s_{t + 1} $
+\If{$ s_{t + 1} $是终止状态}
+\State $ T \gets t + 1 $
+\Else
+\State 根据$ b(\cdot|s_{t + 1}) $选取$ a_{t + 1} $
+\State 选择$ \sigma_{t + 1} $ \Comment{指示是采样还是展开}
+\State $ \rho_{t + 1} \gets \frac{\pi(a_{t + 1}|s_{t + 1})}{b(a_{t + 1}|s_{t + 1})}$ \Comment{重要性采样比率}
+\EndIf
+\EndIf
+\State $ \tau \gets t - n + 1 $ \Comment{$ \tau $是正在更新的状态的时间}
+\If{$ \tau \geq 0 $}
+\State $ G \gets 0 $
+\For{$ k = \min(t, T - 1) $递减到$ \tau + 1 $}
+\If{$ k = T $}
+\State $ G \gets r_T $
+\Else
+\State $ \bar{V} \gets \sum_a \pi(a|s_k)Q(s_k, a) $ \Comment{计算期望状态值}
+\State $ G \gets r_k + \gamma[\sigma_k \rho_k + (1 - \sigma_k)\pi(a_k|s_k)][G - Q(s_k, a_k)] + \gamma\bar{v} $
+\EndIf
+\EndFor
+\State $ Q(S_{\tau},A_{\tau}) \gets Q(s_{\tau}, a_{\tau}) + \alpha[G - Q(s_{\tau}, a_{\tau})] $
+\EndIf
+\If{$ \tau = T - 1 $}
+\State break
+\EndIf
+\EndFor
+\EndFor
+\end{myalgorithm}
+
 返回正文\ref{sec:TD back}。
 %------------------------------------------------
 \subsubsection[模型和规划]{模型和规划}\label{sec:table}
@@ -1463,7 +1605,9 @@ $$ \text{模型} \Longrightarrow \text{模拟经验} \overset{\text{回溯}}{\Lo
 
 返回正文\ref{sec:table back}。
 %------------------------------------------------
-\subsection[核函数近似]{核函数近似}\label{sec:kernal}
+\subsection[值函数近似]{值函数近似}
+%------------------------------------------------
+\paragraph[核函数]{核函数}\label{sec:kernal}
 \begin{itemize}
 \item 基于记忆样本，使用RBF核，存储样本状态。核函数$ k(s, s') $可表示为特征向量$ x(s) $的内积，每个特征对应一个样本状态：
 $$ k(s, s') = x(s)^T x(s') $$
@@ -1527,6 +1671,23 @@ $$ k(s, s') = x(s)^T x(s') $$
 \item 期望的线性：$ E[aX + bY] = a E[X] + b E[Y] $。
 \item 协方差：$ Cov(X, Y) = E[(X - \mu_X)(Y - \mu_Y)] = E[XY] - \mu_X \mu_Y $。
 \item 相关系数：$ \rho(X, Y) = \frac{Cov(X, Y)}{\sigma_X \sigma_Y} $。
+\end{itemize}
+%------------------------------------------------
+\paragraph{状态分布}
+\begin{itemize}
+\item 均匀分布（各状态同等重要）：$ J(\omega) = \frac{1}{|S|}\sum_{s \in S} [v_{\pi}(s) - \hat{v}(s, \omega)]^2 $。
+\item 平稳分布（马氏过程长期行为）：$ J(\omega) = \sum_{s \in S} d_{\pi}(s)[v_{\pi}(s) - \hat{v}(s, \omega)]^2 $。
+\end{itemize}
+%------------------------------------------------
+\paragraph{信息论}
+\begin{itemize}
+\item 熵：不确定度的度量。
+\begin{itemize}
+\item 二值熵：$ H = -p \log(p) - (1 - p)\log(1 - p) $。
+\item 交叉熵：$ H(P, Q) = -E_{P(x)} Q(x) = -\int P(x) \log Q(x) dx $。
+\end{itemize}
+\item KL散度：衡量两个概率分布之间的距离。
+$$ D_{KL}(P||Q) = E_{x \sim P}[\log \frac{P(x)}{Q(x)}] = \int P(x) \log P(x) dx - \int P(x) \log Q(x) dx $$
 \end{itemize}
 %----------------------------------------------------------------------------------------
 \end{document}
