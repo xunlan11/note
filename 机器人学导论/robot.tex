@@ -1370,49 +1370,406 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 %----------------------------------------------------------------------------------------
 \subsection[概念]{概念}
 %------------------------------------------------
-\paragraph{特点}
+\paragraph{要求}
 \begin{itemize}
-\item 
+\item 符合机器人运动特性：奇异问题、关节运动同步问题。
+\item 可执行性：执行器性能（速度、加速度约束）、机械性能（限位）。
+\item 连续性：位移、速度、加速度、加加速度曲线的光滑性。
+\item 轨迹：含时间信息的位移、速度、加速度。
 \end{itemize}
 %------------------------------------------------
 \paragraph{分类}
-\begin{itemize}
-\item 
-\end{itemize}
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c}
+\hline
+分类 & 笛卡尔空间轨迹规划（CP） & 关节空间轨迹规划（PTP） \\
+\hline
+概念 & 连续轨迹规划 & 起点到终点轨迹规划，完整约束系统 \\
+关节解耦 & 不可以 & 可以 \\
+可执行性 & 关节速度、加速度限制 & 关节、速度、加速度约束，中间点连续性约束 \\
+奇异构型 & $ \dot{q} = J^{-1} \begin{bmatrix} v \\ \omega \end{bmatrix} $ & 无 \\
+解 & 多解、无解（超出工作空间） & 无 \\
+计算 & 复杂 & 简单 \\
+关注 & 可达性、奇异性 & 高效性、同步性 \\
+\hline
+\end{tabular}
+\caption{力与力矩（动静一致）}
+\end{table}
 %----------------------------------------------------------------------------------------
 \subsection[多项式规划]{多项式规划\tip{多项式轨迹规划}}
 %------------------------------------------------
 \paragraph{概念}
+初始状态$ q_0\{q_0, \dot{q}_0, \ddot{q}_0\} $经$ t_f $时间向目标状态$ q_f\{q_f, \dot{q}_f, \ddot{q}_f\} $的转化：
+$$ q(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_n t^n $$
 
+满足速度约束$ q_{min} \leq q(t) \leq q_{max} $，在保证规划效果的前提下，使$ n $尽量小。
 %------------------------------------------------
 \paragraph{三次多项式}
+\begin{align*} 
+q(t) &= a_0 + a_1 t + a_2 t^2 + a_3 t^3 \\
+\dot{q}(t) &= a_1 + 2a_2 t + 3a_3 t^2
+\end{align*}
 
+加速度约束：$ \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{max} $，
+
+假设$ \dot{q}_0 = \dot{q}_f = 0 $有： \\
+\begin{minipage}{0.6\textwidth}
+\begin{align*} 
+q_0 &= q(0) = a_0 \quad \dot{q}_0 = \dot{q}(0) = a_1 = 0 \\
+q_f &= q(t_f) = a_0 + a_1 t_f + a_2 t_f^2 + a_3 t_f^3 \\
+\dot{q}_f &= \dot{q}(t_f) = a_1 + 2a_2 t_f + 3a_3 t_f^2 \\
+t_f &= -\frac{a_2}{3a_3}
+\end{align*}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={时间$ t(s) $},
+    ylabel={速度$ \dot{q}(rad/s) $},
+    grid=major,
+    width=6cm,
+    height=4.5cm,
+    xmin=0, xmax=4
+]
+\addplot[blue, thick, samples=200, domain=0:4] 
+{-x*(x - 4)};
+\end{axis}
+\end{tikzpicture}
+\caption{三次多项式规划速度曲线}
+\end{figure}
+\end{minipage}
+
+$ t_f $确定时能唯一确定。加速度不连续。
 %------------------------------------------------
 \paragraph{五次多项式}
+$$ q(t) = a_0 + a_1 t + a_2 t^2 + a_3 t^3 + a_4 t^4 + a_5 t^5 $$
 
+加加速度约束：$ \ddot{q}_{min} \leq \ddot{q}(t) \leq \ddot{q}_{max} $，
+
+假设$ \dot{q}_0 = \dot{q}_f = 0 $有： \\
+\begin{minipage}{0.4\textwidth}
+\begin{align*} 
+q_0 &= q(0) = a_0 \\ 
+q_f &= q(t_f) = a_0 + a_1 t_f + a_2 t_f^2 + a_3 t_f^3 + a_4 t_f^4 + a_5 t_f^5 \\
+\dot{q}_0 &= \dot{q}(0) = a_1 \\
+ \dot{q}_f &=\dot{q}(t_f) = a_1 + 2 a_2 t_f + 3 a_3 t_f^2 + 4 a_4 t_f^3 + 5 a_5 t_f^4 \\
+\ddot{q}_0 &= \ddot{q}(0) = 2a_2 \\
+\ddot{q}_f &= \ddot{q}(t_f) = 2 a_2 + 6 a_3 t_f + 12 a_4 t_f^2 + 20 a_5 t_f^3 \\
+t_f &= \frac{-a_4 \pm 6 \sqrt{a_4^2 - 10 a_3 a_5}}{5a_5}
+\end{align*}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={时间$ t(s) $},
+    ylabel={速度$ \dot{q}(rad/s) $},
+    grid=major,
+    width=6cm,
+    height=4.5cm,
+    xmin=0, xmax=1,
+    ymin=0, ymax=2
+]
+\addplot[blue, thick, samples=100, domain=0:1] 
+{30*x^2*(1-x)^2};
+\end{axis}
+\end{tikzpicture}
+\caption{五次多项式控制速度曲线}
+\end{figure}
+\end{minipage}
+
+$ t_f $确定时能唯一确定。加速度连续，速度过于光滑，可能无法满足可执行性。
+%------------------------------------------------
+\paragraph{其它}
+\begin{itemize}
+\item 多段规划（以三次多项式为例）：
+$$ q(t) = a_0 + a_1(t - t_i) + a_2(t - t_i)^2 + a_3(t - t_i)^3 $$
+
+在$ \dot{q}_0 \neq 0, \dot{q}_f \neq 0 $时有：
+$$ a_0 = q_i, \quad a_1 = \dot{q}_i, \quad a_2 = \frac{3(q_f - q_i)}{(t_f - t_i)^2} - \frac{2\dot{q}_i + \dot{q}_f}{t_f - t_i}, \quad a_3 = \frac{2(q_i - q_f)}{(t_f - t_i)^3} + \frac{\dot{q}_i + \dot{q}_f}{(t_f - t_i)^2} $$
+
+未给定$ \dot{q}_i $时，可选取为$ \frac{q_i - q_{i - 1}}{t_i - t_{i - 1}} $。
+\item 同步规划：按$ t_f = max\{t_{f_i}\} $重新规划。
+\item 更高阶：多解、优化。
+\item 加大$ t_f $会降低执行效率。
+\item 问题：过于光滑，$ v, a $无法保持在峰值，未充分利用执行器性能。
+\end{itemize}
 %----------------------------------------------------------------------------------------
-\subsection[分段函数规划]{分段函数规划\tip{分段函数轨迹规划}}
+\subsection[分段函数规划]{分段函数规划\tip{分段函数轨迹规划（同步规划）}}
+%------------------------------------------------
+\paragraph{概念}
+初始状态$ q_0\{q_0, \dot{q}_0, \ddot{q}_0\} $向目标状态$ q_f\{q_f, \dot{q}_f, \ddot{q}_f\} $的转化：
+
+满足约束：
+$$ q_{min} \leq q(t) \leq q_{max}, \quad \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{max}, \quad \ddot{q}_{min} \leq \ddot{q}(t) \leq \ddot{q}_{max} $$
+
+并假设$ \dot{q}_0 = \dot{q}_f = 0, \ddot{q}_0 = \ddot{q}_f = 0 $。
 %------------------------------------------------
 \paragraph{三段规划}
+速度连续。 \\
+\begin{minipage}{0.5\textwidth}
+\begin{itemize}
+\item 加速段：以$ a_{max} $加速到$ v_{max} $。
+\item 匀速段：维持$ v_{max} $，$ a = 0 $。
+\item 减速段：以$ a_{max} $减速到$ v = 0 $。
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}{0.5\textwidth}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={时间$ t(s) $},
+    ylabel={速度$ \dot{q}(rad/s) $},
+    grid=major,
+    width=6cm,
+    height=4.8cm,
+    xmin=0, xmax=8,
+    ymin=0, ymax=12
+]
+\addplot[blue, thick, samples=200, domain=0:10] {
+    (x <= 2) * (5*x) +
+    (x > 2 && x <= 6) * 10 +
+    (x > 6) * (10 - 5*(x-6))
+};
+\addplot[gray, dashed] coordinates {(2,0) (2,12)};
+\addplot[gray, dashed] coordinates {(6,0) (6,12)};
+\node at (axis cs:1,11) {\small 加速段};
+\node at (axis cs:4,11) {\small 匀速段};
+\node at (axis cs:7,11) {\small 减速段};
+\end{axis}
+\end{tikzpicture}
+\caption{三段规划速度曲线}
+\end{figure}
+\end{minipage}
 
+判断是否需要加到$ v_{max} $（有无匀速段）：路径长度$ s $与$ \frac{v_{max}^2}{a_{max}} $比较。
 %------------------------------------------------
-\paragraph{最小时间规划算法}
+\paragraph{七段规划（加速度规划，最小时间规划）}
+加速度连续。 \\
+\begin{minipage}{0.5\textwidth}
+\begin{itemize}
+\item 加速段：尽量维持$ a_{max} $加速到$ v_{max} $。
+\item 匀速段：维持$ v_{max} $，$ a = 0 $。
+\item 减速段：尽量维持$ a_{max} $减速到$ v = 0 $。
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}{0.5\textwidth}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={时间$ t(s) $},
+    ylabel={速度$ \dot{q}(rad/s) $},
+    grid=major,
+    width=8cm,
+    height=6cm,
+    xmin=0, xmax=14,
+    ymin=0, ymax=12
+]
+\addplot[blue, thick, samples=200, domain=0:14] {
+    (x <= 1) * (2.5*x^2) +
+    (x > 1 && x <= 3) * (2.5 + 2.5*(x-1)) +
+    (x > 3 && x <= 4) * (10 - 2.5*(x-4)^2) +
+    (x > 4 && x <= 10) * 10 +
+    (x > 10 && x <= 11) * (10 - 2.5*(x-10)^2) +
+    (x > 11 && x <= 13) * (7.5 - 2.5*(x-11)) +
+    (x > 13) * (2.5*(14-x)^2)
+};
+\addplot[gray, dashed] coordinates {(1,0) (1,12)};
+\addplot[gray, dashed] coordinates {(3,0) (3,12)};
+\addplot[gray, dashed] coordinates {(4,0) (4,12)};
+\addplot[gray, dashed] coordinates {(10,0) (10,12)};
+\addplot[gray, dashed] coordinates {(11,0) (11,12)};
+\addplot[gray, dashed] coordinates {(13,0) (13,12)};
+\node at (axis cs:0.5,11) {\tiny 加加速};
+\node at (axis cs:2,11) {\tiny 匀加速};
+\node at (axis cs:3.5,11) {\tiny 减加速};
+\node at (axis cs:7,11) {\tiny 匀速};
+\node at (axis cs:10.5,11) {\tiny 加减速};
+\node at (axis cs:12,11) {\tiny 匀减速};
+\node at (axis cs:13.5,11) {\tiny 减减速};
+\end{axis}
+\end{tikzpicture}
+\caption{七段规划速度曲线}
+\end{figure}
+\end{minipage}
 
+\begin{itemize}
+\item 判断是否需要加到$ v_{max} $（有无匀速段）：路径长度$ s $与$ \frac{v_{max}^2}{a_{max}} $比较。
+\item 判断是否需要加到$ a_{max} $（有无匀加速段）：$ v_{max} $与$ \frac{a_{max}^2}{j_{max}} $比较。
+\end{itemize}
 %------------------------------------------------
-\paragraph{七段规划（加速度规划）}
-
-%----------------------------------------------------------------------------------------
-\subsection[多轨迹规划]{多轨迹规划\tip{多轨迹规划}}
-%------------------------------------------------
-\paragraph{多段3-5-3法规划}
-
-%------------------------------------------------
-\paragraph{基于样条曲线函数规划}
-
-%----------------------------------------------------------------------------------------
-\subsection[笛卡尔空间规划]{笛卡尔空间规划\tip{笛卡尔空间规划}}
-
+\paragraph{同步规划}
+在假设$ \dot{q}_0 = \dot{q}_f = 0, \ddot{q}_0 = \ddot{q}_f = 0 $时，可计算$ t_f = max\{t_{f_i}\} $，放缩规划。
+$$ \Delta s_i = v_{\max}(t_f - t_{fi}), \quad k_i = \frac{q_{if} - q_{i0}}{(q_{if} - q_{i0}) + \Delta s_i} $$
 %------------------------------------------------
 \section{机器人控制}
+%----------------------------------------------------------------------------------------
+\subsection[概念]{概念}
+确定各关节驱动器输入，使其产生合适的力/力矩，进而驱动关节连杆--末端执行器按期望的轨迹运动，并抑制扰动。
+%------------------------------------------------
+\paragraph{控制器}
+\begin{itemize}
+\item 硬件：嵌入式计算机，输弱功率信号，需要功率放大（电压比例放大，增强电流输出能力）。
+\item 软件：控制算法。
+\item 输出：通常为电压信号。
+\end{itemize}
+%------------------------------------------------
+\paragraph{关节驱动器分类}
+\begin{itemize}
+\item 电动（electric）——伺服电机（servo motor）：
+\begin{itemize}
+\item 齿轮传动：电机+减速器（gear reduction）：适用于高转速、低力矩电机，$ \omega \downarrow \rightarrow \tau \uparrow \rightarrow \text{负载} \uparrow $，实现一定程度上的关节解耦，但会带来摩擦、间隙等影响。
+\item 直接驱动（direct-drive）：适用于低转速、高力矩电机，连杆直接耦合在驱动器输出轴上，带来扰动。
+\end{itemize}
+\item 液压（hydraulic）常用于大负载设备。
+\item 气动（pneumatic）常用于可穿戴式设备。
+\end{itemize}
+%----------------------------------------------------------------------------------------
+\subsection[关节驱动器动力学]{关节驱动器动力学}
+从电信号输入到关节驱动力/力矩输出的模型，其不确定性源于轴-轴承摩擦、减速器摩擦、非刚性、齿隙等。
+
+在独立关节控制中，将机械臂各关节简化为单输入单输出（single-input-single-output，SISO）系统进行控制器设计，将交叉耦合视为扰动。
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.6\textwidth]{Independent Joint Control} 
+\caption[独立关节控制]{独立关节控制}
+\end{figure}
+%----------------------------------------------------------------------------------------
+\subsubsection[电机动力学]{电机动力学}
+$ \tau_m = K \phi i_a $，电机输出力矩等于电机常数、磁通量（webers）、电枢电流（amperes）的积，其中最后一项可控。
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.5\textwidth]{electrical machinery_1} 
+\caption[电机动力学电路]{电机动力学电路}
+\end{figure}
+
+在电路中有：
+\begin{align*} 
+&\text{电路电压：} L\frac{di_a}{dt} + Ri_a = V - V_b \\
+&\text{电机力矩：} \tau_m = K_1\phi \cdot i_a = \underbrace{C_m}_{\text{力矩常数}} i_a \\
+&\text{电机反电动势：} V_b = K_2\phi\omega_m = \underbrace{C_e}_{\text{反电动势常数}} \dot{\theta}_m  
+\end{align*}
+
+经拉式变换，得到：
+\begin{align*} 
+&\text{电路电流：} i_a(s) = \frac{V(s) - C_e s\theta_m(s)}{R_m + L_m s} \\
+&\text{电机力矩：} \tau_m(s) = C_m i_a(s) \\
+&\text{负载（电机输出轴）：} \tau(s) = (\underbrace{J_m}_{\text{转动惯量}} s^2 + \underbrace{B_m}_{\text{阻尼系数}} s)\theta(s) - \underbrace{\tau_{ml}(s)}_{\text{负载力矩}} 
+\end{align*}
+
+得到相应的控制框图：
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.7\textwidth]{electrical machinery_2} 
+\caption[电机动力学控制框图]{电机动力学控制框图}
+\end{figure}
+
+有传递函数：
+\begin{align*}
+\frac{\theta_m(s)}{u(s)} &= \frac{C_m}{s[(L_m s + R_m)(J_m s + B_m) + C_e C_m]}& \underset{\text{同除}R_m}{\Longrightarrow} \frac{\theta_m(s)}{u(s)} &= \frac{C_m/R_m}{s(J_m s + B_m + C_e C_m/R_m)} \\
+\frac{\theta_m(s)}{\tau_{ml}(s)} &= \frac{-(L_m s + R_m)}{s[(L_m s + R_m)(J_m s + B_m) + C_e C_m]}& \overset{\frac{L_m}{R_m} = 0}{\Longrightarrow} \frac{\theta_m(s)}{\tau_{ml}(s)} &= \frac{-1}{s(J_m s + B_m + C_e C_m/R_m)}
+\end{align*}
+
+这里的化简是由于电时间常数$ \frac{L}{R} $远小于机械时间常数$ \frac{J_m}{B_m} $。
+
+变成微分方程的形式：
+$$ J_m \ddot{\theta}_m(t) + (B_m + \frac{C_e C_m}{R_m}) \dot{\theta}_m(t) = \frac{C_m}{R_m} u(t) - \tau_{ml}(t) $$
+
+可得到化简的控制框图：
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.6\textwidth]{electrical machinery_3} 
+\caption[电机动力学化简控制框图]{电机动力学化简控制框图}
+\end{figure}
+
+在与减速器集成时，有减速比（gear ratio）为$ r:1 $，则$ \theta_m = r \theta_l, \tau_{ml} = \frac{\tau_l}{r} $。此时的转动惯量和阻尼系数为驱动器与减速器之和。
+%----------------------------------------------------------------------------------------
+\subsubsection[连杆]{连杆}
+将连杆动力学：
+$$ M(q)\ddot{q} + C(q, \dot{q})\dot{q} + G(q) = \tau $$
+
+提取为单关节动力学：
+$$ \underbrace{m_{ii}(q)}_{J_i(q)}\ddot{\theta}_i + \underbrace{\{[M(q) - m_{ii}(q)I]\ddot{q} + C(q, \dot{q})\dot{q} + g(q)\}_i}_{\text{扰动}d_i} = \tau_i $$
+
+有：
+$$ \frac{J_i(q)}{r_i^2}\ddot{\theta}_{mi} + \frac{1}{r_i^2}\{[M(q) - J_i(q)I]\ddot{q} + C(q, \dot{q})\dot{q} + g(q)\}_i = \tau_{mli} $$
+
+带到驱动器动力学中，得到：
+$$ J_m\ddot{\theta}_m(t) + (B_m + \frac{C_e C_m}{R_m})\dot{\theta}_m(t) = \frac{C_m}{R_m}u(t) - \tau_{ml}(t) $$
+
+有：
+$$ \underbrace{[J_m + \frac{J_i(q)}{r_i^2}]}_{J_{eff_{mi}}}\ddot{\theta}_{mi} + \underbrace{(B_m + \frac{C_e C_m}{R_m})}_{B_{eff_{mi}}}\dot{\theta}_m(t) = \underbrace{\frac{C_m}{R_m}u(t)}_{u_{mi}} - \underbrace{\frac{1}{r_1}\{[M(q) - J_i(q)I]\ddot{q} + C(q, \dot{q})\dot{q} + g(q)\}_i}_{d_{mi}} $$
+
+\tip{关节驱动器动力学结论}
+为单入单出、时变（$ J_i(q) $的存在）、带扰动二阶惯性环节。存在大减速比时，可简化为定常二阶惯性环节，并隔离电机与连杆负载。
+%----------------------------------------------------------------------------------------
+\subsection[独立关节控制]{独立关节控制（Independent Joint Control）}
+%----------------------------------------------------------------------------------------
+\subsubsection[控制器]{控制器}
+$$ J_{eff_{mi}}\ddot{\theta}_{mi} + B_{eff_{mi}}\dot{\theta}_{mi} = u_{mi} - d_m $$
+
+有控制器框图：
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.6\textwidth]{Independent Joint Controller} 
+\caption[独立关节控制器框图]{独立关节控制器框图}
+\end{figure}
+
+其闭环传递函数为：
+$$ \theta_m(s) = \frac{G_c(s)}{J_{eff}s^2 + B_{eff}s + G_c(s)}\theta_d(s) + \frac{1}{J_{eff}s^2 + B_{eff}s + G_c(s)}d(s) $$
+
+跟踪误差为：
+$$ E(s) = \theta_m(s) - \theta_d(s) = \frac{(J_{eff}s^2 + B_{eff}s)\theta_d(s) - d(s)}{J_{eff}s^2 + B_{eff}s + G_c(s)} $$
+%----------------------------------------------------------------------------------------
+\subsubsection[PD控制器]{PD控制器}
+%------------------------------------------------
+\paragraph{控制器设计}~\\
+
+设计PD控制器$ G_c(s) = K_p + K_d s $，
+
+闭环传递函数变为：
+$$ \theta_m(s) = \frac{(K_d s + K_p)\theta_d(s)}{J_{eff}s^2 + (B_{eff} + K_d)s + K_p} + \frac{d(s)}{J_{eff}s^2 + (B_{eff} + K_d)s + K_p} $$
+
+跟踪误差变为：
+$$ E(s) = \theta_m(s) - \theta_d(s) = \frac{(J_{eff}s^2 + B_{eff}s)\theta_d(s) - d(s)}{J_{eff}s^2 + (B_{eff} + K_d)s + K_p} $$
+
+对于阶跃给定$ \theta_d(s) = \frac{v}{s} $、阶跃扰动$ d(s) = \frac{D}{s} $，有跟踪稳态误差$ e_{ss} = \lim_{s \to 0} sE(s) = -\frac{D}{K_p} $。
+%------------------------------------------------
+\paragraph{控制器参数设计}~\\
+
+有闭环特征方程：
+$$ J_{eff}s^2 + (B_{eff} + K_d)s + K_p $$
+
+即：
+$$ s^2 + \underbrace{\frac{(B_{eff} + K_d)}{J_{eff}}}_{2\zeta \omega_c}s + \underbrace{\frac{K_p}{J_{eff}}}_{\omega_c^2} $$
+
+可得：
+$$ K_d = 2J_{eff}\zeta\omega_c - B_{eff}, \quad K_p = J_{eff}\omega_c^2 $$
+
+需使其根在负半平面，一般使$ \zeta = 1 $（临界阻尼，无超调快速响应），$ \omega_c $尽量大。
+%------------------------------------------------
+\paragraph{总结}\tip{独立关节控制PD控制器总结}
+\begin{itemize}
+\item 刚性假设下，对于任意非负增益$ k_p, k_d $，闭环稳定。
+\item $ k_d $：等效系统阻尼，越大闭环稳定行越好，但响应越慢，还对传感器噪声有放大作用。
+\item $ k_p $：越大抑制扰动的能力越强。
+\item 对于阶跃给定，在无扰动时，跟踪稳态误差为$ 0 $；在阶跃扰动时，存在与比例增益成反比的稳态误差。
+\end{itemize}
+%----------------------------------------------------------------------------------------
+\subsection[多变量控制]{多变量控制\tip{多变量控制}}
+%------------------------------------------------
+\section{机器人的力控制}
 %----------------------------------------------------------------------------------------
 \end{document}
