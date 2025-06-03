@@ -21,7 +21,6 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \tableofcontents
 \end{multicols}
 \endgroup
-\newpage
 \begingroup
 \begin{multicols}{2}
 \listoffigures
@@ -33,7 +32,7 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \listoftables
 \end{multicols}
 \endgroup
-\hrule
+\newpage
 \begingroup
 \begin{multicols}{2}
 \listoftips
@@ -59,7 +58,7 @@ p \times q
 \item 模长：$ |p \times q| = |p||q|\sin\theta $。
 \end{itemize}
 %------------------------------------------------
-\paragraph{$ \arctan 2(x, y) $}
+\paragraph{$ \arctan 2(y, x) $}
 四象限反正切函数，避免反三角函数的无穷、除零错误，且不会多解。
 %------------------------------------------------
 \paragraph{速度合成}\tip{速度合成}
@@ -95,7 +94,7 @@ p \times q
 \hline
 含义 & 能对被控对象施加作用的手段 & 作业目标相应的可测系统状态 & 系统输入输出映射 & 系统输出映射变换 & 系统作业目标 & 作业目标与系统当前测量状态差值 & 系统误差与输入映射 \\
 \hline
-内容 & \multicolumn{2}{c|}{空间描述与变换} & \multicolumn{2}{p{4cm}|}{正、逆运动学，雅可比，动力学} & 轨迹规划 & \multicolumn{2}{c|}{机器人控制} \\
+内容 & \multicolumn{2}{l|}{空间描述与变换} & \multicolumn{2}{p{4cm}|}{正、逆运动学，雅可比，动力学} & 轨迹规划 & \multicolumn{2}{l|}{机器人控制} \\
 \hline
 \end{tabular}
 \end{table}
@@ -139,16 +138,20 @@ $。
 \end{figure}
 %------------------------------------------------
 \subsubsection[刚体]{刚体}
+\noindent
+\begin{minipage}{0.7\textwidth}
 \begin{itemize}
 \item 刚体上任意两点间相对距离保持不变，角（加）速度相同。
 \item 空间描述：位姿（Pose）=位置（Position）$ P_{Borg} $+姿态（Orientation）$ \{\vec x_B, \vec y_B, \vec z_B\} $。
 \end{itemize}
-
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
 \begin{figure}[H]
 \centering 
-\includegraphics[width=0.3\textwidth]{rigid} 
+\includegraphics[width=0.8\textwidth]{rigid} 
 \caption[刚体位姿]{刚体位姿}
 \end{figure}
+\end{minipage}
 %------------------------------------------------
 \subsection[变换]{变换}
 %------------------------------------------------
@@ -246,7 +249,7 @@ $$
 %------------------------------------------------
 \subsection[姿态描述]{姿态描述}
 %------------------------------------------------
-\subsubsection[描述方式]{描述方式}
+\subsubsection[描述方式]{描述方式\tip{姿态描述方式}}
 %------------------------------------------------
 \paragraph{旋转矩阵与方向余弦}
 \begin{itemize}
@@ -254,7 +257,7 @@ $$
 \item $ 9 $个变量，$ 6 $个约束（单位+正交），$ 3 $个独立变量。
 \end{itemize}
 %------------------------------------------------
-\paragraph{等效轴角（绕空间中一轴旋转）}\tip{等效轴角}
+\paragraph{等效轴角（绕空间中一轴旋转）}
 \begin{itemize}
 \item 目标：坐标轴$ B $绕$ ^A \hat{k} = \begin{bmatrix} k_x & k_y & k_z \end{bmatrix}^T(k_x^2 + k_y^2 + k_z^2 = 1) $旋转$ \theta $角。
 \item 方法：先使坐标轴$ B $与坐标轴$ A $重合，再使一轴（以下以$ z $轴为例）与$ ^A \hat{k} $重合，最后绕重合轴旋转$ \theta $角。
@@ -274,7 +277,7 @@ $$ ^A \hat{k} = \frac{1}{2 \sin θ} \begin{bmatrix} r_{32} - r_{23} & r_{13} - r
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
-\paragraph{四元数（欧拉参数）}\tip{四元数}~\\
+\paragraph{四元数（欧拉参数）}~\\
 
 由轴$ \hat{k} = \begin{bmatrix} k_x & k_y & k_z \end{bmatrix}^T(k_x^2 + k_y^2 + k_z^2 = 1) $和$ \theta $，得到欧拉参数：$$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \varepsilon_2 = k_y \sin\frac{\theta}{2}, \varepsilon_3 = k_z \sin\frac{\theta}{2}, \varepsilon_4 = \cos\frac{\theta}{2} $$
 
@@ -402,7 +405,7 @@ $$ ^A \hat{k} = \frac{1}{2 \sin θ} \begin{bmatrix} r_{32} - r_{23} & r_{13} - r
 \item 沿$ Z_i $，由$ X_{i - 1} $与$ X_i $求取$ d_i $和$ \theta_i $。
 \end{enumerate}
 %------------------------------------------------
-\paragraph{例题}
+\subsubsection[例题]{例题\tip{DH参数例题}}
 \begin{figure}[H]
 \centering
 \subfloat[例1结构图]{\includegraphics[width=.3\textwidth]{1.1.1}} \quad
@@ -416,7 +419,9 @@ $$ ^A \hat{k} = \frac{1}{2 \sin θ} \begin{bmatrix} r_{32} - r_{23} & r_{13} - r
 \caption[DH参数例题]{DH参数例题}
 \end{figure}
 %------------------------------------------------
-\subsection[正运动学方程]{正运动学方程\tip{正运动学方程}}
+\subsection[正运动学方程]{正运动学方程}
+%------------------------------------------------
+\subsubsection[求解]{求解\tip{正运动学方程求解}}
 先根据连杆参数沿$ X $轴变换，再根据关节参数沿新$ Z $轴变换：
 \begin{align*}
 ^{i - 1}_i T &= \begin{bmatrix} 1 & 0 & 0 & \vec a_{i - 1} \\ 0 & \cos \alpha_{i - 1} & -\sin \alpha_{i - 1} & 0 \\ 0 & \sin \alpha_{i - 1} & \cos \alpha_{i - 1} & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \cos \theta_i & -\sin \theta_i & 0 & 0 \\ \sin \theta_i & \cos \theta_i & 0 & 0 \\ 0 & 0 & 1 & d_i \\ 0 & 0 & 0 & 1 \end{bmatrix} \\
@@ -428,7 +433,7 @@ $$ ^A \hat{k} = \frac{1}{2 \sin θ} \begin{bmatrix} r_{32} - r_{23} & r_{13} - r
 \item 按关节逐次变换，最终得到腕部坐标，而非末端坐标。
 \end{itemize} 
 %------------------------------------------------
-\paragraph{例题}\label{sec:example2.1}~\\
+\subsubsection[例题]{例题\tip{正运动学方程例题}}
 \begin{minipage}{0.48\textwidth}
 \centering
 \includegraphics[width=0.95\textwidth]{2.1}
@@ -466,15 +471,17 @@ $$ ^0_4T = \begin{bmatrix} c_{12}c_{34} - \frac{\sqrt{2}}{2}s_{12}s_{34} & -c_{1
 %----------------------------------------------------------------------------------------
 \section{逆运动学}
 %------------------------------------------------
-\subsection[逆运动学求解]{逆运动学求解\tip{逆运动学求解}}
+\subsection[逆运动学求解]{逆运动学求解}
 由$ T = \begin{bmatrix} r_{11} & r_{12} & r_{13} & p_x \\ r_{21} & r_{22} & r_{23} & p_y \\ r_{31} & r_{32} & r_{33} & p_z \\ 0 & 0 & 0 & 1 \end{bmatrix} $求解关节角度。
 %------------------------------------------------
-\subsubsection[方法]{方法}
+\subsubsection[方法]{方法\tip{逆运动学求解}}
 \begin{itemize}
 \item 代数法：利用平方（$ \sin^2x + \cos^2x = 1 $）、和差角公式等化简齐次变化阵求解。
 \item 几何法：利用正余弦定理求解图形。
 \item 数值法：迭代搜索求近似解。
 \end{itemize} 
+%------------------------------------------------
+\subsubsection[例题]{例题\tip{逆运动学例题}}
 %------------------------------------------------
 \paragraph{例题1}
 \begin{figure}[H]
@@ -513,21 +520,24 @@ $$ ^0_4T = \begin{bmatrix} c_{12}c_{34} - \frac{\sqrt{2}}{2}s_{12}s_{34} & -c_{1
 \end{itemize} 
 %------------------------------------------------
 \paragraph{灵巧空间}\tip{灵巧空间}
-腕部工作空间以末端执行器长为半径内外切圆。
-
-以下以3R操作臂为例，分析不同臂长情况下的灵巧空间：
-
+腕部工作空间以末端执行器长为半径内外切圆。 \\
+\noindent
+\begin{minipage}{0.6\textwidth}
 \begin{figure}[H]
 \centering
-\subfloat[圆环状]{\includegraphics[width=.2\textwidth]{space1}} \quad
-\subfloat[内圆外环]{\includegraphics[width=.2\textwidth]{space2}} \quad
-\subfloat[大圆]{\includegraphics[width=.2\textwidth]{space5}} \\
-\subfloat[内圆]{\includegraphics[width=.2\textwidth]{space3}} \quad
-\subfloat[无]{\includegraphics[width=.2\textwidth]{space4}}
+\subfloat[圆环状]{\includegraphics[width=.3\textwidth]{space1}} \quad
+\subfloat[内圆外环]{\includegraphics[width=.3\textwidth]{space2}} \quad
+\subfloat[大圆]{\includegraphics[width=.3\textwidth]{space5}} \\
+\subfloat[内圆]{\includegraphics[width=.3\textwidth]{space3}} \quad
+\subfloat[无]{\includegraphics[width=.3\textwidth]{space4}}
 \caption[3R操作臂灵巧空间]{3R操作臂灵巧空间}
 \end{figure}
-
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
 {\footnotesize
+\hspace{2em}
+以下以3R操作臂为例，分析不同臂长情况下的灵巧空间：
 \begin{enumerate}
 \item $ 2L_3 \leq L_1 + L_2 - |L_1 - L_2|\&L_3 \leq |L_1 - L_2| $。
 \item $ 2L_3 \leq L_1 + L_2 - |L_1 - L_2|\&L_3 \geq |L_1 - L_2| $。
@@ -536,6 +546,7 @@ $$ ^0_4T = \begin{bmatrix} c_{12}c_{34} - \frac{\sqrt{2}}{2}s_{12}s_{34} & -c_{1
 \item $ L_2 \leq L_3 \leq |L_1 - L_2|, L_3 \geq L_1 + L_2 $。
 \end{enumerate}
 }
+\end{minipage}
 
 为寻求较大灵巧空间，需要上下臂基本等长，且臂长不过长。
 %------------------------------------------------
@@ -641,13 +652,17 @@ $$
 $$
 \end{itemize} 
 %------------------------------------------------
-\subsection[求导法]{求导法\tip{求导求雅可比}}
+\subsection[求导法]{求导法}
+%------------------------------------------------
+\subsubsection[方法]{方法\tip{求导求雅可比}}
 \begin{itemize}
 \item 直接法：对正运动学方程直接求导。
 $$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \frac{\partial x_R}{\partial q_1} & \frac{\partial x_R}{\partial q_2} & \cdots & \frac{\partial x_R}{\partial q_N} \end{bmatrix} $$
 \item 旋转阵法：线雅可比直接求导，角雅可比提取各旋转阵$ Z $列（原理见\ref{sec:Terminal_function}）。\label{sec:Terminal_function_back}
 \end{itemize} 
 $$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \overline{\epsilon}_1 Z_1 & \overline{\epsilon}_2 Z_2 & \cdots & \overline{\epsilon}_n Z_n \end{bmatrix} $$
+%------------------------------------------------
+\subsubsection[例题]{例题\tip{求导求雅可比例题}}
 %------------------------------------------------
 \paragraph{例题1}
 {\footnotesize
@@ -722,14 +737,17 @@ $$
 \subsubsection[并行末端作用求解]{并行末端作用求解\tip{并行速度传播求雅可比}}
 %------------------------------------------------
 \paragraph{单关节作用}\label{sec:bingxing}
-求一关节运动对末端运动影响时，将其他连杆固定，视为刚体。
-
+求一关节运动对末端运动影响时，将其他连杆固定，视为刚体。 \\
+\noindent
+\begin{minipage}{0.6\textwidth}
 \begin{figure}[H]
 \centering 
-\includegraphics[width=0.6\textwidth]{Terminal function} 
+\includegraphics[width=0.8\textwidth]{Terminal function} 
 \caption[并行速度传播]{并行速度传播}
 \end{figure}
-
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\textwidth}
 \begin{table}[H]
 \centering
 \begin{tabular}{c|cc}
@@ -742,7 +760,7 @@ $$
 \end{tabular}
 \caption{并行速度传播}
 \end{table}
-
+\end{minipage}
 \begin{itemize}
 \item 线速度由线速度传导和角速度转换线速度组成。
 \item 角速度只有角速度传导。
@@ -776,17 +794,17 @@ n_i = n_{i + 1} + P_{i + 1} \times f_{i + 1}
 ^i n_i = ^i_{i + 1}R \cdot ^{i + 1} n_{i + 1} + ^i P_{i + 1} \times ^i f_i
 \end{cases}
 $$
-
-与动力学受力分析对比\ref{sec:fn2}
-
+\noindent
+\begin{minipage}{0.6\textwidth}
 \begin{figure}[H]
 \centering
 \subfloat[静力学受力分析]{\includegraphics[width=.25\textwidth]{force}} \quad
-\subfloat[平移关节]{\includegraphics[width=.2\textwidth]{Prismatic Joint}} \quad
-\subfloat[旋转关节]{\includegraphics[width=.2\textwidth]{Revolute Joint}}
+\subfloat[平移关节]{\includegraphics[width=.25\textwidth]{Prismatic Joint}} \quad
+\subfloat[旋转关节]{\includegraphics[width=.25\textwidth]{Revolute Joint}}
 \caption[静态力与力矩]{静态力与力矩}
 \end{figure}
-
+\end{minipage}
+\begin{minipage}{0.35\textwidth}
 \begin{table}[H]
 \centering
 \begin{tabular}{c|cc}
@@ -800,19 +818,26 @@ $$
 \end{tabular}
 \caption{力与力矩（动静一致）}
 \end{table}
+\end{minipage}
+
+与动力学受力分析对比\ref{sec:fn2}。
 %------------------------------------------------
 \subsubsection[速度与扭矩]{速度与扭矩}
+\noindent
+\begin{minipage}{0.6\textwidth}
 \begin{figure}[H]
 \centering
-\subfloat[角速度与线速度]{\includegraphics[width=.125\textwidth]{wv}} \quad
-\subfloat[力与扭矩]{\includegraphics[width=.125\textwidth]{ft}}
+\subfloat[角速度与线速度]{\includegraphics[width=.2\textwidth]{wv}} \quad
+\subfloat[力与扭矩]{\includegraphics[width=.2\textwidth]{ft}}
 \caption[速度与扭矩]{速度与扭矩}
 \end{figure}
-
+\end{minipage}
+\begin{minipage}{0.35\textwidth}
 \begin{align*}
 v &= \omega \times p = -\hat{p} \omega = J \dot{\theta} \\
 \tau &= p \times F = -\hat{p}^T F = J^T F
 \end{align*}
+\end{minipage}
 %------------------------------------------------
 \subsubsection[虚功原理]{虚功（Virtual Work）原理\tip{虚功原理}}
 已知各连杆力（矩），微小移动$ \delta x $下，各力（矩）作功之和为$ \delta W = \sum_i f_i \delta x_i $，在其等于$ 0 $时，各力（矩）所作功抵消，即：
@@ -822,7 +847,7 @@ $$ \tau^T \delta q + (-F)^T \delta x = 0 $$
 
 这里$ J $是末端雅可比，而非腕部雅可比。
 %------------------------------------------------
-\paragraph{例题}
+\subsubsection[例题]{例题\tip{扭矩与虚功原理例题}}
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.25\textwidth]{5} 
@@ -962,15 +987,17 @@ $$ I_{xy} = \iiint (xy)\rho dxdydz \quad I_{yz} = \iiint (yz)\rho dxdydz \quad I
 %------------------------------------------------
 \paragraph{例题}
 {\footnotesize
-以下以长方体为例，其长宽高分别为$ L,W,H $，密度为$ \rho $：
-
+以下以长方体为例，其长宽高分别为$ L,W,H $，密度为$ \rho $： \\
+\begin{minipage}{0.25\textwidth}
 \begin{figure}[H]
 \centering
-\subfloat[位于中心]{\includegraphics[width=.2\textwidth]{6.1}} \quad
-\subfloat[位于一角]{\includegraphics[width=.2\textwidth]{6.2}}
+\subfloat[位于中心]{\includegraphics[width=\textwidth]{6.1}} \\
+\subfloat[位于一角]{\includegraphics[width=\textwidth]{6.2}}
 \caption[惯性张量例题]{惯性张量例题}
 \end{figure}
-
+\end{minipage}
+\hfill
+\begin{minipage}{0.7\textwidth}
 \begin{enumerate}
 \item 位于中心：
 \begin{align*}
@@ -983,6 +1010,7 @@ I_{Axx} &= I_{Cxx} + m(y_C^2 + z_C^2) = \frac{m}{12}(H^2 + L^2) + \frac{m}{4}(H^
 I_{Axy} &= I_{Cxy} + m x_C y_C = \frac{m}{4}WL
 \end{align*}
 \end{enumerate}
+\end{minipage}
 }
 %------------------------------------------------
 \subsection[牛顿-欧拉动力学方程]{牛顿-欧拉动力学方程}
@@ -990,20 +1018,23 @@ I_{Axy} &= I_{Cxy} + m x_C y_C = \frac{m}{4}WL
 \subsubsection[推导]{推导}
 %------------------------------------------------
 \paragraph{动力学受力分析}\label{sec:fn2}
-\textcolor{red}{与静力学受力分析对比}\ref{sec:fn1}
-
+\textcolor{red}{与静力学受力分析对比}\ref{sec:fn1}。 \\
+\begin{minipage}{0.3\textwidth}
 \begin{figure}[H]
 \centering 
-\includegraphics[width=0.3\textwidth]{force2} 
+\includegraphics[width=\textwidth]{force2} 
 \caption[动力学受力分析]{动力学受力分析}
 \end{figure}
-
+\end{minipage}
+\hfill
+\begin{minipage}{0.6\textwidth}
 $$
 \begin{cases}
 f_i &= f_{i + 1} \textcolor{red}{+ F_i} \\
 n_i &= n_{i + 1} + P_{i + 1} \times f_{i + 1} \textcolor{red}{+ P_{C_i} \times F_i + N_i} \\
 \end{cases}
 $$
+\end{minipage}
 %------------------------------------------------
 \paragraph{牛顿-欧拉动力学方程}
 \begin{itemize}
@@ -1054,6 +1085,7 @@ N_i &= n_i - n_{i + 1} + (-P_{C_i}) \times f_i + (P_{i + 1} - P_{C_i}) \times (-
 %------------------------------------------------
 \subsubsection[总结]{总结}
 %------------------------------------------------
+\noindent
 \begin{minipage}{0.55\textwidth}
 \paragraph{步骤}\tip{牛顿-欧拉动力学方程建模}
 \begin{enumerate}
@@ -1242,7 +1274,7 @@ $。
 \item 标准形式：$ \Gamma = M(q)\ddot{q} + V(q, \dot{q}) + G(q) $。
 \end{enumerate}
 %------------------------------------------------
-\subsubsection[例题]{例题}
+\subsubsection[例题]{例题\tip{动力学例题}}
 {\footnotesize
 %------------------------------------------------
 \paragraph{例题1}~\\
@@ -1357,16 +1389,16 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 \end{enumerate}
 %------------------------------------------------
 \paragraph{例题2}
-
+作业题
 %------------------------------------------------
 \paragraph{牛顿-欧拉动力学方程法}
-
+1
 %------------------------------------------------
 \paragraph{拉格朗日动力学法}
-
+1
 }
 %----------------------------------------------------------------------------------------
-\section{轨迹规划}
+\section{轨迹规划（不考）}
 %----------------------------------------------------------------------------------------
 \subsection[概念]{概念}
 %------------------------------------------------
@@ -1394,10 +1426,10 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 关注 & 可达性、奇异性 & 高效性、同步性 \\
 \hline
 \end{tabular}
-\caption{力与力矩（动静一致）}
+\caption{轨迹规划分类对比}
 \end{table}
 %----------------------------------------------------------------------------------------
-\subsection[多项式规划]{多项式规划\tip{多项式轨迹规划}}
+\subsection[多项式规划]{多项式规划}
 %------------------------------------------------
 \paragraph{概念}
 初始状态$ q_0\{q_0, \dot{q}_0, \ddot{q}_0\} $经$ t_f $时间向目标状态$ q_f\{q_f, \dot{q}_f, \ddot{q}_f\} $的转化：
@@ -1405,36 +1437,26 @@ $$ q(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_n t^n $$
 
 满足速度约束$ q_{min} \leq q(t) \leq q_{max} $，在保证规划效果的前提下，使$ n $尽量小。
 %------------------------------------------------
-\paragraph{三次多项式}
-\begin{align*} 
-q(t) &= a_0 + a_1 t + a_2 t^2 + a_3 t^3 \\
-\dot{q}(t) &= a_1 + 2a_2 t + 3a_3 t^2
-\end{align*}
+\paragraph{三次多项式}~\\
+\begin{minipage}{0.6\textwidth}
+$$ q(t) = a_0 + a_1 t + a_2 t^2 + a_3 t^3 $$
 
+\hspace{2em}
 加速度约束：$ \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{max} $，
 
-假设$ \dot{q}_0 = \dot{q}_f = 0 $有： \\
-\begin{minipage}{0.6\textwidth}
-\begin{align*} 
-q_0 &= q(0) = a_0 \quad \dot{q}_0 = \dot{q}(0) = a_1 = 0 \\
-q_f &= q(t_f) = a_0 + a_1 t_f + a_2 t_f^2 + a_3 t_f^3 \\
-\dot{q}_f &= \dot{q}(t_f) = a_1 + 2a_2 t_f + 3a_3 t_f^2 \\
-t_f &= -\frac{a_2}{3a_3}
-\end{align*}
+\hspace{2em}
+假设$ \dot{q}_0 = \dot{q}_f = 0 $有：
+$$ t_f = -\frac{a_2}{3a_3} $$
+
+\hspace{2em}
+$ t_f $确定时能唯一确定。加速度不连续。
 \end{minipage}
 \hfill
 \begin{minipage}{0.4\textwidth}
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[
-    xlabel={时间$ t(s) $},
-    ylabel={速度$ \dot{q}(rad/s) $},
-    grid=major,
-    width=6cm,
-    height=4.5cm,
-    xmin=0, xmax=4
-]
+\begin{axis}[xlabel={时间$ t(s) $}, ylabel={速度$ \dot{q}(rad/s) $}, grid=major, width=6cm, height=4.5cm, xmin=0, xmax=4]
 \addplot[blue, thick, samples=200, domain=0:4] 
 {-x*(x - 4)};
 \end{axis}
@@ -1442,40 +1464,27 @@ t_f &= -\frac{a_2}{3a_3}
 \caption{三次多项式规划速度曲线}
 \end{figure}
 \end{minipage}
-
-$ t_f $确定时能唯一确定。加速度不连续。
 %------------------------------------------------
-\paragraph{五次多项式}
+\paragraph{五次多项式}~\\
+\begin{minipage}{0.6\textwidth}
 $$ q(t) = a_0 + a_1 t + a_2 t^2 + a_3 t^3 + a_4 t^4 + a_5 t^5 $$
 
+\hspace{2em}
 加加速度约束：$ \ddot{q}_{min} \leq \ddot{q}(t) \leq \ddot{q}_{max} $，
 
-假设$ \dot{q}_0 = \dot{q}_f = 0 $有： \\
-\begin{minipage}{0.4\textwidth}
-\begin{align*} 
-q_0 &= q(0) = a_0 \\ 
-q_f &= q(t_f) = a_0 + a_1 t_f + a_2 t_f^2 + a_3 t_f^3 + a_4 t_f^4 + a_5 t_f^5 \\
-\dot{q}_0 &= \dot{q}(0) = a_1 \\
- \dot{q}_f &=\dot{q}(t_f) = a_1 + 2 a_2 t_f + 3 a_3 t_f^2 + 4 a_4 t_f^3 + 5 a_5 t_f^4 \\
-\ddot{q}_0 &= \ddot{q}(0) = 2a_2 \\
-\ddot{q}_f &= \ddot{q}(t_f) = 2 a_2 + 6 a_3 t_f + 12 a_4 t_f^2 + 20 a_5 t_f^3 \\
-t_f &= \frac{-a_4 \pm 6 \sqrt{a_4^2 - 10 a_3 a_5}}{5a_5}
-\end{align*}
+\hspace{2em}
+假设$ \dot{q}_0 = \dot{q}_f = 0 $有：
+$$ t_f = \frac{-a_4 \pm 6 \sqrt{a_4^2 - 10 a_3 a_5}}{5a_5} $$ 
+
+\hspace{2em}
+$ t_f $确定时能唯一确定。加速度连续，速度过于光滑，可能无法满足可执行性。
 \end{minipage}
 \hfill
 \begin{minipage}{0.4\textwidth}
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[
-    xlabel={时间$ t(s) $},
-    ylabel={速度$ \dot{q}(rad/s) $},
-    grid=major,
-    width=6cm,
-    height=4.5cm,
-    xmin=0, xmax=1,
-    ymin=0, ymax=2
-]
+\begin{axis}[xlabel={时间$ t(s) $}, ylabel={速度$ \dot{q}(rad/s) $}, grid=major, width=6cm, height=4.5cm, xmin=0, xmax=1, ymin=0, ymax=2]
 \addplot[blue, thick, samples=100, domain=0:1] 
 {30*x^2*(1-x)^2};
 \end{axis}
@@ -1483,8 +1492,6 @@ t_f &= \frac{-a_4 \pm 6 \sqrt{a_4^2 - 10 a_3 a_5}}{5a_5}
 \caption{五次多项式控制速度曲线}
 \end{figure}
 \end{minipage}
-
-$ t_f $确定时能唯一确定。加速度连续，速度过于光滑，可能无法满足可执行性。
 %------------------------------------------------
 \paragraph{其它}
 \begin{itemize}
@@ -1501,7 +1508,7 @@ $$ a_0 = q_i, \quad a_1 = \dot{q}_i, \quad a_2 = \frac{3(q_f - q_i)}{(t_f - t_i)
 \item 问题：过于光滑，$ v, a $无法保持在峰值，未充分利用执行器性能。
 \end{itemize}
 %----------------------------------------------------------------------------------------
-\subsection[分段函数规划]{分段函数规划\tip{分段函数轨迹规划（同步规划）}}
+\subsection[分段函数规划]{分段函数规划}
 %------------------------------------------------
 \paragraph{概念}
 初始状态$ q_0\{q_0, \dot{q}_0, \ddot{q}_0\} $向目标状态$ q_f\{q_f, \dot{q}_f, \ddot{q}_f\} $的转化：
@@ -1512,12 +1519,13 @@ $$ q_{min} \leq q(t) \leq q_{max}, \quad \dot{q}_{min} \leq \dot{q}(t) \leq \dot
 并假设$ \dot{q}_0 = \dot{q}_f = 0, \ddot{q}_0 = \ddot{q}_f = 0 $。
 %------------------------------------------------
 \paragraph{三段规划}
-速度连续。 \\
+速度连续。\\
 \begin{minipage}{0.5\textwidth}
 \begin{itemize}
 \item 加速段：以$ a_{max} $加速到$ v_{max} $。
 \item 匀速段：维持$ v_{max} $，$ a = 0 $。
 \item 减速段：以$ a_{max} $减速到$ v = 0 $。
+\item 判断是否需要加到$ v_{max} $（有无匀速段）：路径长度$ s $与$ \frac{v_{max}^2}{a_{max}} $比较。
 \end{itemize}
 \end{minipage}
 \hfill
@@ -1525,20 +1533,9 @@ $$ q_{min} \leq q(t) \leq q_{max}, \quad \dot{q}_{min} \leq \dot{q}(t) \leq \dot
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[
-    xlabel={时间$ t(s) $},
-    ylabel={速度$ \dot{q}(rad/s) $},
-    grid=major,
-    width=6cm,
-    height=4.8cm,
-    xmin=0, xmax=8,
-    ymin=0, ymax=12
-]
-\addplot[blue, thick, samples=200, domain=0:10] {
-    (x <= 2) * (5*x) +
-    (x > 2 && x <= 6) * 10 +
-    (x > 6) * (10 - 5*(x-6))
-};
+\begin{axis}[xlabel={时间$ t(s) $}, ylabel={速度$ \dot{q}(rad/s) $}, grid=major, width=6cm, height=4.8cm, xmin=0, xmax=8, ymin=0, ymax=12]
+\addplot[blue, thick, samples=200, domain=0:10] 
+{(x <= 2) * (5*x) + (x > 2 && x <= 6) * 10 + (x > 6) * (10 - 5*(x-6))};
 \addplot[gray, dashed] coordinates {(2,0) (2,12)};
 \addplot[gray, dashed] coordinates {(6,0) (6,12)};
 \node at (axis cs:1,11) {\small 加速段};
@@ -1549,16 +1546,16 @@ $$ q_{min} \leq q(t) \leq q_{max}, \quad \dot{q}_{min} \leq \dot{q}(t) \leq \dot
 \caption{三段规划速度曲线}
 \end{figure}
 \end{minipage}
-
-判断是否需要加到$ v_{max} $（有无匀速段）：路径长度$ s $与$ \frac{v_{max}^2}{a_{max}} $比较。
 %------------------------------------------------
 \paragraph{七段规划（加速度规划，最小时间规划）}
-加速度连续。 \\
+加速度连续。\\
 \begin{minipage}{0.5\textwidth}
 \begin{itemize}
 \item 加速段：尽量维持$ a_{max} $加速到$ v_{max} $。
 \item 匀速段：维持$ v_{max} $，$ a = 0 $。
 \item 减速段：尽量维持$ a_{max} $减速到$ v = 0 $。
+\item 判断是否需要加到$ v_{max} $（有无匀速段）：路径长度$ s $与$ \frac{v_{max}^2}{a_{max}} $比较。
+\item 判断是否需要加到$ a_{max} $（有无匀加速段）：$ v_{max} $与$ \frac{a_{max}^2}{j_{max}} $比较。
 \end{itemize}
 \end{minipage}
 \hfill
@@ -1566,24 +1563,9 @@ $$ q_{min} \leq q(t) \leq q_{max}, \quad \dot{q}_{min} \leq \dot{q}(t) \leq \dot
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[
-    xlabel={时间$ t(s) $},
-    ylabel={速度$ \dot{q}(rad/s) $},
-    grid=major,
-    width=8cm,
-    height=6cm,
-    xmin=0, xmax=14,
-    ymin=0, ymax=12
-]
-\addplot[blue, thick, samples=200, domain=0:14] {
-    (x <= 1) * (2.5*x^2) +
-    (x > 1 && x <= 3) * (2.5 + 2.5*(x-1)) +
-    (x > 3 && x <= 4) * (10 - 2.5*(x-4)^2) +
-    (x > 4 && x <= 10) * 10 +
-    (x > 10 && x <= 11) * (10 - 2.5*(x-10)^2) +
-    (x > 11 && x <= 13) * (7.5 - 2.5*(x-11)) +
-    (x > 13) * (2.5*(14-x)^2)
-};
+\begin{axis}[xlabel={时间$ t(s) $}, ylabel={速度$ \dot{q}(rad/s) $}, grid=major, width=8cm, height=6cm, xmin=0, xmax=14, ymin=0, ymax=12]
+\addplot[blue, thick, samples=200, domain=0:14] 
+{(x <= 1) * (2.5*x^2) + (x > 1 && x <= 3) * (2.5 + 2.5*(x-1)) + (x > 3 && x <= 4) * (10 - 2.5*(x-4)^2) + (x > 4 && x <= 10) * 10 + (x > 10 && x <= 11) * (10 - 2.5*(x-10)^2) + (x > 11 && x <= 13) * (7.5 - 2.5*(x-11)) + (x > 13) * (2.5*(14-x)^2)};
 \addplot[gray, dashed] coordinates {(1,0) (1,12)};
 \addplot[gray, dashed] coordinates {(3,0) (3,12)};
 \addplot[gray, dashed] coordinates {(4,0) (4,12)};
@@ -1602,11 +1584,6 @@ $$ q_{min} \leq q(t) \leq q_{max}, \quad \dot{q}_{min} \leq \dot{q}(t) \leq \dot
 \caption{七段规划速度曲线}
 \end{figure}
 \end{minipage}
-
-\begin{itemize}
-\item 判断是否需要加到$ v_{max} $（有无匀速段）：路径长度$ s $与$ \frac{v_{max}^2}{a_{max}} $比较。
-\item 判断是否需要加到$ a_{max} $（有无匀加速段）：$ v_{max} $与$ \frac{a_{max}^2}{j_{max}} $比较。
-\end{itemize}
 %------------------------------------------------
 \paragraph{同步规划}
 在假设$ \dot{q}_0 = \dot{q}_f = 0, \ddot{q}_0 = \ddot{q}_f = 0 $时，可计算$ t_f = max\{t_{f_i}\} $，放缩规划。
@@ -1616,15 +1593,14 @@ $$ \Delta s_i = v_{\max}(t_f - t_{fi}), \quad k_i = \frac{q_{if} - q_{i0}}{(q_{i
 %----------------------------------------------------------------------------------------
 \subsection[概念]{概念}
 确定各关节驱动器输入，使其产生合适的力/力矩，进而驱动关节连杆--末端执行器按期望的轨迹运动，并抑制扰动。
-%------------------------------------------------
-\paragraph{控制器}
+\begin{itemize}
+\item 控制器
 \begin{itemize}
 \item 硬件：嵌入式计算机，输弱功率信号，需要功率放大（电压比例放大，增强电流输出能力）。
 \item 软件：控制算法。
 \item 输出：通常为电压信号。
 \end{itemize}
-%------------------------------------------------
-\paragraph{关节驱动器分类}
+\item 驱动器
 \begin{itemize}
 \item 电动（electric）——伺服电机（servo motor）：
 \begin{itemize}
@@ -1634,33 +1610,32 @@ $$ \Delta s_i = v_{\max}(t_f - t_{fi}), \quad k_i = \frac{q_{if} - q_{i0}}{(q_{i
 \item 液压（hydraulic）常用于大负载设备。
 \item 气动（pneumatic）常用于可穿戴式设备。
 \end{itemize}
+\end{itemize}
 %----------------------------------------------------------------------------------------
 \subsection[关节驱动器动力学]{关节驱动器动力学}
 从电信号输入到关节驱动力/力矩输出的模型，其不确定性源于轴-轴承摩擦、减速器摩擦、非刚性、齿隙等。
-
-在独立关节控制中，将机械臂各关节简化为单输入单输出（single-input-single-output，SISO）系统进行控制器设计，将交叉耦合视为扰动。
-
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.6\textwidth]{Independent Joint Control} 
-\caption[独立关节控制]{独立关节控制}
-\end{figure}
 %----------------------------------------------------------------------------------------
-\subsubsection[电机动力学]{电机动力学}
+\paragraph{电机动力学}~\\
+
 $ \tau_m = K \phi i_a $，电机输出力矩等于电机常数、磁通量（webers）、电枢电流（amperes）的积，其中最后一项可控。
 
+\noindent
+\begin{minipage}{0.5\textwidth}
 \begin{figure}[H]
 \centering 
-\includegraphics[width=0.5\textwidth]{electrical machinery_1} 
+\includegraphics[width=\textwidth]{electrical machinery_1} 
 \caption[电机动力学电路]{电机动力学电路}
 \end{figure}
-
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
 在电路中有：
 \begin{align*} 
 &\text{电路电压：} L\frac{di_a}{dt} + Ri_a = V - V_b \\
 &\text{电机力矩：} \tau_m = K_1\phi \cdot i_a = \underbrace{C_m}_{\text{力矩常数}} i_a \\
 &\text{电机反电动势：} V_b = K_2\phi\omega_m = \underbrace{C_e}_{\text{反电动势常数}} \dot{\theta}_m  
 \end{align*}
+\end{minipage}
 
 经拉式变换，得到：
 \begin{align*} 
@@ -1696,7 +1671,8 @@ $$ J_m \ddot{\theta}_m(t) + (B_m + \frac{C_e C_m}{R_m}) \dot{\theta}_m(t) = \fra
 
 在与减速器集成时，有减速比（gear ratio）为$ r:1 $，则$ \theta_m = r \theta_l, \tau_{ml} = \frac{\tau_l}{r} $。此时的转动惯量和阻尼系数为驱动器与减速器之和。
 %----------------------------------------------------------------------------------------
-\subsubsection[连杆]{连杆}
+\paragraph{连杆}~\\
+
 将连杆动力学：
 $$ M(q)\ddot{q} + C(q, \dot{q})\dot{q} + G(q) = \tau $$
 
@@ -1711,13 +1687,13 @@ $$ J_m\ddot{\theta}_m(t) + (B_m + \frac{C_e C_m}{R_m})\dot{\theta}_m(t) = \frac{
 
 有：
 $$ \underbrace{[J_m + \frac{J_i(q)}{r_i^2}]}_{J_{eff_{mi}}}\ddot{\theta}_{mi} + \underbrace{(B_m + \frac{C_e C_m}{R_m})}_{B_{eff_{mi}}}\dot{\theta}_m(t) = \underbrace{\frac{C_m}{R_m}u(t)}_{u_{mi}} - \underbrace{\frac{1}{r_1}\{[M(q) - J_i(q)I]\ddot{q} + C(q, \dot{q})\dot{q} + g(q)\}_i}_{d_{mi}} $$
-
-\tip{关节驱动器动力学结论}
-为单入单出、时变（$ J_i(q) $的存在）、带扰动二阶惯性环节。存在大减速比时，可简化为定常二阶惯性环节，并隔离电机与连杆负载。
+%----------------------------------------------------------------------------------------
+\paragraph{关节驱动器动力学结论}\tip{关节驱动器动力学结论}
+为单入单出（single-input-single-output，SISO）、时变（$ J_i(q) $的存在）、带扰动二阶惯性环节。存在大减速比时，可简化为定常二阶惯性环节，并隔离电机与连杆负载。
 %----------------------------------------------------------------------------------------
 \subsection[独立关节控制]{独立关节控制（Independent Joint Control）}
 %----------------------------------------------------------------------------------------
-\subsubsection[控制器]{控制器}
+\subsubsection[独立关节控制器]{独立关节控制器}
 $$ J_{eff_{mi}}\ddot{\theta}_{mi} + B_{eff_{mi}}\dot{\theta}_{mi} = u_{mi} - d_m $$
 
 有控制器框图：
@@ -1759,17 +1735,160 @@ $$ s^2 + \underbrace{\frac{(B_{eff} + K_d)}{J_{eff}}}_{2\zeta \omega_c}s + \unde
 $$ K_d = 2J_{eff}\zeta\omega_c - B_{eff}, \quad K_p = J_{eff}\omega_c^2 $$
 
 需使其根在负半平面，一般使$ \zeta = 1 $（临界阻尼，无超调快速响应），$ \omega_c $尽量大。
-%------------------------------------------------
-\paragraph{总结}\tip{独立关节控制PD控制器总结}
 \begin{itemize}
 \item 刚性假设下，对于任意非负增益$ k_p, k_d $，闭环稳定。
 \item $ k_d $：等效系统阻尼，越大闭环稳定行越好，但响应越慢，还对传感器噪声有放大作用。
 \item $ k_p $：越大抑制扰动的能力越强。
-\item 对于阶跃给定，在无扰动时，跟踪稳态误差为$ 0 $；在阶跃扰动时，存在与比例增益成反比的稳态误差。
+\end{itemize}
+%------------------------------------------------
+\paragraph{PID控制器}~\\
+
+设计PID控制器$ G_c(s) = K_p + K_d s + \frac{K_i}{s} $，
+
+闭环传递函数变为：
+$$ \theta_m(s) = \frac{(K_d s^2 + K_p s + K_i)\theta_d(s) + s d(s)}{J_{eff}s^3 + (B_{eff} + K_d)s^2 + K_p s + K_i} $$
+
+可用劳斯判据判断稳定性，其闭环稳定条件为：
+$$ K_i < \frac{K_p(B_{eff} + K_d)}{J_{eff}} $$
+%------------------------------------------------
+\subsubsection[前馈控制]{前馈控制}
+加入前馈，有控制器框图：
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.5\textwidth]{feedforward} 
+\caption[前馈控制器框图]{前馈控制器框图}
+\end{figure}
+
+此时闭环传递函数为：
+$$ y(s) = \frac{[F_c(s)G_c(s)]P(s)}{G_s(s)P(s) + 1}r(s) $$
+
+误差传递函数为：
+$$ E(s) = y(s) - r(s) = \frac{F_c(s)P(s) - 1}{G_s(s)P(s) + 1}r(s) $$
+
+可知，在$ F_c(s) = \frac{1}{P(s)} $时，$ E(s) = 0 $，可实现无扰动任意轨迹无误差跟踪。
+
+针对PD控制器与前馈控制器，有控制器框图：
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.6\textwidth]{feedforward_1} 
+\caption[PD+前馈控制器框图]{PD+前馈控制器框图}
+\end{figure}
+
+将控制器输出代入关节动力学，有：
+$$ J_{eff}\ddot{e}(t) + (K_d + B_{eff})\dot{e}(t) + K_p e(t) = 0 $$
+
+该齐次常系数微分方程的解将收敛到$ 0 $。
+%------------------------------------------------
+\subsubsection[力补偿]{力补偿}
+在有扰动$ d $时，由于其源于$ d_{mi} = \frac{1}{r_i}\{[M(q) - m_{ii}(q)I]\ddot{q} + C(q, \dot{q})\dot{q} + G(q)\}_i $，可用其期望值$ d_{mi}^d = \frac{1}{r_i}\{[M(q_d) - m_{ii}(q_d)I]\ddot{q}_d + C(q_d, \dot{q}_d)\dot{q}_d + G(q_d)\}_i $近似补偿，有控制框图：
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.6\textwidth]{Force compensation} 
+\caption[PD+前馈+力补偿控制器框图]{PD+前馈+力补偿控制器框图}
+\end{figure}
+
+可实现有扰动任意轨迹的无误差跟踪。
+%------------------------------------------------
+\paragraph{稳定性影响因素}
+\begin{itemize}
+\item 驱动器饱和：积分环节累计误差导致，使驱动器输出不随控制器输出变化而变化。
+\item 传动链柔性：降低系统固有谐振频率$ \omega_r = \sqrt{\frac{k_r}{J_{eff}}} $，一般令闭环截止频率$ \omega < \frac{\omega_r}{2} $。
+\end{itemize}
+%------------------------------------------------
+\subsubsection[总结]{总结\tip{独立关节控制器总结}}
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c|c}
+\hline
+控制器情况 & 给定 & 误差 & 稳定性 \\
+\hline
+PD & 阶跃 & 无 & 无稳态误差 \\
+PD & 阶跃 & 阶跃 & $ e_{ss} = -\frac{D}{k_p} $ \\
+PD+前馈 & 任意 & 无 & 无稳态误差 \\
+PD+前馈 & 任意 & 有 & 有稳态误差 \\
+PD+前馈+力补偿 & 任意 & 任意 & 无稳态误差 \\
+\hline
+\end{tabular}
+\caption{独立关节控制器总结}
+\end{table}
+%------------------------------------------------
+\subsection[多变量PD控制]{多变量PD控制\tip{多变量PD控制}}
+对机械臂动力学方程：
+$$ M(q)\ddot{q} + C(q, \dot{q})\dot{q} + g(q) = \tau $$
+
+设计PD控制器：
+$$ \tau = K_p \tilde{q} + K_d \dot{\tilde{q}} $$
+
+其中$ \tilde{q} = q_d - q $，$ k_p, k_d $为对角增益阵。
+\begin{itemize}
+\item 无重力平面机器人：对于任意给定渐近稳定，跟踪误差可收敛到$ 0 $。
+\item 有重力机器人：当$ q_d $为常数时，可视$ g(q) $为定常扰动，有稳态误差。如果已知$ g(q) $可进行补偿$ \tau = K_p \tilde{q} + K_d \dot{\tilde{q}} + g(q) $，达到渐进稳定。但有其他定常扰动仍会导致稳态误差。
 \end{itemize}
 %----------------------------------------------------------------------------------------
-\subsection[多变量控制]{多变量控制\tip{多变量控制}}
-%------------------------------------------------
 \section{机器人的力控制}
+机器人通过力/力矩传感器检测与外部环境的接触力/力矩，并设计力控制器计算位置参考指令的修正量或关节力矩的控制指令，控制机器人在不确定环境下与环境相顺应。
+%------------------------------------------------
+\paragraph{力/力矩传感器}
+\begin{itemize}
+\item 关节式力矩传感器：应变片。
+\item 六维力传感器。
+\end{itemize}
+%------------------------------------------------
+\paragraph{约束运动}\tip{约束运动}
+\begin{itemize}
+\item 约束坐标系：正交坐标系，将任务描述为沿各坐标轴的位置控制或力控制。
+\item 力位约束正交：不可能在同一自由度控制位置和力，二者对偶。
+$$
+\begin{bmatrix} v_x & v_y & v_z \\ \omega_x & \omega_y & \omega_z \end{bmatrix}
+\overset{\text{对偶}}{\Longleftrightarrow}
+\begin{bmatrix} f_x & f_y & f_z \\ \tau_x & \tau_y & \tau_z \end{bmatrix}
+$$
+
+位置控制自由度受到力约束，力控制自由度受到位置约束 。
+\item 描述方式：
+\begin{itemize}
+\item 自然约束：任务的几何/环境结构所确定的约束。
+\item 人为约束：任务给定的期望运动位置或力。
+\end{itemize}
+\end{itemize}
+%------------------------------------------------
+\paragraph{例题}\tip{约束运动例题}
+\begin{figure}[H]
+\centering
+\subfloat[销钉入孔（钉子）]{\includegraphics[width=.2\textwidth]{8.1}} \quad
+\subfloat[转动曲柄（扳手）]{\includegraphics[width=.2\textwidth]{8.2}} \quad
+\subfloat[拧螺母（螺刀）]{\includegraphics[width=.1\textwidth]{8.3}} \quad
+\subfloat[开关门（门把手）]{\includegraphics[width=.2\textwidth]{8.4}} 
+\caption[约束运动例题]{约束运动例题（分析物体）}
+\end{figure}
+{\footnotesize
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c|c}
+\hline
+问题 & 约束 & 不可变量（为$ 0 $） & 可变量 \\
+\hline
+\multirow{2}{*}{销钉入孔} & 自然约束 & $ v_x, v_y, \omega_x, \omega_y $ & $ f_z = 0, \tau_z = 0 $ \\
+\cline{2-4}
+& 人为约束 & $ f_{dx}, f_{dy}, \tau_{dx},  \tau_{dy} $ & $ v_z = v_{dz}, \omega_z = \omega_{dz} $ \\
+\hline
+\multirow{2}{*}{转动曲柄} & 自然约束 & $ v_x, v_z, \omega_x, \omega_y $ & $ f_y = 0, \tau_z = 0 $ \\
+\cline{2-4}
+& 人为约束 & $ f_{dx}, f_{dz}, \tau_{dx}, \tau_{dy} $ & $ v_{dy} = r\omega_d, \omega_z = \omega_d $ \\
+\hline
+\multirow{2}{*}{拧螺母} & 自然约束 & $ v_x, \omega_x, \omega_y $ & $ v_z = \rho\omega_{dz}, f_y = 0, \tau_z = 0 $ \\
+\cline{2-4}
+& 人为约束 & $ f_{dx}, \tau_{dx}, \tau_{dy} $ & $ f_z = f_{dz}, v_{dy} = 0, \omega_z = \omega_{dz} $ \\
+\hline
+\multirow{2}{*}{开关门} & 自然约束 & $ v_y, v_z, \omega_x, \omega_y $ & $ f_x = 0, \tau_z = 0 $ \\
+\cline{2-4}
+& 人为约束 & $ f_{dy}, f_z, \tau_{dx}, \tau_{dy} $ & $ v_{dx} = r\omega_d, \omega_z = \omega_d $ \\
+\hline
+\end{tabular}
+\caption{约束运动例题}
+\end{table}
+
+注意耦合量要统一表示。
+}
 %----------------------------------------------------------------------------------------
 \end{document}
