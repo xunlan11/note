@@ -1281,7 +1281,7 @@ $。
 \begin{minipage}{0.35\textwidth}
 \begin{figure}[H]
 \centering 
-\includegraphics[width=0.85\textwidth]{7} 
+\includegraphics[width=0.85\textwidth]{7.1} 
 \caption[动力学例题1]{动力学例题1}
 \end{figure}
 \end{minipage}
@@ -1343,18 +1343,12 @@ $$ ^1P_2 = \begin{bmatrix} 0 & q_2 & 0 \end{bmatrix}^T, ^1P_{C_2} = \begin{bmatr
 \tau_2 &= ^1f_2 \cdot ^1Z_2 = m_2\ddot{q}_2 + m_2gc1 - m_2\dot{q}_1^2(d_2 + q_2) \\
 \tau_1 &= ^1n_1 \cdot ^1Z_1 = \ddot{q}_1[I_{zz2} + I_{zz1} + m_1l_1^2 + m_2(d_2 + q_2)^2] + 2m_2\dot{q}_1\dot{q}_2(d_2 + q_2) - [m_1l_1 + m_2(d_2 + q_2)]gs1
 \end{align*}
-\item 标准形式：
-\begin{align*}
-\Gamma = \begin{bmatrix} \tau_1 \\ \tau_2 \end{bmatrix} 
-&= \begin{bmatrix} \ddot{q}_1[I_{zz2} + I_{zz1} + m_1l_1^2 + m_2(d_2 + q_2)^2] & 0 \\ 0 & m_2 \end{bmatrix} \ddot{q} \\
-&+ \begin{bmatrix} 2m_2(d_2 + q_2) & 0 \\ 0 & m_2(d_2 + q_2) \end{bmatrix} \begin{bmatrix} \dot{q}_1\dot{q}_2 \\ \dot{q}_1^2 \end{bmatrix} + \begin{bmatrix} - [m_1l_1 + m_2(d_2 + q_2)]s1 \\ m_2c1 \end{bmatrix} g 
-\end{align*}
 \end{enumerate}
 %------------------------------------------------
 \paragraph{拉格朗日动力学法}
 \begin{enumerate}
 \item 质心位置矢量：
-$$ ^0 P_{C_1} = \begin{bmatrix} -l_1 s1 \\ l_1 c1 \\ 0 \end{bmatrix}, ^0 P_{C_2} = \begin{bmatrix} -(q_2 + d_2)s1 \\ (q_2 + d_2)c1 \\ 0 \end{bmatrix} $$
+$$ ^0 P_{C_1} = \begin{bmatrix} -l_1 s1 & l_1 c1 & 0 \end{bmatrix}^T, ^0 P_{C_2} = \begin{bmatrix} -(q_2 + d_2)s1 & (q_2 + d_2)c1 & 0 \end{bmatrix}^T $$
 \item 质心处雅可比：
 \begin{align*}
 ^0J_{v_{C_1}} &= \frac{\partial P_{C_1}}{\partial q} = \begin{bmatrix} -l_1 c1 & 0 \\ -l_1 s1 & 0 \\ 0 & 0 \end{bmatrix} & ^0J_{v_{C_2}} &= \frac{\partial P_{C_2}}{\partial q} = \begin{bmatrix} -(q_2 + d_2)c1 & -s1 \\ -(q_2 + d_2)s1 & c1 \\ 0 & 0 \end{bmatrix} \\
@@ -1378,7 +1372,9 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 &= -\begin{bmatrix} -l_1 c1 & -l_1 s1 & 0 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} 0 \\ -m_1 g \\ 0 \end{bmatrix} - \begin{bmatrix} -(q_2 + d_2)c1 & -(q_2 + d_2)s1 & 0 \\ -s1 & c1 & 0 \end{bmatrix} \begin{bmatrix} 0 \\ -m_2 g \\ 0 \end{bmatrix} \\
 &= \begin{bmatrix} -(m_1 l_1 + m_2(d_2 + q_2))g s1 \\ m_2 g c1 \end{bmatrix}
 \end{align*}
-\item 标准形式：
+\end{enumerate}
+%------------------------------------------------
+\paragraph{标准形式}
 \begin{align*}
 \Gamma = \begin{bmatrix} \tau_1 \\ \tau_2 \end{bmatrix} 
 &= \begin{bmatrix} \ddot{q}_1[I_{zz2} + I_{zz1} + m_1l_1^2 + m_2(d_2 + q_2)^2] & 0 \\ 0 & m_2 \end{bmatrix} \ddot{q} \\
@@ -1386,16 +1382,115 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 + \begin{bmatrix} 2m_2(d_2 + q_2) \\ 0 \end{bmatrix} \dot{q}_1\dot{q}_2 
 + \begin{bmatrix} - [m_1l_1 + m_2(d_2 + q_2)]s1 \\ m_2c1 \end{bmatrix} g 
 \end{align*}
-\end{enumerate}
 %------------------------------------------------
-\paragraph{例题2}
-作业题
+\paragraph{例题2}~\\
+\begin{minipage}{0.4\textwidth}
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.6\textwidth]{7.2} 
+\caption[动力学例题2]{动力学例题2}
+\end{figure}
+\end{minipage}
+\hfill
+\begin{minipage}{0.6\textwidth}
+\hspace{2em}
+2R平面机器人的连杆质量分别为$ m_1,m_2 $，杆长分别为$ l_1,l_2 $，连杆质心距关节$ 1 $距离分别为$ l_{C_1},l_{C_2} $，连杆质心处惯性张量分别为：
+$$
+{^{C_1}}I_1 = \begin{bmatrix} I_{xx1} & 0 & 0 \\ 0 & I_{yy1} & 0 \\ 0 & 0 & I_{zz1} \end{bmatrix},
+{^{C_2}}I_2 = \begin{bmatrix}  I_{xx2} & 0 & 0 \\ 0 & I_{yy2} & 0 \\ 0 & 0 & I_{zz2} \end{bmatrix}
+$$
+\end{minipage}
 %------------------------------------------------
 \paragraph{牛顿-欧拉动力学方程法}
-1
+\begin{enumerate}
+\item 初始条件: $ ^0\omega_0 = 0, ^0v_0 = 0, ^0\dot{\omega}_0 = 0, ^0\dot{v}_0 = \begin{bmatrix} 0 & g & 0 \end{bmatrix}^T, f_3 = 0, n_3 = 0 $。
+\item 关节$ 1 $运动学：
+\begin{align*}
+^1\omega_1 &= \dot{\theta}_1 \cdot ^1Z_1 = \begin{bmatrix} 0 & 0 & \dot{\theta}_1 \end{bmatrix}^T \\
+^1\dot{\omega}_1 &= \ddot{\theta}_1 \cdot ^1Z_1 = \begin{bmatrix} 0 & 0 & \ddot{\theta}_1 \end{bmatrix}^T \\
+^1\dot{v}_1 &= ^1_0R_z(\theta_1) \cdot ^0\dot{v}_0 = \begin{bmatrix} gs1 & gc1 & 0 \end{bmatrix}^T \\
+^1\dot{v}_{C_1} &= ^1\dot{v}_1 + ^1\dot{\omega}_1 \times ^1P_{C_1} + ^1\omega_1 \times (^1\omega_1 \times ^1P_{C_1}) = \begin{bmatrix} -l_{C_1}\dot{\theta}_1^2 + gs1 & l_{C_1}\ddot{\theta}_1 + gc1 & 0 \end{bmatrix}^T
+\end{align*}
+\item 关节$ 1 $力：
+\begin{align*}
+^1F_1 &= m_1 {}^1\dot{v}_{C_1} = \begin{bmatrix} -m_1l_{C_1}\dot{\theta}_1^2 + m_1gs1 & m_1l_{C_1}\ddot{\theta}_1 + m_1gc1 & 0 \end{bmatrix}^T \\
+^1N_1 &= ^{C_1}I_1 \times ^1\dot{\omega}_1 + ^1\omega_1 \times ^{C_1}I_1 \cdot ^1\omega_1 = \begin{bmatrix} 0 & 0 & \ddot{\theta}_1 I_{zz1} \end{bmatrix}^T
+\end{align*}
+\item 关节$ 2 $运动学：
+\begin{align*}
+^1\omega_2 &= ^1\omega_1 + \dot{\theta}_2 \cdot ^1Z_2 = \begin{bmatrix} 0 & 0 & \dot{\theta}_1 + \dot{\theta}_2 \end{bmatrix}^T \\
+^1\dot{\omega}_2 &= ^1\dot{\omega}_1 + \ddot{\theta}_2 \cdot ^1Z_2 = \begin{bmatrix} 0 & 0 & \ddot{\theta}_1  + \ddot{\theta}_2 \end{bmatrix}^T \\
+^1\dot{v}_2 &= ^1\dot{v}_1 + ^1\dot{\omega}_1 \times ^1P_2 + ^1\omega_1 \times (^1\omega_1 \times ^1P_2) = \begin{bmatrix} - l_1 \dot{\theta}_1^2 + gs1 & l_1 \ddot{\theta}_1 + gc1 & 0 \end{bmatrix}^T \\
+^1P_{C_2} &= \begin{bmatrix} l_{C_2}c2 & l_{C_2}s2 & 0\end{bmatrix}^T \\
+^1\dot{v}_{C_2} &= ^1\dot{v}_2 + ^1\dot{\omega}_2 \times ^1P_{C_2} + ^1\omega_2 \times (^1\omega_2 \times ^1P_{C_2}) \\
+&= \begin{bmatrix} -(\ddot{\theta}_1 + \ddot{\theta}_2)l_{C_2}s2 - (\dot{\theta}_1 + \dot{\theta}_2)^2l_{C_2}c2 - l_1\dot{\theta}_1^2 + gs1 \\ (\ddot{\theta}_1 + \ddot{\theta}_2)l_{C_2}c2 - (\dot{\theta}_1 + \dot{\theta}_2)^2l_{C_2}s2 + l_1\ddot{\theta}_1 + gc1 \\ 0 \end{bmatrix}
+\end{align*}
+\item 关节$ 2 $力：
+\begin{align*}
+^1F_2 &= m_2 \cdot ^1\dot{v}_{C_2} = m_2 \begin{bmatrix} -(\ddot{\theta}_1 + \ddot{\theta}_2)l_{C_2}s2 - (\dot{\theta}_1 + \dot{\theta}_2)^2l_{C_2}c2 - l_1\dot{\theta}_1^2 + gs1 \\ (\ddot{\theta}_1 + \ddot{\theta}_2)l_{C_2}c2 - (\dot{\theta}_1 + \dot{\theta}_2)^2l_{C_2}s2 + l_1\ddot{\theta}_1 + gc1 \\ 0 \end{bmatrix} \\
+^1N_2 &= ^{C_2}I_2 \times ^1\dot{\omega}_2 + ^1\omega_2 \times ^{C_2}I_2 \cdot ^1\omega_2 = \begin{bmatrix} 0 & 0 & (\ddot{\theta}_1 + \ddot{\theta}_2) I_{zz2} \end{bmatrix}^T
+\end{align*}
+\item 关节$ 2 $力矩：
+\begin{align*}
+^1f_2 &= ^1F_2 \\
+^1n_2 &= ^1N_2 + ^1P_{C_2} \times ^1F_2 = \begin{bmatrix} 0 & 0 & (I_{zz2} + m_2l_{C_2}^2)(\ddot{\theta}_1 + \ddot{\theta}_2) + m_2l_1l_{C_2}c2\ddot{\theta}_1 - m_2l_1l_{C_2}s2\dot{\theta}_1^2 + m_2gl_{C_2}c12 \end{bmatrix}^T
+\end{align*}
+\item 关节$ 1 $力矩：
+\begin{align*}
+^1f_1 &= ^1F_1 + ^1f_2 \\
+^1n_1 &= ^1N_1 + ^1n_2 + ^1P_{C_1} \times ^1F_1 + ^1P_2 \times ^1f_2 \\
+&= \begin{bmatrix} 
+& & [m_1l_{C_1}^2 + I_{zz1} + m_2(l_1^2 + l_{C_2}^2 + 2l_1l_{C_2}c_2) + I_{zz2}]\ddot{\theta}_1 \\
+\star & \star & + [m_2(l_{C_2}^2 + l_1l_{C_2}c_2) + I_{zz2}]\ddot{\theta}_2 - m_2l_1l_{C_2}s2\dot{\theta}_2^2 \\
+& & - 2m_2l_1l_{C_2}s2\dot{\theta}_1\dot{\theta}_2 + m_1gl_{C_1}c1 + m_2g(l_1c1 + l_{C_2}c12) 
+\end{bmatrix}^T_{3 \times 1}
+\end{align*}
+\item 力矩：
+$$ \Gamma = \begin{bmatrix} \tau_1 \\ \tau_2 \end{bmatrix} = \begin{bmatrix} ^1n_1 \cdot ^1Z_1 \\ ^1n_2 \cdot ^1Z_2 \end{bmatrix} $$
+\end{enumerate}
 %------------------------------------------------
 \paragraph{拉格朗日动力学法}
-1
+\begin{enumerate}
+\item 质心位置矢量：
+$$ ^0 P_{C_1} = \begin{bmatrix} l_{C_1}c1 & l_{C_1}s1 & 0 \end{bmatrix}^T, ^0 P_{C_2} = \begin{bmatrix} l_1c1 + l_{C_2}c12 & l_1s1 + l_{C_2}s12 & 0 \end{bmatrix}^T $$
+\item 质心处雅可比：
+\begin{align*}
+^0J_{v_{C_1}} &= \begin{bmatrix} -l_{C_1}s1 & 0 \\ l_{C_1}c1 & 0 \\ 0 & 0 \end{bmatrix}& ^0J_{v_{C_2}} &= \begin{bmatrix} -l_1s1 - l_{C_2}s12 & -l_{C_2}s12 \\ l_1c1 + l_{C_2}c12 & l_{C_2}c12 \\ 0 & 0 \end{bmatrix} \\
+^0J_{\omega_{C_1}} &= \begin{bmatrix} \bar{\varepsilon}_1 Z_1 & 0 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \\ 1 & 0 \end{bmatrix}& ^0J_{\omega_{C_2}} &= \begin{bmatrix} \bar{\varepsilon}_1 Z_1 & \bar{\varepsilon}_2 Z_2 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \\ 1 & 1 \end{bmatrix}
+\end{align*}
+\item 惯性阵：
+\begin{align*}
+M(q) &= \sum_{i = 1}^{2} J_{v_{C_i}}^T m_i J_{v_{C_i}} + J_{\omega_{C_i}}^T I_{C_i} J_{\omega_{C_i}} \\
+&= \begin{bmatrix} m_1l_{C_1}^2 & 0 \\ 0 & 0 \end{bmatrix} + \begin{bmatrix} I_{zz1} & 0 \\ 0 & 0 \end{bmatrix} + m_2 \begin{bmatrix} l_1^2 + l_{C_2}^2 + 2l_1l_{C_2}c_2 & l_{C_2}^2 + l_1l_{C_2}c_2 \\ l_{C_2}^2 + l_1l_{C_2}c_2 & l_{C_2}^2 \end{bmatrix} + \begin{bmatrix} I_{zz2} & I_{zz2} \\ I_{zz2} & I_{zz2} \end{bmatrix} \\
+&= \begin{bmatrix} m_1l_{C_1}^2 + I_{zz1} + m_2(l_1^2 + l_{C_2}^2 + 2l_1l_{C_2}c_2) + I_{zz2} & m_2(l_{C_2}^2 + l_1l_{C_2}c_2) + I_{zz2} \\ m_2(l_{C_2}^2 + l_1l_{C_2}c_2) + I_{zz2} & m_2l_{C_2}^2 + I_{zz2} \end{bmatrix}
+\end{align*}
+\item 惯性力：
+\begin{align*}
+&b_{1,1,1} = b_{1,2,1} = b_{2,2,1} = b_{2,1,1} = b_{2,2,2} = 0, b_{1,1,2} = -2m_2l_1l_{C_2}s2, b_{1,2,2} = -m_2l_1l_{C_2}s2, b_{2,1,2} = -m_2l_1l_{C_2}s2 \\
+&c_{111} = c_{222} = 0, c_{122} = c_{211} = c_{212} = c_{112} = -m_2l_1l_{C_2}s2 \\
+&V(q, \dot{q}) = \begin{bmatrix} c_{111} & c_{122} \\ c_{211} & c_{222} \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix} + 2\begin{bmatrix} c_{112} \\ c_{212} \end{bmatrix} \dot{\theta}_1\dot{\theta}_2 = \begin{bmatrix} 0 & -m_2l_1l_{C_2}s2 \\ -m_2l_1l_{C_2}s2 & 0 \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix} + 2\begin{bmatrix} -m_2l_1l_{C_2}s2 \\ 0 \end{bmatrix} \dot{\theta}_1\dot{\theta}_2
+\end{align*}
+\item 重力：
+\begin{align*}
+G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
+&= -\begin{bmatrix} -l_{C_1}s1 & l_{C_1}c1 & 0 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} 0 \\ -m_1g \\ 0 \end{bmatrix} - \begin{bmatrix} -l_1s1 - l_{C_2}s12 & l_1c1 + l_{C_2}c12 & 0 \\ -l_{C_2}s12 & l_{C_2}c12 & 0 \end{bmatrix} \begin{bmatrix} 0 \\ -m_2g \\ 0 \end{bmatrix} \\
+&= \begin{bmatrix} m_1gl_{C_1}c1 + m_2g(l_1c1 + l_{C_2}c12) \\ l_{C_2}c12m_2g \end{bmatrix}
+\end{align*}
+\end{enumerate}
+%------------------------------------------------
+\paragraph{标准形式}
+\begin{align*}
+\Gamma = \begin{bmatrix} \tau_1 \\ \tau_2 \end{bmatrix}
+&= \begin{bmatrix} 
+m_1l_{C_1}^2 + I_{zz1} + m_2(l_1^2 + l_{C_2}^2 + 2l_1l_{C_2}c_2) + I_{zz2} & m_2(l_{C_2}^2 + l_1l_{C_2}c_2) + I_{zz2} \\
+m_2(l_{C_2}^2 + l_1l_{C_2}c_2) + I_{zz2} & m_2l_{C_2}^2 + I_{zz2}
+\end{bmatrix} 
+\begin{bmatrix} \ddot{\theta}_1 \\ \ddot{\theta}_2 \end{bmatrix} \\  
+&+ \begin{bmatrix} 0 & -m_2l_1l_{C_2}s2 \\ -m_2l_1l_{C_2}s2 & 0 \end{bmatrix}
+\begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix}
++ 2\begin{bmatrix} -m_2l_1l_{C_2}s2 \\ 0 \end{bmatrix} \dot{\theta}_1\dot{\theta}_2 
++ \begin{bmatrix} m_1gl_{C_1}c1 + m_2g(l_1c1 + l_{C_2}c12) \\ l_{C_2}c12m_2g \end{bmatrix} 
+\end{align*}
 }
 %----------------------------------------------------------------------------------------
 \section{轨迹规划（不考）}
