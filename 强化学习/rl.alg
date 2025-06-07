@@ -4,11 +4,11 @@
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 4} MC-Off-policy（every visit）}{17}{myalgorithm.4}%
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 5} TD($ 0 $)}{19}{myalgorithm.5}%
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 6} Sarsa（on-policy-TD）}{20}{myalgorithm.6}%
-\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 7} Q-learning（off-policy-TD）}{22}{myalgorithm.7}%
+\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 7} Q-learning（off-policy-TD）}{21}{myalgorithm.7}%
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 8} 双Q-learning}{22}{myalgorithm.8}%
-\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 9} n-TD}{23}{myalgorithm.9}%
+\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 9} n-TD}{22}{myalgorithm.9}%
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 10} n-Sarsa}{24}{myalgorithm.10}%
-\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 11} n-期望Sarsa-off-policy}{25}{myalgorithm.11}%
+\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 11} n-期望Sarsa-off-policy}{24}{myalgorithm.11}%
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 12} 梯度MC}{29}{myalgorithm.12}%
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 13} 半梯度TD($ 0 $)}{30}{myalgorithm.13}%
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 14} DQN}{31}{myalgorithm.14}%

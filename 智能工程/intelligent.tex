@@ -33,12 +33,8 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \listoftables
 \end{multicols}
 \endgroup
-\hrule
-\begingroup
-\begin{multicols}{2}
+\newpage
 \listoftips
-\end{multicols}
-\endgroup
 \newpage
 %----------------------------------------------------------------------------------------
 \section{基础知识}
@@ -48,11 +44,10 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \centering
 \subfloat[课程内容]{\includegraphics[width=.45\textwidth]{control}} \quad
 \subfloat[工作流程]{\includegraphics[width=.45\textwidth]{workflow}}
-\caption[课程内容]{课程内容}
+\caption{课程内容}
 \end{figure}
 
-\begin{table}[hbt]
-\caption{课程内容}
+\begin{table}[H]
 \centering
 \begin{tabular}{|p{0.5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
@@ -65,38 +60,41 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 内容 & \multicolumn{3}{c|}{机器人运动学} & \multicolumn{2}{c|}{机器人控制} & 机器人感知 & 机器人轨迹规划 \\
 \hline
 \end{tabular}
+\caption{课程内容}
 \end{table}
 %------------------------------------------------
 \paragraph{课程案例}\label{sec:two_wheel}
 移动机器人->轮式机器人->两轮差速机器人。
 
-\begin{minipage}{0.45\textwidth}
+\noindent
+\begin{minipage}{0.3\textwidth}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\linewidth]{two_wheel} 
-\captionof{figure}{两轮差速机器人模型}
+\includegraphics[width=0.6\linewidth]{two_wheel} 
+\caption{两轮差速机器人模型}
 \end{figure}
 \end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
+\begin{minipage}{0.4\textwidth}
 \begin{itemize}
 \item 车轮半径$ r $。
 \item 两轮转速$ \varphi_l,\varphi_r $：$ v_i = \varphi_i r $。
 \item 车轮到两轮中间点距离$ l $。
 \end{itemize}
 \end{minipage}
-
+\begin{minipage}{0.3\textwidth}
 \begin{enumerate}
 \item 求正运动学模型\ref{sec:example1}。
 \item 设计运动控制器\ref{sec:motion_control}。
 \item 里程计模型\ref{sec:odometer}。
 \end{enumerate}
+\end{minipage}
 %------------------------------------------------
 \section{机器人运动形态}
 %------------------------------------------------
 \subsection[移动机器人]{移动机器人}
 %------------------------------------------------
-\begin{minipage}{0.45\textwidth}
+\noindent
+\begin{minipage}{0.4\textwidth}
 \paragraph{自然界运动形态特点}
 \begin{itemize}
 \item 能量利用率高。
@@ -105,8 +103,7 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \item 运行速度高。
 \end{itemize}
 \end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
+\begin{minipage}{0.6\textwidth}
 \paragraph{机器人实现自然界运动形态问题}
 \begin{itemize}
 \item 机械结构、能量密度、感知与控制决策能力困难。
@@ -168,7 +165,6 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 \paragraph{两种方案}
 \begin{table}[H]
 \centering
-\caption{双足机器人方案对比}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
 方案 & 国家 & 基础方式 & 重心 & 速度 & 环境适应性 & 能效 \\
@@ -178,6 +174,7 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 动态稳定 & 美国 & 点接触 & 适时调整 & 高 & 强 & 高 \\
 \hline
 \end{tabular}
+\caption{双足机器人方案对比}
 \end{table}
 %------------------------------------------------
 \paragraph{动态稳定运动机理}\tip{双足机器人运动机理}
@@ -222,12 +219,11 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.6\textwidth]{tire} 
-\caption[车轮类型]{车轮类型}
+\caption{车轮类型}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{车轮类型对比}
 \begin{tabular}{|p{2cm}|p{4.2cm}|p{2.2cm}|p{7cm}|}
 \hline
 类型 & 自由度 & 约束 & 分类/特点 \\
@@ -241,6 +237,7 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 球轮 \newline （Spherical wheel） & $ 3 $（全主动） \newline 沿两个正交轮轴转动 \newline 沿垂直轴转动 & $ 0 $ & 成本高，可靠性差。 \\
 \hline
 \end{tabular}
+\caption{车轮类型对比}
 \end{table}
 %------------------------------------------------
 \paragraph{选取}
@@ -279,17 +276,17 @@ $$ \dot{\xi}_R = R\theta \dot{\xi}_I $$
 %------------------------------------------------
 \subsubsection[ICR法]{ICR法\tip{ICR法运动学建模}}
 %------------------------------------------------
+\noindent
 \begin{minipage}{0.35\textwidth}
 \paragraph{瞬时旋转/曲率中心（ICR）}~\\
 刚体上各点角速度相同。
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.8\textwidth]{icr_point} 
-\caption[瞬心]{瞬心}
+\caption{瞬心}
 \end{figure}
 \end{minipage}
-\hfill
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.65\textwidth}
 \paragraph{步骤}
 \begin{enumerate}
 \item 坐标系变换。
@@ -310,12 +307,11 @@ $$ \dot{\xi}_R = R\theta \dot{\xi}_I $$
 \subfloat[标准轮]{\includegraphics[width=.45\textwidth]{Standard_wheel}} \quad
 \subfloat[脚轮]{\includegraphics[width=.45\textwidth]{Castor_wheel}} \quad
 \subfloat[瑞典轮 ]{\includegraphics[width=.45\textwidth]{Swedish_wheel}}
-\caption[约束方程]{约束方程}
+\caption{约束方程}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{约束方程}
 \begin{tabular}{|p{0.9cm}|p{1.3cm}|p{10cm}|p{1.4cm}|p{1.3cm}|}
 \hline
 类型 & 约束 & 约束方程 & 主动轮 & 随动轮 \\
@@ -333,6 +329,7 @@ $$ \dot{\xi}_R = R\theta \dot{\xi}_I $$
 & 无滑动 & $ \begin{bmatrix} \sin(\alpha + \beta + \gamma) & -\cos(\alpha + \beta + \gamma) & -l\cos(\beta + \gamma) \end{bmatrix} R\theta \dot{\xi}_I \newline = r\dot{\varphi}\cos\gamma $ & $ \surd $ \newline（小轮） & x \\
 \hline
 \end{tabular}
+\caption{约束方程}
 \end{table}
 %------------------------------------------------
 \paragraph{使用}
@@ -356,7 +353,7 @@ $$ C_1(\beta_s) R(\theta) \dot{\xi}_I = 0 $$
 \centering
 \subfloat[ICR法]{\includegraphics[width=.35\textwidth]{icr}} \quad
 \subfloat[约束方程法]{\includegraphics[width=.4\textwidth]{Equation_of_motion}}
-\caption[两轮差速机器人正运动学建模]{两轮差速机器人正运动学建模}
+\caption{两轮差速机器人正运动学建模}
 \end{figure}
 %------------------------------------------------
 \paragraph{ICR法}~\\
@@ -420,7 +417,7 @@ $$ \delta_M = \delta_m + \delta_s $$
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.8\textwidth]{controller} 
-\caption[运动控制器]{运动控制器}
+\caption{运动控制器}
 \end{figure}
 
 误差（惯性系下给定与反馈）$ \overset{\text{变换}}{\Longrightarrow} $输入（机器人系下控制输入）。 
@@ -697,7 +694,7 @@ $$
 \subfloat[欧拉法]{\includegraphics[width=.3\textwidth]{euler}} \quad
 \subfloat[二阶Runge-Kutta法]{\includegraphics[width=.3\textwidth]{rk2}} \quad
 \subfloat[解析积分法]{\includegraphics[width=.3\textwidth]{exact}}
-\caption[里程计建模方法]{里程计建模方法}
+\caption{里程计建模方法}
 \end{figure}
 
 \begin{itemize}
@@ -772,7 +769,7 @@ $$ \nabla_{rl}f = \begin{bmatrix} \frac{\partial f}{\partial \Delta\phi_R} & \fr
 \centering
 \subfloat[直线运动]{\includegraphics[width=.3\textwidth]{line}} \quad
 \subfloat[曲线运动]{\includegraphics[width=.3\textwidth]{circle}}
-\caption[里程计误差转化展示]{里程计误差转化展示}
+\caption{里程计误差转化展示}
 \end{figure}
 
 直线运动时误差方向与运动方向垂直，曲线运动时则不垂直。

@@ -314,8 +314,7 @@ $ log_a 1 $代换$ 0 $。$ u^v = e^{v ln u} $（$ x^x = e^{x ln x} $是初等函
 \item 趋核速度：
 \end{itemize}
 
-\begin{table}[hbt]
-\caption{趋核运算（极限的四则运算）}
+\begin{table}[H]
 \centering
 \begin{tabular}{c|cc}
 \toprule
@@ -328,6 +327,7 @@ $ f(x) $与$ g(x) $的核值 & \multicolumn{2}{c}{核值} \\
 都无 & 可能存在 & 可能存在 \\
 \bottomrule
 \end{tabular}
+\caption{趋核运算（极限的四则运算）}
 \end{table}
 %------------------------------------------------
 \subsubsection[性质]{性质}
@@ -1010,8 +1010,7 @@ $ f(x) = a_0 + a_1x + \dots + a_mx^m $，则$ f(A) = a_0E + a_1A + \dots + a_mA^
 \end{itemize}
 %------------------------------------------------
 \paragraph{总结}\tip{矩阵运算总结}
-\begin{table}[hbt]
-\caption{矩阵运算总结1}
+\begin{table}[H]
 \centering
 \begin{tabular}{|p{2.8cm}|p{2.8cm}|p{2.8cm}|p{2.8cm}|p{2.8cm}|}
 \hline
@@ -1024,10 +1023,10 @@ $ (AB)^T = B^TA^T $ & $ (AB)^m \neq A^mB^m $ & $ (AB)^* = B^*A^* $ & $ |AB| = |B
 $ (A + B)^T = A^T + B^T $ & $ (A + B)^2 \neq A^2 + 2AB + B^2 $ & $ (A + B)^* \neq A^* + B^* $ & $ |A + B| \neq |A| + |B| $ & $ (A + B)^{-1} \neq A^{-1} + B^{-1} $ \\
 \hline
 \end{tabular}
+\caption{矩阵运算总结1}
 \end{table}
 
-\begin{table}[hbt]
-\caption{矩阵运算总结2}
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -1042,6 +1041,7 @@ $ (A + B)^T = A^T + B^T $ & $ (A + B)^2 \neq A^2 + 2AB + B^2 $ & $ (A + B)^* \ne
 逆 & x & x & x & $ (A^{-1})^{-1} = A $ \\
 \hline
 \end{tabular}
+\caption{矩阵运算总结2}
 \end{table}
 
 \begin{itemize}
@@ -1092,8 +1092,7 @@ $ PAQ = B, |P|,|Q| \neq 0 $，则$ A \cong B, r(A) = r(B) $，$ A,B $为等价�
 \item $ A_{m \times n}B_{n \times s} = \mathbf{0} $，则$ r(A) + r(B) \leq n $。
 \end{itemize}
 
-\begin{table}[hbt]
-\caption{矩阵的秩}
+\begin{table}[H]
 \centering
 \begin{tabular}{|p{3.8cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
 \hline
@@ -1102,6 +1101,7 @@ $ AB $ & $ A + B $ & $ A^* $ & $ A^T $ \\
 $ r(AB) \leq min\{r(A), r(B)\} $ & $ r(A + B) \leq r(A) + r(B) $ & $ r(A^*) = \begin{cases} n, r(A) = n \\ 1,  r(A) = n - 1 \\ 0, r(A) < n - 1 \end{cases} $ & $ r(A^T) = r(A) = r(AA^T) $ \\
 \hline
 \end{tabular}
+\caption{矩阵的秩}
 \end{table}
 %------------------------------------------------
 \subsubsection[特征值与特征向量]{特征值与特征向量}
@@ -1131,8 +1131,7 @@ $ A_{n \times n}\zeta = \lambda\zeta $，其中$ \lambda $是特征值，$ \zeta
 \end{itemize}
 %------------------------------------------------
 \paragraph{变换后的特征值与特征向量}
-\begin{table}[hbt]
-\caption{变换后的特征值与特征向量}
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
@@ -1143,6 +1142,7 @@ $ A_{n \times n}\zeta = \lambda\zeta $，其中$ \lambda $是特征值，$ \zeta
 特征向量 & \multicolumn{6}{c|}{$ \zeta $} & $ P^{-1}\zeta $ \\
 \hline
 \end{tabular}
+\caption{变换后的特征值与特征向量}
 \end{table} 
 %------------------------------------------------
 \subsubsection[相似与对角化]{相似与对角化}
@@ -1324,7 +1324,7 @@ $ \beta_2 = \alpha_2 - \frac{(\alpha_2, \alpha_1)}{(\alpha_1, \alpha_1)}\alpha_1
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.6\textwidth]{Schmidt orthogonalization} 
-\caption[施密特正交化]{施密特正交化}
+\caption{施密特正交化}
 \end{figure}
 %------------------------------------------------
 \subsection[线性方程组]{线性方程组}

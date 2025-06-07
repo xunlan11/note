@@ -14,8 +14,8 @@
 \contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 14} 时序差分（TD($ 0 $)）}{19}{tips.14}%
 \contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 15} Sarsa（on-policy-TD）}{20}{tips.15}%
 \contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 16} Q-learning（off-policy-TD）}{21}{tips.16}%
-\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 17} n-TD}{23}{tips.17}%
-\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 18} n-Sarsa}{24}{tips.18}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 17} n-TD}{22}{tips.17}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 18} n-Sarsa}{23}{tips.18}%
 \contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 19} 表格型方法总结对比}{26}{tips.19}%
 \contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 20} 值函数近似与随机梯度下降}{28}{tips.20}%
 \contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 21} DQN}{31}{tips.21}%

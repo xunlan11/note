@@ -121,7 +121,7 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.5\textwidth]{Markov} 
-\caption[马尔可夫决策过程]{马尔可夫决策过程}
+\caption{马尔可夫决策过程}
 \end{figure}
 %------------------------------------------------
 \subsubsection[状态、动作与收益]{状态、动作与收益}
@@ -153,7 +153,7 @@ r(s, a, s') &\doteq E[R_t|S_{t - 1} = s, A_{t - 1} = a, S_t = s'] = \sum_{r \in 
 \centering
 \subfloat[状态转移图（节点不能重复）]{\includegraphics[width=.45\textwidth]{Transitions1}} \quad
 \subfloat[状态转移表]{\includegraphics[width=.45\textwidth]{Transitions2}}
-\caption[回收机器人状态转移]{回收机器人状态转移}
+\caption{回收机器人状态转移}
 \end{figure}
 %------------------------------------------------
 \subsubsection[策略]{策略}
@@ -229,7 +229,7 @@ $ s' $的价值信息回传给$ s $。
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.25\textwidth]{DP} 
-\caption[DP回溯图]{DP回溯图（节点可以重复）}
+\caption{DP回溯图（节点可以重复）}
 \end{figure}
 %------------------------------------------------
 \paragraph{最优值函数与最优策略}
@@ -276,7 +276,7 @@ q^*(s, a) &= E[R_{t + 1} + \gamma \max_{a'} q^*(S_{t + 1}, a')|S_t = s, A_t = a]
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.7\textwidth]{DPbest} 
-\caption[DP回溯图的两种形式（最优）]{DP回溯图的两种形式（最优）}
+\caption{DP回溯图的两种形式（最优）}
 \end{figure}
 %------------------------------------------------
 \paragraph{求解}\label{sec:Scalability Mapping back}
@@ -286,16 +286,15 @@ q^*(s, a) &= E[R_{t + 1} + \gamma \max_{a'} q^*(S_{t + 1}, a')|S_t = s, A_t = a]
 $ \pi^* $中，$ v(s) = E[r(a^*|s)] $，可使用贪心策略求取（证明：凸组合最大值为最大一项）。
 %----------------------------------------------------------------------------------------
 \section[动态规划]{动态规划（Dynamic Programming，DP）：期望更新}
-\begin{minipage}{0.5\textwidth}
+\begin{minipage}{0.55\textwidth}
 \hspace{2em}
 使用值函数结构化组织最优策略搜索，将贝尔曼方程转化成近似逼近理想值函数的递归更新公式，即将多阶段决策问题转化为多个单阶段决策问题。
 \end{minipage}
-\hfill
 \begin{minipage}{0.45\textwidth}
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.6\textwidth]{DP} 
-\caption[DP回溯图]{DP回溯图：显示一步的所有转移}
+\caption{DP回溯图：显示一步的所有转移}
 \end{figure}
 \end{minipage}
 %------------------------------------------------
@@ -380,7 +379,6 @@ $$ v_{k + 1} = \max_{\pi} r_{\pi} + \gamma P_{\pi}v_k, k = 1, 2, 3, \dots $$
 \subsection[对比与补充]{对比与补充}\label{sec:DP back}
 \begin{table}[H]
 \centering
-\caption{DP对比}
 \begin{tabular}{|c|c|c|}
 \hline
 & 策略迭代 & 值迭代 \\
@@ -396,6 +394,7 @@ $$ v_{k + 1} = \max_{\pi} r_{\pi} + \gamma P_{\pi}v_k, k = 1, 2, 3, \dots $$
 计算成本 & 较低 & 较高（迭代遍历所有动作） \\
 \hline
 \end{tabular}
+\caption{DP对比}
 \end{table}
 
 补充见\ref{sec:DP}。
@@ -420,7 +419,7 @@ $ N(s) $是$ s $的访问次数，$ N(s) \to \infty, \hat{q}(s, a) \to q_{\pi}(s
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.3\textwidth]{MC} 
-\caption[MC回溯图：显示一幕所有采样到的转移]{MC回溯图：显示一幕所有采样到的转移}
+\caption{MC回溯图：显示一幕所有采样到的转移}
 \end{figure}
 %------------------------------------------------
 \paragraph{幕长}
@@ -504,7 +503,6 @@ C_{n + 1} &\doteq C_n + W_{n + 1}
 \subsection[对比]{对比}
 \begin{table}[H]
 \centering
-\caption{MC对比}
 \begin{tabular}{|c|c|c|}
 \hline
 策略类型 & 稳定性 & 收敛性 \\
@@ -514,6 +512,7 @@ on-policy & 较稳定 & 需要更多样本（更新需要新的数据） \\
 off-policy & 不太稳定（使用行为策略） & 更快找到优质解 \\
 \hline
 \end{tabular}
+\caption{MC对比}
 \end{table}
 %----------------------------------------------------------------------------------------
 \section[时序差分]{时序差分（Temporal Difference，TD）：采样更新}
@@ -531,7 +530,7 @@ $$ v_{t + 1}(s_t) = v_t(s_t) + \alpha_t(s_t)[\overbrace{\underbrace{r_{t + 1} + 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.2\textwidth]{TD}
-\caption[TD回溯图]{TD回溯图}
+\caption{TD回溯图}
 \end{figure}
 %------------------------------------------------
 \paragraph{优势}
@@ -565,7 +564,7 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma q
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.2\textwidth]{Sarsa}
-\caption[Sarsa回溯图]{Sarsa回溯图}
+\caption{Sarsa回溯图}
 \end{figure}
 %------------------------------------------------
 \begin{myalgorithm}[Sarsa（on-policy-TD）]
@@ -586,19 +585,19 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma q
 \paragraph{期望Sarsa}
 $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} + \gamma[\underbrace{\sum_a \pi(a|s_{t + 1}) q_t(s_{t + 1}, a)}_{v_t(s_{t + 1})}] - q_t(s_t, a_t)\} $$
 
-\begin{minipage}{0.6\textwidth}
+\noindent
+\begin{minipage}{0.7\textwidth}
 \begin{itemize}
 \item 相较Sarsa，期望Sarsa虽然计算复杂，但消除了随机选择带来的方差。
 \item $ \alpha $的选择会影响长期稳态性等指标。
 \item 生成策略可以基于相同或不同策略，即离轨或在轨是可变的，因此Q-learning可视为期望Sarsa的特例。
 \end{itemize}
 \end{minipage}
-\hfill
-\begin{minipage}{0.35\textwidth}
+\begin{minipage}{0.3\textwidth}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.5\textwidth]{eSarsa}
-\caption[期望Sarsa回溯图]{期望Sarsa回溯图}
+\includegraphics[width=0.6\textwidth]{eSarsa}
+\caption{期望Sarsa回溯图}
 \end{figure}
 \end{minipage}
 %------------------------------------------------
@@ -609,7 +608,7 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma \
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.2\textwidth]{Q}
-\caption[Q-learning回溯图]{Q-learning回溯图}
+\caption{Q-learning回溯图}
 \end{figure}
 %------------------------------------------------
 \begin{myalgorithm}[Q-learning（off-policy-TD）]
@@ -632,7 +631,7 @@ $$ q_{1_{t + 1}}(s_t, a_t) = q_{1_t}(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} +
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.2\textwidth]{dQ}
-\caption[双Q-learning回溯图]{双Q-learning回溯图}
+\caption{双Q-learning回溯图}
 \end{figure}
 %------------------------------------------------
 \begin{myalgorithm}[双Q-learning]
@@ -698,7 +697,7 @@ $$ G_{t:t + n} \doteq r_{t + 1} + \gamma r_{t + 2} + \dots + \gamma^{n - 1} r_{t
 \centering
 \subfloat[n-Sarsa]{\includegraphics[width=.6\textwidth]{nSarsa}} \\
 \subfloat[n-期望Sarsa]{\includegraphics[width=.6\textwidth]{neSarsa}}
-\caption[n-Sarsa回溯图]{n-Sarsa回溯图}
+\caption{n-Sarsa回溯图}
 \end{figure}
 %------------------------------------------------
 \begin{myalgorithm}[n-Sarsa]
@@ -794,7 +793,7 @@ Sarsa较为保守，在存在风险的任务中，会避开低回报动作； Q-
 \subfloat[DP表达式]{\includegraphics[width=.3\textwidth]{compare_DP}} \quad
 \subfloat[MC表达式]{\includegraphics[width=.3\textwidth]{compare_MC}} \quad
 \subfloat[TD表达式]{\includegraphics[width=.3\textwidth]{compare_TD}}
-\caption[表格型方法对比]{表格型方法对比}
+\caption{表格型方法对比}
 \end{figure}
 %------------------------------------------------
 \paragraph{表达式对比}
@@ -803,7 +802,6 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[\bar{q}_t - q_t(s_t,
 
 \begin{table}[H]
 \centering
-\caption{各算法中的$ \bar{q}_t $表达式}
 \begin{tabular}{|c|l|c|}
 \hline
 算法 & $ \bar{q}_t $表达式 & 求解目标 \\
@@ -819,6 +817,7 @@ Q-learning & $ r_{t + 1} + \gamma \max_a q_t(s_{t + 1}, a) $ & 贝尔曼最优�
 MC & $ r_{t + 1} + \gamma r_{t + 2} + \cdots $ & 贝尔曼方程 \\
 \hline
 \end{tabular}
+\caption{各算法中的$ \bar{q}_t $表达式}
 \end{table}
 %----------------------------------------------------------------------------------------
 \section{值函数近似}
@@ -1276,6 +1275,7 @@ $$
 \section{多智能体强化学习}\tip{多智能体强化学习}
 %------------------------------------------------
 \subsection[概念]{概念}
+\noindent
 \begin{minipage}{0.3\textwidth}
 \paragraph{分类}
 \begin{itemize}
@@ -1284,8 +1284,7 @@ $$
 \item 混合策略。
 \end{itemize}
 \end{minipage}
-\hfill
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.7\textwidth}
 \paragraph{挑战}
 \begin{itemize}
 \item 单智能体视角下，其它智能体是动态的，值函数为相互依赖的联合值函数。
@@ -1317,7 +1316,7 @@ $$
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\textwidth]{many}
-\caption[多智能体强化学习]{多智能体强化学习}
+\caption{多智能体强化学习}
 \end{figure}
 
 \begin{itemize}
@@ -1434,7 +1433,7 @@ $$ G_{t:t + n} \doteq r_{t + 1} + \gamma \sum_{a \neq a_{t + 1}} \pi(a|s_{t + 1}
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{ntree}
-\caption[n-树回溯回溯图]{n-树回溯回溯图}
+\caption{n-树回溯回溯图}
 \end{figure}
 %------------------------------------------------
 \begin{myalgorithm}[n-树回溯]
@@ -1478,7 +1477,7 @@ $$ G_{t:h} \doteq r_{t + 1} + \gamma [\sigma_{t + 1}\rho_{t + 1} + (1 - \sigma_{
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{Qsigma}
-\caption[Q(sigma)回溯图]{Q(sigma)回溯图}
+\caption{Q(sigma)回溯图}
 \end{figure}
 %------------------------------------------------
 \begin{myalgorithm}[n-Q($ \sigma $)-off-policy]
