@@ -323,7 +323,7 @@ $$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \varepsilon_2 = k_y \sin\frac{\thet
 \begin{itemize}
 \item 连杆参数（几何参数）：沿$ X_{i - 1} $，由$ Z_{i - 1} $与$ Z_i $求取，定值。
 \begin{itemize}
-\item 连杆长度（Link Length）$ \vec{a}_{i - 1}  $：公垂线段（除平行外唯一）长度。
+\item 连杆长度（Link Length）$ \vec{a}_{i - 1} $：公垂线段（除平行外唯一）长度。
 \item 连杆扭角（Link Twist）$ \alpha_{i - 1} $：右手法则（指向末端）。
 \end{itemize}
 \item 关节参数（运动参数）：沿$ Z_i $，由$ X_{i - 1} $与$ X_i $求取，平移关节$ \theta_i $为定值，旋转关节$ d_i $为定值，另一个为变量。
@@ -615,8 +615,8 @@ $$
 \item 直接法：对正运动学方程直接求导。
 $$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \frac{\partial x_R}{\partial q_1} & \frac{\partial x_R}{\partial q_2} & \cdots & \frac{\partial x_R}{\partial q_N} \end{bmatrix} $$
 \item 旋转阵法：线雅可比直接求导，角雅可比提取各旋转阵$ Z $列（原理见\ref{sec:Terminal_function}）。\label{sec:Terminal_function_back}
-\end{itemize} 
 $$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \overline{\epsilon}_1 Z_1 & \overline{\epsilon}_2 Z_2 & \cdots & \overline{\epsilon}_n Z_n \end{bmatrix} $$
+\end{itemize} 
 %------------------------------------------------
 \subsubsection[例题]{例题\tip{求导求雅可比例题}}
 %------------------------------------------------
@@ -699,8 +699,7 @@ $$
 \caption{并行速度传播}
 \end{figure}
 \end{minipage}
-\hfill
-\begin{minipage}{0.35\textwidth}
+\begin{minipage}{0.4\textwidth}
 \begin{table}[H]
 \centering
 \begin{tabular}{c|cc}
@@ -974,7 +973,7 @@ $$
 \item 欧拉方程：$ N = \dot{L} = \frac{d}{dt}(\vec{m}||\omega||) = \dot{\vec{m}}||\omega|| + \vec{m}||\dot{\omega}|| = \omega \times \vec{m}||\omega|| + I \dot{\omega} = \omega \times I \omega + I \dot{\omega} $。
 \end{itemize}
 %------------------------------------------------
-\paragraph{关节分析（外推）}
+\paragraph{关节分析}
 \begin{figure}[H]
 \centering
 \subfloat[速度与加速度]{\includegraphics[width=.4\textwidth]{Velocity propagation}} \quad
@@ -1307,7 +1306,6 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 \caption{动力学例题2}
 \end{figure}
 \end{minipage}
-\hfill
 \begin{minipage}{0.6\textwidth}
 \hspace{2em}
 2R平面机器人的连杆质量分别为$ m_1, m_2 $，杆长分别为$ l_1, l_2 $，连杆质心距相邻关节距离分别为$ l_{C_1}, l_{C_2} $，连杆质心处惯性张量分别为：
@@ -1484,7 +1482,6 @@ $$ t_f = \frac{-a_4 \pm 6 \sqrt{a_4^2 - 10 a_3 a_5}}{5a_5} $$
 \hspace{2em}
 给定$ t_f $时能唯一确定。加速度连续，速度过于光滑，可能无法满足可执行性。
 \end{minipage}
-\hfill
 \begin{minipage}{0.4\textwidth}
 \begin{figure}[H]
 \centering
