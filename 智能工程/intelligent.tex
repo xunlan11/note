@@ -82,7 +82,7 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \begin{itemize}
 \item 车轮半径$ r $。
 \item 两轮转速$ \varphi_l,\varphi_r $：$ v_i = r\varphi_i $。
-\item 车轮到两轮中间点距离$ l $。
+\item 车轮到两轮中点距离$ l $。
 \end{itemize}
 \end{minipage}
 \begin{minipage}{0.3\textwidth}
@@ -210,12 +210,12 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 \section{机器人运动学}
 %------------------------------------------------
 \subsection[运动学模型]{运动学模型}
-表征机器人驱动（输入）和机器人空间位姿（输出）的关系。
+表征机器人驱动（输入）和空间位姿（输出）的关系。
 %------------------------------------------------
 \paragraph{机械臂与移动机器人的区别}
 \begin{itemize}
 \item 机械臂本体坐标系固定，精度高；移动机器人本体坐标系随动，精度低。
-\item 非完整约束\tip{非完整约束}：移动机器人只知道码盘变化量无法获取位姿，状态取决于路径，源于不可积的微分约束（车轮侧向滑动约束）。
+\item 非完整约束\tip{非完整约束}（不可积的微分约束）：移动机器人只知道码盘变化量无法获取位姿，状态取决于路径。
 \item 微分运动学（Differential Kinematics）：速度空间替代位置空间。
 \end{itemize}
 %------------------------------------------------
@@ -234,11 +234,11 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 \hline
 类型 & 自由度 & 约束 & 分类/特点 \\
 \hline
-标准轮 \newline （Standard wheel） & $ 2 $ \newline 沿轮平面滚动 \newline 沿垂直轴转动 & $ 1 $ \newline 沿轮轴滑动 & 标准固定轮（无法旋转，只有一个自由度） \newline 标准转向轮（舵轮） \\
+标准轮 \newline （Standard wheel） & $ 2 $ \newline 沿轮平面滚动 \newline 沿垂直轴转动 & $ 1 $ \newline 沿轮轴滑动 & 标准固定轮：只能滚动 \newline 标准转向轮（舵轮） \\
 \hline
-脚轮 \newline （Castor wheel） & $ 3 $ \newline 沿轮平面滚动 \newline 沿垂直轴转动 \newline 沿路轴运动 & $ 0 $ & 偏心距 $ d $：触地点到垂直旋转轴距离。扭矩压力，易损坏。 \\
+脚轮 \newline （Castor wheel） & $ 3 $ \newline 沿轮平面滚动 \newline 沿垂直轴转动 \newline 沿路轴运动 & $ 0 $ & 偏心距$ d $：触地点到垂直旋转轴距离。 \newline 受扭矩压力，易损坏。 \\
 \hline
-瑞典轮 \newline （Swedish wheel） & $ 3 $ \newline 沿轮平面滚动（被动） \newline 沿轮轴转动（主动） \newline 沿垂直轴转动（被动） & $ 0 $ & 麦克纳姆轮（Macanum wheel）：$ 45° $，至少需要$ 4 $个共同使用。 \newline 连续切换轮：$ 90° $，至少需要$ 3 $个共同使用。 \newline 对地面冲击大，噪音大，易损坏，成本高。 \\
+瑞典轮 \newline （Swedish wheel） & $ 3 $ \newline 沿轮平面滚动（被动） \newline 沿轮轴转动（主动） \newline 沿垂直轴转动（被动） & $ 0 $ & 麦克纳姆轮（Macanum wheel）：$ 45^\circ $，至少$ 4 $个共同使用。 \newline 连续切换轮：$ 90^\circ $，至少$ 3 $个共同使用。 \newline 对地面冲击大，噪音大，易损坏，成本高。 \\
 \hline
 球轮 \newline （Spherical wheel） & $ 3 $（全主动） \newline 沿两个正交轮轴转动 \newline 沿垂直轴转动 & $ 0 $ & 成本高，可靠性差。 \\
 \hline
@@ -248,8 +248,8 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 %------------------------------------------------
 \paragraph{选取}
 \begin{itemize}
-\item 数量：至少三轮同时着地，才能保证静态稳定性。四轮可以提升稳定性，但需要悬架。
-\item 大小：越大的轮子通过性越好，但需要更大的扭矩。
+\item 数量：至少三轮同时着地才能保证静态稳定性。四轮可以提升稳定性，但需要悬架。
+\item 大小：车轮越大通过性越好，但需要更大的扭矩。
 \item 多数形态都有非完整约束。
 \end{itemize}
 %------------------------------------------------
@@ -271,8 +271,8 @@ $$
 \xi_I = \begin{bmatrix} x_I \\ y_I \\ \theta_I \end{bmatrix}, 
 \xi_R = \begin{bmatrix} x_R \\ y_R \\ \theta_R \end{bmatrix}
 \overset{\text{求导}}{\Longrightarrow}
-\xi_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix},
-\xi_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix}
+\dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix},
+\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix}
 $$
 
 惯性系旋转得到机器人系：
@@ -284,7 +284,6 @@ $$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
 \noindent
 \begin{minipage}{0.4\textwidth}
 \paragraph{瞬时旋转/曲率中心（ICR）}~\\
-\hspace{2em}
 刚体上各点角速度相同。
 \begin{figure}[H]
 \centering 
@@ -305,7 +304,7 @@ $$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
 \subsubsection[约束方程法]{约束方程法\tip{约束方程法运动学建模}}
 %------------------------------------------------
 \paragraph{要求}
-在水平面上运动，车轮与地面点接触，不变形，安装在钢体表面，舵机转轴与地面垂直。
+在水平面上运动，与地面点接触，不变形，安装在刚体表面，舵机转轴与地面垂直。
 %------------------------------------------------
 \paragraph{约束方程}
 \begin{figure}[H]
@@ -339,7 +338,7 @@ $$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
 \end{table}
 %------------------------------------------------
 \paragraph{使用}
-根据各轮主/随动状态列运动约束方程，得到最多三个独立约束方程（对应平面三维位姿）。
+根据各轮主/随动状态列运动约束方程，得到最多三个独立方程（对应$ [x, y ,\theta] $）。
 
 以下以$ N $个标准轮（$ N_f $个固定，$ N_s $个转向）机器人为例：
 \begin{itemize}
@@ -379,8 +378,6 @@ $$ \dot{\theta} = \frac{\dot{x}_R}{R} = \frac{\dot{\varphi}_l r}{R-l} = \frac{\d
 $$ \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} $$
 %------------------------------------------------
 \subsection[自由度]{自由度}
-%------------------------------------------------
-\paragraph{概念}
 \begin{itemize}
 \item 衡量机器人改变运行状态的能力。
 \item 需满足实际作业需求，考虑实现成本。
@@ -402,19 +399,54 @@ $$ \delta_M = \delta_m + \delta_s $$
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
+\paragraph{例题}
+示意图中，圆表示全向轮，椭圆表示固定轮，可旋转椭圆表示舵轮。
+
+\noindent
+\begin{minipage}{0.6\textwidth}
+\begin{figure}[H]
+\centering 
+\includegraphics[width=\textwidth]{free} 
+\caption{自由度例题}
+\end{figure}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{table}[H]
+\centering
+\begin{tabular}{c|cccccc}
+\hline
+ & $ x $ & $ y $ & $ \theta $ & $ \delta_m $ & $ \delta_s $ & $ \delta_M $ \\
+\hline
+1 & $ \surd $ & $ \surd $ & $ \surd $ & 3 & 0 & 3 \\
+2 & $ \surd $ & $ x $ & $ \surd $ & 2 & 0 & 2 \\
+3 & $ \surd $ & $ - $ & $ \surd $ & 2 & 1 & 3 \\
+4 & $ \surd $ & $ x $ & $ - $ & 1 & 1 & 2 \\
+5 & $ \surd $ & $ - $ & $ - $ & 1 & 2 & 3 \\
+\hline
+\end{tabular}
+\caption{自由度例题}
+\end{table}
+\end{minipage}
+
+$ \surd $表示可直接控制，$ - $表示可间接控制（不同形态下直接控制），$ x $表示不可控制。
+%------------------------------------------------
 \paragraph{实例（Type(移动度,转向度)）}
 \begin{itemize}
+\begin{minipage}{0.6\textwidth}
 \item 全向机器人：
 \begin{itemize}
 \item Type(3,0)：完整约束全方位移动机器人。
 \item Type(2,1)：一个同心轮+两个瑞典轮。
 \item Type(1,2)：多舵机全方位移动机器人。
 \end{itemize}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
 \item 非全向机器人：
 \begin{itemize}
 \item Type(2,0)：差分移动机器人。
 \item Type(1,1)：自动驾驶汽车（阿克曼转向）、自行车、叉车。
 \end{itemize}
+\end{minipage}
 \end{itemize}
 %----------------------------------------------------------------------------------------
 \section{机器人运动控制}
@@ -431,9 +463,9 @@ $$ \delta_M = \delta_m + \delta_s $$
 \paragraph{特点}
 \begin{itemize}
 \item 大多存在滑动约束，是非完整系统，有侧向和姿态偏差。
-\item 非线性，控制器设计复杂，还需要根据可获得的反馈信号选取，按顺序调节控制参数，并且不能同时实现定点控制和跟踪控制。
+\item 非线性，控制器复杂，需根据可获得的反馈信号选取，且不能同时实现定点控制和跟踪控制。
 \item 不存在能完成控制目标的连续时不变（静态）反馈控制率。
-\item 受标定精度影响大，且由于执行单元性能约束，控制输入要合理限幅。
+\item 受标定精度影响大，且由于执行器约束，控制输入要合理限幅。
 \end{itemize}
 %------------------------------------------------
 \paragraph{分类}
@@ -442,7 +474,7 @@ $$ \delta_M = \delta_m + \delta_s $$
 \item 跟踪控制：
 \begin{itemize}
 \item 轨迹跟踪控制（Trajectory Tracking Control）：跟随给定轨迹（速度+姿态）。
-\item 路径跟踪控制（Path Tracking Control）：跟随给定路线。
+\item 路径跟踪控制（Path Tracking Control）：跟随给定路径。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
@@ -450,10 +482,8 @@ $$ \delta_M = \delta_m + \delta_s $$
 将运动轨迹分割成直线和圆弧，存在以下问题：
 \begin{itemize}
 \item 直线和圆弧的曲率不一致，不连续。
-\item 难以实现定义若干合适轨迹。
-\item 速度加速度约束。
-\item 无法自适应调整轨迹来面对环境变化。
-\item 所得轨迹不光滑。
+\item 速度、加速度约束。
+\item 难多解，不光滑，且无法自适应调整来面对环境变化。
 \end{itemize}
 %------------------------------------------------
 \paragraph{控制器性能评价}
@@ -485,9 +515,9 @@ $$
 \item 转换到极坐标系
 $$ 
 \begin{cases}
-\rho &= \sqrt{\tilde{x}^2 + \tilde{y}^2} \\
-\beta &= -\arctan2(-\tilde{y},-\tilde{x}) \\
-\alpha &= -\beta - \tilde{\theta} \\
+\rho = \sqrt{\tilde{x}^2 + \tilde{y}^2} \\
+\beta = -atan2(-\tilde{y}, -\tilde{x}) \\
+\alpha = -\beta - \tilde{\theta} \\
 \end{cases}
 \overset{\text{闭环}}{\Longrightarrow}
 \begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = 
@@ -505,8 +535,8 @@ $$
 设计控制器%
 $ 
 \begin{cases}
-v_1 &= k_\rho \rho \\
-v_2 &= k_\alpha \alpha + k_\beta \beta
+v_1 = k_\rho \rho \\
+v_2 = k_\alpha \alpha + k_\beta \beta
 \end{cases}
 $，%
 代入得
@@ -524,8 +554,8 @@ $$
 设计控制器%
 $
 \begin{cases}
-v_1 &= k_\rho \rho \cos\alpha \\
-v_2 &= k_\alpha \alpha + \frac{k_\rho \sin \alpha \cos\alpha}{\alpha}(\alpha - k_\beta\beta)
+v_1 = k_\rho \rho \cos\alpha \\
+v_2 = k_\alpha \alpha + \frac{k_\rho \sin \alpha \cos\alpha}{\alpha}(\alpha - k_\beta\beta)
 \end{cases}
 $，%
 代入得
@@ -665,7 +695,7 @@ $%
 \paragraph{特性}
 \begin{itemize}
 \item 测量范围：测量上下界之差。    
-\item 动态范围：测量范围上下界比率，常用对数表示，单位为$ dB $。
+\item 动态范围：测量范围上下界比率，常用对数表示（单位$ dB $）。
 \item 分辨率：最小可测量变化量，一般为为动态范围下界。
 \item 线性度：输入输出信号的映射关系。
 \end{itemize}
@@ -673,10 +703,7 @@ $%
 \subsection[光电传感器]{光电传感器}
 %------------------------------------------------
 \subsubsection[概述]{概述}
-把被测量变化转换成光信号变化，再转换成电信号。
-%------------------------------------------------
-\paragraph{组成}
-辐射源、光学通路、光电器件。
+把被测量变化转换成光信号变化，再转换成电信号。由辐射源、光学通路、光电器件组成。
 %------------------------------------------------
 \paragraph{特性}
 \begin{itemize}
@@ -691,7 +718,7 @@ $%
 \paragraph{增量式旋转编码器}
 \begin{itemize}
 \item 不能直接输出数字编码，需要数字电路。
-\item 原理：遮光周期性变化，莫尔条纹明暗交替，电压周期性变化$ U_0 = U_m \cos(\frac{2\pi}{W}x) $，形成脉冲，根据脉冲数量可推算旋转角度，位置数据是相对的，掉电后需要复位。
+\item 原理：遮光周期性变化，莫尔条纹明暗交替，电压$ U_0 = U_m \cos(\frac{2\pi}{W}x) $周期性变化，形成脉冲，根据脉冲数量可推算旋转角度。位置数据是相对的，掉电后需复位。
 \item 辨向：为判断光栅移动方向，使用D触发器整合两个光栅的信息。
 \begin{itemize}
 \item D触发器：时钟信号有效时，$ Q = D $。
@@ -701,7 +728,7 @@ $%
 %------------------------------------------------
 \paragraph{绝对式光电编码器}
 \begin{itemize}
-\item 能直接输出某种码制的数码，掉电后不需要复位。
+\item 能直接输出某种码制的数码，掉电后无需复位。
 \item 格雷码（余$ 3 $循环码）：任意相邻数只有一位二进制数不同，可以由二进制码按位异或（第一位保留）获得，属于可靠性编码，求反方便。
 \end{itemize}
 %------------------------------------------------
@@ -709,7 +736,7 @@ $%
 %------------------------------------------------
 \subsubsection[里程计模型]{里程计模型}\label{sec:odometer}
 %------------------------------------------------
-\paragraph{两轮差速机器人里程计模型}
+\paragraph{例子}
 以下以两轮差速机器人（见\ref{sec:two_wheel}）为例。
 $$ 
 \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r-\dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v \\ 0 \\ \omega \end{bmatrix} 
@@ -788,7 +815,7 @@ $$
 \item 打滑。
 \end{itemize}
 %------------------------------------------------
-\paragraph{误差传播（RK2法）}\tip{误差传播}\label{sec:error back}~\\
+\paragraph{误差传播（以RK2法为例）}\tip{误差传播}\label{sec:error back}~\\
 
 位姿更新为：
 $$
@@ -851,7 +878,7 @@ $$
 \frac{\partial \Pi}{\partial b} = 2 \sum_{i = 1}^{n} x_i [y_i - (a + bx_i)] = 0 \\
 \end{cases}
 $$
-\item 矩阵形式\tip{最小二乘法矩阵形式求解}：将拟合直线$ f(x) = ax + b $增广为矩阵形式$ Y = X\beta $，在误差$ d = Y - X\beta $趋于$ 0 $时，有$ Y = X\beta $，因此：
+\item 矩阵形式\tip{最小二乘法矩阵形式求解}：将拟合直线$ f(x) = ax + b $增广为矩阵形式$ Y = X\beta $，在误差$ d = Y - X\beta \to 0 $时，有$ Y = X\beta $，由于$ X $不一定是方阵，有：
 $$ Y = X\beta \Rightarrow X^T Y = X^T X\beta \Rightarrow \beta = (X^T X)^{-1}X^T Y $$
 \end{enumerate}
 %------------------------------------------------
@@ -908,7 +935,7 @@ C_{\alpha r} &= F_{\rho\theta} C_x F_{\rho\theta}^T
 \centering
 \begin{tabular}{c|ccccc}
 \hline
-算法 & 复杂度 & 假阳性率FPR & 精度 & 多直线检测 & 属性 \\
+算法 & 复杂度 & 假阳性率FPR & 精度 & 多直线检测 & 补充 \\
 \hline
 Split-and-Merge & $ n \log n $ & 低 & 低 & 适用 &  \\
 Line-Regression & $ n n_f $ & 低 & 低 & 适用 & 有序点云 \\
@@ -925,7 +952,7 @@ Hough-Transform & $ S n n_C + S n_R n_C $ & 高 & 高 & 适用 &  \\
 %------------------------------------------------
 \paragraph{条件与目标}~\\
 
-在二维平面上，有基于世界坐标系的点云$ P = \{p_1, p_2, \dots, p_n\} $和基于激光坐标系的点云$ Q = \{q_1, q_2, \dots, q_n\} $，它们按下标顺序匹配，求解刚体变换（旋转阵$ R $和平移量$ t $）。
+在二维平面上，有基于世界坐标系的点云$ P = \{p_1, p_2, \dots, p_n\} $和基于激光坐标系的点云$ Q = \{q_1, q_2, \dots, q_n\} $，它们按下标顺序匹配，求解变换（旋转阵$ R $和平移量$ t $）。
 
 以误差平方加权和的形式建模，得到目标式：
 $$ (R, t) = argmin \sum_{i = 1}^{n}w_i ||(R p_i + t) - q_i||^2 $$
@@ -952,8 +979,8 @@ $$ R = argmin \sum_{i = 1}^{n}w_i ||R x_i - y_i||^2 $$
 将平方项变成矩阵相乘的形式：
 $$ ||Rx_i - y_i||^2 = (R x_i - y_i)^T(R x_i - y_i) = x_i^T (R^T R) x_i - y_i^T R x_i - x_i^T R^T y_i + y_i^T y_i $$
 \begin{itemize}
-\item 旋转阵为标准正交阵，$ R^{-1} = R^T $，因此$ R^T R = E $。
-\item $ x_i^T R^T y_i $是一个$ 1 \times 1 $标量，转置后不变，$ x_i^T R^T y_i = y_i^T R x_i $。
+\item $ R^{-1} = R^T \Rightarrow R^T R = E $。
+\item $ x_i^T R^T y_i $是一个$ 1 \times 1 $标量，转置后不变，故$ x_i^T R^T y_i = y_i^T R x_i $。
 \end{itemize}
 
 所以:
@@ -975,8 +1002,8 @@ $$ R = argmax \sum_{i = 1}^{n}w_i y_i^T R x_i $$
 因为矩阵的迹满足$ tr(AB) = tr(BA) $，所以$ tr(WY^TRX) = tr(RXWY^T) $。令$ S = XWY^T $，基于SVD原理（见附录\ref{sec:svd}），$ S = U \Sigma V^T $，其中$ U,V $是单位正交阵，$ \Sigma $为对角阵。所以$ tr(RXWY^T) = tr(RU \Sigma V^T) = tr(\Sigma V^TRU) $，后三者都是单位正交阵，它们的积$ M $也是单位正交阵。目标改写为：
 $$ R = argmax tr(\Sigma M) $$
 %------------------------------------------------
-\paragraph{求解$ R $和$ t $}
-由于单位正交阵的最大迹是在单位阵下取得的，最大值条件为$ M = E $，即$ R = VU^T $。代回$ R $和$ t $的关系式，可确定$ t $。
+\paragraph{求解变换}
+单位正交阵的最大迹在单位阵下取得的，有$ M = E $，即$ R = VU^T $。代回确定$ t $。
 %------------------------------------------------
 \subsubsection[基于ICP的点云匹配算法]{基于ICP（Iterative Closest Point，迭代最近点）的点云匹配算法\tip{基于ICP的点云匹配算法}}
 \begin{enumerate}
@@ -1041,8 +1068,7 @@ $$ p(x|y) = \frac{p(y|x)p(x)}{p(y)} $$
 \item 连续型
 \begin{itemize}
 \item 精度受传感器数据限制。
-\item 通常是单一假设位姿估计。
-\item 对于单一假设发散时会丢失。
+\item 通常是单一假设位姿估计，发散时丢失。
 \item 表示紧凑，计算资源需求合理。
 \end{itemize}
 \end{minipage}
@@ -1050,8 +1076,7 @@ $$ p(x|y) = \frac{p(y|x)p(x)}{p(y)} $$
 \item 离散型
 \begin{itemize}
 \item 精度受离散化分辨率限制。
-\item 通常是多假设位姿估计。
-\item 发散时收敛到另一单元，永不丢失。
+\item 通常是多假设位姿估计，发散时收敛到另一单元，永不丢失。
 \item 需大量内存和计算资源。
 \end{itemize}
 \end{minipage}
@@ -1084,6 +1109,7 @@ p(q) = p_1(q) \cdot p_2(q) &= \frac{1}{\sigma_1 \sqrt{2\pi}}exp(-\frac{(q - \hat
 R &= P - P(P + Q)^{-1}P = P - K \cdot \Sigma_{IN} \cdot K^T
 \end{align*}
 
+有模型：
 \begin{align*}
 &\text{过程（推算）方程：}x_k = A x_{k - 1} + B u_{k - 1} + w_{k - 1} \\
 &\text{测量方程：}z_k = H x_k + v_k
@@ -1190,43 +1216,35 @@ $ \begin{bmatrix} x \\ y \\ \frac{dx}{dt} \\ \frac{dy}{dt} \end{bmatrix} $ & $ \
 \begin{itemize}
 \item 严重依赖匹配精度，匹配失败则定位失败，且无法判断和恢复。
 \item 收敛速度受初始状态误差和协方差阵精度影响较大。
-\item 无法进行全局定位，无法应对绑架问题，只能位置跟踪。
+\item 无法全局定位，无法应对绑架问题，只能位置跟踪。
 \item 不确定度需为单峰高斯分布。
 \end{itemize}
 %------------------------------------------------
 \subsection[蒙特卡洛定位]{蒙特卡洛定位}
 %------------------------------------------------
 \subsubsection[蒙特卡洛方法]{蒙特卡洛方法（Monte Carlo Method）}
-不断抽样，逐渐逼近的方法。
-%------------------------------------------------
-\paragraph{特点}
-\begin{itemize}
-\item 优点：通用。
-\item 缺点：收敛速度慢，不精确。
-\end{itemize}
+不断抽样，逐渐逼近。通用，但收敛速度慢，不精确。
 %------------------------------------------------
 \paragraph{分布函数拟合}
-用样本（粒子）分布来处理各种分布。
+用样本（粒子）分布处理各种分布。
 \begin{itemize}
 \item 已知概率分布求粒子分布：采样排除法，概率高的地方采样密集。
-\item 未知概率分布求粒子分布：重要性评估，迭代，根据预估分布（以均匀分布开始）洒粒子，再根据结果调整重要性评估（归一化）。
+\item 未知概率分布求粒子分布：重要性评估，迭代，根据预估分布（以均匀分布开始）撒粒子，再根据结果调整重要性评估（归一化）。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[蒙特卡洛定位算法（粒子滤波算法）]{蒙特卡洛定位算法（粒子滤波算法，MCL）\tip{蒙特卡洛定位算法（粒子滤波算法）}}
-多信息融合，提高真值处的重要性。
+多信息融合，提高真值处重要性。
 %------------------------------------------------
 \paragraph{重要性采样}~\\
 
-目标分布$ f_i = [p(x_i|z_1, z_2, z_3)] $，根据贝叶斯定理，有：
+目标分布：
 $$ p(x_i|z_1, z_2, \cdots, z_n) = \frac{\prod_k p(z_k|x_i)p(x_i)}{p(z_1, z_2, \cdots, z_n)} $$
 
-建议分布$ g_i = [p(x|z_i)] $，有：
+建议分布：
 $$ p(x_i|z_i) = \frac{p(z_i|x_i)p(x_i)}{p(z_i)} $$
 
 有重要性权重：
-$$ w_i = \frac{f_i}{g_i} = \frac{p(x_i|z_1, z_2, \cdots, z_n)}{p(x_i|z_i)} = \frac{p(z_i)\prod_{k\neq i}p(z_k|x_i)}{p(z_1, z_2, \cdots, z_n)} $$
-
-令$ \eta = \frac{p(z_i)}{p(z_1, z_2, \cdots, z_n)} $，则有$ w_i \propto \prod_{k\neq i}p(z_k|x_i) $。
+$$ w_i = \frac{p(x_i|z_1, z_2, \cdots, z_n)}{p(x_i|z_i)} = \frac{p(z_i)\prod_{k\neq i}p(z_k|x_i)}{p(z_1, z_2, \cdots, z_n)} \propto \prod_{k \neq i}p(z_k|x_i) $$
 %------------------------------------------------
 \paragraph{步骤}
 在一次迭代（$ X_{t - 1} \rightarrow X_t $）中，经历以下过程：
@@ -1235,7 +1253,7 @@ $$ w_i = \frac{f_i}{g_i} = \frac{p(x_i|z_1, z_2, \cdots, z_n)}{p(x_i|z_i)} = \fr
 $$ x_t^{(i)} = f(x_{t - 1}^{(i)}, u_t) $$
 \item 校正：使用传感器模型计算粒子权重：
 $$ w_t^{(i)} = p(z_t | x_t^{(i)}) $$
-\item 重采样：根据归一化后的权重进行重采样（采用轮盘赌），权重越大的粒子被采样的概率越高。
+\item 重采样：根据归一化权重进行重采样（采用轮盘赌），权重越大概率越高。
 \end{enumerate}
 %------------------------------------------------
 \paragraph{激光雷达观测误差模型}
@@ -1244,14 +1262,14 @@ $ m $指地图。
 \item 误差
 \begin{itemize}
 \item 激光雷达测量误差$ p_{hit}(z_t|x_t, m) $。
-\item 没有检测到障碍物$ p_{max}(z_t|x_t, m) $：常值分布，返回激光雷达最大测距距离。
+\item 没有检测到障碍物$ p_{max}(z_t|x_t, m) $：常值分布，激光雷达最大测距距离。
 $$
 p_{max}(z_t|x_t, m) = \begin{cases}
 1 & z_t^k = z_{max} \\
 0 & otherwise \\
 \end{cases}
 $$
-\item 随机错误$ p_{rand}(z_t|x_t,m) $：均匀分布，返回错误的距离值。
+\item 随机错误$ p_{rand}(z_t|x_t,m) $：均匀分布，错误的距离值。
 $$
 p_{rand}(z_t|x_t, m) = \begin{cases}
 \frac{1}{z_{max}} & 0 \leq z_t^k \leq z_{max} \\
@@ -1259,7 +1277,7 @@ p_{rand}(z_t|x_t, m) = \begin{cases}
 \end{cases}
 $$
 \item 激光雷达观测误差模型$ p(z_t|x_t, m) $：上述误差的线性组合。
-$$ p(z_t|x_t, m) = \alpha_{hit}p_{hit} + \alpha_{max}p_{max} + \alpha_{rand}p_{rand} \quad \alpha_{hit} + \alpha_{max} + \alpha_{rand} = 1 $$
+$$ p(z_t|x_t, m) = \alpha_{hit}p_{hit} + \alpha_{max}p_{max} + \alpha_{rand}p_{rand}, \quad \alpha_{hit} + \alpha_{max} + \alpha_{rand} = 1 $$
 \end{itemize}
 \item 物理模型：$ p_{hit}(z_t|x_t, m) $包含随机噪声，一般为高斯分布。
 $$
@@ -1268,10 +1286,10 @@ N(z_t^{k*}, \sigma_{hit}^2) & 0 \leq z_t^k \leq z_{max} \\
 0 & otherwise \\
 \end{cases}
 $$
-\item 可能域（likelihood）：$ p_{hit}(z_t|x_t, m) $，将激光束投影到地图中，以距投影最近的点的距离为均值，激光测距偏差为方差。
+\item 可能域（likelihood）：将激光束投影到地图中，$ p_{hit}(z_t|x_t, m) $以距投影最近的点的距离为均值，激光测距偏差为方差。
 \begin{itemize}
 \item 优点：在线计算量小，平滑性好，收敛性强，更符合实际情况。
-\item 缺点：没有明确的物理意义，仅适用于相对静态的环境（如有路标的工厂）。
+\item 缺点：没有明确的物理意义，仅适用于静态环境（如路标工厂）。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
@@ -1288,12 +1306,12 @@ $$
 %------------------------------------------------
 \paragraph{解决问题}
 \begin{itemize}
-\item 绑架问题：发生绑架问题时，$ w_{avg} $会突然下降，导致$ w_{slow} > w_{fast} $，将按照概率$ \max(0, 1 - \frac{w_{fast}}{w_{slow}}) $向粒子集中注入随机粒子。
-\item 粒子数问题：使用KLD（Kullback-Leibler Divergence，库尔贝克-莱布勒散度，计算概率分布间差异）采样，在趋于收敛的过程中减少粒子。
+\item 绑架问题：发生绑架时，$ w_{avg} $会突然下降，导致$ w_{slow} > w_{fast} $，将按照概率$ \max(0, 1 - \frac{w_{fast}}{w_{slow}}) $向粒子集中注入随机粒子。
+\item 粒子数问题：使用KLD（Kullback-Leibler Divergence，库尔贝克-莱布勒散度，计算概率分布间差异）采样，在收敛过程中减少粒子。
 \end{itemize}
 %------------------------------------------------
 \paragraph{算法}
-其中标红部分是AMCL相较MCL的改进。
+标红部分是AMCL相较MCL的改进。
 \begin{myalgorithm}[AMCL]
 \State 参数：$ \alpha_{slow}, \alpha_{fast} $
 \State 初始化：初始化$ \overline{X}_t = X_t $为空，初始化$ w_{slow}, w_{fast} $
@@ -1327,16 +1345,16 @@ $$
 \begin{itemize}
 \item 点云地图
 \begin{itemize}
-\item 优点：可以完全表示环境三维信息，不需要预定义尺寸。
-\item 缺点：存储要求高，存在盲区和空洞，需要处理来判断占用和联通状态，不具有通用性（不同机器人无法共用）。
+\item 优点：可以完全表示环境三维信息，无需预定义尺寸。
+\item 缺点：存储要求高，存在盲区和空洞，需判断占用和联通状态，不具有通用性。
 \end{itemize}
 \item 栅格地图：以允许误差大小确定栅格大小，用$ 0 - 1 $的值表示栅格被占用的概率（不同激光数据中占用的概率）。
 \begin{itemize}
 \item 计算
 \begin{itemize}
-\item 概率：$ p(m_i|s_n) = 1 - E_r E_\alpha $，其中：
+\item 概率$ p $：$ p(m_i|s_n) = 1 - E_r E_\alpha $，其中：
 $$ E_r = 1 - k_r(\frac{2(\rho_i - r_i)}{\Delta r})^2, E_\alpha = 1 - k_\alpha(\frac{2(\theta_i - \alpha)}{\Delta\alpha})^2 $$
-\item 几率：$ \text{几率}l = \frac{\text{概率}p}{1 - \text{概率}p} $，几率与概率非线性正相关。
+\item 几率$ l $：$ \text{几率} = \frac{\text{概率}}{1 - \text{概率}} $，几率与概率非线性正相关。
 
 利用贝叶斯公式得到每次测量（相互独立）的递推关系：
 \begin{align*}
@@ -1356,14 +1374,14 @@ l_{i, n} &= \log\frac{p(m_i|s_1, s_2, \cdots, s_n)}{p(\bar{m}_i|s_1, s_2, \cdots
 \end{itemize}
 \item 特点
 \begin{itemize}
-\item 优点：可以详细描述环境信息，易于定位和路径规划，不需要预定义尺寸。
-\item 缺点：存储要求高，存在盲区和空洞，需要处理来判断占用和联通状态（点占用不够），不具有通用性（不同机器人无法共用）。
+\item 优点：可以详细描述环境信息，易于定位和路径规划，无需预定义尺寸。
+\item 缺点：存储要求高，存在盲区和空洞，需判断占用和联通状态，不具有通用性。
 \end{itemize}
 \item 拓展
 \begin{itemize}
 \item 2.5维占用栅格地图（扩展高度图）：为每个栅格附加高度信息（障碍物最高高度）。
 \item 3维占用栅格地图（Voxel Map，体素地图）：将空间分解为正方体，判断占用情况。
-\item 多分辨率地图：障碍质密处栅格小，无障碍处栅格大，空间占用率高，计算复杂度高，存储存在稀疏特征。
+\item 多分辨率地图：障碍质密处栅格小，无障碍处栅格大，空间占用效率高，计算复杂度高，存储存在稀疏特征。
 \end{itemize}
 \end{itemize}
 \item 特征（语义）地图：连续多边形地图，空间占用效率高，定位精度高。
@@ -1382,22 +1400,14 @@ $$ E[m|Z^t, X^t] $$
 $$ E[X^t, m|Z^t, U^{t - 1}] $$
 \end{itemize}
 %------------------------------------------------
-\paragraph{SLAM关键}
-使用闭环检测进行数据关联，降低估计的不确定度。错误的匹配会使算法发散。
-%------------------------------------------------
-\paragraph{分类}
-\begin{itemize}
-\item 基于滤波：EKF-SLAM（卡尔曼滤波）、FastSLAM（粒子滤波，GMAPPING包）。
-\item 基于优化：图优化（g2o包），主流。
-\end{itemize}
-%------------------------------------------------
 \subsection[基于滤波的SLAM算法]{基于滤波的SLAM算法}
+GMAPPING包。
 %------------------------------------------------
 \subsubsection[EKF-SLAM]{EKF-SLAM（扩展卡尔曼滤波SLAM）\tip{EKF-SLAM}}
 第一个SLAM算法，面向特征地图，采用maximum likelihood进行数据关联。
 %------------------------------------------------
 \paragraph{状态}
-机器人位姿为三维$ X_R = \begin{bmatrix} x & y & \theta \end{bmatrix}^T $，地图特征为二维$ M_i = \begin{bmatrix} x_i & y_i \end{bmatrix}^T $。
+机器人位姿$ X_R = \begin{bmatrix} x & y & \theta \end{bmatrix}^T $，地图特征$ M_i = \begin{bmatrix} x_i & y_i \end{bmatrix}^T $。
 \begin{align*}
 x_t = \begin{bmatrix} X_R \\ M_1 \\ M_2 \\ \vdots \\ M_n \end{bmatrix}_{(3 + 2n) \times 1} \quad 
 \Sigma_t = \begin{bmatrix} 
@@ -1482,7 +1492,7 @@ X_t = \begin{bmatrix} X_R \\ M_1 \\ M_2 \\ \vdots \\ M_n \\ \color{red} M_{n + 1
 \begin{itemize}
 \item 计算复杂度高。
 \item 要求高斯分布，只能处理单峰假设。
-\item 依赖数据关联正确性。
+\item 依赖数据关联正确性，错误匹配会使算法发散。
 \item 仅适用于有全连接人工路标的点云地图或特征地图，无法使用栅格地图。
 \end{itemize}
 %------------------------------------------------
@@ -1532,14 +1542,14 @@ w^{[k]} &= \frac{\overbrace{p(x_{1:t}^{[k]}|z_{1:t}, u_{1:t})}^{\text{目标分�
 \end{itemize}
 %------------------------------------------------
 \subsection[基于优化的SLAM算法]{基于优化的SLAM算法}
-图优化SLAM：位姿通过约束相互连接，表征不确定性，寻求最优的节点构型使约束误差最小。
+图优化SLAM中，位姿通过约束相互连接，表征不确定性，寻求最优的节点构型使约束误差最小。g2o包，主流。
 %------------------------------------------------
 \paragraph{构建图（前端）}
 \begin{itemize}
 \item 节点（Node）：机器人位姿，包含位姿$ x_{1:n}(x, y ,\theta) $、特征或路标$ m_{1:k}(x, y) $信息。
 \begin{itemize}
-\item 定位（Pose）：$ x^T = (x_1^T, x_2^T, \cdots, x_n^T) \in R^{3n} $。
-\item SLAM（Pose feature）：$ x^T = (x_1^T, x_2^T, \cdots, x_n^T, m_1^T, m_2^T, \cdots, m_K^T) \in R^{3n + 2K} $。
+\item 定位（Pose）：$ x^T = (x_1^T, \cdots, x_n^T) \in R^{3n} $。
+\item SLAM（Pose feature）：$ x^T = (x_1^T, \cdots, x_n^T, m_1^T, \cdots, m_K^T) \in R^{3n + 2K} $。
 \end{itemize}
 \item 边（Edge）：位姿间的空间约束，齐次坐标。
 \begin{itemize}
@@ -1563,24 +1573,24 @@ w^{[k]} &= \frac{\overbrace{p(x_{1:t}^{[k]}|z_{1:t}, u_{1:t})}^{\text{目标分�
 \end{figure}
 
 \begin{enumerate}
-\item 定位：起点在0处，向前移动到达远点，编码器测得位移1m，向后移动回到起点（闭环检测），编码器测得位移0.8米。
+\item 定位：起点在$ 0 $处，向前移动到达远点，编码器测得位移$ 1m $，向后移动回到起点（闭环检测），编码器测得位移$ 0.8m $。
 
 有目标函数：
 $$ c = \sum_{i = 1}^{4} f_i^2 = (x_0 - 0)^2 + (x_1 - x_0 - 1)^2 + [x_2 - x_1 -(-0.8)]^2 +(x_2 - x_0 - 0)^2 $$
 
-求偏导的得到方程组，解得：
+求偏导得到方程组，解得：
 $$
 \begin{bmatrix}  x_0 \\ x_1 \\ x_2 \end{bmatrix} 
 = \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1}
 \begin{bmatrix} -1.0 \\ 1.8 \\ -0.8 \end{bmatrix} 
 = \begin{bmatrix} 0 \\ 0.93 \\ 0.07 \end{bmatrix}
 $$
-\item SLAM：起点在0处，观测到前方2m处有路标。向前移动到路标前0.8m处，编码器测得位移1m。
+\item SLAM：起点在$ 0 $处，观测到前方$ 2m $处有路标。向前移动到路标前$ 0.8m $处，编码器测得位移$ 1m $。
 
 有目标函数：
 $$ c = \sum_{i = 1}^{4} f_i^2 = (x_0 - 0)^2 + (x_1 - x_0 - 1)^2 + (l_0 - x_0 - 2)^2 +(l_0 - x_1 - 0.8)^2 $$
 
-求偏导的得到方程组，解得：
+求偏导得到方程组，解得：
 $$
 \begin{bmatrix}  x_0 \\ x_1 \\ l_0 \end{bmatrix} 
 = \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1}
@@ -1615,7 +1625,7 @@ $$
 \item 安全性：规避障碍物。
 \item 可达性：从起点到终点的连通域。
 \item 光滑性：平稳舒适地运行。
-\item 可执行性：动力学约束和执行单元的性能约束。
+\item 可执行性：动力学约束和执行器约束。
 \end{itemize}
 %------------------------------------------------
 \paragraph{分层规划}
@@ -1625,22 +1635,18 @@ $$
 \item 基于图搜索：算法完备，有限时间内返回解或返回无解。
 \item 基于采样：概率完备。
 \end{itemize}
-\item 轨迹规划：在给定路径上考虑机器人和执行器约束，生成随时间变化的运动序列。
-\begin{itemize}
-\item 在线。
-\item 离线
-\end{itemize}
+\item 轨迹规划：在给定路径上考虑机器人和执行器约束，生成随时间变化的运动序列。分在线和离线两种。
 \end{itemize}
 %------------------------------------------------
 \subsection[基于图搜索的路径规划]{基于图搜索的路径规划}
 %------------------------------------------------
 \subsubsection[静态路径规划]{静态路径规划}
 %------------------------------------------------
-\paragraph{图的构建}
+\paragraph{构建图}
 \begin{itemize}
 \item 可视图（visibilty graph）：连线障碍物顶点和起点终点，找最短路径。可实现无碰撞最短路径距离规划，但太靠近障碍物。
 \item 维诺图（Voronoi graph）：路径距周围两个最近障碍物等距（L1/L2）。最大化与障碍物的距离，安全但较长。
-\item Bug算法图：起点和重点连线，在障碍物处沿边缘行走，更新起点迭代。
+\item Bug算法图：起点和终点连线，在障碍物处沿边缘行走，更新起点迭代。
 \item 精确单元分解地图。
 \item 栅格地图：关联格间无障碍。
 \item 拓扑地图。
@@ -1650,7 +1656,7 @@ $$
 \paragraph{算法}\tip{图搜索算法}
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{2cm}|p{6cm}|p{1.4cm}|p{3.5cm}|p{2cm}|}
+\begin{tabular}{|p{2cm}|p{5.5cm}|p{1.4cm}|p{3.5cm}|p{2.5cm}|}
 \hline
 算法 & 原理 & 完备性 & 最优性 & 补充 \\
 \hline
@@ -1668,16 +1674,18 @@ A* & 路径评价由移动开销$ G(n) $和启发函数代价估计$ H(n) $组�
 
 启发函数：
 \begin{itemize}
-\item 可选：曼哈顿距离、欧几里得距离、切比雪夫距离。
+\item 可选曼哈顿距离、欧几里得距离、切比雪夫距离，是算法效率的重要因素。
+\item 最优性性质：
+\begin{itemize}
 \item 可采纳性：低估代价。
 \item 一致性：符合三角不等式。
-\item 选取优劣是算法效率的重要因素。
+\end{itemize}
 \end{itemize}
 %------------------------------------------------
 \paragraph{算法补充}
 \begin{itemize}
 \item 权重A*：为启发函数添加权重$ \epsilon \geq 1 $，限制扩展节点，提高效率，但不满足可采纳性，只能得到局部最优。
-\item ARA*（任意时间法+权重A*）：快速得到次优，再优化。
+\item ARA*：结合任意时间法和权重A*，快速得到次优，再优化。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[动态路径规划]{动态路径规划}
@@ -1712,14 +1720,14 @@ A* & 路径评价由移动开销$ G(n) $和启发函数代价估计$ H(n) $组�
 %------------------------------------------------
 \paragraph{RRT（快速探索随机树）}
 \begin{itemize}
-\item RRT：迭代撒点，选择离目标近的点，按照这个方向步进（不一定到达），更新起点；最后到达终点附近，无法准确到达重点。完备而高效，但是只能得到可行解而非最优解。
+\item RRT：迭代撒点，选择离目标近的点，按其方向步进（不一定到达），更新起点；最后到达终点附近，无法准确到达。完备而高效，但只能得到可行解而非最优解。
 \item RRT*：在路径的大圈中进行局部优化，重构节点关系，使局部最优。
 \item Informed RRT*：在起点终点连线为主轴的椭圆中进行优化。
 \end{itemize}
 %------------------------------------------------
 \subsection[面向碰撞的局部路径规划]{面向碰撞的局部路径规划}
 \begin{itemize}
-\item DWA（Dynamic Window Approach）：评价函数对方向角、空隙、速度进行加权。计算复杂度低，但可能得不到全局最优。
+\item DWA（Dynamic Window Approach）：评价函数对方向角、空隙、速度进行加权。计算复杂度低，但可能不是全局最优。
 \item TEB（Timed Elastic Band）：连接起点终点为可变形路径，将约束视作引起形变的外力。
 \end{itemize}
 %------------------------------------------------
@@ -1731,7 +1739,7 @@ A* & 路径评价由移动开销$ G(n) $和启发函数代价估计$ H(n) $组�
 %------------------------------------------------
 \subsection[轨迹规划]{轨迹规划}
 \begin{itemize}
-\item 目标：在执行器约束下，沿给定光滑曲线的可执行的运动命令序列。
+\item 目标：在执行器约束下，沿给定光滑曲线给出可执行的运动命令序列。
 \item 约束：初始、终止状态约束，执行器约束，运动学约束。
 \end{itemize}
 %----------------------------------------------------------------------------------------
