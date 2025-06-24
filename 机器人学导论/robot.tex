@@ -213,7 +213,7 @@ $$
 \begin{figure}[H]
 \centering
 \subfloat[旋转映射]{\includegraphics[width=.45\textwidth]{Mapping_r}} \quad
-\subfloat[旋转算子]{\includegraphics[width=.45\textwidth]{Operator_r}}\\
+\subfloat[旋转算子]{\includegraphics[width=.45\textwidth]{Operator_r}} \\
 \subfloat[平移映射]{\includegraphics[width=.45\textwidth]{Mapping_p}} \quad
 \subfloat[平移算子]{\includegraphics[width=.45\textwidth]{Operator_p}}
 \caption{映射与算子对比}
@@ -233,6 +233,31 @@ $$
 \caption{映射与算子对比}
 \end{table}
 \end{minipage}
+%------------------------------------------------
+\subsubsection[例题]{例题\tip{映射与算子例题}}
+\begin{figure}[H]
+\centering
+\subfloat[例题1]{\includegraphics[width=.3\textwidth]{9.1}} \quad
+\subfloat[例题2]{\includegraphics[width=.4\textwidth]{9.2}}
+\caption{映射与算子例题}
+\end{figure}
+
+\begin{itemize}
+\item 例题1：
+\begin{align*}
+&{}^A_B T = \begin{bmatrix} -1 & 0 & 0 & 3 \\ 0 & -1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \quad &
+&{}^A_C T = \begin{bmatrix} 0 & -\sin 30^\circ & \cos 30^\circ & 3 \\ 0 & \cos 30^\circ & \sin 30^\circ & 0 \\ -1 & 0 & 0 & 2 \\ 0 & 0 & 0 & 1 \end{bmatrix} \\
+&{}^B_C T = \begin{bmatrix} 0 & \sin 30^\circ & -\cos 30^\circ & 0 \\ 0 & -\cos 30^\circ & -\sin 30^\circ & 0 \\ -1 & 0 & 0 & 2 \\ 0 & 0 & 0 & 1 \end{bmatrix} \quad &
+&{}^C_A T = \begin{bmatrix} 0 & 0 & -1 & 2 \\ -\sin 30^\circ & \cos 30^\circ & 0 & 3\sin 30^\circ \\ \cos 30^\circ & \sin 30^\circ & 0 & -3\cos 30^\circ \\ 0 & 0 & 0 & 1 \end{bmatrix}
+\end{align*}
+\item 例题2：
+\begin{align*}
+&{}^A_B T = \begin{bmatrix} -1 & 0 & 0 & 0 \\ 0 & 0 & -1 & 4 \\ 0 & -1 & 0 & 2 \\ 0 & 0 & 0 & 1 \end{bmatrix} \quad &
+&{}^A_C T = \begin{bmatrix} 0.8 & 0.6 & 0 & -3 \\ 0.6 & -0.8 & 0 & 4 \\ 0 & 0 & -1 & 2 \\ 0 & 0 & 0 & 1 \end{bmatrix} \\
+&{}^B_C T = \begin{bmatrix} -0.8 & -0.6 & 0 & 3 \\ 0 & 0 & 1 & 0 \\ -0.6 & 0.8 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \quad &
+&{}^C_A T = \begin{bmatrix} 0.8 & 0.6 & 0 & 0 \\ 0.6 & -0.8 & 0 & 5 \\ 0 & 0 & -1 & 2 \\ 0 & 0 & 0 & 1 \end{bmatrix}
+\end{align*}
+\end{itemize}
 %------------------------------------------------
 \subsection[姿态描述]{姿态描述}
 %------------------------------------------------
