@@ -1417,8 +1417,8 @@ M(q) &= \sum_{i = 1}^{2} J_{v_{C_i}}^T m_i J_{v_{C_i}} + J_{\omega_{C_i}}^T I_{C
 \item 惯性力：
 \begin{align*}
 &b_{1,1,1} = b_{1,2,1} = b_{2,2,1} = b_{2,1,1} = b_{2,2,2} = 0, b_{1,1,2} = -2m_2 l_1 l_{C_2}s2, b_{1,2,2} = -m_2 l_1 l_{C_2}s2, b_{2,1,2} = -m_2 l_1 l_{C_2}s2 \\
-&c_{111} = c_{222} = 0, c_{122} = c_{211} = c_{212} = c_{112} = -m_2 l_1 l_{C_2}s2 \\
-&V(q, \dot{q}) = \begin{bmatrix} c_{111} & c_{122} \\ c_{211} & c_{222} \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix} + 2\begin{bmatrix} c_{112} \\ c_{212} \end{bmatrix} \dot{\theta}_1\dot{\theta}_2 = \begin{bmatrix} 0 & -m_2 l_1 l_{C_2}s2 \\ -m_2 l_1 l_{C_2}s2 & 0 \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix} + 2\begin{bmatrix} -m_2 l_1 l_{C_2}s2 \\ 0 \end{bmatrix} \dot{\theta}_1 \dot{\theta}_2
+&c_{111} = c_{222} = 0, c_{122} = c_{212} = c_{112} = -m_2 l_1 l_{C_2}s2, c_{211} = m_2 l_1 l_{C_2}s2 \\
+&V(q, \dot{q}) = \begin{bmatrix} c_{111} & c_{122} \\ c_{211} & c_{222} \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix} + 2\begin{bmatrix} c_{112} \\ c_{212} \end{bmatrix} \dot{\theta}_1\dot{\theta}_2 = \begin{bmatrix} 0 & -m_2 l_1 l_{C_2}s2 \\ m_2 l_1 l_{C_2}s2 & 0 \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix} + 2\begin{bmatrix} -m_2 l_1 l_{C_2}s2 \\ 0 \end{bmatrix} \dot{\theta}_1 \dot{\theta}_2
 \end{align*}
 \item 重力：
 \begin{align*}
@@ -1436,7 +1436,7 @@ m_1 l_{C_1}^2 + I_{zz1} + m_2(l_1^2 + l_{C_2}^2 + 2l_1 l_{C_2}c2) + I_{zz2} & m_
 m_2(l_{C_2}^2 + l_1 l_{C_2}c2) + I_{zz2} & m_2 l_{C_2}^2 + I_{zz2}
 \end{bmatrix} 
 \begin{bmatrix} \ddot{\theta}_1 \\ \ddot{\theta}_2 \end{bmatrix} \\  
-&+ \begin{bmatrix} 0 & -m_2 l_1 l_{C_2}s2 \\ -m_2 l_1 l_{C_2}s2 & 0 \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix}
+&+ \begin{bmatrix} 0 & -m_2 l_1 l_{C_2}s2 \\ m_2 l_1 l_{C_2}s2 & 0 \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix}
 + 2\begin{bmatrix} -m_2 l_1 l_{C_2}s2 \\ 0 \end{bmatrix} \dot{\theta}_1 \dot{\theta}_2 
 + \begin{bmatrix} m_1 g l_{C_1}c1 + m_2 g(l_1 c1 + l_{C_2}c12) \\ l_{C_2}c12 m_2 g \end{bmatrix} 
 \end{align*}
