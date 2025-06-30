@@ -33,12 +33,8 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \listoftables
 \end{multicols}
 \endgroup
-\hrule
-\begingroup
-\begin{multicols}{2}
+\newpage
 \listoftips
-\end{multicols}
-\endgroup
 \newpage
 %----------------------------------------------------------------------------------------
 \section{基础知识}
@@ -93,7 +89,6 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \end{enumerate}
 \end{minipage}
 %------------------------------------------------
-\begin{comment}
 \section{机器人运动形态}
 %------------------------------------------------
 \subsection[移动机器人]{移动机器人}
@@ -205,7 +200,6 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 \item 动态稳定：执行器停止工作摔倒。倒立摆模型。    
 \item 静态稳定：执行器停止工作不摔倒。陀螺效应，随动轮效应。
 \end{itemize}
-\end{comment}
 %----------------------------------------------------------------------------------------
 \section{机器人运动学}
 %------------------------------------------------
@@ -268,11 +262,9 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 
 位置空间求导得到速度空间：
 $$
-\xi_I = \begin{bmatrix} x_I \\ y_I \\ \theta_I \end{bmatrix}, 
-\xi_R = \begin{bmatrix} x_R \\ y_R \\ \theta_R \end{bmatrix}
+\xi_I = \begin{bmatrix} x_I \\ y_I \\ \theta_I \end{bmatrix}, \xi_R = \begin{bmatrix} x_R \\ y_R \\ \theta_R \end{bmatrix}
 \overset{\text{求导}}{\Longrightarrow}
-\dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix},
-\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix}
+\dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix}, \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix}
 $$
 
 惯性系旋转得到机器人系：
@@ -321,17 +313,17 @@ $$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
 \hline
 类型 & 约束 & 约束方程 & 主动轮 & 随动轮 \\
 \hline
-\multirow{2}{*}{\parbox[c]{0.9cm}{标\\准\\轮}} & 纯滚动 & $ \begin{bmatrix} \sin(\alpha + \beta(t)) & -\cos(\alpha + \beta(t)) & -l\cos\beta(t) \end{bmatrix} R\theta \dot{\xi}_I \newline = r\dot{\varphi} $ & $ \surd $ & x \\
+\multirow{2}{*}{\parbox[c]{0.9cm}{标\\准\\轮}} & 纯滚动 & $ \begin{bmatrix} \sin(\alpha + \beta(t)) & -\cos(\alpha + \beta(t)) & -l \cos\beta(t) \end{bmatrix} R \theta \dot{\xi}_I \newline = r \dot{\varphi} $ & $ \surd $ & x \\
 \cline{2-5}
-& 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta(t)) & \sin(\alpha + \beta(t)) & l\sin\beta(t) \end{bmatrix} R\theta \dot{\xi}_I = 0 $ & $ \surd $ & $ \surd $ \\
+& 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta(t)) & \sin(\alpha + \beta(t)) & l \sin\beta(t) \end{bmatrix} R \theta \dot{\xi}_I = 0 $ & $ \surd $ & $ \surd $ \\
 \hline
-\multirow{2}{*}{\parbox[c]{0.9cm}{脚\\轮}} & 纯滚动 & $ \begin{bmatrix} \sin(\alpha + \beta) & -\cos(\alpha + \beta) & -l\cos\beta \end{bmatrix} R\theta \dot{\xi}_I = r\dot{\varphi} $ & $ \surd $ & x \\
+\multirow{2}{*}{\parbox[c]{0.9cm}{脚\\轮}} & 纯滚动 & $ \begin{bmatrix} \sin(\alpha + \beta) & -\cos(\alpha + \beta) & -l \cos\beta \end{bmatrix} R \theta \dot{\xi}_I = r \dot{\varphi} $ & $ \surd $ & x \\
 \cline{2-5}
-& 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta) & \sin(\alpha + \beta) & d + l\sin\beta \end{bmatrix} R\theta \dot{\xi}_I = -d\dot{\beta} $ & $ \surd $ & x \\
+& 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta) & \sin(\alpha + \beta) & d + l \sin\beta \end{bmatrix} R \theta \dot{\xi}_I = -d \dot{\beta} $ & $ \surd $ & x \\
 \hline
-\multirow{2}{*}{\parbox[c]{0.9cm}{瑞\\典\\轮}} & 纯滚动 & $ \begin{bmatrix} \cos(\alpha + \beta + \gamma) & \sin(\alpha + \beta + \gamma) & l\sin(\beta + \gamma) \end{bmatrix} R\theta \dot{\xi}_I \newline = r\dot{\varphi}\sin\gamma + r_{sw}\dot{\varphi}_{sw} $ & $ \surd $ & x \\
+\multirow{2}{*}{\parbox[c]{0.9cm}{瑞\\典\\轮}} & 纯滚动 & $ \begin{bmatrix} \cos(\alpha + \beta + \gamma) & \sin(\alpha + \beta + \gamma) & l \sin(\beta + \gamma) \end{bmatrix} R \theta \dot{\xi}_I \newline = r \dot{\varphi}\sin\gamma + r_{sw}\dot{\varphi}_{sw} $ & $ \surd $ & x \\
 \cline{2-5}
-& 无滑动 & $ \begin{bmatrix} \sin(\alpha + \beta + \gamma) & -\cos(\alpha + \beta + \gamma) & -l\cos(\beta + \gamma) \end{bmatrix} R\theta \dot{\xi}_I \newline = r\dot{\varphi}\cos\gamma $ & $ \surd $ \newline 小轮 & x \\
+& 无滑动 & $ \begin{bmatrix} \sin(\alpha + \beta + \gamma) & -\cos(\alpha + \beta + \gamma) & -l \cos(\beta + \gamma) \end{bmatrix} R \theta \dot{\xi}_I \newline = r \dot{\varphi} \cos\gamma $ & $ \surd $ \newline 小轮 & x \\
 \hline
 \end{tabular}
 \caption{车轮约束方程}
@@ -364,14 +356,14 @@ $$ C_1(\beta_s) R(\theta) \dot{\xi}_I = 0 $$
 \paragraph{瞬心法}~\\
 
 两轮差速机器人的瞬心在两轮轮轴上，设其到机器人两轮中间的距离为$ R $，有：
-$$ \dot{\theta} = \frac{\dot{x}_R}{R} = \frac{\dot{\varphi}_l r}{R-l} = \frac{\dot{\varphi}_r r}{R+l} $$
+$$ \dot{\theta} = \frac{\dot{x}_R}{R} = \frac{\dot{\varphi}_l r}{R - l} = \frac{\dot{\varphi}_r r}{R + l} $$
 
 解得$ R = \frac{\dot{\varphi}_r + \dot{\varphi}_l}{\dot{\varphi}_r - \dot{\varphi}_l} $，代回即可。
 %------------------------------------------------
 \paragraph{约束方程法}
 \begin{itemize}
-\item 纯滚动：$ \begin{bmatrix} \sin(\alpha + \beta) & -\cos(\alpha + \beta) & -l\cos\beta \end{bmatrix} \dot{\xi}_R = r\dot{\varphi} $。
-\item 无滑动：$ \begin{bmatrix} \cos(\alpha + \beta) & \sin(\alpha + \beta) & l\sin\beta \end{bmatrix} \dot{\xi}_R = 0 $。
+\item 纯滚动：$ \begin{bmatrix} \sin(\alpha + \beta) & -\cos(\alpha + \beta) & -l \cos\beta \end{bmatrix} \dot{\xi}_R = r\dot{\varphi} $。
+\item 无滑动：$ \begin{bmatrix} \cos(\alpha + \beta) & \sin(\alpha + \beta) & l \sin\beta \end{bmatrix} \dot{\xi}_R = 0 $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{正运动学模型}
@@ -388,9 +380,9 @@ $$ \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{b
 \paragraph{分类}\tip{自由度}
 \begin{itemize}
 \item 移动度（Degree of Mobility）$ \delta_m $：瞬时改变机器人运动状态的能力。
-$$ \delta_m = \dim[C_1(\beta_s)] = 3 - \operatorname{rank}[C_1(\beta_s)] \in [0,3] $$
+$$ \delta_m = \dim[C_1(\beta_s)] = 3 - rank[C_1(\beta_s)] \in [0, 3] $$
 \item 转向度（Degree of Steerability）$ \delta_s $：间接改变机器人运动状态的能力。
-$$ \delta_s = \operatorname{rank}[C_{1s}(\beta_s)] \in [0,2] $$
+$$ \delta_s = rank[C_{1s}(\beta_s)] \in [0, 2] $$
 \item 机动度（Degree of Maneuverability）$ \delta_M $：改变机器人运动状态的能力。
 $$ \delta_M = \delta_m + \delta_s $$
 \begin{itemize}
@@ -417,11 +409,11 @@ $$ \delta_M = \delta_m + \delta_s $$
 \hline
  & $ x $ & $ y $ & $ \theta $ & $ \delta_m $ & $ \delta_s $ & $ \delta_M $ \\
 \hline
-1 & $ \surd $ & $ \surd $ & $ \surd $ & 3 & 0 & 3 \\
-2 & $ \surd $ & $ x $ & $ \surd $ & 2 & 0 & 2 \\
-3 & $ \surd $ & $ - $ & $ \surd $ & 2 & 1 & 3 \\
-4 & $ \surd $ & $ x $ & $ - $ & 1 & 1 & 2 \\
-5 & $ \surd $ & $ - $ & $ - $ & 1 & 2 & 3 \\
+$ 1 $ & $ \surd $ & $ \surd $ & $ \surd $ & $ 3 $ & $ 0 $ & $ 3 $ \\
+$ 2 $ & $ \surd $ & $ x $ & $ \surd $ & $ 2 $ & $ 0 $ & $ 2 $ \\
+$ 3 $ & $ \surd $ & $ - $ & $ \surd $ & $ 2 $ & $ 1 $ & $ 3 $ \\
+$ 4 $ & $ \surd $ & $ x $ & $ - $ & $ 1 $ & $ 1 $ & $ 2 $ \\
+$ 5 $ & $ \surd $ & $ - $ & $ - $ & $ 1 $ & $ 2 $ & $ 3 $ \\
 \hline
 \end{tabular}
 \caption{自由度例题}
@@ -492,12 +484,12 @@ $ \surd $表示可直接控制，$ - $表示可间接控制（不同形态下直
 \paragraph{两轮差速机器人运动控制}
 以下以两轮差速机器人（见\ref{sec:two_wheel}）为例。
 $$ 
-\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r-\dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v_1 \\ 0 \\ v_2 \end{bmatrix} 
+\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v_1 \\ 0 \\ v_2 \end{bmatrix} 
 \overset{\text{变换}}{\Longrightarrow}
 \dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix} = \begin{bmatrix} \cos\theta & 0 \\ \sin\theta & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} 
 $$
 %------------------------------------------------
-\subsection[定点控制器]{定点控制器\tip{定点控制器（误差信号转换）}}
+\subsection[定点控制器]{定点控制器\tip{定点控制器}}
 %------------------------------------------------
 \paragraph{控制目标}
 机器人参考坐标系下误差$ e = \begin{bmatrix} x & y & \theta \end{bmatrix}^T $，设计控制阵$ K = \begin{bmatrix} k_{11} & k_{12} & k_{13} \\ k_{21} & k_{22} & k_{23} \end{bmatrix} $，其中$ k_{ij} = k(t, e) $，得到控制输入$ \begin{bmatrix} v(t) \\ \omega(t) \end{bmatrix} = Ke $，使$ \lim_{t \to \infty} e(t) = 0 $。
@@ -510,19 +502,12 @@ $$
 $$ 
 e = \begin{bmatrix} e_1 \\ e_2 \\ e_3 \end{bmatrix} = R(\theta)^T \tilde{q} = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \tilde{x} \\ \tilde{y} \\ \tilde{\theta} \end{bmatrix}
 \overset{\text{闭环}}{\Longrightarrow}
-\dot{e} = \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = R(\theta)\dot{\tilde{q}} + \dot{R(\theta)}\tilde{q} = \begin{bmatrix} v_1 + v_2 e_2 \\ -v_2 e_1 \\ v_2 \end{bmatrix} 
+\dot{e} = \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = R(\theta) \dot{\tilde{q}} + \dot{R(\theta)}\tilde{q} = \begin{bmatrix} v_1 + v_2 e_2 \\ -v_2 e_1 \\ v_2 \end{bmatrix} 
 $$
 \item 转换到极坐标系
-$$ 
-\begin{cases}
-\rho = \sqrt{\tilde{x}^2 + \tilde{y}^2} \\
-\beta = -atan2(-\tilde{y}, -\tilde{x}) \\
-\alpha = -\beta - \tilde{\theta} \\
-\end{cases}
+$$ \begin{cases} \rho = \sqrt{\tilde{x}^2 + \tilde{y}^2} \\ \beta = -atan2(-\tilde{y}, -\tilde{x}) \\ \alpha = -\beta - \tilde{\theta} \end{cases}
 \overset{\text{闭环}}{\Longrightarrow}
-\begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = 
-\begin{bmatrix} -\cos\alpha & 0 \\ \frac{\sin\alpha}{\rho} & 0 \\ \frac{\sin\alpha}{\rho} & -1 \end{bmatrix}
-\begin{bmatrix} v_1 \\ v_2 \end{bmatrix}
+\begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = \begin{bmatrix} -\cos\alpha & 0 \\ \frac{\sin\alpha}{\rho} & 0 \\ \frac{\sin\alpha}{\rho} & -1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}
 $$ 
 \end{enumerate}
 %------------------------------------------------
@@ -532,14 +517,7 @@ $$
 %------------------------------------------------
 \paragraph{极坐标系线性控制器}~\\
 
-设计控制器%
-$ 
-\begin{cases}
-v_1 = k_\rho \rho \\
-v_2 = k_\alpha \alpha + k_\beta \beta
-\end{cases}
-$，%
-代入得
+设计控制器$ \begin{cases} v_1 = k_\rho \rho \\ v_2 = k_\alpha \alpha + k_\beta \beta \end{cases} $，代入得
 $$ 
 \begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} 
 = \begin{bmatrix} -k_\rho \rho \cos\alpha \\ -k_\rho \sin\alpha \\ k_\rho \sin\alpha - k_\alpha \alpha - k_\beta \beta \end{bmatrix} 
@@ -551,19 +529,12 @@ $$
 %------------------------------------------------
 \paragraph{极坐标系线性控制器}~\\
 
-设计控制器%
-$
-\begin{cases}
-v_1 = k_\rho \rho \cos\alpha \\
-v_2 = k_\alpha \alpha + \frac{k_\rho \sin \alpha \cos\alpha}{\alpha}(\alpha - k_\beta\beta)
-\end{cases}
-$，%
-代入得
+设计控制器$ \begin{cases} v_1 = k_\rho \rho \cos\alpha \\ v_2 = k_\alpha \alpha + \frac{k_\rho \sin\alpha \cos\alpha}{\alpha}(\alpha - k_\beta \beta) \end{cases} $，代入得
 $$ 
 \begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} 
-= \begin{bmatrix} -k_\rho \rho \cos^2\alpha \\ -k_\rho \cos\alpha \sin\alpha \\ k_\rho \cos\alpha \sin\alpha - k_\alpha \alpha - \frac{k_\rho \sin\alpha \cos\alpha}{\alpha} (\alpha - k_\beta\beta) \end{bmatrix} 
+= \begin{bmatrix} -k_\rho \rho \cos^2\alpha \\ -k_\rho \cos\alpha \sin\alpha \\ k_\rho \cos\alpha \sin\alpha - k_\alpha \alpha - \frac{k_\rho \sin\alpha \cos\alpha}{\alpha} (\alpha - k_\beta \beta) \end{bmatrix} 
 \overset{\alpha \to 0}{\Longrightarrow}
-\begin{bmatrix} -k_\rho \rho \\ -k_\rho \alpha \\ - k_\alpha \alpha + k_\rho k_\beta\beta \end{bmatrix} 
+\begin{bmatrix} -k_\rho \rho \\ -k_\rho \alpha \\ - k_\alpha \alpha + k_\rho k_\beta \beta \end{bmatrix} 
 $$
 
 其全局渐近稳定。
@@ -591,43 +562,15 @@ $ e_3 \to 0 $时，控制器简化为$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} 
 %------------------------------------------------
 \paragraph{控制目标与误差变换}~\\
 
-惯性系下，实际路径$ q(s) = \begin{bmatrix} x(s) & y(s) & \theta(s) \end{bmatrix}^T $与参考路径$ q_r \begin{bmatrix} x_r(s) & y_r(s) & \theta_r(s) \end{bmatrix}^T $之差为开环误差$ \tilde{q}(s) = \begin{bmatrix} \tilde{x}(s) & \tilde{y}(s) & \tilde{\theta}(s) \end{bmatrix}^T = \begin{bmatrix} x(s) - x_r(s) & y(s) - y_r(s) & \theta(s) - \theta_r(s) \end{bmatrix}^T $，其中$ s \in [0,1] $为路径参考变量，控制目标为$ \lim_{n \to \infty} \tilde{q}(s) = 0 $。
+惯性系下，实际路径$ q(s) = \begin{bmatrix} x(s) & y(s) & \theta(s) \end{bmatrix}^T $与参考路径$ q_r \begin{bmatrix} x_r(s) & y_r(s) & \theta_r(s) \end{bmatrix}^T $之差为开环误差$ \tilde{q}(s) = \begin{bmatrix} \tilde{x}(s) & \tilde{y}(s) & \tilde{\theta}(s) \end{bmatrix}^T = \begin{bmatrix} x(s) - x_r(s) & y(s) - y_r(s) & \theta(s) - \theta_r(s) \end{bmatrix}^T $，其中$ s \in [0, 1] $为路径参考变量，控制目标为$ \lim_{n \to \infty} \tilde{q}(s) = 0 $。
 
-作变换%
-$
-\begin{cases}
-y_1 &= x + b\cos\theta \\
-y_2 &= y + b\sin\theta
-\end{cases}
-$，%
-进而得到闭环误差$ \begin{bmatrix} \dot{y}_1 \\ \dot{y}_2 \end{bmatrix} = \begin{bmatrix} \cos\theta & -b\sin\theta \\ \sin\theta & b\cos\theta \end{bmatrix} \begin{bmatrix} v \\ \omega \end{bmatrix} = T(\theta) \begin{bmatrix} v \\ \omega \end{bmatrix} $。
+作变换$ \begin{cases} y_1 &= x + b \cos\theta \\ y_2 &= y + b \sin\theta \end{cases} $，进而得到闭环误差$ \begin{bmatrix} \dot{y}_1 \\ \dot{y}_2 \end{bmatrix} = \begin{bmatrix} \cos\theta & -b \sin\theta \\ \sin\theta & b \cos\theta \end{bmatrix} \begin{bmatrix} v \\ \omega \end{bmatrix} = T(\theta) \begin{bmatrix} v \\ \omega \end{bmatrix} $。
 
-逆运算得到$ \begin{bmatrix} v \\ \omega \end{bmatrix} = T^{-1}(\theta) \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} = \begin{bmatrix} \cos\theta & \sin\theta \\ -\frac{\sin\theta}{b} & \frac{\cos\theta}{b} \end{bmatrix} \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} $，故%
-$
-\begin{cases}
-\dot{y}_1 &= u_1 \\
-\dot{y}_2 &= u_2 \\
-\dot{\theta} &= \frac{u_2 \cos\theta - u_1 \sin\theta}{b}
-\end{cases}
-$。
+逆运算得到$ \begin{bmatrix} v \\ \omega \end{bmatrix} = T^{-1}(\theta) \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} = \begin{bmatrix} \cos\theta & \sin\theta \\ -\frac{\sin\theta}{b} & \frac{\cos\theta}{b} \end{bmatrix} \begin{bmatrix} u_1 \\ u_2 \end{bmatrix} $，故$ \begin{cases} \dot{y}_1 &= u_1 \\ \dot{y}_2 &= u_2 \\ \dot{\theta} &= \frac{u_2 \cos\theta - u_1 \sin\theta}{b} \end{cases} $。
 %------------------------------------------------
 \paragraph{控制器}~\\
 
-设计控制器
-$ 
-\begin{cases}
-u_1 = \dot{y}_{1d} + k_1(y_{1d} - y_1) \\
-u_2 = \dot{y}_{2d} + k_2(y_{2d} - y_2)
-\end{cases} 
-$%
-，有%
-$
-\begin{cases}
-\dot{\tilde{y}}_1 = -k_1\tilde{y}_1 \\
-\dot{\tilde{y}}_2 = -k_2\tilde{y}_2
-\end{cases}
-$%
-，系统指数性收敛。
+设计控制器$ \begin{cases} u_1 = \dot{y}_{1d} + k_1(y_{1d} - y_1) \\ u_2 = \dot{y}_{2d} + k_2(y_{2d} - y_2) \end{cases} $，有$ \begin{cases} \dot{\tilde{y}}_1 = -k_1 \tilde{y}_1 \\ \dot{\tilde{y}}_2 = -k_2 \tilde{y}_2 \end{cases} $，系统指数性收敛。
 %----------------------------------------------------------------------------------------
 \section{机器人感知}
 %------------------------------------------------
@@ -739,26 +682,16 @@ $%
 \paragraph{例子}
 以下以两轮差速机器人（见\ref{sec:two_wheel}）为例。
 $$ 
-\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r-\dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v \\ 0 \\ \omega \end{bmatrix} 
+\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v \\ 0 \\ \omega \end{bmatrix} 
 \overset{\text{转换到惯性系}}{\Longrightarrow}
-\begin{cases}
-\dot{x} &= v \cos \theta \\
-\dot{y} &= v \sin \theta \\
-\dot{\theta} &= \omega   
-\end{cases}
+\begin{cases} \dot{x} &= v \cos \theta \\ \dot{y} &= v \sin \theta \\ \dot{\theta} &= \omega \end{cases}
 $$
 
 码盘读数为：
 $$ 
-\begin{cases}
-\Delta s = \frac{r}{2}(\Delta \phi_R + \Delta \phi_L) \\
-\Delta \theta = \frac{r}{2d}(\Delta \phi_R - \Delta \phi_L)
-\end{cases}
+\begin{cases} \Delta s = \frac{r}{2}(\Delta \phi_R + \Delta \phi_L) \\ \Delta \theta = \frac{r}{2d}(\Delta \phi_R - \Delta \phi_L) \end{cases}
 \overset{\text{小时间变化}}{\Longrightarrow}
-\begin{cases}
-\Delta s &= v_k T_s \\
-\Delta \theta &= \omega_k T_s    
-\end{cases}   
+\begin{cases} \Delta s &= v_k T_s \\ \Delta \theta &= \omega_k T_s \end{cases}   
 $$ 
 %------------------------------------------------
 \paragraph{建模方法}\tip{里程计建模方法}
@@ -773,36 +706,17 @@ $$
 \begin{itemize}
 \begin{minipage}{0.5\textwidth}
 \item 欧拉法
-$$
-\begin{cases}
-x_{k + 1} = x_k + v_k T_s \cos \theta_k \\
-y_{k + 1} = y_k + v_k T_s \sin \theta_k \\
-\theta_{k + 1} = \theta_k + \omega_k T_s
-\end{cases}   
-$$
+$$ \begin{cases} x_{k + 1} = x_k + v_k T_s \cos \theta_k \\ y_{k + 1} = y_k + v_k T_s \sin \theta_k \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases} $$
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
 \item RK2（二阶Runge-Kutta）法
-$$
-\begin{cases}
-x_{k + 1} = x_k + v_k T_s \cos(\theta_k + \frac{\omega_k T_s}{2}) \\
-y_{k + 1} = y_k + v_k T_s \sin(\theta_k + \frac{\omega_k T_s}{2}) \\
-\theta_{k + 1} = \theta_k + \omega_k T_s
-\end{cases}  
-$$
+$$ \begin{cases} x_{k + 1} = x_k + v_k T_s \cos(\theta_k + \frac{\omega_k T_s}{2}) \\ y_{k + 1} = y_k + v_k T_s \sin(\theta_k + \frac{\omega_k T_s}{2}) \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases} $$
 \end{minipage}
 \item 解析积分法
-$$
-\begin{cases}
-x_{k + 1} = x_k + \frac{v_k}{\omega_k} (\sin \theta_{k + 1} - \sin \theta_k) \\
-y_{k + 1} = y_k - \frac{v_k}{\omega_k} (\cos \theta_{k + 1} - \cos \theta_k) \\
-\theta_{k + 1} = \theta_k + \omega_k T_s
-\end{cases} 
+$$ 
+\begin{cases} x_{k + 1} = x_k + \frac{v_k}{\omega_k} (\sin \theta_{k + 1} - \sin \theta_k) \\ y_{k + 1} = y_k - \frac{v_k}{\omega_k} (\cos \theta_{k + 1} - \cos \theta_k) \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases} 
 \overset{\omega_k = 0}{\Longrightarrow}
-\begin{cases}
-x_{k + 1} = x_k + v_k T_s \\
-y_{k + 1} = y_k \\
-\end{cases}  
+\begin{cases} x_{k + 1} = x_k + v_k T_s \\ y_{k + 1} = y_k \end{cases}  
 $$
 \end{itemize}
 %------------------------------------------------
@@ -818,26 +732,19 @@ $$
 \paragraph{误差传播（以RK2法为例）}\tip{误差传播}\label{sec:error back}~\\
 
 位姿更新为：
-$$
-p' = f(x, y, \theta, \Delta\phi_R, \Delta\phi_L) = 
-\begin{bmatrix} x \\ y \\ \theta \end{bmatrix} + 
-\begin{bmatrix} \frac{r(\Delta\phi_R + \Delta\phi_L)}{2} \cos(\theta_k + \frac{r[\Delta\phi_R - \Delta\phi_L]}{4d}) \\ \frac{r(\Delta\phi_R + \Delta\phi_L)}{2} \sin(\theta_k + \frac{r[\Delta\phi_R - \Delta\phi_L]}{4d}) \\ \frac{r(\Delta\phi_R - \Delta\phi_L)}{2d} \end{bmatrix}
-$$
+$$ p' = f(x, y, \theta, \Delta \phi_R, \Delta \phi_L) = \begin{bmatrix} x \\ y \\ \theta \end{bmatrix} + \begin{bmatrix} \frac{r(\Delta \phi_R + \Delta \phi_L)}{2} \cos(\theta_k + \frac{r[\Delta \phi_R - \Delta \phi_L]}{4d}) \\ \frac{r(\Delta \phi_R + \Delta \phi_L)}{2} \sin(\theta_k + \frac{r[\Delta \phi_R - \Delta \phi_L]}{4d}) \\ \frac{r(\Delta \phi_R - \Delta \phi_L)}{2d} \end{bmatrix} $$
 
-其中$ \Delta\phi_R,\Delta\phi_L $是控制输入量，有误差协方差矩阵迭代公式：
+其中$ \Delta \phi_R, \Delta \phi_L $是控制输入量，有误差协方差矩阵迭代公式：
 $$ \sum_{p'} = \underbrace{\nabla_p f \cdot \sum_p \cdot \nabla_p f^T}_{\text{位姿}} + \underbrace{\nabla_{r|l}f \cdot \sum_{\Delta} \cdot \nabla_{r|l}f^T}_{\text{控制输入量}} $$
 
 初始化姿态协方差矩阵$ \sum_{p'} $（可零初始化），其更新量为：
-$$
-\nabla_p f = \begin{bmatrix}\frac{\partial f}{\partial x} & \frac{\partial f}{\partial y} & \frac{\partial f}{\partial \theta}\end{bmatrix} = 
-\begin{bmatrix} 1 & 0 & -\Delta s \sin(\theta_k + \frac{\Delta\theta}{2}) \\ 0 & 1 & \Delta s \cos(\theta_k + \frac{\Delta\theta}{2}) \\ 0 & 0 & 1 \end{bmatrix}
-$$
+$$ \nabla_p f = \begin{bmatrix}\frac{\partial f}{\partial x} & \frac{\partial f}{\partial y} & \frac{\partial f}{\partial \theta}\end{bmatrix} = \begin{bmatrix} 1 & 0 & -\Delta s \sin(\theta_k + \frac{\Delta \theta}{2}) \\ 0 & 1 & \Delta s \cos(\theta_k + \frac{\Delta \theta}{2}) \\ 0 & 0 & 1 \end{bmatrix} $$
 
-假设$ \Delta\phi_R,\Delta\phi_L $的误差相互独立，有控制输入量协方差矩阵：
-$$ \sum_{\Delta} = covar(\Delta\phi_R, \Delta\phi_L) = \begin{bmatrix} k_r||\Delta\phi_R|| & 0 \\ 0 & k_l||\Delta\phi_L|| \end{bmatrix} $$
+假设$ \Delta \phi_R, \Delta \phi_L $的误差相互独立，有控制输入量协方差矩阵：
+$$ \sum_{\Delta} = covar(\Delta \phi_R, \Delta \phi_L) = \begin{bmatrix} k_r||\Delta \phi_R|| & 0 \\ 0 & k_l||\Delta \phi_L|| \end{bmatrix} $$
 
 其更新量为：
-$$ \nabla_{rl}f = \begin{bmatrix} \frac{\partial f}{\partial \Delta\phi_R} & \frac{\partial f}{\partial \Delta\phi_L} \end{bmatrix} = \begin{bmatrix} \frac{r}{2}\cos(\theta_k + \frac{\Delta\theta}{2}) - \frac{r}{4d}\Delta s \sin(\theta_k + \frac{\Delta\theta}{2}) & \frac{r}{2}\cos(\theta_k + \frac{\Delta\theta}{2}) + \frac{r}{4d}\Delta s \sin(\theta_k + \frac{\Delta\theta}{2}) \\ \frac{r}{2}\sin(\theta_k + \frac{\Delta\theta}{2}) + \frac{r}{4d}\Delta s \cos(\theta_k + \frac{\Delta\theta}{2}) & \frac{r}{2}\sin(\theta_k + \frac{\Delta\theta}{2}) - \frac{r}{4d}\Delta s \cos(\theta_k + \frac{\Delta\theta}{2}) \\ \frac{r}{2d} & -\frac{r}{2d} \end{bmatrix} $$
+$$ \nabla_{rl}f = \begin{bmatrix} \frac{\partial f}{\partial \Delta \phi_R} & \frac{\partial f}{\partial \Delta \phi_L} \end{bmatrix} = \begin{bmatrix} \frac{r}{2}\cos(\theta_k + \frac{\Delta \theta}{2}) - \frac{r}{4d}\Delta s \sin(\theta_k + \frac{\Delta \theta}{2}) & \frac{r}{2}\cos(\theta_k + \frac{\Delta \theta}{2}) + \frac{r}{4d}\Delta s \sin(\theta_k + \frac{\Delta \theta}{2}) \\ \frac{r}{2}\sin(\theta_k + \frac{\Delta \theta}{2}) + \frac{r}{4d}\Delta s \cos(\theta_k + \frac{\Delta \theta}{2}) & \frac{r}{2}\sin(\theta_k + \frac{\Delta \theta}{2}) - \frac{r}{4d}\Delta s \cos(\theta_k + \frac{\Delta \theta}{2}) \\ \frac{r}{2d} & -\frac{r}{2d} \end{bmatrix} $$
 %------------------------------------------------
 \paragraph{误差转化展示}
 原理见\ref{sec:error}。
@@ -872,14 +779,9 @@ $$ \min \sum_{i = 1}^{n} d_i^2 = \min \sum_{i = 1}^{n}[y_i - f(x_i)]^2 $$
 \paragraph{求解方法}
 \begin{enumerate}
 \item 求偏导：求目标式关于$ a, b $的偏导，得到如下极值条件：
-$$
-\begin{cases}
-\frac{\partial \Pi}{\partial a} = 2 \sum_{i = 1}^{n} [y_i - (a + bx_i)] = 0 \\
-\frac{\partial \Pi}{\partial b} = 2 \sum_{i = 1}^{n} x_i [y_i - (a + bx_i)] = 0 \\
-\end{cases}
-$$
-\item 矩阵形式\tip{最小二乘法矩阵形式求解}：将拟合直线$ f(x) = ax + b $增广为矩阵形式$ Y = X\beta $，在误差$ d = Y - X\beta \to 0 $时，有$ Y = X\beta $，由于$ X $不一定是方阵，有：
-$$ Y = X\beta \Rightarrow X^T Y = X^T X\beta \Rightarrow \beta = (X^T X)^{-1}X^T Y $$
+$$ \begin{cases} \frac{\partial \Pi}{\partial a} = 2 \sum_{i = 1}^{n} [y_i - (a + b x_i)] = 0 \\ \frac{\partial \Pi}{\partial b} = 2 \sum_{i = 1}^{n} x_i [y_i - (a + b x_i)] = 0 \end{cases} $$
+\item 矩阵形式\tip{最小二乘法矩阵形式求解}：将拟合直线$ f(x) = ax + b $增广为矩阵形式$ Y = X \beta $，在误差$ d = Y - X \beta \to 0 $时，有$ Y = X \beta $，由于$ X $不一定是方阵，有：
+$$ Y = X \beta \Rightarrow X^T Y = X^T X \beta \Rightarrow \beta = (X^T X)^{-1}X^T Y $$
 \end{enumerate}
 %------------------------------------------------
 \subsubsection[Split-and-Merge]{Split-and-Merge（分割与合并）\tip{Split-and-Merge直线提取}}
@@ -908,7 +810,7 @@ $$ k = \frac{log(1 - p)}{log(1 - w^2)} $$
 \end{enumerate}
 %------------------------------------------------
 \subsubsection[Hough-Transform]{Hough-Transform（霍夫变换）}
-图像空间中的一个点对应Hough空间中的一条线。激光定位任务中，常用极坐标$ \rho = x \cos \theta + y \sin \theta $表示。在定距下，误差呈正态分布；而在变距下，误差增长与距离正相关。
+图像空间中的一个点对应Hough空间中的一条线。激光定位任务中，常用极坐标$ \rho = x \cos\theta + y \sin\theta $表示。在定距下，误差呈正态分布；而在变距下，误差增长与距离正相关。
 \begin{enumerate}
 \item 计算数据范围（Hough空间参数分辨率），并初始化累加器。
 \item 遍历边缘点，计算可能的参数组合，并在对应位置进行投票。
@@ -926,8 +828,8 @@ $$ \rho_i \cos(\theta_i - \alpha) - r = d_i $$
 误差传播为：
 \begin{align*}
 C_x = \begin{bmatrix} diag(\sigma_\rho^2) & 0 \\ 0 & diag(\sigma_\theta^2) \end{bmatrix}_{2n \times 2n} &\quad
-F_{\rho\theta} = \begin{bmatrix} \frac{\partial \alpha}{\partial \rho_1} & \frac{\partial \alpha}{\partial \rho_2} & \cdots & \frac{\partial \alpha}{\partial \theta_{n - 1}} & \frac{\partial \alpha}{\partial \theta_n} \\ \frac{\partial r}{\partial \rho_1} & \frac{\partial r}{\partial \rho_2} & \cdots & \frac{\partial r}{\partial \theta_{n - 1}} & \frac{\partial r}{\partial \theta_n} \end{bmatrix} \\
-C_{\alpha r} &= F_{\rho\theta} C_x F_{\rho\theta}^T    
+F_{\rho \theta} = \begin{bmatrix} \frac{\partial \alpha}{\partial \rho_1} & \frac{\partial \alpha}{\partial \rho_2} & \cdots & \frac{\partial \alpha}{\partial \theta_{n - 1}} & \frac{\partial \alpha}{\partial \theta_n} \\ \frac{\partial r}{\partial \rho_1} & \frac{\partial r}{\partial \rho_2} & \cdots & \frac{\partial r}{\partial \theta_{n - 1}} & \frac{\partial r}{\partial \theta_n} \end{bmatrix} \\
+C_{\alpha r} &= F_{\rho \theta} C_x F_{\rho \theta}^T    
 \end{align*}
 %------------------------------------------------
 \subsubsection[性能对比]{性能对比}
@@ -977,14 +879,14 @@ $$ R = argmin \sum_{i = 1}^{n}w_i ||R(p_i - \hat{p}) - (q_i - \hat{q})||^2 $$
 $$ R = argmin \sum_{i = 1}^{n}w_i ||R x_i - y_i||^2 $$
 
 将平方项变成矩阵相乘的形式：
-$$ ||Rx_i - y_i||^2 = (R x_i - y_i)^T(R x_i - y_i) = x_i^T (R^T R) x_i - y_i^T R x_i - x_i^T R^T y_i + y_i^T y_i $$
+$$ ||R x_i - y_i||^2 = (R x_i - y_i)^T(R x_i - y_i) = x_i^T (R^T R) x_i - y_i^T R x_i - x_i^T R^T y_i + y_i^T y_i $$
 \begin{itemize}
 \item $ R^{-1} = R^T \Rightarrow R^T R = E $。
 \item $ x_i^T R^T y_i $是一个$ 1 \times 1 $标量，转置后不变，故$ x_i^T R^T y_i = y_i^T R x_i $。
 \end{itemize}
 
 所以:
-$$ ||Rx_i - y_i||^2 = x_i^T x_i - 2 y_i^T R x_i + y_i^T y_i $$
+$$ ||R x_i - y_i||^2 = x_i^T x_i - 2 y_i^T R x_i + y_i^T y_i $$
 
 其中仅有负号项与$ R $相关，其它项都是定值，目标可改写为：
 $$ R = argmax \sum_{i = 1}^{n}w_i y_i^T R x_i $$
@@ -996,14 +898,14 @@ $$ R = argmax \sum_{i = 1}^{n}w_i y_i^T R x_i $$
 \sum_{i = 1}^{n} w_i y_i^T R x_i 
 &= tr(diag(w_1 y_1^T R x_1, w_2 y_2^T R x_2, \dots, w_n y_n^T R x_n)) \\
 &= tr(diag(w_1, w_2, \dots, w_n) \begin{bmatrix} y_1^T & y_2^T & \vdots & y_n^T \end{bmatrix}^T R \begin{bmatrix} x_1 & x_2 & \cdots & x_n \end{bmatrix}) \\
-&= tr(WY^TRX)
+&= tr(W Y^T R X)
 \end{align*}
 
-因为矩阵的迹满足$ tr(AB) = tr(BA) $，所以$ tr(WY^TRX) = tr(RXWY^T) $。令$ S = XWY^T $，基于SVD原理（见附录\ref{sec:svd}），$ S = U \Sigma V^T $，其中$ U,V $是单位正交阵，$ \Sigma $为对角阵。所以$ tr(RXWY^T) = tr(RU \Sigma V^T) = tr(\Sigma V^TRU) $，后三者都是单位正交阵，它们的积$ M $也是单位正交阵。目标改写为：
+因为矩阵的迹满足$ tr(AB) = tr(BA) $，所以$ tr(W Y^T R X) = tr(R X W Y^T) $。令$ S = X W Y^T $，基于SVD原理（见附录\ref{sec:svd}），$ S = U \Sigma V^T $，其中$ U, V $是单位正交阵，$ \Sigma $为对角阵。所以$ tr(R X W Y^T) = tr(R U \Sigma V^T) = tr(\Sigma V^T R U) $，后三者都是单位正交阵，它们的积$ M $也是单位正交阵。目标改写为：
 $$ R = argmax tr(\Sigma M) $$
 %------------------------------------------------
 \paragraph{求解变换}
-单位正交阵的最大迹在单位阵下取得的，有$ M = E $，即$ R = VU^T $。代回确定$ t $。
+单位正交阵的最大迹在单位阵下取得的，有$ M = E $，即$ R = V U^T $。代回确定$ t $。
 %------------------------------------------------
 \subsubsection[基于ICP的点云匹配算法]{基于ICP（Iterative Closest Point，迭代最近点）的点云匹配算法\tip{基于ICP的点云匹配算法}}
 \begin{enumerate}
@@ -1125,11 +1027,11 @@ $$ \hat{x}_k = \hat{x}_k^- + \underbrace{K}_{\text{卡尔曼增益}}\underbrace{
 $ P_k $可进行转化：
 \begin{align*}
 P_k &= E[e_k e_k^T] = E[(x_k - \hat{x}_k)(x_k - \hat{x}_k)^T] (\text{误差展开}) \\
-&= E[\{x_k - [\hat{x}_k^- + K(z_k - H\hat{x}_k^-)]\} \{x_k - [\hat{x}_k^- + K(z_k - H\hat{x}_k^-)]\}^T] (\text{代入先后验转化关系}) \\
+&= E[\{x_k - [\hat{x}_k^- + K(z_k - H \hat{x}_k^-)]\} \{x_k - [\hat{x}_k^- + K(z_k - H \hat{x}_k^-)]\}^T] (\text{代入先后验转化关系}) \\
 &= E\{[(x_k - \hat{x}_k^-) - K(H x_k + v_k - H \hat{x}_k^-)][(x_k - \hat{x}_k^-) - K(H x_k + v_k - H \hat{x}_k^-)]^T\} (\text{代入测量方程}) \\
-&= E\{[(I - KH)e_k^- - Kv_k][(I - KH)e_k^- - Kv_k]^T\} (\text{误差重构}) \\
+&= E\{[(I - KH)e_k^- - Kv_k][(I - KH)e_k^- - K v_k]^T\} (\text{误差重构}) \\
 &= (I - KH) \underbrace{E[e_k^- e_k^{-T}]}_{P_n^-} (I - KH)^T + K \underbrace{E[v_k v_k^T]}_{R} K^T - K \underbrace{E[v_k e_k^{-T}]}_{\text{不相干，}0} (I - KH)^T -(I - KH) \underbrace{E[e_k^- v_k^T]}_{\text{不相干，}0} K^T \\
-&= (I - KH)P_k^-(I - KH)^T + KRK^T
+&= (I - KH)P_k^-(I - KH)^T + K R K^T
 \end{align*}
 
 令偏导为$ 0 $：
@@ -1156,7 +1058,7 @@ $$ \frac{\partial P_k}{\partial K} = -2P_k^- H^T + 2K H P_k^- H^T + 2KR = 0 $$
 \begin{align*}
 &K_k = P_k^-H^T(H P_k^- H^T + R)^{-1} \\
 &\hat{x}_k = \hat{x}_k^- + K_k(z_k - H \hat{x}_k^-) \\
-&P_k = (I - K_k H)P_k^- < P_k^-,R
+&P_k = (I - K_k H)P_k^- < P_k^-, R
 \end{align*}
 };
 \node[draw, rectangle, minimum width=5cm, minimum height=2cm, text width=5cm, below=0.5cm of predict] (init) {
@@ -1177,7 +1079,7 @@ $$ \frac{\partial P_k}{\partial K} = -2P_k^- H^T + 2K H P_k^- H^T + 2KR = 0 $$
 \subsubsection[基于卡尔曼滤波的定位算法]{基于卡尔曼滤波的定位算法\tip{基于卡尔曼滤波的定位算法}}
 %------------------------------------------------
 \paragraph{步骤}
-$ Prediction \rightarrow Observation \rightarrow Estimation $
+$ Prediction \rightarrow Observation \rightarrow Estimation $。
 
 \begin{figure}[H]
 \centering 
@@ -1232,7 +1134,7 @@ $ \begin{bmatrix} x \\ y \\ \frac{dx}{dt} \\ \frac{dy}{dt} \end{bmatrix} $ & $ \
 \item 未知概率分布求粒子分布：重要性评估，迭代，根据预估分布（以均匀分布开始）撒粒子，再根据结果调整重要性评估（归一化）。
 \end{itemize}
 %------------------------------------------------
-\subsubsection[蒙特卡洛定位算法（粒子滤波算法）]{蒙特卡洛定位算法（粒子滤波算法，MCL）\tip{蒙特卡洛定位算法（粒子滤波算法）}}
+\subsubsection[蒙特卡洛定位（粒子滤波）算法]{蒙特卡洛定位（粒子滤波算法）（MCL）\tip{蒙特卡洛定位（粒子滤波）算法}}
 多信息融合，提高真值处重要性。
 %------------------------------------------------
 \paragraph{重要性采样}~\\
@@ -1244,7 +1146,7 @@ $$ p(x_i|z_1, z_2, \cdots, z_n) = \frac{\prod_k p(z_k|x_i)p(x_i)}{p(z_1, z_2, \c
 $$ p(x_i|z_i) = \frac{p(z_i|x_i)p(x_i)}{p(z_i)} $$
 
 有重要性权重：
-$$ w_i = \frac{p(x_i|z_1, z_2, \cdots, z_n)}{p(x_i|z_i)} = \frac{p(z_i)\prod_{k\neq i}p(z_k|x_i)}{p(z_1, z_2, \cdots, z_n)} \propto \prod_{k \neq i}p(z_k|x_i) $$
+$$ w_i = \frac{p(x_i|z_1, z_2, \cdots, z_n)}{p(x_i|z_i)} = \frac{p(z_i)\prod_{k \neq i}p(z_k|x_i)}{p(z_1, z_2, \cdots, z_n)} \propto \prod_{k \neq i}p(z_k|x_i) $$
 %------------------------------------------------
 \paragraph{步骤}
 在一次迭代（$ X_{t - 1} \rightarrow X_t $）中，经历以下过程：
@@ -1252,7 +1154,7 @@ $$ w_i = \frac{p(x_i|z_1, z_2, \cdots, z_n)}{p(x_i|z_i)} = \frac{p(z_i)\prod_{k\
 \item 预测：基于运动模型（建议分布）对粒子进行更新和采样：
 $$ x_t^{(i)} = f(x_{t - 1}^{(i)}, u_t) $$
 \item 校正：使用传感器模型计算粒子权重：
-$$ w_t^{(i)} = p(z_t | x_t^{(i)}) $$
+$$ w_t^{(i)} = p(z_t|x_t^{(i)}) $$
 \item 重采样：根据归一化权重进行重采样（采用轮盘赌），权重越大概率越高。
 \end{enumerate}
 %------------------------------------------------
@@ -1263,29 +1165,14 @@ $ m $指地图。
 \begin{itemize}
 \item 激光雷达测量误差$ p_{hit}(z_t|x_t, m) $。
 \item 没有检测到障碍物$ p_{max}(z_t|x_t, m) $：常值分布，激光雷达最大测距距离。
-$$
-p_{max}(z_t|x_t, m) = \begin{cases}
-1 & z_t^k = z_{max} \\
-0 & otherwise \\
-\end{cases}
-$$
-\item 随机错误$ p_{rand}(z_t|x_t,m) $：均匀分布，错误的距离值。
-$$
-p_{rand}(z_t|x_t, m) = \begin{cases}
-\frac{1}{z_{max}} & 0 \leq z_t^k \leq z_{max} \\
-0 & otherwise \\
-\end{cases}
-$$
+$$ p_{max}(z_t|x_t, m) = \begin{cases} 1 & z_t^k = z_{max} \\ 0 & otherwise \\ \end{cases} $$
+\item 随机错误$ p_{rand}(z_t|x_t, m) $：均匀分布，错误的距离值。
+$$ p_{rand}(z_t|x_t, m) = \begin{cases} \frac{1}{z_{max}} & 0 \leq z_t^k \leq z_{max} \\ 0 & otherwise \\ \end{cases} $$
 \item 激光雷达观测误差模型$ p(z_t|x_t, m) $：上述误差的线性组合。
 $$ p(z_t|x_t, m) = \alpha_{hit}p_{hit} + \alpha_{max}p_{max} + \alpha_{rand}p_{rand}, \quad \alpha_{hit} + \alpha_{max} + \alpha_{rand} = 1 $$
 \end{itemize}
 \item 物理模型：$ p_{hit}(z_t|x_t, m) $包含随机噪声，一般为高斯分布。
-$$
-p_{hit}(z_t|x_t, m) = \begin{cases}
-N(z_t^{k*}, \sigma_{hit}^2) & 0 \leq z_t^k \leq z_{max} \\
-0 & otherwise \\
-\end{cases}
-$$
+$$ p_{hit}(z_t|x_t, m) = \begin{cases} N(z_t^{k*}, \sigma_{hit}^2) & 0 \leq z_t^k \leq z_{max} \\ 0 & otherwise \\ \end{cases} $$
 \item 可能域（likelihood）：将激光束投影到地图中，$ p_{hit}(z_t|x_t, m) $以距投影最近的点的距离为均值，激光测距偏差为方差。
 \begin{itemize}
 \item 优点：在线计算量小，平滑性好，收敛性强，更符合实际情况。
@@ -1353,7 +1240,7 @@ $$
 \item 计算
 \begin{itemize}
 \item 概率$ p $：$ p(m_i|s_n) = 1 - E_r E_\alpha $，其中：
-$$ E_r = 1 - k_r(\frac{2(\rho_i - r_i)}{\Delta r})^2, E_\alpha = 1 - k_\alpha(\frac{2(\theta_i - \alpha)}{\Delta\alpha})^2 $$
+$$ E_r = 1 - k_r(\frac{2(\rho_i - r_i)}{\Delta r})^2, E_\alpha = 1 - k_\alpha(\frac{2(\theta_i - \alpha)}{\Delta \alpha})^2 $$
 \item 几率$ l $：$ \text{几率} = \frac{\text{概率}}{1 - \text{概率}} $，几率与概率非线性正相关。
 
 利用贝叶斯公式得到每次测量（相互独立）的递推关系：
@@ -1432,21 +1319,15 @@ x_t = \begin{bmatrix} X_R \\ M_1 \\ M_2 \\ \vdots \\ M_n \end{bmatrix}_{(3 + 2n)
 \nabla f' = \begin{bmatrix} \nabla f & 0 \\ 0 & I \end{bmatrix}
 \end{align*}
 \item 基于观测模型进行预估观测：每个路标观测独立，交叉项为$ 0 $。
-$$
-\hat{Z}_t = \begin{bmatrix} Z_{1t} \\ Z_{2t} \\ \vdots \\ Z_{nt} \end{bmatrix}, \quad
-Q_t = \begin{bmatrix} Q_{1t} & 0 & \cdots & 0 \\ 0 & Q_{2t} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & Q_{nt} \end{bmatrix}
-$$
+$$ \hat{Z}_t = \begin{bmatrix} Z_{1t} \\ Z_{2t} \\ \vdots \\ Z_{nt} \end{bmatrix}, \quad Q_t = \begin{bmatrix} Q_{1t} & 0 & \cdots & 0 \\ 0 & Q_{2t} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & Q_{nt} \end{bmatrix} $$
 \item 建立状态估计和预估观测的数据关联。
 $$ K_t = \bar{\Sigma}_t H_t^T (H_t \bar{\Sigma}_t H_t^T + Q_t)^{-1} $$
 \item 状态更新。
-$$ 
-X_t = \bar{X}_t + K_t[\hat{Z}_t - h(\bar{X}_t)], \quad
-\Sigma_t = [I - K_t H_t]\bar{\Sigma}_t 
-$$
+$$ X_t = \bar{X}_t + K_t[\hat{Z}_t - h(\bar{X}_t)], \quad \Sigma_t = [I - K_t H_t]\bar{\Sigma}_t $$
 \item 获得实际观测：全局地图 = 全局观测位置 + 机器人测量数据。
 
 机器人系的激光观测数据$ z^i_t = [r_t^i, \phi_t^i] $，投影到世界坐标系：
-$$ \begin{pmatrix} \bar{x}_m \\ \bar{y}_m \end{pmatrix} = \begin{pmatrix} \bar{x}_R \\ \bar{y}_R \end{pmatrix} + \begin{pmatrix} r_t^i \cos (\phi_t^i + \bar{\theta}_R) \\ r_t^i \sin (\phi_t^i + \bar{\theta}_R) \end{pmatrix} $$
+$$ \begin{pmatrix} \bar{x}_m \\ \bar{y}_m \end{pmatrix} = \begin{pmatrix} \bar{x}_R \\ \bar{y}_R \end{pmatrix} + \begin{pmatrix} r_t^i \cos(\phi_t^i + \bar{\theta}_R) \\ r_t^i \sin(\phi_t^i + \bar{\theta}_R) \end{pmatrix} $$
 
 转换得到：
 $$
@@ -1457,12 +1338,8 @@ $$
 
 有单路标雅可比：
 \begin{align*}
-H_i^j &= ^{low}H_i^j F_{x, j} \\
-&= \frac{1}{q} \begin{pmatrix} -\sqrt{q}\delta_x & -\sqrt{q}\delta_y & 0 & \sqrt{q}\delta_x & \sqrt{q}\delta_y \\ \delta_y & -\delta_x & -q & -\delta_y & \delta_x \end{pmatrix} 
-\begin{pmatrix} 
-I_3 & 0_{2j - 2} & 0 & 0_{2N - 2j}  \\
-0 & 0 & I_2 & 0 \\
-\end{pmatrix}
+H_i^j &= {}^{low} H_i^j F_{x, j} \\
+&= \frac{1}{q} \begin{pmatrix} -\sqrt{q}\delta_x & -\sqrt{q}\delta_y & 0 & \sqrt{q}\delta_x & \sqrt{q}\delta_y \\ \delta_y & -\delta_x & -q & -\delta_y & \delta_x \end{pmatrix} \begin{pmatrix} I_3 & 0_{2j - 2} & 0 & 0_{2N - 2j} \\ 0 & 0 & I_2 & 0 \\ \end{pmatrix}
 \end{align*}
 \item 在地图中加入新的路标：新路标与原路标不独立，因为前者由不确定度决定，而不确定度有后者计算。
 \begin{align*}
@@ -1546,7 +1423,7 @@ w^{[k]} &= \frac{\overbrace{p(x_{1:t}^{[k]}|z_{1:t}, u_{1:t})}^{\text{目标分�
 %------------------------------------------------
 \paragraph{构建图（前端）}
 \begin{itemize}
-\item 节点（Node）：机器人位姿，包含位姿$ x_{1:n}(x, y ,\theta) $、特征或路标$ m_{1:k}(x, y) $信息。
+\item 节点（Node）：机器人位姿，包含位姿$ x_{1:n}(x, y, \theta) $、特征或路标$ m_{1:k}(x, y) $信息。
 \begin{itemize}
 \item 定位（Pose）：$ x^T = (x_1^T, \cdots, x_n^T) \in R^{3n} $。
 \item SLAM（Pose feature）：$ x^T = (x_1^T, \cdots, x_n^T, m_1^T, \cdots, m_K^T) \in R^{3n + 2K} $。
@@ -1581,8 +1458,7 @@ $$ c = \sum_{i = 1}^{4} f_i^2 = (x_0 - 0)^2 + (x_1 - x_0 - 1)^2 + [x_2 - x_1 -(-
 求偏导得到方程组，解得：
 $$
 \begin{bmatrix}  x_0 \\ x_1 \\ x_2 \end{bmatrix} 
-= \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1}
-\begin{bmatrix} -1.0 \\ 1.8 \\ -0.8 \end{bmatrix} 
+= \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1} \begin{bmatrix} -1.0 \\ 1.8 \\ -0.8 \end{bmatrix} 
 = \begin{bmatrix} 0 \\ 0.93 \\ 0.07 \end{bmatrix}
 $$
 \item SLAM：起点在$ 0 $处，观测到前方$ 2m $处有路标。向前移动到路标前$ 0.8m $处，编码器测得位移$ 1m $。
@@ -1593,8 +1469,7 @@ $$ c = \sum_{i = 1}^{4} f_i^2 = (x_0 - 0)^2 + (x_1 - x_0 - 1)^2 + (l_0 - x_0 - 2
 求偏导得到方程组，解得：
 $$
 \begin{bmatrix}  x_0 \\ x_1 \\ l_0 \end{bmatrix} 
-= \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1}
-\begin{bmatrix} -3.0 \\ 0.2 \\ 2.8 \end{bmatrix} 
+= \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1} \begin{bmatrix} -3.0 \\ 0.2 \\ 2.8 \end{bmatrix} 
 = \begin{bmatrix} 0 \\ 1.07 \\ 1.93 \end{bmatrix}
 $$
 \end{enumerate}
@@ -1749,7 +1624,7 @@ A* & 路径评价由移动开销$ G(n) $和启发函数代价估计$ H(n) $组�
 将误差传播协方差矩阵$ \sum_p $转化成椭圆展示。
 %------------------------------------------------
 \paragraph{计算}
-取$ \sum_p $左上二阶子阵$ \sum_{p_{xy}} = \begin{bmatrix} \sigma_{xx} & \sigma_{xy} \\ \sigma_{xy} & \sigma_{yy} \end{bmatrix} $，计算特征值$ \lambda_1,\lambda_2 $和特征向量$ \overrightarrow{p}_1,\overrightarrow{p}_2 $，其分别表示长短轴的大小和方向，圆心是$ (x_k, y_k) $（直接对$ \sum_p $求取特征根和特征向量，再取前两个，结果与其不同）。
+取$ \sum_p $左上二阶子阵$ \sum_{p_{xy}} = \begin{bmatrix} \sigma_{xx} & \sigma_{xy} \\ \sigma_{xy} & \sigma_{yy} \end{bmatrix} $，计算特征值$ \lambda_1, \lambda_2 $和特征向量$ \overrightarrow{p}_1, \overrightarrow{p}_2 $，其分别表示长短轴的大小和方向，圆心是$ (x_k, y_k) $（直接对$ \sum_p $求取特征根和特征向量，再取前两个，结果与其不同）。
 %------------------------------------------------
 \paragraph{意义}
 \begin{itemize}
@@ -1761,8 +1636,8 @@ A* & 路径评价由移动开销$ G(n) $和启发函数代价估计$ H(n) $组�
 返回里程计\ref{sec:error back}。
 %------------------------------------------------
 \subsection[奇异值分解]{奇异值分解（Singular Value Decomposition，SVD）}\label{sec:svd}
-根据$ A_{m \times n} $计算$ (A^T A)_{n \times n} $ 和$ (AA^T)_{m \times m} $两个对称矩阵，求二者的特征值和特征向量：
-$$ A^T A v_i = \lambda_i v_i, i = 1, 2, \dots, n \quad AA^T u_i = \mu_i u_i, i = 1, 2, \dots, m $$
+根据$ A_{m \times n} $计算$ (A^T A)_{n \times n} $ 和$ (A A^T)_{m \times m} $两个对称矩阵，求二者的特征值和特征向量：
+$$ A^T A v_i = \lambda_i v_i, i = 1, 2, \dots, n \quad A A^T u_i = \mu_i u_i, i = 1, 2, \dots, m $$
 
 其中，$ \lambda_i, \mu_i $是特征值，$ v_i, u_i $是其对应的特征向量，分别组成$ V = [v_1, v_2, \dots, v_n] $和$ U = [u_1, u_2, \dots, u_m] $。
 

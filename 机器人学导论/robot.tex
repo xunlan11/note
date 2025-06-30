@@ -34,11 +34,7 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \end{multicols}
 \endgroup
 \newpage
-\begingroup
-\begin{multicols}{2}
 \listoftips
-\end{multicols}
-\endgroup
 \newpage
 %----------------------------------------------------------------------------------------
 \section{基础知识}
@@ -113,23 +109,11 @@ $$
 \item 笛卡尔坐标系$ (x, y, z) $：标准正交基，右手法则。 \\
 \begin{minipage}{0.5\textwidth}
 \item 圆柱坐标系$ (r, \theta, \mu) $：
-$$ 
-\begin{cases}
-x = r \cos\theta &r \geq 0 \\
-y = r \sin\theta &0 \leq \theta \leq 2 \pi \\
-z = \mu
-\end{cases} 
-$$
+$$ \begin{cases} x = r \cos\theta &r \geq 0 \\ y = r \sin\theta &0 \leq \theta \leq 2 \pi \\ z = \mu \end{cases} $$
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
 \item 球坐标系$ (r, \alpha, \beta) $：
-$$
-\begin{cases}
-x = r \cos\beta \cos\alpha &r \geq 0 \\
-y = r \cos\beta \sin\alpha &0 \leq \alpha \leq 2\pi \\
-z = r \sin\beta &0 \leq \beta \leq 2\pi
-\end{cases} 
-$$
+$$ \begin{cases} x = r \cos\beta \cos\alpha &r \geq 0 \\ y = r \cos\beta \sin\alpha &0 \leq \alpha \leq 2\pi \\ z = r \sin\beta &0 \leq \beta \leq 2\pi \end{cases} $$
 \end{minipage}
 \end{itemize}
 
@@ -181,12 +165,7 @@ $$ {}^A_B T = \begin{bmatrix} {}^A_B R & {}^A P_{Borg} \\ \underbrace{0}_{\text{
 \begin{itemize}
 \item $ {}^A_B T $满秩。
 \item 求解：求$ {}^A_B R $，填底行，求$ P_{Borg} $（$ A $坐标系下$ B $的位置，即旋转完的$ B $坐标系下$ A $到$ B $的移动）。
-\item 
-$ 
-{}^A_B T^{-1} = {}^B_A T 
-= \begin{bmatrix} {}^B_A R & {}^B P_{Aorg} \\ 0 & 1 \end{bmatrix} 
-= \begin{bmatrix} {}^A_B R^T & -{}^A_B R^T \cdot {}^A P_{Borg} \\ 0 & 1 \end{bmatrix} 
-$，
+\item $ {}^A_B T^{-1} = {}^B_A T = \begin{bmatrix} {}^B_A R & {}^B P_{Aorg} \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} {}^A_B R^T & -{}^A_B R^T \cdot {}^A P_{Borg} \\ 0 & 1 \end{bmatrix} $，
 
 推导：先逆平移，再整体逆旋转，$ {}^B({}^A P_{Borg}) = {}^B_A R \cdot {}^A P_{Borg} + {}^B P_{Aorg} = 0 $。
 \end{itemize}
@@ -237,7 +216,7 @@ $$
 \end{table}
 \end{minipage}
 %------------------------------------------------
-\subsubsection[例题]{例题\tip{映射与算子例题}}
+\subsubsection[例题]{例题}
 \begin{figure}[H]
 \centering
 \subfloat[例题1]{\includegraphics[width=.3\textwidth]{9.1}} \quad
@@ -377,8 +356,8 @@ $$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \varepsilon_2 = k_y \sin\frac{\thet
 \hline
 关节 & $ \alpha_{i - 1} $ & $ \vec{a}_{i - 1} $ & $ \theta_i $ & $ d_i $ \\
 \hline
-1 & $ 0 $ & $ 0 $ & $ \theta_1 $ & $ d_1 $ \\
-2 & $ \alpha_1 $ & $ \vec a_1 $ & $ \theta_2 $ & $ d_2 $ \\
+$ 1 $ & $ 0 $ & $ 0 $ & $ \theta_1 $ & $ d_1 $ \\
+$ 2 $ & $ \alpha_1 $ & $ \vec a_1 $ & $ \theta_2 $ & $ d_2 $ \\
 \hline
 \end{tabular}
 \caption{DH参数表}
@@ -411,7 +390,7 @@ $$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \varepsilon_2 = k_y \sin\frac{\thet
 \item 沿$ X_{i - 1} $，由$ Z_{i - 1} $与$ Z_i $求取$ \vec{a}_{i - 1}  $和$ \alpha_{i - 1} $；沿$ Z_i $，由$ X_{i - 1} $与$ X_i $求取$ d_i $和$ \theta_i $。注意方向。
 \end{enumerate}
 %------------------------------------------------
-\subsubsection[例题]{例题\tip{DH参数例题}}
+\subsubsection[例题]{例题}
 \begin{figure}[H]
 \centering
 \subfloat[例1结构图]{\includegraphics[width=.225\textwidth]{1.1.1}} \quad
@@ -439,7 +418,7 @@ $$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \varepsilon_2 = k_y \sin\frac{\thet
 \item 按关节逐次变换，最终得到腕部坐标，而非末端坐标。
 \end{itemize} 
 %------------------------------------------------
-\subsubsection[例题]{例题\tip{正运动学方程例题}}
+\subsubsection[例题]{例题}
 \noindent
 \begin{minipage}{0.45\textwidth}
 \begin{figure}[H]
@@ -455,10 +434,10 @@ $$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \varepsilon_2 = k_y \sin\frac{\thet
 \hline
 $ i $ & $ \alpha_{i - 1} $ & $ a_{i - 1} $ & $ \theta_i $ & $ d_i $ \\
 \hline
-1 & $ 0 $ & $ 0 $ & $ \theta_1 $ & $ 0 $ \\
-2 & $ 0 $ & $ 1 $ & $ \theta_2 $ & $ 0 $ \\
-3 & $ \frac{\pi}{4} $ & $ 1 $ & $ \theta_3 $ & $ 0 $ \\
-4 & $ 0 $ & $ \sqrt{2} $ & $ \theta_4 $ & $ 0 $ \\
+$ 1 $ & $ 0 $ & $ 0 $ & $ \theta_1 $ & $ 0 $ \\
+$ 2 $ & $ 0 $ & $ 1 $ & $ \theta_2 $ & $ 0 $ \\
+$ 3 $ & $ \frac{\pi}{4} $ & $ 1 $ & $ \theta_3 $ & $ 0 $ \\
+$ 4 $ & $ 0 $ & $ \sqrt{2} $ & $ \theta_4 $ & $ 0 $ \\
 \hline
 \end{tabular}
 \caption{正运动学方程例题DH参数表}
@@ -491,7 +470,7 @@ $$ {}^0_4T = \begin{bmatrix} c12 c34 - \frac{\sqrt{2}}{2}s12 s34 & -c12 s34 - \f
 \item （数值法：迭代搜索求近似解。）
 \end{itemize} 
 %------------------------------------------------
-\subsubsection[例题]{例题\tip{逆运动学例题}}
+\subsubsection[例题]{例题}
 %------------------------------------------------
 \paragraph{例题1}
 \begin{figure}[H]
@@ -519,7 +498,7 @@ $$ {}^0_4T = \begin{bmatrix} c12 c34 - \frac{\sqrt{2}}{2}s12 s34 & -c12 s34 - \f
 %------------------------------------------------
 \subsection[工作空间]{工作空间}
 %------------------------------------------------
-\paragraph{概念}\tip{工作空间概念}
+\paragraph{概念}\tip{工作空间}
 \begin{itemize}
 \item 工作空间（W）：末端能到达的空间。
 \item 可达空间（RW）：机器人至少能以一种姿态到达的空间。
@@ -547,10 +526,10 @@ $$ {}^0_4T = \begin{bmatrix} c12 c34 - \frac{\sqrt{2}}{2}s12 s34 & -c12 s34 - \f
 \hspace{2em}
 以下以3R操作臂为例，分析不同臂长情况下的灵巧空间：
 \begin{enumerate}
-\item $ 2L_3 \leq L_1 + L_2 - |L_1 - L_2|\&L_3 \leq |L_1 - L_2| $。
-\item $ 2L_3 \leq L_1 + L_2 - |L_1 - L_2|\&L_3 \geq |L_1 - L_2| $。
+\item $ 2L_3 \leq L_1 + L_2 - |L_1 - L_2| \& L_3 \leq |L_1 - L_2| $。
+\item $ 2L_3 \leq L_1 + L_2 - |L_1 - L_2| \& L_3 \geq |L_1 - L_2| $。
 \item $ L_3 \leq L_1 + L_2 $。
-\item $ 2L_3 \geq L_1 + L_2 - |L_1 - L_2|\&|L_1 - L_2| \leq L_3 \leq L_1 + L_2 $。
+\item $ 2L_3 \geq L_1 + L_2 - |L_1 - L_2| \& |L_1 - L_2| \leq L_3 \leq L_1 + L_2 $。
 \item $ L_2 \leq L_3 \leq |L_1 - L_2|, L_3 \geq L_1 + L_2 $。
 \end{enumerate}
 }
@@ -573,16 +552,13 @@ $$ {}^0_4T = \begin{bmatrix} c12 c34 - \frac{\sqrt{2}}{2}s12 s34 & -c12 s34 - \f
 J_{ij}(q) &= \frac{\partial f_i(q)}{\partial q_j}
 \end{align*}
 %------------------------------------------------
-\subsection[不同坐标描述下的雅可比矩阵转换]{不同坐标描述下的雅可比矩阵转换\tip{不同坐标描述下的雅可比矩阵转换}}
+\subsection[雅可比坐标描述转换]{雅可比坐标描述转换\tip{雅可比坐标描述转换}}
 基础雅可比矩阵（笛卡尔系）：
 $$ \begin{bmatrix} v \\ \omega \end{bmatrix}_{(6 \times 1)} = J_0(q)_{(6 \times n)} \dot{q}_{(n \times 1)} $$
 
 $ X_P, X_R $定义了坐标描述方式，$ E_P, E_R $则描述了对应的转换关系：
 $$
-\begin{cases}
-\dot{X}_P &= E_P \cdot v = [E_P \cdot J_v] \dot{q} = J_P \dot{q} \\
-\dot{X}_R &= E_R \cdot \omega = [E_R \cdot J_\omega] \dot{q} = J_R \dot{q} \\
-\end{cases}
+\begin{cases} \dot{X}_P &= E_P \cdot v = [E_P \cdot J_v] \dot{q} = J_P \dot{q} \\ \dot{X}_R &= E_R \cdot \omega = [E_R \cdot J_\omega] \dot{q} = J_R \dot{q} \end{cases}
 \Longrightarrow
 J = \begin{bmatrix} J_P \\ J_R \end{bmatrix} = \begin{bmatrix} E_P & 0 \\ 0 & E_R \end{bmatrix} \begin{bmatrix} J_v \\ J_\omega \end{bmatrix}
 $$
@@ -591,21 +567,13 @@ $$
 \begin{itemize}
 \item 柱坐标系
 $
-\begin{cases}
-\rho = \sqrt{x^2 + y^2} \\
-\theta = \arctan(y / x) \\
-z = z
-\end{cases}
+\begin{cases} \rho = \sqrt{x^2 + y^2} \\ \theta = \arctan(\frac{y}{x}) \\ z = z \end{cases}
 \Rightarrow
 E_P(X) = \begin{pmatrix} \cos\theta & \sin\theta & 0 \\ \frac{-\sin\theta}{\rho} & \frac{\cos\theta}{\rho} & 0 \\ 0 & 0 & 1 \end{pmatrix}
 $。
 \item 球坐标系
 $
-\begin{cases}
-\rho = \sqrt{x^2 + y^2 + z^2} \\
-\theta = \arctan(\frac{y}{x}) \\
-\phi = \arctan(\frac{\sqrt{x^2 + y^2}}{z})
-\end{cases}
+\begin{cases} \rho = \sqrt{x^2 + y^2 + z^2} \\ \theta = \arctan(\frac{y}{x}) \\ \phi = \arctan(\frac{\sqrt{x^2 + y^2}}{z}) \end{cases}
 \Rightarrow
 E_P(X) = \begin{pmatrix} \cos\theta \sin\phi & \sin\theta \sin\phi & \cos\phi \\ \frac{-\sin\theta}{\rho \sin\phi} & \frac{\cos\theta}{\rho \sin\phi} & 0 \\ \frac{\cos\theta \cos\phi}{\rho} & \frac{\sin\theta \cos\phi}{\rho} & \frac{-\sin\phi}{\rho} \end{pmatrix}
 $。
@@ -615,18 +583,11 @@ $。
 \begin{itemize}
 \item 旋转阵推基础\label{sec:Rotation_matrix}
 
-旋转阵导数为$ \dot{R} = \lim_{\Delta t \to 0} [\frac{R_K(\Delta\theta) - I_3}{\Delta t} R(t)] $，
+旋转阵导数为$ \dot{R} = \lim_{\Delta t \to 0}[\frac{R_K(\Delta \theta) - I_3}{\Delta t} R(t)] $，
 
 其与逆（转置）的积为反对称阵$ \dot{R} R^{-1} = \dot{R} R^T = \hat{\Omega} = \begin{bmatrix} 0 & -\Omega_z & \Omega_y \\ \Omega_z & 0 & -\Omega_x \\ -\Omega_y & \Omega_x & 0 \end{bmatrix} $
 
-得到
-$
-\begin{cases}
-\Omega_x = \dot{r}_{31} r_{21} + \dot{r}_{32} r_{22} + \dot{r}_{33} r_{23} \\
-\Omega_y = \dot{r}_{11} r_{31} + \dot{r}_{12} r_{32} + \dot{r}_{13} r_{33} \\
-\Omega_z = \dot{r}_{21} r_{11} + \dot{r}_{22} r_{12} + \dot{r}_{23} r_{13}
-\end{cases}
-$，
+得到$ \begin{cases} \Omega_x = \dot{r}_{31} r_{21} + \dot{r}_{32} r_{22} + \dot{r}_{33} r_{23} \\ \Omega_y = \dot{r}_{11} r_{31} + \dot{r}_{12} r_{32} + \dot{r}_{13} r_{33} \\ \Omega_z = \dot{r}_{21} r_{11} + \dot{r}_{22} r_{12} + \dot{r}_{23} r_{13} \end{cases} $，
 
 $ \Omega = \begin{bmatrix} \Omega_x & \Omega_y & \Omega_z \end{bmatrix}^T = \begin{bmatrix} k_x & k_y & k_z \end{bmatrix}^T $为瞬时旋转轴。
 
@@ -652,7 +613,7 @@ $$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\
 $$ J = \begin{bmatrix} \frac{\partial X_P}{\partial q_1} & \frac{\partial X_P}{\partial q_2} & \cdots & \frac{\partial X_P}{\partial q_N} \\ \overline{\epsilon}_1 Z_1 & \overline{\epsilon}_2 Z_2 & \cdots & \overline{\epsilon}_n Z_n \end{bmatrix} $$
 \end{itemize} 
 %------------------------------------------------
-\subsubsection[例题]{例题\tip{求导求雅可比例题}}
+\subsubsection[例题]{例题}
 %------------------------------------------------
 \paragraph{例题1}
 {\footnotesize
@@ -776,15 +737,9 @@ v &= \sum_{i = 1}^n [\epsilon_i V_i + \overline{\epsilon}_i (\Omega_i \times P_{
 \end{itemize} 
 
 $$
-\begin{cases}
-f_i = f_{i + 1} \\
-n_i = n_{i + 1} + P_{i + 1} \times f_{i + 1}
-\end{cases}
+\begin{cases} f_i = f_{i + 1} \\ n_i = n_{i + 1} + P_{i + 1} \times f_{i + 1} \end{cases}
 \overset{\text{换系}}{\Longrightarrow}
-\begin{cases}
-{}^i f_i = {}^i_{i + 1}R \cdot {}^{i + 1} f_{i + 1} \\
-{}^i n_i = {}^i_{i + 1}R \cdot {}^{i + 1} n_{i + 1} + {}^i P_{i + 1} \times {}^i f_i
-\end{cases}
+\begin{cases} {}^i f_i = {}^i_{i + 1}R \cdot {}^{i + 1} f_{i + 1} \\ {}^i n_i = {}^i_{i + 1}R \cdot {}^{i + 1} n_{i + 1} + {}^i P_{i + 1} \times {}^i f_i \end{cases}
 $$
 \noindent
 \begin{minipage}{0.65\textwidth}
@@ -808,7 +763,7 @@ $$
 内部平衡量 & 力矩 & 力 \\
 \hline
 \end{tabular}
-\caption{力与力矩（动静一致）}
+\caption[力与力矩]{力与力矩（动静一致）}
 \end{table}
 \end{minipage}
 
@@ -837,7 +792,7 @@ $$ \tau^T \delta q + (-F)^T \delta x = 0 \overset{\delta x = J \delta q}{\Longri
 
 其中$ J $是末端雅可比，而非腕部雅可比。
 %------------------------------------------------
-\subsubsection[例题]{例题\tip{扭矩与虚功原理例题}}
+\subsubsection[例题]{例题}
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.25\textwidth]{5} 
@@ -845,7 +800,7 @@ $$ \tau^T \delta q + (-F)^T \delta x = 0 \overset{\delta x = J \delta q}{\Longri
 \end{figure}
 
 {\footnotesize
-条件： $ l_1 = l_2 = 1, \theta_1 = 0, \theta_2 = 60^\circ, F = \begin{bmatrix} 0 & -1 & 0 \end{bmatrix}^T N $。
+条件：$ l_1 = l_2 = 1, \theta_1 = 0, \theta_2 = 60^\circ, F = \begin{bmatrix} 0 & -1 & 0 \end{bmatrix}^T N $。
 \begin{enumerate}
 \item 求力矩：
 \begin{itemize}
@@ -874,12 +829,10 @@ $$ {}^0 J_j = \begin{bmatrix} {}^0_n R & -{}^0_n R \cdot {}^n \hat{P}_{ij} \cdot
 
 不同坐标系下$ J $不同，但是$ |J| $相同：$ {}^i J \neq {}^j J, |{}^i J| = |{}^j J| $。
 %------------------------------------------------
-\subsection[其他]{其他}
-%------------------------------------------------
-\subsubsection[雅可比奇异]{雅可比奇异\tip{雅可比奇异}}
+\subsection[雅可比奇异]{雅可比奇异\tip{雅可比奇异}}
 $ |J(q)| = 0 $时，奇异，存在方向无法运动或旋转，控制失效。
 %------------------------------------------------
-\subsubsection[雅可比速率控制]{雅可比速率控制}
+\subsection[雅可比速率控制]{雅可比速率控制}
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.6\textwidth]{J_control} 
@@ -892,7 +845,7 @@ $ \delta q = J(q)^{-1} \delta x $，为保证可逆，可采用伪逆$ J(q)^+ $�
 %------------------------------------------------
 \subsection[刚体动力学]{刚体动力学}
 %------------------------------------------------
-\subsubsection[受力种类分析]{受力种类分析}
+\subsubsection[受力分析]{受力分析}
 \begin{itemize}
 \item 惯性参考系
 \begin{itemize}
@@ -904,7 +857,7 @@ $ \delta q = J(q)^{-1} \delta x $，为保证可逆，可采用伪逆$ J(q)^+ $�
 \item 离心力$ F_2 = m \omega^2 r $：沿半径背离圆心。
 \item 科里奥利力$ F_3 = 2mv' \times \omega $：相对于参考系运动的惯性力（惯性系下保持直线运动）。
 \end{itemize} 
-\item 合力：$ \Gamma $为广义关节力，$ q,\dot{q},\ddot{q} $为关节空间广义坐标、速度、加速度，$ M(q) $为惯性阵。
+\item 合力：$ \Gamma $为广义关节力，$ q, \dot{q}, \ddot{q} $为关节空间广义坐标、速度、加速度，$ M(q) $为惯性阵。
 \begin{align*}
 \Gamma &= ma + m \omega^2 r + 2mv' \times \omega + G \\
 &= \textcolor{red}{M(q) \ddot{q} + V(q, \dot{q}) + G(q) (\text{标准形式})}
@@ -933,7 +886,7 @@ $$ Q = mv \overset{\text{质点到刚体}}{\Longrightarrow} Q = \int_V v_i \rho 
 \begin{itemize}
 \item 角动量守恒（合外力为零/指向原点，系统总角动量不变）：$ \tau = \vec{p} \times m \dot{v} = \dot{L} $。
 \item 角动量变化量等于所受外力矩：
-$$ L = \vec{p} \times mv = mp \times (\omega \times p) \overset{\text{质点到刚体}}{\Longrightarrow} L = \int_V p \times (\omega \times p) \rho dV = (\int_V -\hat{p} \hat{p} \rho dV) \omega = I \omega $$
+$$ L = \vec{p} \times mv = mp \times (\omega \times p) \overset{\text{质点到刚体}}{\Longrightarrow} L = \int_V p \times (\omega \times p) \rho dV = (\int_V -\hat{p} \hat{p} \rho dV)\omega = I \omega $$
 \end{itemize} 
 %------------------------------------------------
 \subsubsection[惯性张量]{惯性张量$ I $\tip{惯性张量}}
@@ -973,8 +926,8 @@ $$ I_{xy} = \iiint (xy)\rho dxdydz, I_{yz} = \iiint (yz)\rho dxdydz, I_{xz} = \i
 \begin{enumerate}
 \item 位于中心：
 \begin{align*}
-I_{xx} &= \int_{-\frac{H}{2}}^{\frac{H}{2}} \int_{-\frac{L}{2}}^{\frac{L}{2}} \int_{-\frac{W}{2}}^{\frac{W}{2}} (y^2 + z^2)\rho dxdydz = \frac{H^2 + L^2}{12} LWH\rho = \frac{m}{12}(H^2 + L^2) \\
-I_{xy} &= \int_{-\frac{H}{2}}^{\frac{H}{2}} \int_{-\frac{L}{2}}^{\frac{L}{2}} \int_{-\frac{W}{2}}^{\frac{W}{2}} (xy)\rho dxdydz = 0
+I_{xx} &= \int_{-\frac{H}{2}}^{\frac{H}{2}} \int_{-\frac{L}{2}}^{\frac{L}{2}} \int_{-\frac{W}{2}}^{\frac{W}{2}}(y^2 + z^2)\rho dxdydz = \frac{H^2 + L^2}{12} LWH\rho = \frac{m}{12}(H^2 + L^2) \\
+I_{xy} &= \int_{-\frac{H}{2}}^{\frac{H}{2}} \int_{-\frac{L}{2}}^{\frac{L}{2}} \int_{-\frac{W}{2}}^{\frac{W}{2}}(xy)\rho dxdydz = 0
 \end{align*}
 \item 位于一角，利用平行轴定理：
 \begin{align*}
@@ -999,12 +952,7 @@ I_{Axy} &= I_{Cxy} + m x_C y_C = \frac{m}{4}WL
 \end{figure}
 \end{minipage}
 \begin{minipage}{0.7\textwidth}
-$$
-\begin{cases}
-f_i = f_{i + 1} \textcolor{red}{+ F_i} \\
-n_i = n_{i + 1} + P_{i + 1} \times f_{i + 1} \textcolor{red}{+ P_{C_i} \times F_i + N_i} \\
-\end{cases}
-$$
+$$ \begin{cases} f_i = f_{i + 1} \textcolor{red}{+ F_i} \\ n_i = n_{i + 1} + P_{i + 1} \times f_{i + 1} \textcolor{red}{+ P_{C_i} \times F_i + N_i} \end{cases} $$
 \end{minipage}
 %------------------------------------------------
 \paragraph{牛顿-欧拉动力学方程}
@@ -1029,8 +977,8 @@ v_{i + 1} &=  v_i + \omega_i \times P_{i + 1} + \textcolor{blue}{\dot{d}_{i + 1}
 \end{align*}
 \item 加速度：
 \begin{align*}
-\dot{v}_{i + 1} &=  \dot{v}_i +  \dot{\omega}_i \times P_{i + 1} + \textcolor{blue}{\ddot{d}_{i + 1} \cdot Z_{i + 1}} + \underbrace{\omega_i \times \overset{\omega_i \times P_{i + 1}}{\overbrace{\dot{P_{i + 1}}}}}_{\text{离心力}} + \underbrace{\textcolor{blue}{2\dot{d}_{i + 1} \omega_i \times Z_{i + 1}}}_{\text{科里奥利力}} \\
-\dot{\omega}_{i + 1} &=  \dot{\omega}_i + \ddot{\theta}_{i + 1} \cdot Z_{i + 1} + \dot{\theta}_{i + 1} \cdot \underbrace{\dot{Z_{i + 1}}}_{\omega_i \times Z_{i + 1}}
+\dot{v}_{i + 1} &= \dot{v}_i + \dot{\omega}_i \times P_{i + 1} + \textcolor{blue}{\ddot{d}_{i + 1} \cdot Z_{i + 1}} + \underbrace{\omega_i \times \overset{\omega_i \times P_{i + 1}}{\overbrace{\dot{P_{i + 1}}}}}_{\text{离心力}} + \underbrace{\textcolor{blue}{2\dot{d}_{i + 1} \omega_i \times Z_{i + 1}}}_{\text{科里奥利力}} \\
+\dot{\omega}_{i + 1} &= \dot{\omega}_i + \ddot{\theta}_{i + 1} \cdot Z_{i + 1} + \dot{\theta}_{i + 1} \cdot \underbrace{\dot{Z_{i + 1}}}_{\omega_i \times Z_{i + 1}}
 \end{align*}
 \item 质心处速度：（$ P_{C_{i + 1}} $为起始到质心的向量）
 \begin{align*}
@@ -1091,11 +1039,7 @@ $$ {}^0 \omega_0 = 0, {}^0 v_0 = 0, {}^0 \dot{v}_0 = g $$
 {}^{i + 1}N_{i + 1} &= \textcolor{yellow}{{}^{i + 1}I_{C_{i + 1}}} \cdot \textcolor{purple}{{}^{i + 1}\dot{\omega}_{i + 1}} + \textcolor{orange}{{}^{i + 1}\omega_{i + 1}} \times \textcolor{yellow}{{}^{i + 1}I_{C_{i + 1}}} \cdot \textcolor{orange}{{}^{i + 1}\omega_{i + 1}} \\
 \textcolor{gray}{{}^i f_i} &= {}^i F_i + \textcolor{green}{{}^i_{i + 1}R} \cdot {}^{i + 1}f_{i + 1} \\
 \textcolor{olive}{{}^i n_i} &= {}^i N_i + \textcolor{green}{{}^i_{i + 1}R} \cdot {}^{i + 1}n_{i + 1} + {}^i P_{C_i} \times {}^i F_i + \textcolor{cyan}{{}^i P_{i + 1}} \times \textcolor{green}{{}^i_{i + 1}R} \cdot {}^{i + 1}f_{i + 1} \\
-\tau_i &= 
-\begin{cases} 
-\textcolor{olive}{{}^i n_i} \cdot Z_i & \text{旋转关节} \\ 
-\textcolor{gray}{{}^i f_i} \cdot Z_i & \text{平移关节} 
-\end{cases}
+\tau_i &= \begin{cases} \textcolor{olive}{{}^i n_i} \cdot Z_i & \text{旋转关节} \\ \textcolor{gray}{{}^i f_i} \cdot Z_i & \text{平移关节} \end{cases}
 \end{align*}
 %------------------------------------------------
 \subsection[拉格朗日动力学算法]{拉格朗日动力学算法}
@@ -1111,27 +1055,27 @@ $$ {}^0 \omega_0 = 0, {}^0 v_0 = 0, {}^0 \dot{v}_0 = g $$
 \end{itemize}
 \item 动能$ K(q, \dot{q}, t) = \frac{1}{2}\dot{q}^T M(q) \dot{q} $（其中$ q $为$ v/\omega $，$ M $为$ M/I $）：瞬时性，正标量。
 \begin{itemize}
-\item 与速度：（角）动量，$ \textcolor{orange}{\frac{\partial K}{\partial \dot{q}} = Q(q, \dot{q})} $，其变化率为惯性力$ \textcolor{orange}{F = \frac{d Q(q, \dot{q})}{d t}} $。
+\item 与速度：（角）动量，$ \textcolor{orange}{\frac{\partial K}{\partial \dot{q}} = Q(q, \dot{q})} $，其变化率为惯性力$ \textcolor{orange}{F = \frac{d Q(q, \dot{q})}{dt}} $。
 \item 与位移（构型变化）：内力做功，$ \textcolor{blue}{\frac{\partial K}{\partial q} = \frac{\partial M(q)}{\partial q}} $。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
 \paragraph{拉格朗日动力学方程}
-系统输入（广义外力）$ \Gamma $与相互独立的广义坐标和广义速度$ q,\dot{q} \in R^n $的关系：
+系统输入（广义外力）$ \Gamma $与相互独立的广义坐标和广义速度$ q, \dot{q} \in R^n $的关系：
 \begin{align*}
-\Gamma &= \underbrace{\textcolor{orange}{\frac{d}{d t}\frac{\partial K}{\partial \dot{q}}} - \textcolor{blue}{\frac{\partial K}{\partial q}}}_{\text{非惯性系力}M(q) \ddot{q} + V(q, \dot{q})} + \underbrace{\textcolor{green}{\frac{\partial U}{\partial q}}}_{\text{重力}G(q)} \\
-&= \frac{d}{d t}\frac{\partial(K - \textcolor{red}{U})}{\partial \dot{q}} - \frac{\partial(K - U)}{\partial q} \\
-&= \frac{d}{d t}\frac{\partial L}{\partial \dot{q}} - \frac{\partial L}{\partial q}
+\Gamma &= \underbrace{\textcolor{orange}{\frac{d}{dt}\frac{\partial K}{\partial \dot{q}}} - \textcolor{blue}{\frac{\partial K}{\partial q}}}_{\text{非惯性系力}M(q) \ddot{q} + V(q, \dot{q})} + \underbrace{\textcolor{green}{\frac{\partial U}{\partial q}}}_{\text{重力}G(q)} \\
+&= \frac{d}{dt}\frac{\partial(K - \textcolor{red}{U})}{\partial \dot{q}} - \frac{\partial(K - U)}{\partial q} \\
+&= \frac{d}{dt}\frac{\partial L}{\partial \dot{q}} - \frac{\partial L}{\partial q}
 \end{align*}
 
 对于各关节有：
-$$ \tau_i = \frac{d}{d t}\frac{\partial L(q, \dot{q}, t)}{\partial \dot{q}_i} - \frac{\partial L(q, \dot{q}, t)}{\partial q_i} \quad i = 1, 2, \cdots, N $$
+$$ \tau_i = \frac{d}{dt}\frac{\partial L(q, \dot{q}, t)}{\partial \dot{q}_i} - \frac{\partial L(q, \dot{q}, t)}{\partial q_i} \quad i = 1, 2, \cdots, N $$
 %------------------------------------------------
 \subsubsection[求解]{求解}
 %------------------------------------------------
 \paragraph{动能}
 \begin{align*}
-\frac{\partial}{\partial\dot{q}}K(q, \dot{q}) &= M(q) \dot{q} \Rightarrow \frac{d}{d t}(\frac{\partial}{\partial \dot{q}}K(q, \dot{q})) = M(q) \ddot{q} + \dot{M}(q) \dot{q} \\
+\frac{\partial}{\partial\dot{q}}K(q, \dot{q}) &= M(q) \dot{q} \Rightarrow \frac{d}{dt}(\frac{\partial}{\partial \dot{q}}K(q, \dot{q})) = M(q) \ddot{q} + \dot{M}(q) \dot{q} \\
 \frac{\partial}{\partial q}K(q, \dot{q}) &= \frac{\partial}{\partial q}[\frac{1}{2}\dot{q}^T M(q) \dot{q}] = \frac{1}{2} \begin{bmatrix} \dot{q}^T \frac{\partial M(q)}{\partial q_1}\dot{q} \\ \vdots \\ \dot{q}^T \frac{\partial M(q)}{\partial q_N}\dot{q} \end{bmatrix}
 \end{align*}
 
@@ -1181,20 +1125,16 @@ $$
 \item 后者：
 $$ 
 \dot{q}^T \frac{\partial M(q)}{\partial q_i}\dot{q} = \sum_{x = 1}^n \sum_{y = 1}^n \frac{\partial m_{xy}}{\partial q_i}\dot{q}_x \dot{q}_y 
-= \begin{bmatrix} b_{1,1,i} \\ b_{2,2,i} \\ \cdots \\ b_{n,n,i} \end{bmatrix}^T 
-\begin{bmatrix} \dot{q}_1^2 \\ \dot{q}_2^2 \\ \vdots \\ \dot{q}_n^2 \end{bmatrix}
-+ \begin{bmatrix} 2b_{1,2,i} \\ 2b_{1,3,i} \\ \cdots \\ 2b_{n - 1,n,i} \end{bmatrix}^T
-\begin{bmatrix} \dot{q}_1 \dot{q}_2 \\ \dot{q}_1 \dot{q}_3 \\ \vdots \\ \dot{q}_{n - 1} \dot{q}_n \end{bmatrix}_{\frac{n^2 - n}{2}}
+= \begin{bmatrix} b_{1,1,i} \\ b_{2,2,i} \\ \cdots \\ b_{n,n,i} \end{bmatrix}^T \begin{bmatrix} \dot{q}_1^2 \\ \dot{q}_2^2 \\ \vdots \\ \dot{q}_n^2 \end{bmatrix}
++ \begin{bmatrix} 2b_{1,2,i} \\ 2b_{1,3,i} \\ \cdots \\ 2b_{n - 1,n,i} \end{bmatrix}^T \begin{bmatrix} \dot{q}_1 \dot{q}_2 \\ \dot{q}_1 \dot{q}_3 \\ \vdots \\ \dot{q}_{n - 1} \dot{q}_n \end{bmatrix}_{\frac{n^2 - n}{2}}
 $$
 
 故：
 {\footnotesize
 $$
 \textcolor{blue}{\begin{bmatrix} \dot{q}^T \frac{\partial M(q)}{\partial q_1}\dot{q} \\ \vdots \\ \dot{q}^T \frac{\partial M(q)}{\partial q_n}\dot{q} \end{bmatrix}} 
-= \begin{bmatrix} b_{1,1,1} & b_{2,2,1} & \cdots & b_{n,n,1} \\ b_{1,1,2} & b_{2,2,2} & \cdots & b_{n,n,2} \\ \vdots & \vdots & \ddots & \vdots \\ b_{1,1,n} & b_{2,2,n} & \cdots & b_{n,n,n} \end{bmatrix}
-\begin{bmatrix} \dot{q}_1^2 \\ \dot{q}_2^2 \\ \vdots \\ \dot{q}_n^2 \end{bmatrix}
-+ 2\begin{bmatrix} b_{1,2,1} & b_{1,3,1} & \cdots & b_{n - 1,n,1} \\ b_{1,2,2} & b_{1,3,2} & \cdots & b_{n - 1,n,2} \\ \vdots & \vdots & \ddots & \vdots \\ b_{1,2,n} & b_{1,3,n} & \cdots & b_{n - 1,n,n} \end{bmatrix}_{n \times \frac{n^2 - n}{2}}
-\begin{bmatrix} \dot{q}_1 \dot{q}_2 \\ \dot{q}_1 \dot{q}_3 \\ \vdots \\ \dot{q}_{n - 1} \dot{q}_n \end{bmatrix}_{\frac{n^2 - n}{2}}
+= \begin{bmatrix} b_{1,1,1} & b_{2,2,1} & \cdots & b_{n,n,1} \\ b_{1,1,2} & b_{2,2,2} & \cdots & b_{n,n,2} \\ \vdots & \vdots & \ddots & \vdots \\ b_{1,1,n} & b_{2,2,n} & \cdots & b_{n,n,n} \end{bmatrix} \begin{bmatrix} \dot{q}_1^2 \\ \dot{q}_2^2 \\ \vdots \\ \dot{q}_n^2 \end{bmatrix}
++ 2\begin{bmatrix} b_{1,2,1} & b_{1,3,1} & \cdots & b_{n - 1,n,1} \\ b_{1,2,2} & b_{1,3,2} & \cdots & b_{n - 1,n,2} \\ \vdots & \vdots & \ddots & \vdots \\ b_{1,2,n} & b_{1,3,n} & \cdots & b_{n - 1,n,n} \end{bmatrix}_{n \times \frac{n^2 - n}{2}} \begin{bmatrix} \dot{q}_1 \dot{q}_2 \\ \dot{q}_1 \dot{q}_3 \\ \vdots \\ \dot{q}_{n - 1} \dot{q}_n \end{bmatrix}_{\frac{n^2 - n}{2}}
 $$
 }
 \item 整合：
@@ -1228,11 +1168,11 @@ V(q, \dot{q}) =
 + 2\begin{bmatrix} c_{112} & c_{113} & \cdots & c_{1(n - 1)n} \\ c_{212} & c_{213} & \cdots & c_{1(n - 1)n} \\ \vdots & \vdots & \ddots & \vdots \\ c_{n12} & c_{n13} & \cdots & c_{n(n - 1)n} \end{bmatrix} \begin{bmatrix} \dot{q}_1 \dot{q}_2 \\ \dot{q}_1 \dot{q}_3 \\ \vdots \\ \dot{q}_{n - 1} \dot{q}_n \end{bmatrix}
 $。
 \end{enumerate}
-\item 求解重力$ G(q) $：$ G(q) = -\sum_{i = 1}^{n} m_i J_{v_{C_i}}^T g $。
+\item 求解重力：$ G(q) = -\sum_{i = 1}^{n} m_i J_{v_{C_i}}^T g $。
 \item 标准形式：$ \Gamma = M(q) \ddot{q} + V(q, \dot{q}) + G(q) $。
 \end{enumerate}
 %------------------------------------------------
-\subsubsection[例题]{例题\tip{动力学例题}}
+\subsection[例题]{例题}
 {\footnotesize
 %------------------------------------------------
 \paragraph{例题1}~\\
@@ -1331,10 +1271,8 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 \paragraph{标准形式}
 \begin{align*}
 \Gamma = \begin{bmatrix} \tau_1 \\ \tau_2 \end{bmatrix} 
-&= \begin{bmatrix} \ddot{q}_1[I_{zz2} + I_{zz1} + m_1l_1^2 + m_2(d_2 + q_2)^2] & 0 \\ 0 & m_2 \end{bmatrix} \ddot{q} \\
-&+ \begin{bmatrix} 0 & 0 \\ -m_2(d_2 + q_2) & 0 \end{bmatrix} \begin{bmatrix} \dot{q}_1^2\\ \dot{q}_2^2 \end{bmatrix} 
-+ \begin{bmatrix} 2m_2(d_2 + q_2) \\ 0 \end{bmatrix} \dot{q}_1 \dot{q}_2 
-+ \begin{bmatrix} -[m_1l_1 + m_2(d_2 + q_2)]s1 \\ m_2 c1 \end{bmatrix} g 
+&= \begin{bmatrix} \ddot{q}_1[I_{zz2} + I_{zz1} + m_1 l_1^2 + m_2(d_2 + q_2)^2] & 0 \\ 0 & m_2 \end{bmatrix} \ddot{q} \\
+&+ \begin{bmatrix} 0 & 0 \\ -m_2(d_2 + q_2) & 0 \end{bmatrix} \begin{bmatrix} \dot{q}_1^2\\ \dot{q}_2^2 \end{bmatrix} + \begin{bmatrix} 2m_2(d_2 + q_2) \\ 0 \end{bmatrix} \dot{q}_1 \dot{q}_2 + \begin{bmatrix} -[m_1 l_1 + m_2(d_2 + q_2)]s1 \\ m_2 c1 \end{bmatrix} g 
 \end{align*}
 %------------------------------------------------
 \paragraph{例题2}~\\
@@ -1383,7 +1321,7 @@ $$ {{}^{C_1}}I_1 = \begin{bmatrix} I_{xx1} & 0 & 0 \\ 0 & I_{yy1} & 0 \\ 0 & 0 &
 \item 关节$ 2 $力矩：
 \begin{align*}
 {}^1 f_2 &= {}^1 F_2 \\
-{}^1 n_2 &= {}^1 N_2 + {}^1 P_{C_2} \times {}^1 F_2 = \begin{bmatrix} 0 & 0 & (I_{zz2} + m_2l_{C_2}^2)(\ddot{\theta}_1 + \ddot{\theta}_2) + m_2 l_1 l_{C_2}c2 \ddot{\theta}_1 - m_2 l_1 l_{C_2}s2 \dot{\theta}_1^2 + m_2 g l_{C_2}c12 \end{bmatrix}^T
+{}^1 n_2 &= {}^1 N_2 + {}^1 P_{C_2} \times {}^1 F_2 = \begin{bmatrix} 0 & 0 & (I_{zz2} + m_2 l_{C_2}^2)(\ddot{\theta}_1 + \ddot{\theta}_2) + m_2 l_1 l_{C_2}c2 \ddot{\theta}_1 - m_2 l_1 l_{C_2}s2 \dot{\theta}_1^2 + m_2 g l_{C_2}c12 \end{bmatrix}^T
 \end{align*}
 \item 关节$ 1 $力矩：
 \begin{align*}
@@ -1396,7 +1334,7 @@ $$ {{}^{C_1}}I_1 = \begin{bmatrix} I_{xx1} & 0 & 0 \\ 0 & I_{yy1} & 0 \\ 0 & 0 &
 \end{bmatrix}^T_{3 \times 1}
 \end{align*}
 \item 力矩：
-$$ \Gamma = \begin{bmatrix} \tau_1 \\ \tau_2 \end{bmatrix} = \begin{bmatrix} ^1n_1 \cdot ^1Z_1 \\ ^1n_2 \cdot ^1Z_2 \end{bmatrix} $$
+$$ \Gamma = \begin{bmatrix} \tau_1 \\ \tau_2 \end{bmatrix} = \begin{bmatrix} {}^1 n_1 \cdot {}^1 Z_1 \\ {}^1 n_2 \cdot {}^1 Z_2 \end{bmatrix} $$
 \end{enumerate}
 %------------------------------------------------
 \paragraph{拉格朗日动力学法}
@@ -1431,14 +1369,8 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 \paragraph{标准形式}
 \begin{align*}
 \Gamma = \begin{bmatrix} \tau_1 \\ \tau_2 \end{bmatrix}
-&= \begin{bmatrix} 
-m_1 l_{C_1}^2 + I_{zz1} + m_2(l_1^2 + l_{C_2}^2 + 2l_1 l_{C_2}c2) + I_{zz2} & m_2(l_{C_2}^2 + l_1 l_{C_2}c2) + I_{zz2} \\
-m_2(l_{C_2}^2 + l_1 l_{C_2}c2) + I_{zz2} & m_2 l_{C_2}^2 + I_{zz2}
-\end{bmatrix} 
-\begin{bmatrix} \ddot{\theta}_1 \\ \ddot{\theta}_2 \end{bmatrix} \\  
-&+ \begin{bmatrix} 0 & -m_2 l_1 l_{C_2}s2 \\ m_2 l_1 l_{C_2}s2 & 0 \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix}
-+ 2\begin{bmatrix} -m_2 l_1 l_{C_2}s2 \\ 0 \end{bmatrix} \dot{\theta}_1 \dot{\theta}_2 
-+ \begin{bmatrix} m_1 g l_{C_1}c1 + m_2 g(l_1 c1 + l_{C_2}c12) \\ l_{C_2}c12 m_2 g \end{bmatrix} 
+&= \begin{bmatrix} m_1 l_{C_1}^2 + I_{zz1} + m_2(l_1^2 + l_{C_2}^2 + 2l_1 l_{C_2}c2) + I_{zz2} & m_2(l_{C_2}^2 + l_1 l_{C_2}c2) + I_{zz2} \\ m_2(l_{C_2}^2 + l_1 l_{C_2}c2) + I_{zz2} & m_2 l_{C_2}^2 + I_{zz2} \end{bmatrix} \begin{bmatrix} \ddot{\theta}_1 \\ \ddot{\theta}_2 \end{bmatrix} \\  
+&+ \begin{bmatrix} 0 & -m_2 l_1 l_{C_2}s2 \\ m_2 l_1 l_{C_2}s2 & 0 \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix} + 2\begin{bmatrix} -m_2 l_1 l_{C_2}s2 \\ 0 \end{bmatrix} \dot{\theta}_1 \dot{\theta}_2 + \begin{bmatrix} m_1 g l_{C_1}c1 + m_2 g(l_1 c1 + l_{C_2}c12) \\ l_{C_2}c12 m_2 g \end{bmatrix} 
 \end{align*}
 }
 %----------------------------------------------------------------------------------------
@@ -1542,7 +1474,7 @@ $$ q(t) = a_0 + a_1(t - t_i) + a_2(t - t_i)^2 + a_3(t - t_i)^3 $$
 $$ a_0 = q_i, a_1 = \dot{q}_i, a_2 = \frac{3(q_f - q_i)}{(t_f - t_i)^2} - \frac{2\dot{q}_i + \dot{q}_f}{t_f - t_i}, a_3 = \frac{2(q_i - q_f)}{(t_f - t_i)^3} + \frac{\dot{q}_i + \dot{q}_f}{(t_f - t_i)^2} $$
 
 未给定$ \dot{q}_i $时，可选取为$ \frac{q_i - q_{i - 1}}{t_i - t_{i - 1}} $。
-\item 同步规划：按$ t_f = max\{t_{f_i}\} $重新规划。
+\item 同步规划：按$ t_f = \max\{t_{f_i}\} $重新规划。
 \item 更高阶：多解、优化。
 \item 加大$ t_f $会降低执行效率。
 \item 问题：过于光滑，$ v, a $无法保持在峰值，未充分利用执行器性能。
@@ -1585,7 +1517,7 @@ $$ q_{min} \leq q(t) \leq q_{max}, \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{m
 \begin{minipage}{0.5\textwidth}
 \begin{itemize}
 \item 加速段：尽量维持$ a_{max} $加速到$ v_{max} $。
-\item 匀速段：维持$ v_{max} $，$ a = 0 $。
+\item 匀速段：维持$ v_{max}, a = 0 $。
 \item 减速段：尽量维持$ a_{max} $减速到$ v = 0 $。
 \item 判断是否需要加到$ v_{max} $（有无匀速段）：比较路径长度$ s $与$ \frac{v_{max}^2}{a_{max}} $。
 \item 判断是否需要加到$ a_{max} $（有无匀加速段）：比较$ v_{max} $与$ \frac{a_{max}^2}{j_{max}} $。
@@ -1606,8 +1538,8 @@ $$ q_{min} \leq q(t) \leq q_{max}, \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{m
 \end{minipage}
 %------------------------------------------------
 \paragraph{同步规划}
-在$ \dot{q}_0 = \dot{q}_f = 0, \ddot{q}_0 = \ddot{q}_f = 0 $时，可计算$ t_f = max\{t_{f_i}\} $，放缩规划。
-$$ \Delta s_i = v_{\max}(t_f - t_{fi}), k_i = \frac{q_{if} - q_{i0}}{(q_{if} - q_{i0}) + \Delta s_i} $$
+在$ \dot{q}_0 = \dot{q}_f = 0, \ddot{q}_0 = \ddot{q}_f = 0 $时，可计算$ t_f = \max\{t_{f_i}\} $，放缩规划。
+$$ \Delta s_i = v_{max}(t_f - t_{fi}), k_i = \frac{q_{if} - q_{i0}}{(q_{if} - q_{i0}) + \Delta s_i} $$
 %------------------------------------------------
 \section{机器人控制}
 %----------------------------------------------------------------------------------------
@@ -1764,6 +1696,7 @@ $$ K_i < \frac{K_p(B_{eff} + K_d)}{J_{eff}} $$
 %------------------------------------------------
 \subsubsection[前馈控制]{前馈控制}
 加入前馈，有控制器框图：
+
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.5\textwidth]{feedforward} 
@@ -1790,6 +1723,7 @@ $$ J_{eff}\ddot{e}(t) + (K_d + B_{eff})\dot{e}(t) + K_p e(t) = 0 $$
 %------------------------------------------------
 \subsubsection[力补偿]{力补偿}
 在有扰动$ d $时，由于其源于$ d_{mi} = \frac{1}{r_i}\{[M(q) - m_{ii}(q)I]\ddot{q} + C(q, \dot{q})\dot{q} + G(q)\}_i $，可用其期望值$ d_{mi}^d = \frac{1}{r_i}\{[M(q_d) - m_{ii}(q_d)I]\ddot{q}_d + C(q_d, \dot{q}_d)\dot{q}_d + G(q_d)\}_i $近似补偿，有控制框图：
+
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.6\textwidth]{Force compensation} 
@@ -1853,14 +1787,14 @@ $$
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
-\paragraph{例题}\tip{约束运动例题}
+\paragraph{例题}
 \begin{figure}[H]
 \centering
 \subfloat[销钉入孔（钉子）]{\includegraphics[width=.2\textwidth]{8.1}} \quad
 \subfloat[转动曲柄（扳手）]{\includegraphics[width=.2\textwidth]{8.2}} \quad
 \subfloat[拧螺母（螺刀）]{\includegraphics[width=.1\textwidth]{8.3}} \quad
 \subfloat[开关门（门把手）]{\includegraphics[width=.2\textwidth]{8.4}} 
-\caption{约束运动例题（分析物体）}
+\caption[约束运动例题]{约束运动例题（分析物体）}
 \end{figure}
 {\footnotesize
 \begin{table}[H]
