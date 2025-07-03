@@ -265,7 +265,7 @@ G(s) &= \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s^n
 \begin{tikzpicture}
 \node[sum] at (0,0) {$ X $};
 \node[block] at (3,0) {控制器$ G(s) $};
-\node[block] at (3,-2) {反馈$ H(s) $};
+\node[block] at (3,-1.5) {反馈$ H(s) $};
 \node at (-2,0) {输入$ R(s) $};
 \node at (7.9,0) {输出$ C(s) $};
 \node at (1,0.5) {偏差$ E(s) $};
@@ -275,8 +275,8 @@ G(s) &= \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s^n
 \draw[arrow] (4.2,0) -- (7,0);
 \draw[arrow] (-1.2,0) -- (-0.4,0);
 \draw[arrow] (0.4,0) -- (1.8,0);
-\draw[arrow] (6,0) |- (6,-2) -| (4,-2);
-\draw[arrow] (2,-2) -| (0,-0.4) node[near end, left] {$ \pm $};
+\draw[arrow] (6,0) |- (6,-1.5) -| (4,-1.5);
+\draw[arrow] (2,-1.5) -| (0,-0.4) node[near end, left] {$ \pm $};
 \end{tikzpicture}
 \caption{结构图}
 \end{figure}
@@ -307,10 +307,10 @@ G(s) &= \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s^n
 \node at (8,-0.7) {输出节点/阱点};
 \node at (4,0.7) {混合节点};
 \node at (1,0.7) {支路};
-\draw[arrow] (0.5,0) -- (1.5,0) node[midway, above] {$ 1 $};
-\draw[arrow] (2.5,0) -- (3.5,0) node[midway, above] {$ G_1 $};
-\draw[arrow] (4.5,0) -- (5.5,0) node[midway, above] {$ G_2 $};
-\draw[arrow] (6.5,0) -- (7.5,0) node[midway, above] {$ 1 $};
+\draw[arrow] (0.4,0) -- (1.6,0) node[midway, above] {$ 1 $};
+\draw[arrow] (2.4,0) -- (3.6,0) node[midway, above] {$ G_1 $};
+\draw[arrow] (4.4,0) -- (5.6,0) node[midway, above] {$ G_2 $};
+\draw[arrow] (6.4,0) -- (7.6,0) node[midway, above] {$ 1 $};
 \draw[arrow] (5.7,-0.2) to[bend left=60] (2.3,-0.2);
 \end{tikzpicture}
 \caption{信号流图}
@@ -392,7 +392,7 @@ P &= \frac{1}{\underbrace{\Delta}_{\text{简单回路}}} \sum_{k = 1}^n \underbr
 \hline
 \multirow{5}{*}{动态} & 延迟时间 & $ t_d $ & 首次达到终值$ 50\% $的时间 \\
 \cline{2-4}
-& 上升时间 & $ t_r $ & 终值$ 10\% - 90\% $的时间（有震荡系统为$ 0\% - 100\% $） \\
+& 上升时间 & $ t_r $ & 终值$ 10\% - 90\% $的时间（有振荡系统为$ 0\% - 100\% $） \\
 \cline{2-4}
 & 峰值时间 & $ t_p $ & 首次达到最大值的时间 \\
 \cline{2-4}
@@ -415,6 +415,7 @@ P &= \frac{1}{\underbrace{\Delta}_{\text{简单回路}}} \sum_{k = 1}^n \underbr
 \node at (-1.6,0) {$ R(s) $};
 \node at (7.5,0) {$ C(s) $};
 \node at (1,0.2) {$ E(s) $};
+\node at (5.5,0.4) {$ \Phi(s) = \frac{1}{1 + Ts} $};
 \draw[arrow] (4,0) -- (7,0);
 \draw[arrow] (-1.2,0) -- (-0.4,0);
 \draw[arrow] (0.4,0) -- (2,0);
@@ -453,8 +454,293 @@ t_d &= 0.69T,& \quad t_r &= 2.2T,& \quad t_s &= 3T
 \end{align*}
 %------------------------------------------------
 \subsection[二阶系统]{二阶系统}
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[block] at (3,0) {$ \frac{\omega_n^2}{s(s + 2 \xi \omega_n)} $};
+\node at (-1.6,0) {$ R(s) $};
+\node at (7.5,0) {$ C(s) $};
+\node at (1,0.2) {$ E(s) $};
+\node at (4,1) {$ \Phi(s) = \frac{\omega_n^2}{s^2 + 2 \xi \omega_n s + \omega_n^2} $};
+\draw[arrow] (4,0) -- (7,0);
+\draw[arrow] (-1.2,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (2,0);
+\draw[arrow] (6,0) |- (6,-1) -| (0,-0.4) node[near end, left] {$ - $};
+\end{tikzpicture}
+\caption{二阶系统结构图}
+\end{figure}
+%------------------------------------------------
+\paragraph{概念}
+\begin{itemize}
+\item 自然角频率（无阻尼振荡圆频率）$ \omega_n > 0 $。
+\item 阻尼比$ \xi $：增大过程中，从无衰减周期运动变为有衰减正弦运动，最后无振荡。$ \xi > 1 $，$ t_s $长；$ \xi \leq 0 $，不能稳定工作；$ \xi $较小时，$ \sigma $大，振荡次数多，$ t_s $长；最佳为$ \xi = \frac{1}{\sqrt{2}} \approx 0.707 $。
+\item 特征方程$ s^2 + 2 \xi \omega_n s + \omega_n^2 $。
+\item 特征根（$ 0 < \xi < 1 $）：
+$$ s_{1, 2} = -\underbrace{\xi \omega_n}_{\text{衰减系数}\sigma} \pm j \underbrace{\omega_n \sqrt{1 - \xi^2}}_{\text{阻尼振荡圆频率}\omega_d} $$
+阻尼角$ \beta = \arctan(\frac{\omega_d}{\sigma}) $。
+\item 特征根（$ \xi > 1 $）：
+$$ s_{1, 2} = -\xi \omega_n \pm \omega_n \sqrt{\xi^2 - 1} $$
+以$ T_{1, 2} = \frac{1}{\omega_n(\xi \pm \sqrt{\xi^2 - 1})} $，则$ s_{1, 2} = -\frac{1}{T_{1, 2}}, s_1 s_2 = \frac{1}{T_1 T_2} = \omega_n^2 $。
+\end{itemize}
+%------------------------------------------------
+\paragraph{阻尼情况讨论}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$ \xi $ & 阻尼 & 阶跃响应 & 稳定性 & $ C(s) $ & $ c(t) $ \\
+\hline
+$ (-\infty, 0) $ & 负 & 振荡/发散 & 不稳定 & & \\
+\hline
+$ 0 $ & 无/零 & 等幅振荡 & 临界 & $ \frac{1}{s} - \frac{s}{s^2 + \omega_n^2} $ & $ 1 - \cos \omega_n t $ \\
+\hline
+$ (0, 1) $ & 欠 & 衰减振荡 & 稳定 & $ \frac{1}{s} - \frac{s + 2\xi \omega_n}{s^2 + 2 \xi \omega_n s + \omega_n^2} $ & $ 1 - \frac{e^{-\sigma t}}{\sqrt{1 - \xi^2}}\sin(\omega_d t + \beta) $ \\
+\hline
+$ 1 $ & 临界 & 单升非振荡 & 稳定 & $ \frac{1}{s} - \frac{1}{s + \omega_n} - \frac{\omega_n}{(s + \omega_n)^2} $ & $ 1 - e^{-\omega_n t}(1 + \omega_n t) $ \\
+\hline
+$ (1, \infty) $ & 过 & 单升非振荡 & 稳定 & $ \frac{1}{s} + \frac{T_1}{T_2 - T_1}\frac{1}{s + \frac{1}{T_1}} + \frac{T_2}{T_1 - T_2}\frac{1}{s + \frac{1}{T_2}} $ & $ 1 + \frac{T_1}{T_2 - T_1} e^{-\frac{t}{T_1}}+ \frac{T_2}{T_1 - T_2} e^{-\frac{t}{T_2}} $ \\
+\hline
+\end{tabular}
+\caption{阻尼情况讨论}
+\end{table}
+%------------------------------------------------
+\paragraph{动态性能}
+\begin{itemize}
+\item $ 0 < \xi < 1 $：
+\begin{itemize}
+\item $ t_d = \frac{1 + 0.7\xi}{\omega_n} $。
+\item $ t_r(0 - 100\%) = \frac{\pi - \beta}{\omega_d} $。
+\item $ t_p = \frac{\pi}{\omega_d} $。
+\item $ \sigma = e^{-\frac{\xi \pi}{\sqrt{1 - \xi^2}}} \times 100\% $。
+\item $ t_s = -\frac{ln(\sqrt{1 - \xi^2} \times \Delta\%)}{\xi \omega_n} \Rightarrow \begin{cases} \frac{4}{\xi \omega_n}, \Delta = 2 \\  \frac{3}{\xi \omega_n}, \Delta = 5 \end{cases} $。
+\end{itemize}
+\item $ \xi > 1 $：
+\begin{itemize}
+\item $ t_d = \frac{1 + 0.6\xi + 0.2\xi^2}{\omega_n} $。
+\item $ t_r(10\% - 90\%) = \frac{1 + 1.5\xi + \xi^2}{\omega_n} $。
+\item $ t_s = 3T_1 $。
+\end{itemize}
+\item $ \xi = 1 $：$ t_s = 4.75 T_1 $，为最小值。
+\item $ \xi \gg 1 $：可近似为一阶系统。
+\end{itemize}
+%------------------------------------------------
+\paragraph{有零点的二阶欠阻尼系统}
+$ \Phi(s) = \frac{\omega_n^2(1 + \tau s)}{s^2 + 2\xi \omega_n s + \omega_n^2} $，具有零点$ z = \frac{1}{\tau} $。
+\begin{align*}
+C(s) &= \underbrace{\frac{\omega_n^2}{s^2 + 2\xi \omega_n s + \omega_n^2} \frac{1}{s}}_{c_1(s)} + \underbrace{\frac{\omega_n^2 \tau}{s^2 + 2\xi \omega_n s + \omega_n^2}}_{c_2(s)} \\
+c(t) &= c_1(t) + \frac{1}{z} \frac{d c_1(t)}{dt} = 1 - \frac{e^{-\xi \omega_n t}}{\sqrt{1 - \xi^2}} \cdot \frac{l}{z} \sin(\sqrt{1 - \xi^2}\omega_n t + \beta + \varphi)
+\end{align*}
+
+其中，$ \beta = \arctan(\frac{\sqrt{1 - \xi^2}}{\xi}), \varphi = \arctan(\frac{\omega_n \sqrt{1 - \xi^2}}{z - \xi \omega_n}), l = \sqrt{z^2 - 2\xi \omega_n z + \omega_n^2} $。
+%------------------------------------------------
+\paragraph{改善}
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[sum] at (2.5,0) {$ X $};
+\node[block] at (4.5,0) {$ \frac{\omega_n^2}{s(s + 2 \xi \omega_n)} $};
+\node[block, minimum width=1cm, minimum height=0.5cm] at (1.3,1) {$ \tau s $};
+\node at (-1.6,0) {$ R(s) $};
+\node at (7.5,0) {$ C(s) $};
+\draw[arrow] (5.5,0) -- (7,0);
+\draw[arrow] (-1.2,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (2.1,0);
+\draw[arrow] (2.9,0) -- (3.5,0);
+\draw[arrow] (6,0) |- (6,-0.8) -| (0,-0.4) node[near end, left] {$ - $};
+\draw[arrow] (0.5,0) |- (0.5,1) -| (0.8,1);
+\draw[arrow] (1.8,1) |- (2.5,1) -| (2.5,0.4) node[near end, right] {$ + $};
+\end{tikzpicture}
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[sum] at (1.5,0) {$ X $};
+\node[block] at (4.5,0) {$ \frac{\omega_n^2}{s(s + 2 \xi \omega_n)} $};
+\node[block, minimum width=1cm, minimum height=0.5cm] at (3,-0.8) {$ \tau s $};
+\node at (-1.6,0) {$ R(s) $};
+\node at (7.5,0) {$ C(s) $};
+\draw[arrow] (5.5,0) -- (7,0);
+\draw[arrow] (-1.2,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (1.1,0);
+\draw[arrow] (1.9,0) -- (3.5,0);
+\draw[arrow] (6,-0.8) -- (3.5,-0.8);
+\draw[arrow] (6,0) |- (6,-1.2) -| (0,-0.4) node[near end, left] {$ - $};
+\draw[arrow] (2.5,-0.8) |- (1.5,-0.8) -| (1.5,-0.4) node[near end, left] {$ - $};
+\end{tikzpicture}
+\caption{改善二阶系统结构图}
+\end{figure}
+
+\begin{itemize}
+\item PD（微分顺馈）：$ \omega_n $不变，$ \xi_d = \xi + \frac{\tau}{2} \omega_m $，零点$ z = -\frac{1}{\tau} $，放大噪声。
+\item 测速反馈：$ \omega_n $不变，$ \xi_t = \xi + \frac{\tau}{2} \omega_m $。
+\end{itemize}
 %------------------------------------------------
 \subsection[稳定性分析]{稳定性分析}
+%------------------------------------------------
+\paragraph{概念}
+$$ G_B(s) = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s^n + a_1 s^{n - 1} + \dots + a_n} $$
+\begin{itemize}
+\item 稳定：$ t:0 \to \infty $，系统能达到新的稳态。
+\item 充要条件：特征方程的根均在根平面的左半平面（闭环传递函数的极点严格分布在$ s $平面左半平面）。
+\item 最小相位系统：闭环传递函数的零极点都分布在$ s $平面左半平面，必要条件为特征多项式的系数全同号（非零）。
+\end{itemize}
+%------------------------------------------------
+\subsubsection[判据]{判据}
+%------------------------------------------------
+\paragraph{赫尔维茨判据}
+系统稳定$ \Leftrightarrow $$ n $阶赫尔维茨矩阵$ \Delta_i > 0 $。
+$$ \Delta_x = \begin{vmatrix} a_1 & a_3 & a_5 & \cdots & a_{2n - 1} \\ a_0 & a_2 & a_4 & \cdots & a_{2n - 2} \\ 0   & a_1 & a_3 & \cdots & a_{2n - 3} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & a_n \end{vmatrix} $$
+
+其中横向相邻项差$ 2 $，纵向相邻项差$ -1 $，对角线相邻项差$ 1 $，序数大于$ n $的项为$ 0 $。
+\begin{itemize}
+\item 一阶：$ a_0, a_1 > 0 $。
+\item 二阶：$ a_0, a_1, a_2 > 0 $。
+\item 三阶：$ a_0, a_1, a_2, a_3 > 0, a_1 a_2 - a_0 a_3 > 0 $。
+\item 四阶：$ a_0, a_1, a_2, a_3, a_4 > 0, a_1 a_2 a_3 - a_1^2 a_4 - a_0 a_3^2  > 0 $。
+\end{itemize}
+%------------------------------------------------
+\paragraph{劳斯判据}
+\begin{align*}
+&\begin{array}{cccccc}
+s^n & a_0 & a_2 & a_4 & a_6 & \cdots \text{偶数项} \\
+s^{n - 1} & a_1 & a_3 & a_5 & a_7 & \cdots \text{奇数项} \\
+s^{n - 2} & b_1 & b_2 & b_3 & b_4 & \cdots \\
+s^{n - 3} & c_1 & c_2 & c_3 & c_4 & \cdots \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \\
+s^2 & e_1 & e_2 \\
+s^1 & f_1 \\
+s^0 & g_1 \\
+\end{array} \\
+& \text{其中} z_n = \frac{y_1 x_{n + 1} - x_1 y_{n + 1}}{y_1}
+\end{align*}
+
+第$ i $行第$ j $列的元素为$ i - 1, i - 2 $两行$ 1, j + 1 $两列的行列式的相反数比上第$ i - 1 $行第$ 1 $列的元素。
+\begin{itemize}
+\item 第一列元素变号次数为右半平面根数，全同号则稳定。
+\item 第一列有$ 0 $，用$ \epsilon \to 0 $代替。
+\item 某行全为$ 0 $，用上一行作为辅助方程（系统不稳定，判断根的情况）求导：
+$$ \begin{array}{ccccc} s^n & a & b & c & \cdots \\ s^{n - 1} & na & (n - 2)b & (n - 4)c & \cdots \end{array} $$
+\item 应用：求解使系统稳定的$ k $。拓展为使跟在$ -x $左侧（预留波动空间）时，用$ s = s' - x $代换，对$ s' $求解劳斯判据。
+\end{itemize}
+%------------------------------------------------
+\subsubsection[稳态误差]{稳态误差}
+$ c(t) $ = 稳态 + 暂态（$ t \to \infty $，稳定系统暂态$ \to 0 $）。
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[block] at (3,0) {$ G(s) $};
+\node[block] at (3,-1.5) {$ H(s) $};
+\node at (-1,0.3) {$ R(s) $};
+\node at (-1,-0.3) {$ r(t) $};
+\node at (1,0.3) {$ E(s) $};
+\node at (1,-0.3) {$ e(t) $};
+\node at (6.5,0.3) {$ C(s) $};
+\node at (6.9,-0.3) {实际$ c(t) $};
+\node at (7,-0.9) {期望$ c_d(t) $};
+\node at (1,-1.2) {$ B(s) $};
+\node at (1,-1.8) {$ b(t) $};
+\draw[arrow] (4,0) -- (7,0);
+\draw[arrow] (-1.2,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (2,0);
+\draw[arrow] (6,0) |- (6,-1.5) -| (4,-1.5);
+\draw[arrow] (2,-1.5) -| (0,-0.4) node[near end, left] {$ - $};
+\end{tikzpicture}
+\caption{稳态误差}
+\end{figure}
+%------------------------------------------------
+\paragraph{误差}
+\begin{itemize}
+\item 给定误差（输入端）$ E(s) $：
+\begin{align*}
+&e(t) = r(t) - b(t) \\
+\Rightarrow 
+&E(s) = R(s) - B(s) = R(s) - H(s) C(s) = \frac{R(s)}{1 + G_k(s)} \\
+\Rightarrow 
+&ess = \lim_{s \to 0} s \cdot E(s) = \lim_{s \to 0} \frac{s R(s)}{1 + G_k(s)}
+\end{align*}
+\item 扰动误差（输出端）$ B(s) = E(s) - C(s) H(s) $：
+\begin{align*}
+&e_N(t) = c_d(t) - c(t) \\
+\Rightarrow 
+&E_N(s) = C_d(s) - C(s) = \frac{E(s)}{H(s)} = -C_N(s) \\
+\Rightarrow 
+&ess_N = \lim_{s \to 0} s \cdot E_N(s) = -\lim_{s \to 0} s \cdot C_N(s)
+\end{align*}
+\end{itemize}
+%------------------------------------------------
+\paragraph{系统类型}
+$ G_k(s) = \frac{k \Pi_{i = 1}^m (\tau_i s + 1)}{s^v \Pi_{i = 1}^{n - v} (T_j s + 1)} $。
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$ r(t) $ & $ k $ & $ ess $ & 0型 & 1型 & 2型 \\
+\hline
+$ 1(t) $ & $ k_p = \lim_{s \to 0} G_k(s) $ & $ \frac{1}{1 + k_p} $ & $ \frac{1}{1 + k_k} $ & $ 0 $ & $ 0 $ \\
+\hline
+$ t $ & $ k_v = \lim_{s \to 0} s G_k(s) $ & $ \frac{1}{k_v} $ & $ \infty $ & $ \frac{1}{k_k} $ & $ 0 $ \\
+\hline
+$ \frac{t^2}{2} $ & $ k_a = \lim_{s \to 0} s^2 G_k(s) $ & $ \frac{1}{k_a} $ & $ \infty $ & $ \infty $ & $ \frac{1}{k_k} $ \\
+\hline
+\end{tabular}
+\caption{阻尼情况讨论}
+\end{table}
+%------------------------------------------------
+\paragraph{减小稳态误差的方法}
+\begin{itemize}
+\item 增大开环放大系数$ k_k $：增益裕度变小，易使系统不稳定。
+\item 增多积分环节$ v $：相位裕度变小，易使系统不稳定。
+\item 串级控制已知内回路扰动。
+\item 加前馈：
+\begin{itemize}
+\item 补偿给定量：$ G_c(s) = \frac{1}{G_2(s)} \Rightarrow E(s) = 0 $。
+\item 补偿扰动量：$ G_c(s) = \frac{1}{G_1(s)} \Rightarrow C_N(s) = 0 $。
+\end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[block] at (2.5,0) {$ G_1(s) $};
+\node[sum] at (5,0) {$ X $};
+\node[block] at (7.5,0) {$ G_2(s) $};
+\node[block] at (2.5,-1.5) {$ G_c(s) $};
+\node at (-2,0) {$ R(s) $};
+\node at (10,0) {$ C(s) $};
+\node at (1,-0.5) {$ E(s) $};
+\draw[arrow] (-1.5,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (1.5,0);
+\draw[arrow] (3.5,0) -- (4.6,0);
+\draw[arrow] (5.4,0) -- (6.5,0);
+\draw[arrow] (8.5,0) -- (9.5,0);
+\draw[arrow] (9,0) |- (9,1) -| (0,0.4) node[near end, left] {$ - $};
+\draw[arrow] (-1,0) |- (-1,-1.5) -| (1.5,-1.5);
+\draw[arrow] (3.5,-1.5) |- (5,-1.5) -| (5,-0.4);
+\end{tikzpicture}
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[block] at (2.5,0) {$ G_1(s) $};
+\node[sum] at (5,0) {$ X $};
+\node[block] at (7.5,0) {$ G_2(s) $};
+\node[block] at (2.5,1.5) {$ G_c(s) $};
+\node at (-2,0) {$ R(s) $};
+\node at (10,0) {$ C(s) $};
+\node at (5.5,1.5) {$ N(s) $};
+\draw[arrow] (-1.5,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (1.5,0);
+\draw[arrow] (3.5,0) -- (4.6,0);
+\draw[arrow] (5.4,0) -- (6.5,0);
+\draw[arrow] (8.5,0) -- (9.5,0);
+\draw[arrow] (5,2) -- (5,0.4) node[near end, right] {$ + $};
+\draw[arrow] (5,1.5) -- (3.5,1.5);
+\draw[arrow] (1.5,1.5) |- (0,1.5) -| (0,0.4);
+\draw[arrow] (9,0) |- (9,-1) |- (0,-1) -| (0,-0.4);
+\end{tikzpicture}
+\caption{前馈复合控制}
+\end{figure}
 %----------------------------------------------------------------------------------------
 \section{根轨迹分析}
 %------------------------------------------------
