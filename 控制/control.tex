@@ -152,7 +152,7 @@ $ f(t)(t \geq 0) $ & $ R(t) $ & $ Rt $ & $ \frac{1}{2}R t^2 $ & $ f(0) = \infty,
 \subsection[数学模型]{数学模型}
 %------------------------------------------------
 \subsubsection[拉氏变换]{拉氏变换}
-$$ \text{微分方程（时域）}\overset{\text{拉氏变换}}{\Longrightarrow} \text{代数方程（频域）} \overset{\text{求解}}{\Longrightarrow} \text{输出量表达式（频域）} \overset{\text{反拉氏变换}}{\Longrightarrow} \text{方程解（时域）} $$
+$$ \text{微分方程（时域）} \overset{\text{拉氏变换}}{\Longrightarrow} \text{代数方程（频域）} \overset{\text{求解}}{\Longrightarrow} \text{输出量表达式（频域）} \overset{\text{反拉氏变换}}{\Longrightarrow} \text{方程解（时域）} $$
 %------------------------------------------------
 \paragraph{变换}
 单边衰减的傅里叶变换，记$ s = \sigma + j \omega t $
@@ -276,7 +276,7 @@ G(s) &= \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s^n
 \draw[arrow] (4.2,0) -- (7,0);
 \draw[arrow] (-1.2,0) -- (-0.4,0);
 \draw[arrow] (0.4,0) -- (1.8,0);
-\draw[arrow] (6,0) |- (6,-1.5) -| (4,-1.5);
+\draw[arrow] (6,0) |- (4,-1.5);
 \draw[arrow] (2,-1.5) -| (0,-0.4) node[near end, left] {$ \pm $};
 \end{tikzpicture}
 \caption{结构图}
@@ -550,8 +550,8 @@ c(t) &= c_1(t) + \frac{1}{z} \frac{d c_1(t)}{dt} = 1 - \frac{e^{-\xi \omega_n t}
 \draw[arrow] (0.4,0) -- (2.1,0);
 \draw[arrow] (2.9,0) -- (3.5,0);
 \draw[arrow] (6,0) |- (6,-0.8) -| (0,-0.4) node[near end, left] {$ - $};
-\draw[arrow] (0.5,0) |- (0.5,1) -| (0.8,1);
-\draw[arrow] (1.8,1) |- (2.5,1) -| (2.5,0.4) node[near end, right] {$ + $};
+\draw[arrow] (0.5,0) |- (0.8,1);
+\draw[arrow] (1.8,1) -| (2.5,0.4) node[near end, right] {$ + $};
 \end{tikzpicture}
 \begin{tikzpicture}
 \node[sum] at (0,0) {$ X $};
@@ -566,7 +566,7 @@ c(t) &= c_1(t) + \frac{1}{z} \frac{d c_1(t)}{dt} = 1 - \frac{e^{-\xi \omega_n t}
 \draw[arrow] (1.9,0) -- (3.5,0);
 \draw[arrow] (6,-0.8) -- (3.5,-0.8);
 \draw[arrow] (6,0) |- (6,-1.2) -| (0,-0.4) node[near end, left] {$ - $};
-\draw[arrow] (2.5,-0.8) |- (1.5,-0.8) -| (1.5,-0.4) node[near end, left] {$ - $};
+\draw[arrow] (2.5,-0.8) -| (1.5,-0.4) node[near end, left] {$ - $};
 \end{tikzpicture}
 \caption{改善二阶系统结构图}
 \end{figure}
@@ -626,6 +626,7 @@ $$ \begin{array}{ccccc} s^n & a & b & c & \cdots \\ s^{n - 1} & na & (n - 2)b & 
 %------------------------------------------------
 \subsubsection[稳态误差]{稳态误差}
 $ c(t) $ = 稳态 + 暂态（$ t \to \infty $，稳定系统暂态$ \to 0 $）。
+
 \begin{figure}[H]
 \centering 
 \begin{tikzpicture}
@@ -644,7 +645,7 @@ $ c(t) $ = 稳态 + 暂态（$ t \to \infty $，稳定系统暂态$ \to 0 $）�
 \draw[arrow] (4,0) -- (7,0);
 \draw[arrow] (-1.2,0) -- (-0.4,0);
 \draw[arrow] (0.4,0) -- (2,0);
-\draw[arrow] (6,0) |- (6,-1.5) -| (4,-1.5);
+\draw[arrow] (6,0) |- (4,-1.5);
 \draw[arrow] (2,-1.5) -| (0,-0.4) node[near end, left] {$ - $};
 \end{tikzpicture}
 \caption{稳态误差}
@@ -718,8 +719,8 @@ $ \frac{t^2}{2} $ & $ k_a = \lim_{s \to 0} s^2 G_k(s) $ & $ \frac{1}{k_a} $ & $ 
 \draw[arrow] (5.4,0) -- (6.5,0);
 \draw[arrow] (8.5,0) -- (9.5,0);
 \draw[arrow] (9,0) |- (9,1) -| (0,0.4) node[near end, left] {$ - $};
-\draw[arrow] (-1,0) |- (-1,-1.5) -| (1.5,-1.5);
-\draw[arrow] (3.5,-1.5) |- (5,-1.5) -| (5,-0.4);
+\draw[arrow] (-1,0) |- (1.5,-1.5);
+\draw[arrow] (3.5,-1.5) -| (5,-0.4);
 \end{tikzpicture}
 \begin{tikzpicture}
 \node[sum] at (0,0) {$ X $};
@@ -737,8 +738,8 @@ $ \frac{t^2}{2} $ & $ k_a = \lim_{s \to 0} s^2 G_k(s) $ & $ \frac{1}{k_a} $ & $ 
 \draw[arrow] (8.5,0) -- (9.5,0);
 \draw[arrow] (5,2) -- (5,0.4) node[near end, right] {$ + $};
 \draw[arrow] (5,1.5) -- (3.5,1.5);
-\draw[arrow] (1.5,1.5) |- (0,1.5) -| (0,0.4);
-\draw[arrow] (9,0) |- (9,-1) |- (0,-1) -| (0,-0.4);
+\draw[arrow] (1.5,1.5) -| (0,0.4);
+\draw[arrow] (9,0) |- (9,-1) -| (0,-0.4);
 \end{tikzpicture}
 \caption{前馈复合控制}
 \end{figure}
@@ -1007,13 +1008,253 @@ $ A(\omega_0) = 0, A(\omega_b) = -3dB $，带宽为$ \omega_b - \omega_0 $。
 \section{校正}
 %------------------------------------------------
 \subsection[概念]{概念}
-1
+在系统中加入参数可调的装置，改变原系统特性，满足一定的性能指标（稳态误差、动态品质）。
+%------------------------------------------------
+\paragraph{性能指标}
+\begin{itemize}
+\item 时域：$ t_p, t_s, \sigma, \xi, ess $。
+\item 频域：$ \gamma(\omega_c), h, M_p, \omega_b $。
+\item 带宽要求：跟踪低频输入，抑制高频扰动，需适当大。
+\end{itemize}
+%------------------------------------------------
+\paragraph{方式}
+\begin{itemize}
+\item 串联：误差测量点和放大器间串联。
+\item 反馈：局部反馈通道中。
+\item 前馈：在主反馈外，分为滤波和补偿。
+\item 复合：按扰动/输出进行补偿。
+\end{itemize}
+
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[sum] at (4,0) {$ X $};
+\node[block] at (-2,0) {前馈滤波};
+\node[block] at (2,0) {串联};
+\node[block] at (6,0) {控制器};
+\node[block] at (9,0) {控制对象};
+\node[block] at (7.5,-1.5) {反馈};
+\node[block] at (7.5,1.5) {前馈补偿};
+\node at (-3.5,0.3) {$ R(s) $};
+\node at (0.5,0.5) {$ E(s) $};
+\node at (11.5,0.3) {$ C(s) $};
+\draw[arrow] (-4,0) -- (-3,0);
+\draw[arrow] (-1,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (1,0);
+\draw[arrow] (3,0) -- (3.6,0);
+\draw[arrow] (4.4,0) -- (5,0);
+\draw[arrow] (7,0) -- (8,0);
+\draw[arrow] (10,0) -- (12,0);
+\draw[arrow] (9,2.5) -- (9,0.5);
+\draw[arrow] (9,1.5) -- (8.5,1.5);
+\draw[arrow] (6.5,1.5) -| (4,0.4) node[near end, left] {$ + $};
+\draw[arrow] (11,0) |- (8.5,-1.5);
+\draw[arrow] (6.5,-1.5) -| (4,-0.4);
+\draw[arrow] (11,-1.5) |- (11,-2.5) -| (0,-0.4);
+\end{tikzpicture}
+\caption{校正}
+\end{figure}
+%------------------------------------------------
+\paragraph{基本控制率}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+控制率 & $ m(t) $ & 评价 \\
+\hline
+P & $ k_p e(t) $ & $ G_K \uparrow, e_{ss} \downarrow $，闭环不稳定 \\
+\hline
+PD & $ k_p e(t) + k_p \tau \frac{d e(t)}{dt} $ & $ \xi \uparrow $，开环零点$ \uparrow $，$ \gamma(\omega_c) \uparrow $，动态性能$ \uparrow $，对噪声敏感 \\
+\hline
+I & $ k_i \int_0^t e(t) dt $ & 型次$ \uparrow $，稳态性能$ \uparrow $，相角裕度$ \downarrow $，稳定性$ \downarrow $ \\
+\hline
+PI & $ k_p e(t) + \frac{k_p}{T_i} \int_0^t e(t) dt $ & 稳态性能 $ \uparrow $ \\
+\hline
+PID & $ k_p e(t) + \frac{k_p}{T_i} \int_0^t e(t) dt + k_p \tau \frac{d e(t)}{dt} $ & \\
+\hline
+\end{tabular}
+\caption{基本控制律}
+\end{table}
 %------------------------------------------------
 \subsection[串联校正]{串联校正}
-1
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[block] at (2.5,0) {$ G_c(s) $};
+\node[block] at (5.5,0) {$ G(s) $};
+\node at (-1,0.3) {$ R(s) $};
+\node at (8,0.3) {$ C(s) $};
+\draw[arrow] (-1.2,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (1.5,0);
+\draw[arrow] (3.5,0) -- (4.5,0);
+\draw[arrow] (6.5,0) -- (8,0);
+\draw[arrow] (7,0) |- (6,-1) -| (0,-0.4) node[near end, left] {$ - $};
+\end{tikzpicture}
+\caption{串联校正}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{3cm}|p{6cm}|p{6cm}|}
+\hline
+ & 超前校正 & 滞后校正 \\
+\hline
+作用 & $ \varphi(\omega_c) \uparrow $，中频相角$ \uparrow $，$ G_k \uparrow $ & 提前$ \omega_n $ \\
+\hline
+装置 & \includegraphics[width=2cm]{3.1} & \includegraphics[width=2cm]{3.2} \\
+\hline
+网络系数 & $ \alpha = \frac{R_1 + R_2}{R_2} > 1 $ & $ b = \frac{R_2}{R_1 + R_2} < 1 $ \\
+\hline
+$ G_c(s) $ & $ \frac{1}{\alpha} \frac{1 + \alpha Ts}{1 + Ts} $ & $ \frac{1 + b Ts}{1 + Ts} $ \\
+\hline
+波特图 & \includegraphics[width=4cm]{4.1} & \includegraphics[width=4cm]{4.2} \\
+\hline
+$ \omega $ & $ \omega_1 = \frac{1}{\alpha T}, \omega_2 = \frac{1}{T} $ & $ \omega_1 = \frac{1}{T}, \omega_2 = \frac{1}{bT} $ \\
+\hline
+$ \omega_m = \sqrt{\omega_1 \omega_2} $ & $ \frac{1}{T\sqrt{\alpha}} $ & $ \frac{1}{T\sqrt{b}} $ \\
+\hline
+$ \varphi(\omega) $ & $ \arctan(\alpha T \omega) - \arctan(T \omega) $ & $ \arctan(T \omega) - \arctan(b T \omega) $ \\
+\hline
+$ \varphi_m(\omega) $ & $ \arcsin(\frac{\alpha - 1}{\alpha + 1}) $ & $ \arcsin(\frac{1 - b}{1 + b}) $ \\
+\hline
+$ L(\omega_m) $ & $ 10lg \alpha $ & $ 10lgb $ \\
+\hline
+$ \omega_c $ & \multicolumn{2}{c|}{$ \omega_c'' $为校正后，$ \omega_c $为校正前，$ \omega_c' $为要求} \\
+\hline
+设计原理 & $ \omega_m = \omega_c'' $ & $ \omega_c'' = 10\omega_2 $ \\
+\hline
+\multirow{4}{*}{步骤} & \multicolumn{2}{c|}{稳态误差$ \Rightarrow $系统型次、开环增益} \\
+\cline{2-3}
+ & \multicolumn{2}{c|}{$ \omega_c, \varphi(\omega_c), \omega_c' - \omega_c $} \\
+\cline{2-3}
+ & \multicolumn{2}{c|}{$ \varphi(\omega_c'') \Rightarrow \omega_c'' \Rightarrow \alpha/b $} \\
+\cline{2-3}
+ &  & $ \varphi(\omega_c') = \varphi(\omega_c) + \varphi(\omega_c'') $ \\
+ &  & $ 20lgb + L(\omega_c'') = 0, \frac{1}{bT} = 0.1\omega_c'' $ \\
+\cline{2-3}
+ & \multicolumn{2}{c|}{验算$ \varphi(\omega_c'') $} \\
+\hline
+\end{tabular}
+\caption{串联校正}
+\end{table}
+%------------------------------------------------
+\paragraph{频率响应法}~\\
+\begin{minipage}{0.3\textwidth}
+\begin{itemize}
+\item 分析/试探法。
+\item 综合/期望特性法。
+\end{itemize}
+\end{minipage}
+\begin{minipage}{0.7\textwidth}
+\begin{itemize}
+\item 低频：稳态性能，$ G_b $大，$ ess $。
+\item 中频：动态性能，带宽大，$ \varphi(\omega_c), k = -20dB/dec $。
+\item 高频：系统复杂性，噪声抑制性能，$ G_b $小。
+\end{itemize}
+\end{minipage}
 %------------------------------------------------
 \subsection[反馈校正]{反馈校正}
-1
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[sum] at (4,0) {$ X $};
+\node[block] at (2,0) {$ G_1(s) $};
+\node[block] at (6,0) {$ G_2(s) $};
+\node[block] at (6,-1.5) {$ G_c(s) $};
+\node at (-1,0.3) {$ R(s) $};
+\node at (3.5,0.5) {$ R_1(s) $};
+\node at (8.5,0.3) {$ C(s) $};
+\node at (7.3,-2.2) {$ G_{eq}(s) $};
+\draw[arrow] (-1.5,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (1,0);
+\draw[arrow] (3,0) -- (3.6,0);
+\draw[arrow] (4.4,0) -- (5,0);
+\draw[arrow] (7,0) -- (9,0);
+\draw[arrow] (8,0) |- (7,-1.5);
+\draw[arrow] (5,-1.5) -| (4,-0.4);
+\draw[arrow] (8,-1.5) |- (7,-2.5) -| (0,-0.4);
+\end{tikzpicture}
+\caption{反馈校正}
+\end{figure}
+
+$$ G_b(s) = \frac{G_1(s)G_{eq}(s)}{1 + G_1(s)G_{eq}(s)}, G_{eq}(s) = \frac{G_2(s)}{1 + G_2(s)G_c(s)} \overset{G_2(s)G_c(s) \gg 1}{\Longrightarrow} G_{eq}(s) \approx \frac{1}{G_c(s)} $$
+%------------------------------------------------
+\paragraph{特性}
+\begin{itemize}
+\item 削弱非线性特性影响。
+\item 减小系统时间常数。
+\item 降低系统对参数变化的敏感性。
+\item 抑制噪声。
+\end{itemize}
+%------------------------------------------------
+\subsection[复合校正]{复合校正}
+%------------------------------------------------
+\paragraph{概念}
+\begin{itemize}
+\item 前馈：不变性原理。
+\item 反馈：补偿可测量扰动，消除影响，改善性能指标。
+\end{itemize}
+%------------------------------------------------
+\paragraph{按扰动补偿}
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[sum] at (2,0) {$ X $};
+\node[sum] at (6,0) {$ X $};
+\node[block] at (4,0) {$ G_1(s) $};
+\node[block] at (4,1.5) {$ G_n(s) $};
+\node[block] at (8,0) {$ G_2(s) $};
+\node at (-1,0.3) {$ R(s) $};
+\node at (1,0.5) {$ E(s) $};
+\node at (10,0.3) {$ C(s) $};
+\draw[arrow] (-1.5,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (1.6,0);
+\draw[arrow] (2.4,0) -- (3,0);
+\draw[arrow] (5,0) -- (5.6,0);
+\draw[arrow] (6.4,0) -- (7,0);
+\draw[arrow] (9,0) -- (10.5,0);
+\draw[arrow] (6,2) -- (6,0.4) node[near end, right] {$ + $};
+\draw[arrow] (6,1.5) -- (5,1.5);
+\draw[arrow] (3,1.5) -| (2,0.4) node[near end, left] {$ + $};
+\draw[arrow] (10,0) |- (10,-1) -| (0,-0.4) node[near end, left] {$ - $};
+\end{tikzpicture}
+\caption{反馈校正}
+\end{figure}
+
+$$ C_n(s) = \frac{G_2(s)[1 + G_1(s)G_n(s)]N(s)}{1 + G_1(s)G_2(s)}, \quad G_n(s) = -\frac{1}{G_1(s)} $$
+%------------------------------------------------
+\paragraph{按输入补偿}
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}
+\node[sum] at (0,0) {$ X $};
+\node[sum] at (2,0) {$ X $};
+\node[block] at (4,0) {$ G(s) $};
+\node[block] at (0,1.5) {$ G_r(s) $};
+\node at (-3,0.3) {$ R(s) $};
+\node at (1,0.5) {$ E(s) $};
+\node at (6,0.3) {$ C(s) $};
+\draw[arrow] (-3.5,0) -- (-0.4,0);
+\draw[arrow] (0.4,0) -- (1.6,0);
+\draw[arrow] (2.4,0) -- (3,0);
+\draw[arrow] (5,0) -- (6.5,0);
+\draw[arrow] (-2,0) |- (-1,1.5);
+\draw[arrow] (1,1.5) -| (2,0.4) node[near end, right] {$ + $};
+\draw[arrow] (5.5,0) |- (5.5,-1) -| (0,-0.4) node[near end, left] {$ - $};
+\end{tikzpicture}
+\caption{反馈校正}
+\end{figure}
+
+$$ G_b(s) = \frac{[1 + G_r(s)]G(s)}{1 + G(s)}, \quad G_k(s) = \frac{G_b(s)}{1 - G_b(s)} = \frac{1 + G_r(s)G(s)}{1 - G_r(s)G(s)} $$
+
+\begin{itemize}
+\item 全补偿：$ G_r(s) = \frac{1}{G(s)} \Rightarrow G_b(s) = 1, E(s) = 0 $。
+\item 部分补偿：$ G(s) = \frac{kv}{s(a_n s^{n - 1} + \dots + a_1)} $，取$ G_r(s) = \lambda_2 s^2 + \lambda_1 s $，$ G_k(s) = \frac{a_2 s^2 + a_1 s + kv}{s^3(a_n s^{n - 3} + \dots + a_3)} $，型次提升。
+\end{itemize}
 %----------------------------------------------------------------------------------------
 \section{离散系统}
 %------------------------------------------------
