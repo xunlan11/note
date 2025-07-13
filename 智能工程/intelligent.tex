@@ -261,11 +261,7 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 \paragraph{位姿（Pose）}~\\
 
 位置空间求导得到速度空间：
-$$
-\xi_I = \begin{bmatrix} x_I \\ y_I \\ \theta_I \end{bmatrix}, \xi_R = \begin{bmatrix} x_R \\ y_R \\ \theta_R \end{bmatrix}
-\overset{\text{求导}}{\Longrightarrow}
-\dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix}, \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix}
-$$
+$$ \xi_I = \begin{bmatrix} x_I \\ y_I \\ \theta_I \end{bmatrix}, \xi_R = \begin{bmatrix} x_R \\ y_R \\ \theta_R \end{bmatrix} \overset{\text{求导}}{\Longrightarrow} \dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix}, \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} $$
 
 惯性系旋转得到机器人系：
 $$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
@@ -483,11 +479,7 @@ $ \surd $表示可直接控制，$ - $表示可间接控制（不同形态下直
 %------------------------------------------------
 \paragraph{两轮差速机器人运动控制}
 以下以两轮差速机器人（见\ref{sec:two_wheel}）为例。
-$$ 
-\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v_1 \\ 0 \\ v_2 \end{bmatrix} 
-\overset{\text{变换}}{\Longrightarrow}
-\dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix} = \begin{bmatrix} \cos\theta & 0 \\ \sin\theta & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} 
-$$
+$$ \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v_1 \\ 0 \\ v_2 \end{bmatrix} \overset{\text{变换}}{\Longrightarrow} \dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix} = \begin{bmatrix} \cos\theta & 0 \\ \sin\theta & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} $$
 %------------------------------------------------
 \subsection[定点控制器]{定点控制器\tip{定点控制器}}
 %------------------------------------------------
@@ -499,16 +491,9 @@ $$
 惯性系下，实际状态$ q = \begin{bmatrix} x & y & \theta \end{bmatrix}^T $与参考状态$ q_r \begin{bmatrix} x_r & y_r & \theta_r \end{bmatrix}^T $之差为开环误差$ \tilde{q} = \begin{bmatrix} \tilde{x} & \tilde{y} & \tilde{\theta} \end{bmatrix}^T = \begin{bmatrix} x - x_r & y - y_r & \theta - \theta_r \end{bmatrix}^T $。
 \begin{enumerate}
 \item 转换到机器人系
-$$ 
-e = \begin{bmatrix} e_1 \\ e_2 \\ e_3 \end{bmatrix} = R(\theta)^T \tilde{q} = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \tilde{x} \\ \tilde{y} \\ \tilde{\theta} \end{bmatrix}
-\overset{\text{闭环}}{\Longrightarrow}
-\dot{e} = \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = R(\theta) \dot{\tilde{q}} + \dot{R(\theta)}\tilde{q} = \begin{bmatrix} v_1 + v_2 e_2 \\ -v_2 e_1 \\ v_2 \end{bmatrix} 
-$$
+$$ e = \begin{bmatrix} e_1 \\ e_2 \\ e_3 \end{bmatrix} = R(\theta)^T \tilde{q} = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \tilde{x} \\ \tilde{y} \\ \tilde{\theta} \end{bmatrix} \overset{\text{闭环}}{\Longrightarrow} \dot{e} = \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = R(\theta) \dot{\tilde{q}} + \dot{R(\theta)}\tilde{q} = \begin{bmatrix} v_1 + v_2 e_2 \\ -v_2 e_1 \\ v_2 \end{bmatrix} $$
 \item 转换到极坐标系
-$$ \begin{cases} \rho = \sqrt{\tilde{x}^2 + \tilde{y}^2} \\ \beta = -atan2(-\tilde{y}, -\tilde{x}) \\ \alpha = -\beta - \tilde{\theta} \end{cases}
-\overset{\text{闭环}}{\Longrightarrow}
-\begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = \begin{bmatrix} -\cos\alpha & 0 \\ \frac{\sin\alpha}{\rho} & 0 \\ \frac{\sin\alpha}{\rho} & -1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}
-$$ 
+$$ \begin{cases} \rho = \sqrt{\tilde{x}^2 + \tilde{y}^2} \\ \beta = -atan2(-\tilde{y}, -\tilde{x}) \\ \alpha = -\beta - \tilde{\theta} \end{cases} \overset{\text{闭环}}{\Longrightarrow} \begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = \begin{bmatrix} -\cos\alpha & 0 \\ \frac{\sin\alpha}{\rho} & 0 \\ \frac{\sin\alpha}{\rho} & -1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} $$ 
 \end{enumerate}
 %------------------------------------------------
 \paragraph{机器人系非线性控制器}~\\
@@ -521,8 +506,7 @@ $$
 $$ 
 \begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} 
 = \begin{bmatrix} -k_\rho \rho \cos\alpha \\ -k_\rho \sin\alpha \\ k_\rho \sin\alpha - k_\alpha \alpha - k_\beta \beta \end{bmatrix} 
-\overset{\alpha \to 0}{\Longrightarrow}
-\begin{bmatrix} -k_\rho \rho \\ -k_\rho \alpha \\ k_\rho \alpha - k_\alpha \alpha - k_\beta \beta \end{bmatrix} 
+\overset{\alpha \to 0}{\Longrightarrow} \begin{bmatrix} -k_\rho \rho \\ -k_\rho \alpha \\ k_\rho \alpha - k_\alpha \alpha - k_\beta \beta \end{bmatrix} 
 $$
 
 其中前两行非线性耦合，在$ \alpha \to 0 $时指数性稳定，非全局稳定。
@@ -533,8 +517,7 @@ $$
 $$ 
 \begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} 
 = \begin{bmatrix} -k_\rho \rho \cos^2\alpha \\ -k_\rho \cos\alpha \sin\alpha \\ k_\rho \cos\alpha \sin\alpha - k_\alpha \alpha - \frac{k_\rho \sin\alpha \cos\alpha}{\alpha} (\alpha - k_\beta \beta) \end{bmatrix} 
-\overset{\alpha \to 0}{\Longrightarrow}
-\begin{bmatrix} -k_\rho \rho \\ -k_\rho \alpha \\ - k_\alpha \alpha + k_\rho k_\beta \beta \end{bmatrix} 
+\overset{\alpha \to 0}{\Longrightarrow} \begin{bmatrix} -k_\rho \rho \\ -k_\rho \alpha \\ - k_\alpha \alpha + k_\rho k_\beta \beta \end{bmatrix} 
 $$
 
 其全局渐近稳定。
@@ -546,11 +529,7 @@ $$
 惯性系下，实际轨迹$ q(t) = \begin{bmatrix} x(t) & y(t) & \theta(t) \end{bmatrix}^T $与参考轨迹$ q_r \begin{bmatrix} x_r(t) & y_r(t) & \theta_r(t) \end{bmatrix}^T $之差为开环误差$ \tilde{q}(t) = \begin{bmatrix} \tilde{x}(t) & \tilde{y}(t) & \tilde{\theta}(t) \end{bmatrix}^T = \begin{bmatrix} x(t) - x_r(t) & y(t) - y_r(t) & \theta(t) - \theta_r(t) \end{bmatrix}^T $，控制目标为$ \lim_{n \to \infty} \tilde{q}(t) = 0 $。
 
 辅助误差信号为：
-$$ 
-e = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \tilde{x} \\ \tilde{y} \\ \tilde{\theta} \end{bmatrix}
-\overset{\text{闭环}}{\Longrightarrow}
-\dot{e} = \begin{bmatrix} v_1 + v_2 e_2 - v_{1r} \cos e_3 \\ - v_2 e_1 + v_{1r} \sin e_3 \\ v_2 - v_{2r} \end{bmatrix} 
-$$
+$$ e = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \tilde{x} \\ \tilde{y} \\ \tilde{\theta} \end{bmatrix} \overset{\text{闭环}}{\Longrightarrow} \dot{e} = \begin{bmatrix} v_1 + v_2 e_2 - v_{1r} \cos e_3 \\ - v_2 e_1 + v_{1r} \sin e_3 \\ v_2 - v_{2r} \end{bmatrix} $$
 %------------------------------------------------
 \paragraph{控制器}~\\
 
@@ -681,18 +660,10 @@ $ e_3 \to 0 $时，控制器简化为$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} 
 %------------------------------------------------
 \paragraph{例子}
 以下以两轮差速机器人（见\ref{sec:two_wheel}）为例。
-$$ 
-\dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v \\ 0 \\ \omega \end{bmatrix} 
-\overset{\text{转换到惯性系}}{\Longrightarrow}
-\begin{cases} \dot{x} &= v \cos \theta \\ \dot{y} &= v \sin \theta \\ \dot{\theta} &= \omega \end{cases}
-$$
+$$ \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v \\ 0 \\ \omega \end{bmatrix} \overset{\text{转换到惯性系}}{\Longrightarrow} \begin{cases} \dot{x} &= v \cos \theta \\ \dot{y} &= v \sin \theta \\ \dot{\theta} &= \omega \end{cases} $$
 
 码盘读数为：
-$$ 
-\begin{cases} \Delta s = \frac{r}{2}(\Delta \phi_R + \Delta \phi_L) \\ \Delta \theta = \frac{r}{2d}(\Delta \phi_R - \Delta \phi_L) \end{cases}
-\overset{\text{小时间变化}}{\Longrightarrow}
-\begin{cases} \Delta s &= v_k T_s \\ \Delta \theta &= \omega_k T_s \end{cases}   
-$$ 
+$$ \begin{cases} \Delta s = \frac{r}{2}(\Delta \phi_R + \Delta \phi_L) \\ \Delta \theta = \frac{r}{2d}(\Delta \phi_R - \Delta \phi_L) \end{cases} \overset{\text{小时间变化}}{\Longrightarrow} \begin{cases} \Delta s &= v_k T_s \\ \Delta \theta &= \omega_k T_s \end{cases} $$ 
 %------------------------------------------------
 \paragraph{建模方法}\tip{里程计建模方法}
 \begin{figure}[H]
@@ -713,11 +684,7 @@ $$ \begin{cases} x_{k + 1} = x_k + v_k T_s \cos \theta_k \\ y_{k + 1} = y_k + v_
 $$ \begin{cases} x_{k + 1} = x_k + v_k T_s \cos(\theta_k + \frac{\omega_k T_s}{2}) \\ y_{k + 1} = y_k + v_k T_s \sin(\theta_k + \frac{\omega_k T_s}{2}) \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases} $$
 \end{minipage}
 \item 解析积分法
-$$ 
-\begin{cases} x_{k + 1} = x_k + \frac{v_k}{\omega_k} (\sin \theta_{k + 1} - \sin \theta_k) \\ y_{k + 1} = y_k - \frac{v_k}{\omega_k} (\cos \theta_{k + 1} - \cos \theta_k) \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases} 
-\overset{\omega_k = 0}{\Longrightarrow}
-\begin{cases} x_{k + 1} = x_k + v_k T_s \\ y_{k + 1} = y_k \end{cases}  
-$$
+$$ \begin{cases} x_{k + 1} = x_k + \frac{v_k}{\omega_k} (\sin \theta_{k + 1} - \sin \theta_k) \\ y_{k + 1} = y_k - \frac{v_k}{\omega_k} (\cos \theta_{k + 1} - \cos \theta_k) \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases} \overset{\omega_k = 0}{\Longrightarrow} \begin{cases} x_{k + 1} = x_k + v_k T_s \\ y_{k + 1} = y_k \end{cases} $$
 \end{itemize}
 %------------------------------------------------
 \subsubsection[里程计误差]{里程计误差}
@@ -864,11 +831,7 @@ $$ (R, t) = argmin \sum_{i = 1}^{n}w_i ||(R p_i + t) - q_i||^2 $$
 \paragraph{加权平均}~\\
 
 为求极值，对目标式求关于$ t $的偏导：
-$$ 
-2t(\sum_{i = 1}^{n} w_i) + 2R(\sum_{i = 1}^{n} w_i p_i) - 2\sum_{i = 1}^{n} w_i q_i = 0 
-\overset{\text{等号两边同除}}{\underset{\sum_{i = 1}^{n} w_i}{\Longrightarrow}}
-t + R\frac{(\sum_{i = 1}^{n} w_i p_i)}{\sum_{i = 1}^{n} w_i} - \frac{\sum_{i = 1}^{n} w_i q_i}{\sum_{i = 1}^{n} w_i} = 0
-$$
+$$ 2t(\sum_{i = 1}^{n} w_i) + 2R(\sum_{i = 1}^{n} w_i p_i) - 2\sum_{i = 1}^{n} w_i q_i = 0 \overset{\text{等号两边同除}}{\underset{\sum_{i = 1}^{n} w_i}{\Longrightarrow}} t + R\frac{(\sum_{i = 1}^{n} w_i p_i)}{\sum_{i = 1}^{n} w_i} - \frac{\sum_{i = 1}^{n} w_i q_i}{\sum_{i = 1}^{n} w_i} = 0 $$
 
 取两个点云的加权中心点$ \hat{p} = \frac{\sum_{i = 1}^{n} w_i p_i}{\sum_{i = 1}^{n} w_i}, \hat{q} = \frac{\sum_{i = 1}^{n} w_i q_i}{\sum_{i = 1}^{n} w_i} $，上式可化简为$ t = \hat{q} - R \hat{p} $。该式描述了平移量和旋转阵的关系，将其带回目标式，得到单变量最值问题：
 $$ R = argmin \sum_{i = 1}^{n}w_i ||R(p_i - \hat{p}) - (q_i - \hat{q})||^2 $$

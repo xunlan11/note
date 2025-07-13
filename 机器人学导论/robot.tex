@@ -43,11 +43,7 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 $ {}^A P_B $表示$ A $坐标系下的量$ P_B $。
 %------------------------------------------------
 \paragraph{向量叉乘}\tip{向量叉乘}
-$$
-p \times q = \begin{vmatrix} i & j & k \\ p_1 & p_2 & p_3 \\ q_1 & q_2 & q_3 \end{vmatrix} = \begin{bmatrix} p_2 q_3 - p_3 q_2 \\ p_3 q_1 - p_1 q_3 \\ p_1 q_2 - p_2 q_1 \end{bmatrix}
-\overset{\text{反对称阵点乘}}{\Longrightarrow}
-\hat{p} \cdot q = \begin{bmatrix} 0 & -p_3 & p_2 \\ p_3 & 0 & -p_1 \\ -p_2 & p_1 & 0 \end{bmatrix} \cdot \begin{bmatrix} q_1 \\ q_2 \\ q_3 \end{bmatrix}
-$$
+$$ p \times q = \begin{vmatrix} i & j & k \\ p_1 & p_2 & p_3 \\ q_1 & q_2 & q_3 \end{vmatrix} = \begin{bmatrix} p_2 q_3 - p_3 q_2 \\ p_3 q_1 - p_1 q_3 \\ p_1 q_2 - p_2 q_1 \end{bmatrix} \overset{\text{反对称阵点乘}}{\Longrightarrow} \hat{p} \cdot q = \begin{bmatrix} 0 & -p_3 & p_2 \\ p_3 & 0 & -p_1 \\ -p_2 & p_1 & 0 \end{bmatrix} \cdot \begin{bmatrix} q_1 \\ q_2 \\ q_3 \end{bmatrix} $$
 
 \begin{itemize}
 \item 顺序变换：$ p \times q = -q \times p = \hat{p} \cdot q = -\hat{q} \cdot p $。
@@ -669,17 +665,9 @@ $$
 
 \begin{itemize}
 \item 平移关节：线速度传导 + 角速度转换线速度 + 平移变化。
-$$
-v_{i + 1} = v_i + \omega_i \times P_{i + 1} + \dot{d}_{i + 1} \cdot Z_{i + 1}
-\overset{\text{换系}}{\Longrightarrow}
-{}^{i + 1}v_{i + 1} = {}^{i + 1}_i R \cdot ({}^i v_i + {}^i \omega_i \times {}^i P_{i + 1}) + \dot{d}_{i + 1} \cdot {}^{i + 1}Z_{i + 1}
-$$
+$$ v_{i + 1} = v_i + \omega_i \times P_{i + 1} + \dot{d}_{i + 1} \cdot Z_{i + 1} \overset{\text{换系}}{\Longrightarrow} {}^{i + 1}v_{i + 1} = {}^{i + 1}_i R \cdot ({}^i v_i + {}^i \omega_i \times {}^i P_{i + 1}) + \dot{d}_{i + 1} \cdot {}^{i + 1}Z_{i + 1} $$
 \item 旋转关节：角速度传导 + 旋转变化。
-$$
-\omega_{i + 1} = \omega_i + \dot{\theta}_{i + 1} \cdot Z_{i + 1}
-\overset{\text{换系}}{\Longrightarrow}
-{}^{i + 1}\omega_{i + 1} = {}^{i + 1}_i R \cdot {}^i \omega_i + \dot{\theta}_{i + 1} \cdot {}^{i + 1}Z_{i + 1}
-$$
+$$ \omega_{i + 1} = \omega_i + \dot{\theta}_{i + 1} \cdot Z_{i + 1} \overset{\text{换系}}{\Longrightarrow} {}^{i + 1}\omega_{i + 1} = {}^{i + 1}_i R \cdot {}^i \omega_i + \dot{\theta}_{i + 1} \cdot {}^{i + 1}Z_{i + 1} $$
 \end{itemize} 
 %------------------------------------------------
 \subsubsection[并行末端作用求解]{并行末端作用求解\tip{并行速度传播求雅可比}}
@@ -736,11 +724,7 @@ v &= \sum_{i = 1}^n [\epsilon_i V_i + \overline{\epsilon}_i (\Omega_i \times P_{
 \item 扭矩 = 扭矩回传 + 力臂$ \times $力。
 \end{itemize} 
 
-$$
-\begin{cases} f_i = f_{i + 1} \\ n_i = n_{i + 1} + P_{i + 1} \times f_{i + 1} \end{cases}
-\overset{\text{换系}}{\Longrightarrow}
-\begin{cases} {}^i f_i = {}^i_{i + 1}R \cdot {}^{i + 1} f_{i + 1} \\ {}^i n_i = {}^i_{i + 1}R \cdot {}^{i + 1} n_{i + 1} + {}^i P_{i + 1} \times {}^i f_i \end{cases}
-$$
+$$ \begin{cases} f_i = f_{i + 1} \\ n_i = n_{i + 1} + P_{i + 1} \times f_{i + 1} \end{cases} \overset{\text{换系}}{\Longrightarrow} \begin{cases} {}^i f_i = {}^i_{i + 1}R \cdot {}^{i + 1} f_{i + 1} \\ {}^i n_i = {}^i_{i + 1}R \cdot {}^{i + 1} n_{i + 1} + {}^i P_{i + 1} \times {}^i f_i \end{cases} $$
 \noindent
 \begin{minipage}{0.65\textwidth}
 \begin{figure}[H]
@@ -1775,11 +1759,7 @@ PD+前馈+力补偿 & 任意 & 任意 & 无 \\
 \begin{itemize}
 \item 约束坐标系：正交坐标系，将任务描述为沿各坐标轴的位置控制或力控制。
 \item 力位约束正交：不可能在同一自由度控制位置和力。位置控制自由度受到力约束，力控制自由度受到位置约束，二者对偶。
-$$
-\begin{bmatrix} v_x & v_y & v_z \\ \omega_x & \omega_y & \omega_z \end{bmatrix}
-\overset{\text{对偶}}{\Longleftrightarrow}
-\begin{bmatrix} f_x & f_y & f_z \\ \tau_x & \tau_y & \tau_z \end{bmatrix}
-$$
+$$ \begin{bmatrix} v_x & v_y & v_z \\ \omega_x & \omega_y & \omega_z \end{bmatrix} \overset{\text{对偶}}{\Longleftrightarrow} \begin{bmatrix} f_x & f_y & f_z \\ \tau_x & \tau_y & \tau_z \end{bmatrix} $$
 \item 描述方式：
 \begin{itemize}
 \item 自然约束：任务的几何/环境结构所确定的约束。

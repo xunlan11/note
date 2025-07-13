@@ -1187,12 +1187,9 @@ $$ \eta(\tilde{\pi}) \geq L_{\pi}(\tilde{\pi}) - \frac{4\epsilon}{(1 - \gamma)^2
 问题转化为：
 \begin{align*}
 &\max_{\theta}[L_{\theta_{old}}(\theta) - C D^{\max}_{KL}(\theta_{old}, \theta)] \\
-\overset{\text{迭代步长较小}}{\Longrightarrow} 
-&\max_{\theta} E_{s \sim \rho_{\theta_{old}}, a \sim \pi_{\theta_{old}}}[\frac{\pi_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)], \quad D^{\max}_{KL}(\theta_{old}, \theta) \leq \delta \\
-\underset{\text{平均KL散度}}{\overset{\text{策略状态空间分布}}{\Longrightarrow}}
-&\max_{\theta} E_{s \sim \textcolor{red}{\pi_{\theta_{old}}}, a \sim \pi_{\theta_{old}}}[\frac{\pi_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)], \quad E_{s \sim \pi_{\theta_{old}}}\{D_{KL}[\pi_{\theta_{old}}(\cdot|s)\pi_{\theta}(\cdot|s)]\} \leq \delta \\
-\underset{\text{约束二次逼近}}{\overset{\text{目标线性逼近}}{\Longrightarrow}}
-&\max_{\theta}[\nabla_{\theta} L_{\theta_{old}}(\theta) \big|_{\theta = \theta_{old}} \cdot (\theta - \theta_{old})], \quad \frac{1}{2}(\theta_{old} - \theta)^T \underbrace{A(\theta_{old})}_{Fisher \text{信息矩阵}} (\theta_{old} - \theta) \leq \delta
+\overset{\text{迭代步长较小}}{\Longrightarrow} &\max_{\theta} E_{s \sim \rho_{\theta_{old}}, a \sim \pi_{\theta_{old}}}[\frac{\pi_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)], \quad D^{\max}_{KL}(\theta_{old}, \theta) \leq \delta \\
+\underset{\text{平均KL散度}}{\overset{\text{策略状态空间分布}}{\Longrightarrow}} &\max_{\theta} E_{s \sim \textcolor{red}{\pi_{\theta_{old}}}, a \sim \pi_{\theta_{old}}}[\frac{\pi_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)], \quad E_{s \sim \pi_{\theta_{old}}}\{D_{KL}[\pi_{\theta_{old}}(\cdot|s)\pi_{\theta}(\cdot|s)]\} \leq \delta \\
+\underset{\text{约束二次逼近}}{\overset{\text{目标线性逼近}}{\Longrightarrow}} &\max_{\theta}[\nabla_{\theta} L_{\theta_{old}}(\theta) \big|_{\theta = \theta_{old}} \cdot (\theta - \theta_{old})], \quad \frac{1}{2}(\theta_{old} - \theta)^T \underbrace{A(\theta_{old})}_{Fisher \text{信息矩阵}} (\theta_{old} - \theta) \leq \delta
 \end{align*}
 %------------------------------------------------·
 \subsubsection[PPO]{PPO（Proximal Policy Optimization，近端策略优化）}
