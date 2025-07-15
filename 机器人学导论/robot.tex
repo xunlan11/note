@@ -255,9 +255,9 @@ R(\theta, {}^A \hat{k}) &= R_K(\theta) = R_z(\alpha) \cdot R_y(\beta) \cdot R_z(
 &= \begin{bmatrix} k_x k_x v\theta + c\theta & k_x k_y v\theta - k_z s\theta & k_x k_z v\theta + k_y c\theta \\ k_x k_y v\theta + k_z s\theta & k_y k_y v\theta + c\theta & k_y k_z v\theta - k_x s\theta \\ k_x k_z v\theta - k_y c\theta & k_y k_z v\theta + k_x s\theta & k_z k_z v\theta + c\theta \end{bmatrix} 
 \end{align*}
 
-其中$ c\theta = \cos\theta, s\theta = \sin\theta, v\theta = 1 - \cos\theta $。
+其中$ c\theta = \cos\theta, \quad s\theta = \sin\theta, \quad v\theta = 1 - \cos\theta $。
 \item 与旋转矩阵结合：
-$$ \theta = \arccos(\frac{r_{11} + r_{22} + r_{33} - 1}{2}), {}^A \hat{k} = \frac{1}{2 \sin\theta} \begin{bmatrix} r_{32} - r_{23} & r_{13} - r_{31} & r_{21} - r_{12} \end{bmatrix}^T $$
+$$ \theta = \arccos(\frac{r_{11} + r_{22} + r_{33} - 1}{2}), \quad {}^A \hat{k} = \frac{1}{2 \sin\theta} \begin{bmatrix} r_{32} - r_{23} & r_{13} - r_{31} & r_{21} - r_{12} \end{bmatrix}^T $$
 \begin{itemize}
 \item 多解：$ \arccos $多解。    
 \item 奇异：$ \sin\theta = 0 $。
@@ -267,7 +267,7 @@ $$ \theta = \arccos(\frac{r_{11} + r_{22} + r_{33} - 1}{2}), {}^A \hat{k} = \fra
 \paragraph{四元数（欧拉参数）}~\\
 
 由轴$ \hat{k} = \begin{bmatrix} k_x & k_y & k_z \end{bmatrix}^T (k_x^2 + k_y^2 + k_z^2 = 1) $和$ \theta $，得到欧拉参数：
-$$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \varepsilon_2 = k_y \sin\frac{\theta}{2}, \varepsilon_3 = k_z \sin\frac{\theta}{2}, \varepsilon_4 = \cos\frac{\theta}{2} $$
+$$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \quad \varepsilon_2 = k_y \sin\frac{\theta}{2}, \quad \varepsilon_3 = k_z \sin\frac{\theta}{2}, \quad \varepsilon_4 = \cos\frac{\theta}{2} $$
 
 有$ \varepsilon_1^2 + \varepsilon_2^2 + \varepsilon_3^2 + \varepsilon_4^2 = 1 $，其表示超球体上一点，至少有一个参数不小于$ \frac{1}{2} $。
 
@@ -276,7 +276,7 @@ $$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \varepsilon_2 = k_y \sin\frac{\thet
 求解时，先计算$ \max{\varepsilon_i }$，用其计算其它参数，以保证最高精度。以下以$ \varepsilon_4 $为例：
 \begin{itemize}
 \item $ tr(R) = r_{11} + r_{22} + r_{33} = 3 - 4(\varepsilon_1^2 + \varepsilon_2^2 + \varepsilon_3^2) = 3 - 4(1 - \varepsilon_4^2) $。
-\item $ \varepsilon_4 = \frac{1}{2} \sqrt{1 + r_{11} + r_{22} + r_{33}}, \varepsilon_1 = \frac{r_{32} - r_{23}}{4 \varepsilon_4}, \varepsilon_2 = \frac{r_{13} - r_{31}}{4 \varepsilon_4}, \varepsilon_3 = \frac{r_{21} - r_{12}}{4 \varepsilon_4} $。
+\item $ \varepsilon_4 = \frac{1}{2} \sqrt{1 + r_{11} + r_{22} + r_{33}}, \quad \varepsilon_1 = \frac{r_{32} - r_{23}}{4 \varepsilon_4}, \quad \varepsilon_2 = \frac{r_{13} - r_{31}}{4 \varepsilon_4}, \quad \varepsilon_3 = \frac{r_{21} - r_{12}}{4 \varepsilon_4} $。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[旋转角]{旋转角}
@@ -340,8 +340,8 @@ $$ \varepsilon_1 = k_x \sin\frac{\theta}{2}, \varepsilon_2 = k_y \sin\frac{\thet
 \end{itemize}
 \item 
 \begin{itemize}
-\item 基座：虚拟关节$ 0 $与关节$ 1 $重合，$ \vec{a}_0 = 0, \alpha_0 = 0 $。
-\item 末端：虚拟关节$ n + 1 $与关节$ n $重合，$ \vec{a}_n = 0, \alpha_n = 0 $。
+\item 基座：虚拟关节$ 0 $与关节$ 1 $重合，$ \vec{a}_0 = 0, \quad \alpha_0 = 0 $。
+\item 末端：虚拟关节$ n + 1 $与关节$ n $重合，$ \vec{a}_n = 0, \quad \alpha_n = 0 $。
 \end{itemize}
 \item 关节$ i $的DH参数表征其所在坐标系与前一坐标系的关系；坐标系$ i $的参数表征连杆$ i $沿其$ z $轴运动后相对于连杆$ i - 1 $的位姿。
 \end{itemize}
@@ -526,7 +526,7 @@ $$ {}^0_4T = \begin{bmatrix} c12 c34 - \frac{\sqrt{2}}{2}s12 s34 & -c12 s34 - \f
 \item $ 2L_3 \leq L_1 + L_2 - |L_1 - L_2| \& L_3 \geq |L_1 - L_2| $。
 \item $ L_3 \leq L_1 + L_2 $。
 \item $ 2L_3 \geq L_1 + L_2 - |L_1 - L_2| \& |L_1 - L_2| \leq L_3 \leq L_1 + L_2 $。
-\item $ L_2 \leq L_3 \leq |L_1 - L_2|, L_3 \geq L_1 + L_2 $。
+\item $ L_2 \leq L_3 \leq |L_1 - L_2|, \quad L_3 \geq L_1 + L_2 $。
 \end{enumerate}
 }
 \end{minipage}
@@ -704,7 +704,7 @@ $$ \omega_{i + 1} = \omega_i + \dot{\theta}_{i + 1} \cdot Z_{i + 1} \overset{\te
 回到雅可比转换\ref{sec:bingxing_back1}，回到惯性阵$ M(q) $求取\ref{sec:bingxing_back2}。
 %------------------------------------------------
 \paragraph{综合作用}\label{sec:Terminal_function}
-基于基坐标系，由$ V_i = Z_i \dot{q}_i, \Omega_i = Z_i \dot{q}_i $，综合各关节运动，得到：
+基于基坐标系，由$ V_i = Z_i \dot{q}_i, \quad \Omega_i = Z_i \dot{q}_i $，综合各关节运动，得到：
 
 \begin{align*}
 v &= \sum_{i = 1}^n [\epsilon_i V_i + \overline{\epsilon}_i (\Omega_i \times P_{in})] = \sum_{i = 1}^n [\epsilon_i Z_i + \overline{\epsilon}_i (Z_i \times P_{in})] \dot{q}_i \\
@@ -784,12 +784,12 @@ $$ \tau^T \delta q + (-F)^T \delta x = 0 \overset{\delta x = J \delta q}{\Longri
 \end{figure}
 
 {\footnotesize
-条件：$ l_1 = l_2 = 1, \theta_1 = 0, \theta_2 = 60^\circ, F = \begin{bmatrix} 0 & -1 & 0 \end{bmatrix}^T N $。
+条件：$ l_1 = l_2 = 1, \quad \theta_1 = 0, \quad \theta_2 = 60^\circ, \quad F = \begin{bmatrix} 0 & -1 & 0 \end{bmatrix}^T N $。
 \begin{enumerate}
 \item 求力矩：
 \begin{itemize}
-\item 对于连杆2：$ f_2 = F, n_2 = \vec{l}_2 \times F = \begin{bmatrix} 0 & 0 & -l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
-\item 对于连杆1：$ f_1 = f_2 = F, n_1 = n_2 + \vec{l}_1 \times f_2 = \begin{bmatrix} 0 & 0 & -l_1 \cos\theta_1 - l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
+\item 对于连杆2：$ f_2 = F, \quad n_2 = \vec{l}_2 \times F = \begin{bmatrix} 0 & 0 & -l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
+\item 对于连杆1：$ f_1 = f_2 = F, \quad n_1 = n_2 + \vec{l}_1 \times f_2 = \begin{bmatrix} 0 & 0 & -l_1 \cos\theta_1 - l_2 \cos(\theta_1 + \theta_2) \end{bmatrix}^T N $。
 \end{itemize} 
 \item 求扭矩：
 \begin{itemize}
@@ -811,7 +811,7 @@ $$ \begin{bmatrix} v_j \\ \omega_j \end{bmatrix} = \begin{bmatrix} E & -\hat{P}_
 $ {}^0 \hat{P}_{ij} = {}^0_n R \cdot {}^n \hat{P}_{ij} \cdot {}^0_n R^T $：
 $$ {}^0 J_j = \begin{bmatrix} {}^0_n R & -{}^0_n R \cdot {}^n \hat{P}_{ij} \cdot {}^0_n R^T \\ 0 & {}^0_n R \end{bmatrix} {}^n J_i $$
 
-不同坐标系下$ J $不同，但是$ |J| $相同：$ {}^i J \neq {}^j J, |{}^i J| = |{}^j J| $。
+不同坐标系下$ J $不同，但是$ |J| $相同：$ {}^i J \neq {}^j J, \quad |{}^i J| = |{}^j J| $。
 %------------------------------------------------
 \subsection[雅可比奇异]{雅可比奇异\tip{雅可比奇异}}
 $ |J(q)| = 0 $时，奇异，存在方向无法运动或旋转，控制失效。
@@ -881,9 +881,9 @@ $$ -\hat{p} \hat{p} = (p^T p)E_3 - p p^T = \begin{bmatrix} y^2 + z^2 & -xy & -xz
 三列分别表示沿$ x, y, z $三轴旋转时，对三轴产生的动量矩列向量$ L = r \times m \omega \times r $。
 \begin{itemize}
 \item 惯量矩（绕主轴的转动惯量）：恒正，和（即$ tr(I) $）不变，绕质心转轴最小。
-$$ I_{xx} = \iiint (y^2 + z^2)\rho dxdydz, I_{yy} = \iiint (z^2 + x^2)\rho dxdydz, I_{zz} = \iiint (x^2 + y^2)\rho dxdydz $$
+$$ I_{xx} = \iiint (y^2 + z^2)\rho dxdydz, \quad I_{yy} = \iiint (z^2 + x^2)\rho dxdydz, \quad I_{zz} = \iiint (x^2 + y^2)\rho dxdydz $$
 \item 惯量积：可正可负可零。
-$$ I_{xy} = \iiint (xy)\rho dxdydz, I_{yz} = \iiint (yz)\rho dxdydz, I_{xz} = \iiint (xz)\rho dxdydz $$
+$$ I_{xy} = \iiint (xy)\rho dxdydz, \quad I_{yz} = \iiint (yz)\rho dxdydz, \quad I_{xz} = \iiint (xz)\rho dxdydz $$
 \end{itemize} 
 %------------------------------------------------
 \paragraph{性质}
@@ -993,7 +993,7 @@ N_i &= n_i - n_{i + 1} + (-P_{C_i}) \times f_i + (P_{i + 1} - P_{C_i}) \times (-
 \paragraph{步骤}\tip{牛顿-欧拉动力学方程}
 \begin{enumerate}
 \item 初始化（基坐标系固定时表征重力）：
-$$ {}^0 \omega_0 = 0, {}^0 v_0 = 0, {}^0 \dot{v}_0 = g $$
+$$ {}^0 \omega_0 = 0, \quad {}^0 v_0 = 0, \quad {}^0 \dot{v}_0 = g $$
 \item 外推：
 \begin{enumerate}
 \item 关节速度、加速度。
@@ -1075,7 +1075,7 @@ K(q, \dot{q}) = \frac{1}{2}\dot{q}^T \textcolor{red}{M(q)} \dot{q} &\equiv \sum_
 &= \frac{1}{2}\dot{q}^T \textcolor{red}{\sum_{i = 1}^{n}[J_{v_{C_i}}^T m_i J_{v_{C_i}} + J_{\omega_{C_i}}^T I_{C_i} J_{\omega_{C_i}}]} \dot{q}
 \end{align*}
 
-其中$ J_{v_{C_i}}, J_{\omega_{C_i}} $为连杆$ i $质心处的线、角雅可比。
+其中$ J_{v_{C_i}}, \quad J_{\omega_{C_i}} $为连杆$ i $质心处的线、角雅可比。
 \begin{itemize}
 \item $ J_{v_{C_i}} $可由$ J_{v_i} $转化（见\ref{sec:bingxing}）推得，也可由质心处的位置矢量求偏导获得。
 $$ J_{v_{C_i}} = \begin{bmatrix} \frac{\partial P_{C_i}}{\partial q_1} & \frac{\partial P_{C_i}}{\partial q_2} & \cdots & \frac{\partial P_{C_i}}{\partial q_i} & 0 & 0 & \cdots & 0 \end{bmatrix} $$
@@ -1090,7 +1090,7 @@ $$ M(q) = \begin{bmatrix} m_{11} & m_{12} & \cdots & m_{1n} \\ m_{21} & m_{22} &
 %------------------------------------------------
 \paragraph{$ V(q, \dot{q}) $}
 \begin{itemize}
-\item 记号：$ b_{i,j,k} = b_{j,i,k} = \frac{\partial m_{ij}}{\partial q_k}, c_{i,j k} = b_{i,j,k} + b_{i,k,j}, c_{ijk} = \frac{1}{2}(b_{i,j,k} + b_{i,k,j} - b_{j,k,i}) $。
+\item 记号：$ b_{i,j,k} = b_{j,i,k} = \frac{\partial m_{ij}}{\partial q_k}, \quad c_{i,j k} = b_{i,j,k} + b_{i,k,j}, \quad c_{ijk} = \frac{1}{2}(b_{i,j,k} + b_{i,k,j} - b_{j,k,i}) $。
 \item 总体：
 $$ V(q, \dot{q}) = \textcolor{red}{\dot{M}(q) \dot{q}} - \frac{1}{2}\textcolor{blue}{\begin{bmatrix} \dot{q}^T \frac{\partial M(q)}{\partial q_1}\dot{q} \\ \vdots \\ \dot{q}^T \frac{\partial M(q)}{\partial q_n}\dot{q} \end{bmatrix}} $$
 \item 前者：
@@ -1139,12 +1139,12 @@ $$ G(q) = -\sum_{i = 1}^{n} m_i J_{v_{C_i}}^T g $$
 \paragraph{步骤}\tip{拉格朗日动力学方程}
 \begin{enumerate}
 \item 求解各连杆质心位置矢量$ P_{C_i} $。
-\item 求解各连杆质心处雅可比$ J_{v_{C_i}}, J_{\omega_{C_i}} $，前者求偏导，后者取$ z $列。
-\item 求解惯性阵$ M(q) $，需检查$ m_{ii} $是否只与$ q_j, j > i $相关。
+\item 求解各连杆质心处雅可比$ J_{v_{C_i}}, \quad J_{\omega_{C_i}} $，前者求偏导，后者取$ z $列。
+\item 求解惯性阵$ M(q) $，需检查$ m_{ii} $是否只与$ q_j, \quad j > i $相关。
 $$ M(q) = \sum_{i = 1}^{n}[J_{v_{C_i}}^T m_i J_{v_{C_i}} + J_{\omega_{C_i}}^T I_{C_i} J_{\omega_{C_i}}] $$
 \item 求解惯性力$ V(q, \dot{q}) $：
 \begin{enumerate}
-\item $ b_{i,j,k} = \frac{\partial m_{ij}}{\partial q_k}, c_{ijk} = \frac{1}{2}(b_{i,j,k} + b_{i,k,j} - b_{j,k,i}) $。
+\item $ b_{i,j,k} = \frac{\partial m_{ij}}{\partial q_k}, \quad c_{ijk} = \frac{1}{2}(b_{i,j,k} + b_{i,k,j} - b_{j,k,i}) $。
 \item 
 $
 V(q, \dot{q}) = 
@@ -1170,15 +1170,15 @@ $。
 \begin{minipage}{0.7\textwidth}
 \hspace{2em}
 RP平面机器人的连杆质量分别为$ m_1, m_2 $，连杆质心距关节$ 1 $距离分别为$ l_1, d_2 $，连杆质心处惯性张量分别为：
-$$ {{}^{C_1}}I_1 = \begin{bmatrix} I_{xx1} & 0 & 0 \\ 0 & I_{yy1} & 0 \\ 0 & 0 & I_{zz1} \end{bmatrix}, {{}^{C_2}}I_2 = \begin{bmatrix} I_{xx2} & 0 & 0 \\ 0 & I_{yy2} & 0 \\ 0 & 0 & I_{zz2} \end{bmatrix} $$
+$$ {{}^{C_1}}I_1 = \begin{bmatrix} I_{xx1} & 0 & 0 \\ 0 & I_{yy1} & 0 \\ 0 & 0 & I_{zz1} \end{bmatrix}, \quad {{}^{C_2}}I_2 = \begin{bmatrix} I_{xx2} & 0 & 0 \\ 0 & I_{yy2} & 0 \\ 0 & 0 & I_{zz2} \end{bmatrix} $$
 \hspace{2em}
 统一到$ 1 $坐标系下：$ y_1 $与$ z_2 $重合：
-$$ {}^1 P_2 = \begin{bmatrix} 0 & q_2 & 0 \end{bmatrix}^T, {}^1 P_{C_2} = \begin{bmatrix} 0 & d_2 & 0 \end{bmatrix}^T $$
+$$ {}^1 P_2 = \begin{bmatrix} 0 & q_2 & 0 \end{bmatrix}^T, \quad {}^1 P_{C_2} = \begin{bmatrix} 0 & d_2 & 0 \end{bmatrix}^T $$
 \end{minipage}
 %------------------------------------------------
 \paragraph{牛顿-欧拉动力学方程法}
 \begin{enumerate}
-\item 初始条件: $ {}^0 \omega_0 = 0, {}^0 v_0 = 0, {}^0 \dot{\omega}_0 = 0, {}^0 \dot{v}_0 = \begin{bmatrix} 0 & g & 0 \end{bmatrix}^T, f_3 = 0, n_3 = 0 $。
+\item 初始条件: $ {}^0 \omega_0 = 0, \quad {}^0 v_0 = 0, \quad {}^0 \dot{\omega}_0 = 0, \quad {}^0 \dot{v}_0 = \begin{bmatrix} 0 & g & 0 \end{bmatrix}^T, \quad f_3 = 0, \quad n_3 = 0 $。
 \item 关节$ 1 $运动学：
 \begin{align*}
 {}^1 \omega_1 &= \dot{q}_1 \cdot {}^1 Z_1 = \begin{bmatrix} 0 & 0 & \dot{q}_1 \end{bmatrix}^T \\
@@ -1226,7 +1226,7 @@ $$ {}^1 P_2 = \begin{bmatrix} 0 & q_2 & 0 \end{bmatrix}^T, {}^1 P_{C_2} = \begin
 \paragraph{拉格朗日动力学法}
 \begin{enumerate}
 \item 质心位置矢量：
-$$ {}^0 P_{C_1} = \begin{bmatrix} -l_1 s1 & l_1 c1 & 0 \end{bmatrix}^T, {}^0 P_{C_2} = \begin{bmatrix} -(q_2 + d_2)s1 & (q_2 + d_2)c1 & 0 \end{bmatrix}^T $$
+$$ {}^0 P_{C_1} = \begin{bmatrix} -l_1 s1 & l_1 c1 & 0 \end{bmatrix}^T, \quad {}^0 P_{C_2} = \begin{bmatrix} -(q_2 + d_2)s1 & (q_2 + d_2)c1 & 0 \end{bmatrix}^T $$
 \item 质心处雅可比：
 \begin{align*}
 {}^0 J_{v_{C_1}} &= \frac{\partial P_{C_1}}{\partial q} = \begin{bmatrix} -l_1 c1 & 0 \\ -l_1 s1 & 0 \\ 0 & 0 \end{bmatrix} & {}^0 J_{v_{C_2}} &= \frac{\partial P_{C_2}}{\partial q} = \begin{bmatrix} -(q_2 + d_2)c1 & -s1 \\ -(q_2 + d_2)s1 & c1 \\ 0 & 0 \end{bmatrix} \\
@@ -1240,8 +1240,8 @@ M(q) &= \sum_{i = 1}^{2} J_{v_{C_i}}^T m_i J_{v_{C_i}} + J_{\omega_{C_i}}^T I_{C
 \end{align*}
 \item 惯性力：
 \begin{align*}
-&b_{1,1,1} = b_{1,2,1} = b_{1,2,2} = b_{2,1,1} = b_{2,1,2} = b_{2,2,1} = b_{2,2,2} = 0, b_{1,1,2} = 2m_2(q_2 + d_2) \\
-&c_{111} = c_{122} = c_{212} = c_{222} = 0, c_{211} = -m_2(q_2 + d_2), c_{112} = m_2(q_2 + d_2) \\
+&b_{1,1,1} = b_{1,2,1} = b_{1,2,2} = b_{2,1,1} = b_{2,1,2} = b_{2,2,1} = b_{2,2,2} = 0, \quad b_{1,1,2} = 2m_2(q_2 + d_2) \\
+&c_{111} = c_{122} = c_{212} = c_{222} = 0, \quad c_{211} = -m_2(q_2 + d_2), \quad c_{112} = m_2(q_2 + d_2) \\
 &V(q, \dot{q}) = \begin{bmatrix} c_{111} & c_{122} \\ c_{211} & c_{222} \end{bmatrix} \begin{bmatrix} \dot{q}_1^2 \\ \dot{q}_2^2 \end{bmatrix} + 2\begin{bmatrix} c_{112} \\ c_{212} \end{bmatrix} \dot{q}_1 \dot{q}_2 = \begin{bmatrix} 0 & 0 \\ -m_2(q_2 + d_2) & 0 \end{bmatrix} \begin{bmatrix} \dot{q}_1^2 \\ \dot{q}_2^2 \end{bmatrix} + \begin{bmatrix} 2m_2(q_2 + d_2) \\ 0 \end{bmatrix} \dot{q}_1 \dot{q}_2
 \end{align*}
 \item 重力：
@@ -1270,12 +1270,12 @@ G(q) &= -(m_1 J_{v_{C_1}}^T g + m_2 J_{v_{C_2}}^T g) \\
 \begin{minipage}{0.6\textwidth}
 \hspace{2em}
 2R平面机器人的连杆质量分别为$ m_1, m_2 $，杆长分别为$ l_1, l_2 $，连杆质心距相邻关节距离分别为$ l_{C_1}, l_{C_2} $，连杆质心处惯性张量分别为：
-$$ {{}^{C_1}}I_1 = \begin{bmatrix} I_{xx1} & 0 & 0 \\ 0 & I_{yy1} & 0 \\ 0 & 0 & I_{zz1} \end{bmatrix}, {{}^{C_2}}I_2 = \begin{bmatrix}  I_{xx2} & 0 & 0 \\ 0 & I_{yy2} & 0 \\ 0 & 0 & I_{zz2} \end{bmatrix} $$
+$$ {{}^{C_1}}I_1 = \begin{bmatrix} I_{xx1} & 0 & 0 \\ 0 & I_{yy1} & 0 \\ 0 & 0 & I_{zz1} \end{bmatrix}, \quad {{}^{C_2}}I_2 = \begin{bmatrix}  I_{xx2} & 0 & 0 \\ 0 & I_{yy2} & 0 \\ 0 & 0 & I_{zz2} \end{bmatrix} $$
 \end{minipage}
 %------------------------------------------------
 \paragraph{牛顿-欧拉动力学方程法}
 \begin{enumerate}
-\item 初始条件: $ {}^0 \omega_0 = 0, {}^0 v_0 = 0, {}^0 \dot{\omega}_0 = 0, {}^0 \dot{v}_0 = \begin{bmatrix} 0 & g & 0 \end{bmatrix}^T, f_3 = 0, n_3 = 0 $。
+\item 初始条件: $ {}^0 \omega_0 = 0, \quad {}^0 v_0 = 0, \quad {}^0 \dot{\omega}_0 = 0, \quad {}^0 \dot{v}_0 = \begin{bmatrix} 0 & g & 0 \end{bmatrix}^T, \quad f_3 = 0, \quad n_3 = 0 $。
 \item 关节$ 1 $运动学：
 \begin{align*}
 {}^1 \omega_1 &= \dot{\theta}_1 \cdot {}^1 Z_1 = \begin{bmatrix} 0 & 0 & \dot{\theta}_1 \end{bmatrix}^T \\
@@ -1324,7 +1324,7 @@ $$ \Gamma = \begin{bmatrix} \tau_1 \\ \tau_2 \end{bmatrix} = \begin{bmatrix} {}^
 \paragraph{拉格朗日动力学法}
 \begin{enumerate}
 \item 质心位置矢量：
-$$ {}^0 P_{C_1} = \begin{bmatrix} l_{C_1}c1 & l_{C_1}s1 & 0 \end{bmatrix}^T, {}^0 P_{C_2} = \begin{bmatrix} l_1 c1 + l_{C_2}c12 & l_1 s1 + l_{C_2}s12 & 0 \end{bmatrix}^T $$
+$$ {}^0 P_{C_1} = \begin{bmatrix} l_{C_1}c1 & l_{C_1}s1 & 0 \end{bmatrix}^T, \quad {}^0 P_{C_2} = \begin{bmatrix} l_1 c1 + l_{C_2}c12 & l_1 s1 + l_{C_2}s12 & 0 \end{bmatrix}^T $$
 \item 质心处雅可比：
 \begin{align*}
 {}^0 J_{v_{C_1}} &= \begin{bmatrix} -l_{C_1}s1 & 0 \\ l_{C_1}c1 & 0 \\ 0 & 0 \end{bmatrix}& {}^0 J_{v_{C_2}} &= \begin{bmatrix} -l_1 s1 - l_{C_2}s12 & -l_{C_2}s12 \\ l_1 c1 + l_{C_2}c12 & l_{C_2}c12 \\ 0 & 0 \end{bmatrix} \\
@@ -1338,8 +1338,8 @@ M(q) &= \sum_{i = 1}^{2} J_{v_{C_i}}^T m_i J_{v_{C_i}} + J_{\omega_{C_i}}^T I_{C
 \end{align*}
 \item 惯性力：
 \begin{align*}
-&b_{1,1,1} = b_{1,2,1} = b_{2,2,1} = b_{2,1,1} = b_{2,2,2} = 0, b_{1,1,2} = -2m_2 l_1 l_{C_2}s2, b_{1,2,2} = -m_2 l_1 l_{C_2}s2, b_{2,1,2} = -m_2 l_1 l_{C_2}s2 \\
-&c_{111} = c_{222} = 0, c_{122} = c_{212} = c_{112} = -m_2 l_1 l_{C_2}s2, c_{211} = m_2 l_1 l_{C_2}s2 \\
+&b_{1,1,1} = b_{1,2,1} = b_{2,2,1} = b_{2,1,1} = b_{2,2,2} = 0, \quad b_{1,1,2} = -2m_2 l_1 l_{C_2}s2, \quad b_{1,2,2} = -m_2 l_1 l_{C_2}s2, \quad b_{2,1,2} = -m_2 l_1 l_{C_2}s2 \\
+&c_{111} = c_{222} = 0, \quad c_{122} = c_{212} = c_{112} = -m_2 l_1 l_{C_2}s2, \quad c_{211} = m_2 l_1 l_{C_2}s2 \\
 &V(q, \dot{q}) = \begin{bmatrix} c_{111} & c_{122} \\ c_{211} & c_{222} \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix} + 2\begin{bmatrix} c_{112} \\ c_{212} \end{bmatrix} \dot{\theta}_1\dot{\theta}_2 = \begin{bmatrix} 0 & -m_2 l_1 l_{C_2}s2 \\ m_2 l_1 l_{C_2}s2 & 0 \end{bmatrix} \begin{bmatrix} \dot{\theta}_1^2 \\ \dot{\theta}_2^2 \end{bmatrix} + 2\begin{bmatrix} -m_2 l_1 l_{C_2}s2 \\ 0 \end{bmatrix} \dot{\theta}_1 \dot{\theta}_2
 \end{align*}
 \item 重力：
@@ -1415,8 +1415,8 @@ $$ t_f = -\frac{a_2}{3a_3} $$
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[xlabel={时间$ t(s) $}, ylabel={速度$ \dot{q}(rad/s) $}, grid=major, width=6cm, height=4.5cm, xmin=0, xmax=4]
-\addplot[blue, thick, samples=200, domain=0:4]{-x*(x - 4)};
+\begin{axis}[xlabel={时间$ t(s) $},ylabel={速度$ \dot{q}(rad/s) $},grid=major,width=6cm,height=4.5cm,xmin=0,xmax=4]
+\addplot[blue,thick,samples=200,domain=0:4]{-x*(x - 4)};
 \end{axis}
 \end{tikzpicture}
 \caption{三次多项式规划速度曲线}
@@ -1441,8 +1441,8 @@ $$ t_f = \frac{-a_4 \pm 6 \sqrt{a_4^2 - 10 a_3 a_5}}{5a_5} $$
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[xlabel={时间$ t(s) $}, ylabel={速度$ \dot{q}(rad/s) $}, grid=major, width=6cm, height=4.5cm, xmin=0, xmax=1, ymin=0, ymax=2]
-\addplot[blue, thick, samples=100, domain=0:1]{30*x^2*(1-x)^2};
+\begin{axis}[xlabel={时间$ t(s) $},ylabel={速度$ \dot{q}(rad/s) $},grid=major,width=6cm,height=4.5cm,xmin=0,xmax=1,ymin=0,ymax=2]
+\addplot[blue,thick,samples=100,domain=0:1]{30*x^2*(1-x)^2};
 \end{axis}
 \end{tikzpicture}
 \caption{五次多项式控制速度曲线}
@@ -1454,8 +1454,8 @@ $$ t_f = \frac{-a_4 \pm 6 \sqrt{a_4^2 - 10 a_3 a_5}}{5a_5} $$
 \item 多段规划（以三次多项式为例）：
 $$ q(t) = a_0 + a_1(t - t_i) + a_2(t - t_i)^2 + a_3(t - t_i)^3 $$
 
-在$ \dot{q}_0 \neq 0, \dot{q}_f \neq 0 $时有：
-$$ a_0 = q_i, a_1 = \dot{q}_i, a_2 = \frac{3(q_f - q_i)}{(t_f - t_i)^2} - \frac{2\dot{q}_i + \dot{q}_f}{t_f - t_i}, a_3 = \frac{2(q_i - q_f)}{(t_f - t_i)^3} + \frac{\dot{q}_i + \dot{q}_f}{(t_f - t_i)^2} $$
+在$ \dot{q}_0 \neq 0, \quad \dot{q}_f \neq 0 $时有：
+$$ a_0 = q_i, \quad a_1 = \dot{q}_i, \quad a_2 = \frac{3(q_f - q_i)}{(t_f - t_i)^2} - \frac{2\dot{q}_i + \dot{q}_f}{t_f - t_i}, \quad a_3 = \frac{2(q_i - q_f)}{(t_f - t_i)^3} + \frac{\dot{q}_i + \dot{q}_f}{(t_f - t_i)^2} $$
 
 未给定$ \dot{q}_i $时，可选取为$ \frac{q_i - q_{i - 1}}{t_i - t_{i - 1}} $。
 \item 同步规划：按$ t_f = \max\{t_{f_i}\} $重新规划。
@@ -1468,9 +1468,9 @@ $$ a_0 = q_i, a_1 = \dot{q}_i, a_2 = \frac{3(q_f - q_i)}{(t_f - t_i)^2} - \frac{
 %------------------------------------------------
 \paragraph{概念}
 初始状态$ q_0\{q_0, \dot{q}_0, \ddot{q}_0\} $向目标状态$ q_f\{q_f, \dot{q}_f, \ddot{q}_f\} $的转化，满足约束：
-$$ q_{min} \leq q(t) \leq q_{max}, \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{max}, \ddot{q}_{min} \leq \ddot{q}(t) \leq \ddot{q}_{max} $$
+$$ q_{min} \leq q(t) \leq q_{max}, \quad \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{max}, \quad \ddot{q}_{min} \leq \ddot{q}(t) \leq \ddot{q}_{max} $$
 
-并假设$ \dot{q}_0 = \dot{q}_f = 0, \ddot{q}_0 = \ddot{q}_f = 0 $。
+并假设$ \dot{q}_0 = \dot{q}_f = 0, \quad \ddot{q}_0 = \ddot{q}_f = 0 $。
 %------------------------------------------------
 \paragraph{三段规划}
 速度连续。\\
@@ -1486,9 +1486,9 @@ $$ q_{min} \leq q(t) \leq q_{max}, \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{m
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[xlabel={时间$ t(s) $}, ylabel={速度$ \dot{q}(rad/s) $}, grid=major, width=6cm, height=4.8cm, xmin=0, xmax=8, ymin=0, ymax=12]
-\addplot[blue, thick, samples=200, domain=0:10]{(x <= 2) * (5*x) + (x > 2 && x <= 6) * 10 + (x > 6) * (10 - 5*(x-6))};
-\addplot[gray, dashed] coordinates {(2,0) (2,12)}; \addplot[gray, dashed] coordinates {(6,0) (6,12)};
+\begin{axis}[xlabel={时间$ t(s) $},ylabel={速度$ \dot{q}(rad/s) $},grid=major,width=6cm,height=4.8cm,xmin=0,xmax=8,ymin=0,ymax=12]
+\addplot[blue,thick,samples=200,domain=0:10]{(x <= 2) * (5*x) + (x > 2 && x <= 6) * 10 + (x > 6) * (10 - 5*(x-6))};
+\addplot[gray,dashed] coordinates {(2,0) (2,12)}; \addplot[gray,dashed] coordinates {(6,0) (6,12)};
 \node at (axis cs:1,11) {\small 加速段}; \node at (axis cs:4,11) {\small 匀速段}; \node at (axis cs:7,11) {\small 减速段};
 \end{axis}
 \end{tikzpicture}
@@ -1501,7 +1501,7 @@ $$ q_{min} \leq q(t) \leq q_{max}, \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{m
 \begin{minipage}{0.5\textwidth}
 \begin{itemize}
 \item 加速段：尽量维持$ a_{max} $加速到$ v_{max} $。
-\item 匀速段：维持$ v_{max}, a = 0 $。
+\item 匀速段：维持$ v_{max}, \quad a = 0 $。
 \item 减速段：尽量维持$ a_{max} $减速到$ v = 0 $。
 \item 判断是否需要加到$ v_{max} $（有无匀速段）：比较路径长度$ s $与$ \frac{v_{max}^2}{a_{max}} $。
 \item 判断是否需要加到$ a_{max} $（有无匀加速段）：比较$ v_{max} $与$ \frac{a_{max}^2}{j_{max}} $。
@@ -1511,9 +1511,9 @@ $$ q_{min} \leq q(t) \leq q_{max}, \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{m
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[xlabel={时间$ t(s) $}, ylabel={速度$ \dot{q}(rad/s) $}, grid=major, width=8cm, height=6cm, xmin=0, xmax=14, ymin=0, ymax=12]
-\addplot[blue, thick, samples=200, domain=0:14]{(x <= 1) * (2.5*x^2) + (x > 1 && x <= 3) * (2.5 + 2.5*(x-1)) + (x > 3 && x <= 4) * (10 - 2.5*(x-4)^2) + (x > 4 && x <= 10) * 10 + (x > 10 && x <= 11) * (10 - 2.5*(x-10)^2) + (x > 11 && x <= 13) * (7.5 - 2.5*(x-11)) + (x > 13) * (2.5*(14-x)^2)};
-\addplot[gray, dashed] coordinates {(1,0) (1,12)}; \addplot[gray, dashed] coordinates {(3,0) (3,12)}; \addplot[gray, dashed] coordinates {(4,0) (4,12)}; \addplot[gray, dashed] coordinates {(10,0) (10,12)}; \addplot[gray, dashed] coordinates {(11,0) (11,12)}; \addplot[gray, dashed] coordinates {(13,0) (13,12)};
+\begin{axis}[xlabel={时间$ t(s) $},ylabel={速度$ \dot{q}(rad/s) $},grid=major,width=8cm,height=6cm,xmin=0,xmax=14,ymin=0,ymax=12]
+\addplot[blue,thick,samples=200,domain=0:14]{(x <= 1) * (2.5*x^2) + (x > 1 && x <= 3) * (2.5 + 2.5*(x-1)) + (x > 3 && x <= 4) * (10 - 2.5*(x-4)^2) + (x > 4 && x <= 10) * 10 + (x > 10 && x <= 11) * (10 - 2.5*(x-10)^2) + (x > 11 && x <= 13) * (7.5 - 2.5*(x-11)) + (x > 13) * (2.5*(14-x)^2)};
+\addplot[gray,dashed] coordinates {(1,0) (1,12)}; \addplot[gray,dashed] coordinates {(3,0) (3,12)}; \addplot[gray,dashed] coordinates {(4,0) (4,12)}; \addplot[gray,dashed] coordinates {(10,0) (10,12)}; \addplot[gray,dashed] coordinates {(11,0) (11,12)}; \addplot[gray,dashed] coordinates {(13,0) (13,12)};
 \node at (axis cs:0.5,11) {\tiny 加加速}; \node at (axis cs:2,11) {\tiny 匀加速}; \node at (axis cs:3.5,11) {\tiny 减加速}; \node at (axis cs:7,11) {\tiny 匀速}; \node at (axis cs:10.5,11) {\tiny 加减速}; \node at (axis cs:12,11) {\tiny 匀减速}; \node at (axis cs:13.5,11) {\tiny 减减速};
 \end{axis}
 \end{tikzpicture}
@@ -1522,8 +1522,8 @@ $$ q_{min} \leq q(t) \leq q_{max}, \dot{q}_{min} \leq \dot{q}(t) \leq \dot{q}_{m
 \end{minipage}
 %------------------------------------------------
 \paragraph{同步规划}
-在$ \dot{q}_0 = \dot{q}_f = 0, \ddot{q}_0 = \ddot{q}_f = 0 $时，可计算$ t_f = \max\{t_{f_i}\} $，放缩规划。
-$$ \Delta s_i = v_{max}(t_f - t_{fi}), k_i = \frac{q_{if} - q_{i0}}{(q_{if} - q_{i0}) + \Delta s_i} $$
+在$ \dot{q}_0 = \dot{q}_f = 0, \quad \ddot{q}_0 = \ddot{q}_f = 0 $时，可计算$ t_f = \max\{t_{f_i}\} $，放缩规划。
+$$ \Delta s_i = v_{max}(t_f - t_{fi}), \quad k_i = \frac{q_{if} - q_{i0}}{(q_{if} - q_{i0}) + \Delta s_i} $$
 %------------------------------------------------
 \section{机器人控制}
 %----------------------------------------------------------------------------------------
@@ -1601,7 +1601,7 @@ $$ J_m \ddot{\theta}_m(t) + (B_m + \frac{C_e C_m}{R_m}) \dot{\theta}_m(t) = \fra
 \caption{电机动力学化简控制框图}
 \end{figure}
 
-在与减速器集成时，当减速比（gear ratio）为$ r:1 $，$ \theta_m = r \theta_l, \tau_{ml} = \frac{\tau_l}{r} $。此时的转动惯量和阻尼系数为驱动器与减速器之和。
+在与减速器集成时，当减速比（gear ratio）为$ r:1 $，$ \theta_m = r \theta_l, \quad \tau_{ml} = \frac{\tau_l}{r} $。此时的转动惯量和阻尼系数为驱动器与减速器之和。
 %----------------------------------------------------------------------------------------
 \paragraph{连杆}~\\
 
@@ -1663,7 +1663,7 @@ $$ K_d = 2J_{eff}\zeta\omega_c - B_{eff}, \quad K_p = J_{eff}\omega_c^2 $$
 
 需使根在负半平面，一般使$ \zeta = 1 $（临界阻尼，无超调快速响应），$ \omega_c $尽量大。
 \begin{itemize}
-\item 刚性假设下，$ \forall k_p, k_d > 0 $，闭环稳定。
+\item 刚性假设下，$ \forall k_p, \quad k_d > 0 $，闭环稳定。
 \item $ k_d $：等效系统阻尼，越大闭环稳定性越好，但响应越慢，对传感器噪声有放大作用。
 \item $ k_p $：越大抑制扰动的能力越强。
 \end{itemize}
@@ -1783,21 +1783,21 @@ $$ \begin{bmatrix} v_x & v_y & v_z \\ \omega_x & \omega_y & \omega_z \end{bmatri
 \hline
 问题 & 约束 & 不可变量（为$ 0 $） & 可变量 \\
 \hline
-\multirow{2}{*}{销钉入孔} & 自然约束 & $ v_x, v_y, \omega_x, \omega_y $ & $ f_z = 0, \tau_z = 0 $ \\
+\multirow{2}{*}{销钉入孔} & 自然约束 & $ v_x, v_y, \omega_x, \omega_y $ & $ f_z = 0, \quad \tau_z = 0 $ \\
 \cline{2-4}
-& 人为约束 & $ f_{dx}, f_{dy}, \tau_{dx},  \tau_{dy} $ & $ v_z = v_{dz}, \omega_z = \omega_{dz} $ \\
+& 人为约束 & $ f_{dx}, f_{dy}, \tau_{dx},  \tau_{dy} $ & $ v_z = v_{dz}, \quad \omega_z = \omega_{dz} $ \\
 \hline
-\multirow{2}{*}{转动曲柄} & 自然约束 & $ v_x, v_z, \omega_x, \omega_y $ & $ f_y = 0, \tau_z = 0 $ \\
+\multirow{2}{*}{转动曲柄} & 自然约束 & $ v_x, v_z, \omega_x, \omega_y $ & $ f_y = 0, \quad \tau_z = 0 $ \\
 \cline{2-4}
-& 人为约束 & $ f_{dx}, f_{dz}, \tau_{dx}, \tau_{dy} $ & $ v_{dy} = r\omega_d, \omega_z = \omega_d $ \\
+& 人为约束 & $ f_{dx}, f_{dz}, \tau_{dx}, \tau_{dy} $ & $ v_{dy} = r\omega_d, \quad \omega_z = \omega_d $ \\
 \hline
-\multirow{2}{*}{拧螺母} & 自然约束 & $ v_x, \omega_x, \omega_y $ & $ v_z = \rho \omega_{dz}, f_y = 0, \tau_z = 0 $ \\
+\multirow{2}{*}{拧螺母} & 自然约束 & $ v_x, \omega_x, \omega_y $ & $ v_z = \rho \omega_{dz}, \quad f_y = 0, \quad \tau_z = 0 $ \\
 \cline{2-4}
-& 人为约束 & $ f_{dx}, \tau_{dx}, \tau_{dy} $ & $ f_z = f_{dz}, v_{dy} = 0, \omega_z = \omega_{dz} $ \\
+& 人为约束 & $ f_{dx}, \tau_{dx}, \tau_{dy} $ & $ f_z = f_{dz}, \quad v_{dy} = 0, \quad \omega_z = \omega_{dz} $ \\
 \hline
-\multirow{2}{*}{开关门} & 自然约束 & $ v_y, v_z, \omega_x, \omega_y $ & $ f_x = 0, \tau_z = 0 $ \\
+\multirow{2}{*}{开关门} & 自然约束 & $ v_y, v_z, \omega_x, \omega_y $ & $ f_x = 0, \quad \tau_z = 0 $ \\
 \cline{2-4}
-& 人为约束 & $ f_{dy}, f_z, \tau_{dx}, \tau_{dy} $ & $ v_{dx} = r \omega_d, \omega_z = \omega_d $ \\
+& 人为约束 & $ f_{dy}, f_z, \tau_{dx}, \tau_{dy} $ & $ v_{dx} = r \omega_d, \quad \omega_z = \omega_d $ \\
 \hline
 \end{tabular}
 \caption{约束运动例题}

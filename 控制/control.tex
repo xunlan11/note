@@ -72,13 +72,13 @@ sum/.style={circle, draw, minimum size=0.6cm},
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-& 价格 & 复杂度 & 精度 & 抗干扰性能 & 其它 \\
+& 成本 & 复杂度 & 精度 & 抗干扰 & 其它 \\
 \hline
 开环 & 低 & 简单 & 低 & 差 & 稳定 \\
 \hline
 闭环/反馈 & 高 & 复杂 & 高 & 强 & \\
 \hline
-前馈 & 高 & \multicolumn{3}{c|}{} & 补偿可测量扰动 \\
+前馈/顺馈 & 高 & \multicolumn{3}{c|}{} & 快速、完全补偿可测量扰动 \\
 \hline
 复合 & \multicolumn{5}{c|}{闭环 + 前馈} \\
 \hline
@@ -87,19 +87,24 @@ sum/.style={circle, draw, minimum size=0.6cm},
 \end{table}
 
 \begin{itemize}
-\begin{minipage}[t]{0.35\textwidth}
-\item 输入量变化特性：
+\begin{minipage}[t]{0.5\textwidth}
+\item 输入量变化规律：
 \begin{itemize}
 \item 恒值。
 \item 随动：未知时间函数。
 \item 程序：预设时间函数。
 \end{itemize}
+\item 传输数据类型：
+\begin{itemize}
+\item 连续：模拟信号。
+\item 离散：脉冲序列或数字信号。
+\end{itemize}
 \end{minipage}
-\begin{minipage}[t]{0.45\textwidth}
+\begin{minipage}[t]{0.5\textwidth}
 \item 系统特性：
 \begin{itemize}
 \item 非线性：常数、幂。
-\item 线性：导数。（\textcolor{red}{齐次性，线性}）
+\item 线性：导数。（\textcolor{red}{齐次性、叠加性}）
 \begin{itemize}
 \item 定常：常系数。
 \item 时变：系数不全是常数。
@@ -107,21 +112,24 @@ sum/.style={circle, draw, minimum size=0.6cm},
 \end{itemize}
 \end{itemize}
 \end{minipage}
-\begin{minipage}[t]{0.2\textwidth}
-\item 传输数据类型：
-\begin{itemize}
-\item 连续。
-\item 离散。
-\end{itemize}
-\end{minipage}
 \end{itemize}
 %------------------------------------------------
-\paragraph{\textcolor{red}{性能指标}}\tip{性能指标}
+\paragraph{\textcolor{red}{性能指标}}\tip{性能指标}~\\
+\begin{minipage}[t]{0.5\textwidth}
 \begin{itemize}
-\item \textcolor{red}{稳定性}：有无稳态。
-\item \textcolor{red}{快速性}：到达稳态快慢。
-\item \textcolor{red}{准确性}：稳态误差大小。
+\item \textcolor{red}{稳定性}：$ t \to \infty $时有无稳态。
+\item \textcolor{red}{准确性}：稳态误差大小，控制精度。
+\item \textcolor{red}{快速性}：跟踪速度，扰动恢复快慢。
 \end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{-4em}
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.8\textwidth]{performance index} 
+\caption{性能指标案例}
+\end{figure}
+\end{minipage}
 %------------------------------------------------
 \paragraph{\textcolor{red}{外作用}}
 \begin{table}[H]
@@ -130,17 +138,41 @@ sum/.style={circle, draw, minimum size=0.6cm},
 \hline
 信号 & 阶跃 & 斜坡 & 加速度 & 脉冲 & 脉动 & 正弦 \\
 \hline
-$ f(t)(t \geq 0) $ & $ R(t) $ & $ Rt $ & $ \frac{1}{2}R t^2 $ & $ f(0) = \infty, \quad \int_{-\infty}^{\infty} f(t) dt = A $ & & $ A \sin(\omega t - \phi) $ \\
+$ r(t)(t \geq 0) $ & $ R(t) $ & $ Rt $ & $ \frac{1}{2}R t^2 $ & $ r(0) = \infty, \quad \int_{-\infty}^{\infty} r(t) dt = A $ & & $ A \sin(\omega t + \phi) $ \\
 \cline{1-5}\cline{7-7}
-单位化 & \multicolumn{3}{c|}{$ R = 1 $} & $ A = 1, \quad \delta(t) $ & & $ A = 1 $ \\
+单位化 & \multicolumn{3}{c|}{$ R = 1 $} & $ A = 1 $，记作$ \delta(t) $ & & $ A = 1 $ \\
 \hline
 图像 & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ f(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,1) -- (1.5,1); \node[left,font=\tiny] at (0,1) {$ R $}; \end{tikzpicture} & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ f(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) -- (1.5,1.5); \end{tikzpicture} & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ f(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) parabola (1.5,1.5); \end{tikzpicture} & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ f(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) -- (0,1.2); \end{tikzpicture} & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ f(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,1.2) -| (1,0); \end{tikzpicture} &  
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (2.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ f(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] plot[domain=0:2,samples=50] (\x,{sin(\x r)}); \end{tikzpicture} \\
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,1) {$ R $};    
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ r(t) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,1) -- (1.5,1); 
+\end{tikzpicture} & 
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $};   
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ r(t) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,0) -- (1.5,1.5); 
+\end{tikzpicture} & 
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; 
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ r(t) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,0) parabola (1.5,1.5); 
+\end{tikzpicture} & 
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; 
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ r(t) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,0) -- (0,1.2); 
+\end{tikzpicture} & 
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $};     
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ r(t) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,1.2) -| (1,0); 
+\end{tikzpicture} &  
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $};
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ r(t) $}; \draw[->] (0,0) -- (2.5,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] plot[domain=0:2,samples=50] (\x,{sin(\x r)}); 
+\end{tikzpicture} \\
 \hline
 \end{tabular}
 \caption{典型输入信号}
@@ -148,7 +180,7 @@ $ f(t)(t \geq 0) $ & $ R(t) $ & $ Rt $ & $ \frac{1}{2}R t^2 $ & $ f(0) = \infty,
 %------------------------------------------------
 \subsection[数学模型]{数学模型}
 %------------------------------------------------
-\subsubsection[拉氏变换]{\textcolor{red}{拉氏变换}\tip{拉氏变换（性质、常用变换）}}
+\subsubsection[拉氏变换]{\textcolor{red}{拉氏（Laplace）变换}\tip{拉氏变换（性质、常用变换）}}
 %------------------------------------------------
 \paragraph{变换}
 \textcolor{red}{单边衰减的傅里叶变换}，记$ s = \sigma + j \omega t, \quad F(s) = L[f(t)] = \int_{\textcolor{red}{0}}^{\infty} f(t) e^{-st} dt = \int_0^{\infty} f(t) e^{-\sigma t} e^{-j \omega t} dt $。而傅里叶变换为$ F(\omega) = \int_{-\infty}^{\infty} g(t) e^{-j \omega t} dt $。
@@ -180,51 +212,61 @@ $ E(s) $ & $ 1 $ & $ \frac{1}{s} $ & $ \frac{1}{s^n} $ & $ \frac{1}{s + a} $ & $
 \end{table}
 %------------------------------------------------
 \paragraph{应用}
-微分方程（时域）$ \overset{\text{拉氏变换}}{\Longrightarrow} $代数方程（频域）$ \overset{\text{求解}}{\Longrightarrow} $输出量表达式（频域）$ \overset{\text{反拉氏变换}}{\Longrightarrow} $方程解（时域）。
+微分方程（时域）$ \overset{\text{拉氏变换}}{\Longrightarrow} $代数方程（s域）$ \overset{\text{求解}}{\Longrightarrow} $输出量表达式（s域）$ \overset{\text{反拉氏变换}}{\Longrightarrow} $方程解（时域）。
 %------------------------------------------------
 \subsubsection[控制微分方程]{控制微分方程}
-输入输出方程$ \Rightarrow $按信号传递顺序列微分方程$ \Rightarrow $消去中间变量$ \Rightarrow $输出量归一为标准形式。
-
-\noindent
-\begin{minipage}{0.6\textwidth}
+输入输出方程$ \Rightarrow $按信号传递顺序列微分方程$ \Rightarrow $消去中间变量$ \Rightarrow $归一为标准形式。
+%------------------------------------------------
 \paragraph{\textcolor{red}{非线性的线性化}}
 \begin{itemize}
-\item 泰勒展开：$ y = f(x_0) + \frac{d f(x)}{dx}|_{x_0} \cdot \Delta x + o(\Delta x) $。
-\item 增量线性化方程：$ \Delta y = \frac{d f(x)}{dx}|_{x_0} \cdot \Delta x $。
+\item 非线性特性不强时可忽略。
+\item 偏差法：在平衡点（状态不再发生变化）附近线性化，使用泰勒展开$ y = f(x) = f(x_0) + \frac{d f(x)}{dx}|_{x_0} \cdot \Delta x + o(\Delta x) $，得到增量线性化方程：$ \Delta y = \frac{d f(x)}{dx}|_{x_0} \cdot \Delta x $。
 \end{itemize}
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
-\paragraph{解}
+%------------------------------------------------
+\paragraph{解与模态}
 \begin{itemize}
-\item 解 = 特解 + 通解（特征根）。
-\item 解的模态：极点。
+\item 解 = 特解 + 通解（特征根，代表自由运动）。
+\item 运动模态（振型）：
+\begin{itemize}
+\item 单根$ \lambda $：$ e^{\lambda t} $。
+\item 重根$ \lambda^m $：$ t^i e^{\lambda t}, \quad i = 0, 1, 2, \dots, m - 1 $。
+\item 共轭复根$ \sigma \pm j \omega $：$ e^{(\sigma \pm j \omega)t} = e^{\sigma t} \sin \omega t + e^{\sigma t} \cos \omega t $。
 \end{itemize}
-\end{minipage}
+\end{itemize}
 %------------------------------------------------
 \subsubsection[传递函数]{\textcolor{red}{传递函数}\tip{传递函数}}
 %------------------------------------------------
 \paragraph{概念}
-系统在\textcolor{red}{零初始条件}下，输出、输入拉式变换之比。反应线性系统特性，与输入量无关，对应微分方程为$ s $的有理真分式。
-%------------------------------------------------
-\paragraph{\textcolor{red}{求解}}
 \begin{itemize}
-\item 零初始条件：$ G(s) = L[g(t)] $，其中$ g(t) $为单位脉冲响应（等效反馈函数）。
-\item 非零初始条件：微分定理。
+\item 定义：系统在\textcolor{red}{零初始条件}下，输出、输入拉式变换之比。
+\item 性质：反应线性系统特性，决定于系统结构和参数，与输入量无关，对应微分方程为$ s $的有理真分式。
+\item 单位脉冲响应（等效反馈函数）$ g(t) $：$ \textcolor{red}{G(s) = L[g(t)]} $。
+\item 输入输出关系：输入是微积分关系，则输出也是，常数用零初始条件确定。
+$$ \textcolor{red}{r_2(t) = \dot{r_1(t)} \Rightarrow c_2(t) = \dot{c_1(t)}} $$
 \end{itemize}
 %------------------------------------------------
-\paragraph{应用}
-\textcolor{red}{$$ R(s) = L[r(t)] \Rightarrow C(s) = G(s)R(S) \Rightarrow c(t) = L^{-1}[C(s)] $$}
-%------------------------------------------------
-\paragraph{输入输出关系}
-输入是微积分关系，则输出也是，常数用零初始条件确定。
-\textcolor{red}{$$ r_2(t) = \dot{r_1(t)} \Rightarrow c_2(t) = \dot{c_1(t)} $$}
+\paragraph{\textcolor{red}{响应计算}}
+\begin{itemize}
+\item 零初始条件：$ \textcolor{red}{ R(s) = L[r(t)] \Rightarrow C(s) = G(s)R(s) \Rightarrow c(t) = L^{-1}[C(s)]} $。
+\item 非零初始条件：由传递函数反推微分方程，使用微分定理进行拉氏变换。
+\end{itemize}
+
+分式有理化计算：
+\begin{itemize}
+\item 待定系数法。
+\item 留数法：
+\begin{itemize}
+\item 单根：$ \frac{A}{s - a} \Rightarrow A = \lim_{s \to a} C(s) (s - a) $。
+\item $ m $重根：$ \frac{A_{m - j}}{(s - a)^{m - j}} \Rightarrow A_{m - j} = \frac{1}{j!} \lim_{s \to a} \frac{d^j[C(s) (s - a)^m]}{d s^j} $。
+\end{itemize}
+\end{itemize}
 %------------------------------------------------
 \paragraph{\textcolor{red}{零极点}}
 $$ G(s) = \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s^n + a_1 s^{n - 1} + \dots + a_n} = k^* \frac{\Pi_{i = 1}^m (s - z_i)}{\Pi_{j = 1}^n (s - p_j)}, \quad n > m $$
 
 \begin{itemize}
-\item 零点$ z_i $：影响比重、曲线形状，不决定模态。
-\item 极点$ p_j $：特征根，决定模态，对系统响应影响大（近原点、远零点的影响大）。
+\item 极点$ p_j $：特征根，决定模态。
+\item 零点$ z_i $：不决定模态，影响响应比重、曲线形状，距原点近、极点远的影响大。
 \item 传递系数/根轨迹增益$ k^* $。
 \end{itemize}
 %------------------------------------------------
@@ -233,31 +275,58 @@ $$ G(s) = \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
- & 微分方程 & 输出$ X_c(t) $ & 传递函数$ G(s) $ & 图像 \\
+ & 微分方程 & $ x_c(t) $ & $ G(s) $ & 图像 \\
 \hline
-比例 & \multicolumn{2}{c|}{$ X_c(t) = kX_r(t) $} & $ k $ & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ X_c(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,1.2) -- (1.5,1.2); \node[left,font=\tiny] at (0,1.5) {$ k $}; \end{tikzpicture} \\
+比例 & \multicolumn{2}{c|}{$ x_c(t) = k x_r(t) $} & $ k $ & 
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,1.5) {$ k $};  
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ x_c(t) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,1.2) -- (1.5,1.2); 
+\end{tikzpicture} \\
 \hline
-惯性 & $ T \frac{d X_c(t)}{dt} + X_c(t) = X_r(t) $ & $ 1 - e^{-\frac{t}{T}} $ & $ \frac{1}{Ts + 1} $ & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ X_c(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) plot[domain=0:2,samples=20] (\x,{1.5*(1-exp(-2*\x))}); \draw[dashed,thin] (0,1.5) -- (2,1.5); \draw[dashed,thin] (0,0.948) -- (0.347,0.948); \draw[dashed,thin] (0.347,0) -- (0.347,0.948); \node[left,font=\tiny] at (0,1.5) {$ 1 $}; \node[left,font=\tiny] at (0,0.948) {$ 0.632 $}; \node[below,font=\tiny] at (0.347,0) {$ T $}; \end{tikzpicture} \\
+惯性 & $ T \frac{d x_c(t)}{dt} + x_c(t) = x_r(t) $ & $ 1 - e^{-\frac{t}{T}} $ & $ \frac{1}{Ts + 1} $ & 
+\begin{tikzpicture}[scale=0.4] 
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ x_c(t) $}; \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ t $}; 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,0.948) {$ 0.632 $}; \node[left,font=\tiny] at (0,1.5) {$ 1 $}; \node[below,font=\tiny] at (0.347,0) {$ T $}; 
+\draw[thick] (0,0) plot[domain=0:2,samples=20] (\x,{1.5*(1-exp(-2*\x))}); 
+\draw[dashed] (0,0.948) -- (0.347,0.948); \draw[dashed] (0,1.5) -- (2,1.5); \draw[dashed] (0.347,0) -- (0.347,0.948); 
+\end{tikzpicture} \\
 \hline
-积分 & $ X_c(t) = k \int X_r(t) dt $ & $ t $ & $ \frac{k}{s} $ & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ X_c(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) -- (1.5,1.5); \end{tikzpicture} \\
+积分 & $ x_c(t) = k \int x_r(t) dt $ & $ t $ & $ \frac{k}{s} $ & 
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $};     
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ x_c(t) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,0) -- (1.5,1.5); 
+\end{tikzpicture} \\
 \hline
-微分 & $ X_c(t) = k \frac{d X_r(t)}{dt} $ & $ \delta(t) $ & $ ks $ & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ X_c(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) -- (0,1.5); \end{tikzpicture} \\
+微分 & $ x_c(t) = k \frac{d x_r(t)}{dt} $ & $ \delta(t) $ & $ ks $ & 
+\begin{tikzpicture}[scale=0.4]
+\node[below,font=\tiny] at (0,0) {$ 0 $};
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ x_c(t) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,0) -- (0,1.5); 
+\end{tikzpicture} \\
 \hline
-滞后 & \multicolumn{2}{c|}{$ X_c(t) = X_r(t - \tau) $} & $ e^{-Ts} $ &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ X_c(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) -| (0.5,1.5) -- (1.5,1.5); \node[below,font=\tiny] at (0.5,0) {$ \tau $}; \end{tikzpicture} \\
+滞后 & \multicolumn{2}{c|}{$ x_c(t) = x_r(t - \tau) $} & $ e^{-\tau s} $ &
+\begin{tikzpicture}[scale=0.4] 
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ x_c(t) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ t $}; 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,1) {$ 1 $}; \node[below,font=\tiny] at (0.5,0) {$ \tau $}; 
+\draw[thick] (0,0) -| (0.5,1) -- (1.5,1); 
+\draw[dashed] (0,1) -- (0.5,1); 
+\end{tikzpicture} \\
 \hline
 \end{tabular}
-\caption{典型传递函数（单位阶跃）}
+\caption{典型传递函数（单位阶跃响应）}
 \end{table}
 %------------------------------------------------
-\paragraph{\textcolor{red}{开环与闭环}}
+\paragraph{\textcolor{red}{传递函数}}
+\begin{itemize}
+\item \textcolor{red}{开闭环}：
 \begin{itemize}
 \item 开环（断开主反馈）：$ G_k(s) = G(s)H(s) $。
-\item 闭环：\textcolor{red}{$ G_b(s) = \frac{G(s)}{1 + G_k(s)} $}。
+\item 闭环：$ \textcolor{red}{G_b(s) = \frac{G(s)}{1 + G_k(s)}} $。
+\end{itemize}
+\item 输出量对给定量或扰动量：另一个为$ 0 $。
+\item 误差对给定量或扰动量：另一个为$ 0 $。
 \end{itemize}
 %------------------------------------------------
 \subsection[框图]{框图}
@@ -267,7 +336,7 @@ $$ G(s) = \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s
 \centering 
 \begin{tikzpicture}[scale=0.8,transform shape]
 \node[sum] at (0,0) {$ X $}; \node[block] at (3,-1.5) {反馈$ H(s) $}; \node[block] at (3,0) {控制器$ G(s) $};
-\node at (-2,0) {输入$ R(s) $}; \node at (0,0.5) {比较/综合点}; \node at (1,-1.8) {反馈$ B(s) $}; \node at (1,-0.5) {偏差$ E(s) $}; \node at (6,0.5) {引出/测量点}; \node at (7.9,0) {输出$ C(s) $};
+\node at (-2,0) {输入$ R(s) $}; \node at (0,0.5) {比较/综合点}; \node at (1,-1.8) {反馈$ B(s) $}; \node at (1,-0.5) {偏差$ E(s) $}; \node at (3,-0.8) {环节}; \node at (6,0.5) {引出/测量点}; \node at (7.9,0) {输出$ C(s) $};
 \draw[->] (-1.2,0) -- (-0.4,0); \draw[->] (0.4,0) -- (1.8,0); \draw[->] (4.2,0) -- (7,0);
 \draw[->] (2,-1.5) -| (0,-0.4) node[near end,left] {$ \pm $}; \draw[->] (6,0) |- (4,-1.5);
 \end{tikzpicture}
@@ -277,10 +346,10 @@ $$ G(s) = \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s
 \paragraph{\textcolor{red}{简化}}
 原则：等效原则，引出点信号保持不变。
 \begin{itemize}
-\item 串联和并联积。
+\item 串联积并联和。
 \item 反馈：$ \frac{G(s)}{1 \mp G(s)H(s)} $。
-\item 比较点、引出点移动：前后通路/回路乘积不变。
-\item 相邻信号相加点、同一信号分支点位置可互换，二者间不可互换。
+\item \textcolor{red}{比较点、引出点移动}：前后通路/回路乘积不变。
+\item \textcolor{red}{相邻信号相加点、同一信号分支点位置可互换}，二者间不可互换。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[信号流图]{\textcolor{red}{信号流图}\tip{信号流图}}
@@ -290,20 +359,19 @@ $$ G(s) = \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s
 \begin{figure}[H]
 \centering 
 \begin{tikzpicture}[scale=0.8,transform shape]
-\node[sum] at (0,0) {$ R $}; \node[sum] at (2,0) {$ E $}; \node[sum] at (4,0) {$ P $}; \node[sum] at (6,0) {$ Q $}; \node[sum] at (8,0) {$ C $};
+\node[sum] at (0,0) {$ R $}; \node[sum] at (2,0) {$ E $}; \node[sum] at (4,0) {$ P $}; \node[sum] at (4,1.5) {$ N $}; \node[sum] at (6,0) {$ Q $}; \node[sum] at (8,0) {$ C $};
 \node at (0,-0.7) {输入节点/源点}; \node at (4,-0.8) {$ -H $}; \node at (8,-0.7) {输出节点/阱点};
-\draw[->] (0.4,0) -- (1.6,0) node[midway,above] {$ 1 $}; \draw[->] (2.4,0) -- (3.6,0) node[midway,above] {$ G_1 $}; \draw[->] (4.4,0) -- (5.6,0) node[midway,above] {$ G_2 $}; \draw[->] (6.4,0) -- (7.6,0) node[midway,above] {$ 1 $};
+\draw[->] (0.4,0) -- (1.6,0) node[midway,above] {$ 1 $}; \draw[->] (2.4,0) -- (3.6,0) node[midway,above] {$ G_1 $}; \draw[->] (4,1.1) -- (4,0.4) node[midway,left] {$ 1 $}; \draw[->] (4.4,0) -- (5.6,0) node[midway,above] {$ G_2 $}; \draw[->] (6.4,0) -- (7.6,0) node[midway,above] {$ 1 $};
 \draw[->] (5.7,-0.2) to[bend left=60] (2.3,-0.2);
 \end{tikzpicture}
 \caption{信号流图}
 \end{figure}
 
 \begin{itemize}
-\item 混合节点：流向该结点信号代数和。
+\item 混合节点：流向该节点信号代数和。
 \item 支路：方向 + 传递函数，相当于乘法器，保证信号单向传递。
 \item 前向通路：输入到输出，不重复过节点。
-\item 回路：起止于同一节点，不重复过节点。。
-\item 不接触回路：无公共节点的两个回路。
+\item 回路：起止于同一节点，不重复过节点，其所有支路增益的乘积为回路增益。无公共节点的两个回路为不接触回路。
 \end{itemize}
 %------------------------------------------------
 \begin{minipage}[t]{0.45\textwidth}
@@ -326,18 +394,14 @@ $$ G(s) = \frac{C(s)}{R(s)} = \frac{b_0 s^m + b_1 s^{m - 1} + \dots + b_m}{a_0 s
 \end{itemize}
 \end{minipage}
 %------------------------------------------------
-\paragraph{\textcolor{red}{梅森公式}}\tip{梅森公式}
-\textcolor{red}{
-\begin{align*}
-P &= \frac{1}{\underbrace{\Delta}_{\text{简单回路}}} \sum_{k = 1}^n \underbrace{P_k}_{\text{前向通路}} \Delta_k \\
-\Delta &= 1 - \sum_{L_i} + \sum_{L_i, L_j} - \sum_{L_i, L_j, L_r} + \dots
-\end{align*}
-}
+\paragraph{\textcolor{red}{梅森（Mason）公式}}\tip{梅森公式}
+$$ \textcolor{red}{P = \frac{1}{\underbrace{\Delta}_{\text{简单回路}}} \sum_{k = 1}^n \underbrace{P_k}_{\text{前向通路}} \Delta_k, \quad \Delta = 1 - \sum L_i + \sum L_i L_j - \sum L_i L_j L_r + \dots} $$
 
-其中，$ \Delta_k $是余子式，由$ \Delta $略去与$ P_k $接触项获得。
+其中，$ \Delta $是特征式，$ P_k $是第$ k $条前向通路的传递函数，$ \Delta_k $是余子式，为$ \Delta $略去$ P_k $接触项。
 \begin{itemize}
-\item 两节点间增益为$ 1 $，若合并后两回路接触，则不可合并。
-\item 求解的是输出对输入的增益，若求解中间变量，可省去前面输入、比值进行计算。
+\item 基于克莱姆法则直接求传递函数。    
+\item 绘制信号流图时，两节点间增益为$ 1 $，若合并后两回路接触，则不可合并。
+\item 求解的是输出对输入的增益，若求解输出对中间变量的增益，可省去前面输入支路进行计算，也可使用输出、中间变量对输入的比值。
 \end{itemize}
 %----------------------------------------------------------------------------------------
 \section{时域分析}
@@ -347,7 +411,7 @@ P &= \frac{1}{\underbrace{\Delta}_{\text{简单回路}}} \sum_{k = 1}^n \underbr
 
 \begin{figure}[H]
 \centering 
-\begin{tikzpicture}[scale=1]
+\begin{tikzpicture}
 \draw[->] (0,0) -- (8,0) node[right] {$ t $}; \draw[->] (0,0) -- (0,3) node[above] {$ h(t) $};
 \draw[dashed,gray] (0,2) -- (8,2); \draw[dashed,gray,very thin] (0,1.9) -- (8,1.9); \draw[dashed,gray,very thin] (0,2.1) -- (8,2.1); \node at (7,2.5) {误差带};
 \draw[thick,blue] plot[domain=0:7.5,samples=100] (\x, {2*(1 - exp(-0.3*\x)*cos(deg(1.2*\x)))});
@@ -389,7 +453,7 @@ P &= \frac{1}{\underbrace{\Delta}_{\text{简单回路}}} \sum_{k = 1}^n \underbr
 \centering 
 \begin{tikzpicture}[scale=0.8,transform shape]
 \node[sum] at (0,0) {$ X $}; \node[block] at (3,0) {$ \frac{1}{Ts} $};
-\node at (-1,0.3) {$ R(s) $}; \node at (1,0.3) {$ E(s) $}; \node at (4,1) {\textcolor{red}{$ \Phi(s) = \frac{1}{1 + Ts} $}}; \node at (6.5,0.3) {$ C(s) $};
+\node at (-1,0.3) {$ R(s) $}; \node at (1,0.3) {$ E(s) $}; \node at (4,1) {$ \textcolor{red}{\Phi(s) = \frac{1}{1 + Ts}} $}; \node at (6.5,0.3) {$ C(s) $};
 \draw[->] (-1.5,0) -- (-0.4,0); \draw[->] (0.4,0) -- (2,0); \draw[->] (4,0) -- (7,0);
 \draw[->] (6,0) |- (6,-1) -| (0,-0.4) node[near end,left] {$ - $};
 \end{tikzpicture}
@@ -404,13 +468,27 @@ P &= \frac{1}{\underbrace{\Delta}_{\text{简单回路}}} \sum_{k = 1}^n \underbr
 $ r(t) \to R(s) $ & $ c(t) $ & $ e(t) $ & $ e_{ss} $ & 备注 & 图像 \\
 \hline
 $ 1(t) \to \frac{1}{s} $ & $ 1 - e^{-\frac{t}{T}} $ & $ -\frac{1}{T} e^{-\frac{t}{T}} $ & $ 0 $ & &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ h(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) plot[domain=0:2,samples=20] (\x,{1.2*(1-exp(-2*\x))}); \draw[dashed,thin] (0,1.2) -- (2,1.2); \node[left,font=\tiny] at (0,1.2) {$ 1 $}; \end{tikzpicture} \\
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $};  \node[left,font=\tiny] at (0,1.2) {$ 1 $};   
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ h(t) $}; \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,0) plot[domain=0:2,samples=20] (\x,{1.2*(1-exp(-2*\x))}); 
+\draw[dashed,thin] (0,1.2) -- (2,1.2); 
+\end{tikzpicture} \\
 \cline{1-4}\cline{6-6}
 $ \delta(t) \to 1 $ & $ \frac{1}{T} e^{-\frac{t}{T}} $ & $ -\frac{1}{T}e^{-\frac{t}{T}} $ & $ 0 $ & & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ h(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,1.2) plot[domain=0:2,samples=20] (\x,{1.2*exp(-2*\x)}); \node[left,font=\tiny] at (0,1.2) {$ \frac{1}{T} $}; \end{tikzpicture} \\
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,1.2) {$ \frac{1}{T} $};    
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ h(t) $}; \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,1.2) plot[domain=0:2,samples=20] (\x,{1.2*exp(-2*\x)}); 
+\end{tikzpicture} \\
 \hline
 $ t \to \frac{1}{s^2} $ & $ t - T + T e^{-\frac{t}{T}} $ & $ T(1 - e^{-\frac{t}{T}}) $ & $ T $ & $ T $越小跟踪精度越高 & 
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ t $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ h(t) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) plot[domain=0:2,samples=20] (\x,{\x-0.5+0.5*exp(-2*\x)}); \draw[dashed,thin] (0,0) -- (2,2); \end{tikzpicture} \\
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $};
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ h(t) $}; \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ t $}; 
+\draw[thick] (0,0) plot[domain=0:2,samples=20] (\x,{\x-0.5+0.5*exp(-2*\x)}); 
+\draw[dashed,thin] (0,0) -- (2,2); 
+\end{tikzpicture} \\
 \hline
 $ \frac{1}{2}t^2 \to \frac{1}{s^3} $ & $ (\frac{1}{2}t^2 + Tt) + T^2(1 - e^{-\frac{t}{T}}) $ & $ Tt - T^2(1 - e^{-\frac{t}{T}}) $ & $ \infty $ & 无法跟踪 & \\
 \hline
@@ -430,7 +508,7 @@ t_d &= 0.69T&, \quad t_r &= 2.2T&, \quad t_s &= 3T
 \centering 
 \begin{tikzpicture}[scale=0.8,transform shape]
 \node[sum] at (0,0) {$ X $}; \node[block] at (3,0) {$ \frac{\omega_n^2}{s(s + 2 \xi \omega_n)} $};
-\node at (-1,0.3) {$ R(s) $}; \node at (1,0.3) {$ E(s) $}; \node at (4,1) {\textcolor{red}{$ \Phi(s) = \frac{\omega_n^2}{s^2 + 2 \xi \omega_n s + \omega_n^2} $}}; \node at (6.5,0.3) {$ C(s) $};
+\node at (-1,0.3) {$ R(s) $}; \node at (1,0.3) {$ E(s) $}; \node at (4,1) {$ \textcolor{red}{\Phi(s) = \frac{\omega_n^2}{s^2 + 2 \xi \omega_n s + \omega_n^2}} $}; \node at (6.5,0.3) {$ C(s) $};
 \draw[->] (-1.5,0) -- (-0.4,0); \draw[->] (0.4,0) -- (2,0); \draw[->] (4,0) -- (7,0);
 \draw[->] (6,0) |- (6,-1) -| (0,-0.4) node[near end,left] {$ - $};
 \end{tikzpicture}
@@ -439,7 +517,7 @@ t_d &= 0.69T&, \quad t_r &= 2.2T&, \quad t_s &= 3T
 %------------------------------------------------
 \paragraph{概念}
 \begin{itemize}
-\item \textcolor{red}{自然角频率}（无阻尼振荡圆频率）\textcolor{red}{$ \omega_n > 0 $}。
+\item \textcolor{red}{自然角频率}（无阻尼振荡圆频率）$ \textcolor{red}{\omega_n > 0} $。
 \item \textcolor{red}{阻尼比$ \xi $}：$ \xi > 1 $，$ t_s $长；$ \xi \leq 0 $，不能稳定工作；$ \xi $较小时，$ \sigma $大，振荡次数多，$ t_s $长；最佳为$ \xi = \frac{1}{\sqrt{2}} \approx 0.707 $。
 \item \textcolor{red}{特征方程$ s^2 + 2 \xi \omega_n s + \omega_n^2 $}。
 \item 特征根（$ 0 < \xi < 1 $）：$ s_{1, 2} = -\underbrace{\xi \omega_n}_{\textcolor{red}{\text{衰减系数}\sigma}} \pm j \underbrace{\omega_n \sqrt{1 - \xi^2}}_{\textcolor{red}{\text{阻尼振荡圆频率}\omega_d}} $，阻尼角$ \beta = \arctan(\frac{\omega_d}{\sigma}) $。
@@ -470,12 +548,12 @@ $ (1, \infty) $ & \textcolor{red}{过} & 单升非振荡 & 稳定 & $ \frac{1}{s
 \paragraph{\textcolor{red}{动态性能}}
 \begin{itemize}
 \begin{minipage}[t]{0.6\textwidth}
-\item \textcolor{red}{$ 0 < \xi < 1 $}：
+\item $ \textcolor{red}{0 < \xi < 1} $：
 \begin{itemize}
-\item \textcolor{red}{$ t_d = \frac{1 + 0.7\xi}{\omega_n} $}。
+\item $ \textcolor{red}{t_d = \frac{1 + 0.7\xi}{\omega_n}} $。
 \item $ \textcolor{red}{t_r}(0 - 100\%) \textcolor{red}{= \frac{\pi - \beta}{\omega_d}} $。
-\item \textcolor{red}{$ t_p = \frac{\pi}{\omega_d} $}。
-\item \textcolor{red}{$ \sigma = e^{-\frac{\xi \pi}{\sqrt{1 - \xi^2}}} \times 100\% $}。
+\item $ \textcolor{red}{t_p = \frac{\pi}{\omega_d}} $。
+\item $ \textcolor{red}{\sigma = e^{-\frac{\xi \pi}{\sqrt{1 - \xi^2}}} \times 100\%} $。
 \item $ \textcolor{red}{t_s =} -\frac{ln(\sqrt{1 - \xi^2} \times \Delta\%)}{\xi \omega_n} \Rightarrow \textcolor{red}{\begin{cases} \frac{4}{\xi \omega_n}, \quad \Delta = 2 \\ \frac{3}{\xi \omega_n}, \quad \Delta = 5 \end{cases}} $。
 \end{itemize}
 \end{minipage}
@@ -519,8 +597,8 @@ c(t) &= c_1(t) + \frac{1}{z} \frac{d c_1(t)}{dt} = 1 - \frac{e^{-\xi \omega_n t}
 \end{figure}
 
 \begin{itemize}
-\item PD（微分顺馈）：$ \omega_n $不变，\textcolor{red}{$ \xi_d = \xi + \frac{\tau}{2} \omega_m $}，零点$ z = -\frac{1}{\tau} $，放大噪声。
-\item 测速反馈：$ \omega_n $不变，\textcolor{red}{$ \xi_t = \xi + \frac{\tau}{2} \omega_m $}。
+\item PD（微分顺馈）：$ \omega_n $不变，$ \textcolor{red}{\xi_d = \xi + \frac{\tau}{2} \omega_m} $，零点$ z = -\frac{1}{\tau} $，放大噪声。
+\item 测速反馈：$ \omega_n $不变，$ \textcolor{red}{\xi_t = \xi + \frac{\tau}{2} \omega_m} $。
 \end{itemize}
 %------------------------------------------------
 \subsection[稳定性分析]{稳定性分析}
@@ -671,22 +749,22 @@ $$ \begin{cases} \text{\textcolor{red}{相角条件}（充要条件）：}\sum_{
 \end{itemize}
 \item \textcolor{red}{渐近线}：
 \begin{itemize}
-\item 与实轴\textcolor{red}{夹角}：\textcolor{red}{$ \varphi_a = \frac{(2k + 1)\pi}{n - m} \in (-\pi, \pi) $}。
-\item 与实轴\textcolor{red}{交点}：\textcolor{red}{$ \sigma_a = \frac{\sum_{j = 1}^n p_j - \sum_{i = 1}^m z_i}{n - m} $}。
+\item 与实轴\textcolor{red}{夹角}：$ \textcolor{red}{\varphi_a = \frac{(2k + 1)\pi}{n - m} \in (-\pi, \pi)} $。
+\item 与实轴\textcolor{red}{交点}：$ \textcolor{red}{\sigma_a = \frac{\sum_{j = 1}^n p_j - \sum_{i = 1}^m z_i}{n - m}} $。
 \end{itemize}
 \item \textcolor{red}{实轴部分}：确保\textcolor{red}{右侧有奇数个零极点}的线段组合。
 $$ \sum_{i = 1}^m \angle (s - z_i) - \sum_{j = 1}^n \angle (s - p_j) = (2k + 1)\pi $$ 
 \item \textcolor{red}{分离点}与会合点：闭环极点重根。
 \begin{itemize}
-\item \textcolor{red}{坐标$ d $}：由\textcolor{red}{$ \sum_{j = 1}^n \frac{1}{d - p_j} = \sum_{i = 1}^m \frac{1}{d - z_i} $}解得。
-\item \textcolor{red}{角度}：\textcolor{red}{$ \frac{(2k + 1)\pi}{l} $}，$ l $为该处重根数。
+\item \textcolor{red}{坐标$ d $}：由$ \textcolor{red}{\sum_{j = 1}^n \frac{1}{d - p_j} = \sum_{i = 1}^m \frac{1}{d - z_i}} $解得。
+\item \textcolor{red}{角度}：$ \textcolor{red}{\frac{(2k + 1)\pi}{l}} $，$ l $为该处重根数。
 \end{itemize}
 \item $ \varphi_{z x} $是$ z $到出射角的幅角，$ \theta_{p x} $是$ p $到入射角的幅角。
 \begin{itemize}
 \item \textcolor{red}{起始/出射角$ \theta_{pj} $}：离开极点切线与正实轴夹角。 
-\textcolor{red}{$$ \theta_{pj} = (2k + 1)\pi + \sum_{a = 1}^m \varphi_{z_a p_j} - \sum_{b = 1, b \neq j}^n \theta_{p_b p_j} $$}
+$$ \textcolor{red}{\theta_{pj} = (2k + 1)\pi + \sum_{a = 1}^m \varphi_{z_a p_j} - \sum_{b = 1, b \neq j}^n \theta_{p_b p_j}} $$
 \item \textcolor{red}{终止/入射角$ \varphi_{zi} $}：抵达零点切线与正实轴夹角。
-\textcolor{red}{$$ \varphi_{zi} = (2k + 1)\pi + \sum_{a = 1}^n \theta_{p_a z_i} - \sum_{b = 1, b \neq i}^m \varphi_{z_b z_i} $$}
+$$ \textcolor{red}{\varphi_{zi} = (2k + 1)\pi + \sum_{a = 1}^n \theta_{p_a z_i} - \sum_{b = 1, b \neq i}^m \varphi_{z_b z_i}} $$
 \end{itemize}
 \item \textcolor{red}{虚轴交点}：
 $$ 
@@ -751,7 +829,7 @@ $$ \begin{cases} 1 + G(s)H(s) = 0 \Rightarrow 1 - G(s)H(s) = 0 \\ (2k + 1)\pi \R
 \item 分解为典型环节$ G(s) = \frac{k \Pi_{i = 1}^m (s + z_i)}{\Pi_{j = 1}^n (s + p_j)} = \frac{k' \Pi_{i = 1}^m (\tau_i s + 1)}{\Pi_{j = 1}^n (T_j s + 1)} $。
 \item \textcolor{red}{交接频率}（$ z_i, p_j $）排序，每个环节斜率$ z_i + 20, \quad p_j - 20 $。
 \item \textcolor{red}{截止频率$ \omega_c $}：$ L(\omega_c) = 0 \Rightarrow A(\omega_c) = 1 $。
-\item 过\textcolor{red}{$ L(1) = 20lg k $}。
+\item 过$ \textcolor{red}{L(1) = 20lg k} $。
 \item 横坐标$ \omega $，纵坐标$ L(\omega) = 20lg A(\omega) $（缩小比例尺，便于化简）和$ \varphi(\omega) $。
 \end{itemize}
 \item 对数幅相曲线（尼柯尔斯图）：横坐标$ \varphi(\omega) $，纵坐标$ L(\omega) $。
@@ -766,39 +844,103 @@ $$ \begin{cases} 1 + G(s)H(s) = 0 \Rightarrow 1 - G(s)H(s) = 0 \\ (2k + 1)\pi \R
 环节 & $ G(s) $ & $ A(\omega) $ & $ \varphi(\omega) $ & 幅相 & 幅频 & 相频 \\
 \hline
 比例 & $ k $ & $ k $ & $ 0 $ &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ j \omega $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \fill (1,0) circle (1.2pt); \node[below,font=\tiny] at (1,0) {$ k $}; \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,1) -- (1.2,1); \node[left,font=\tiny] at (0,1) {$ 20 lg k $}; \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ \varphi(\omega) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \end{tikzpicture} \\
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[below,font=\tiny] at (1,0) {$ k $}; 
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ j \omega $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; 
+\fill (1,0) circle (1.2pt); 
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,1) {$ 20 lg k $};    
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; 
+\draw[thick] (0,1) -- (1.2,1); 
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; 
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ \varphi(\omega) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; 
+\end{tikzpicture} \\
 \hline
 积分 & $ \frac{k}{s} $ & $ \frac{k}{\omega} $ & $ -\frac{\pi}{2} $ &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; \draw[->] (0,-1) -- (0,1) node[above,font=\tiny] {$ j \omega $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; \draw[->,thick] (0,-1) -- (0,-0.2); \node[right,font=\tiny] at (0,-0.3) {$ \omega = \infty $}; \node[right,font=\tiny] at (0,-0.9) {$ \omega = 0 $}; \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,-1) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,1.2) -- (2,-0.8); \draw[dashed] (0.6,0.6) -- (0.6,0); \node[below,font=\tiny] at (0.6,0) {$ 1 $}; \draw[dashed] (0.6,0.6) -- (0,0.6); \node[left,font=\tiny] at (0,0.6) {$ 20 lg k $}; \node[right,font=\tiny] at (0.6,0.6) {斜率$ = -1 $}; \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,-1) -- (0,0.5) node[above,font=\tiny] {$ \varphi(\omega) $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,-0.5) -- (1.2,-0.5); \node[left,font=\tiny] at (0,-0.5) {$ -\frac{\pi}{2} $}; \end{tikzpicture} \\
+\begin{tikzpicture}[scale=0.4] 
+\node[right,font=\tiny] at (0,-0.9) {$ \omega = 0 $}; \node[right,font=\tiny] at (0,-0.3) {$ \omega = \infty $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; 
+\draw[->,thick] (0,-1) -- (0,-0.2); \draw[->] (0,-1) -- (0,1) node[above,font=\tiny] {$ j \omega $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $};
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[left,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,0.6) {$ 20 lg k $}; \node[below,font=\tiny] at (0.6,0) {$ 1 $}; \node[right,font=\tiny] at (0.6,0.6) {斜率$ = -1 $}; 
+\draw[->] (0,-1) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ \omega $}; 
+\draw[thick] (0,1.2) -- (2,-0.8); 
+\draw[dashed] (0.6,0.6) -- (0,0.6); \draw[dashed] (0.6,0.6) -- (0.6,0); 
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[left,font=\tiny] at (0,-0.5) {$ -\frac{\pi}{2} $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; 
+\draw[->] (0,-1) -- (0,0.5) node[above,font=\tiny] {$ \varphi(\omega) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; 
+\draw[thick] (0,-0.5) -- (1.2,-0.5); 
+\end{tikzpicture} \\
 \hline
 微分 & $ ks $ & $ k\omega $ & $ \frac{\pi}{2} $ &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ j \omega $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[->,thick] (0,0) -- (0,1); \node[right,font=\tiny] at (0,1) {$ \omega = \infty $}; \node[right,font=\tiny] at (0,0.2) {$ \omega = 0 $}; \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,-1) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,-0.6) -- (2,1.4); \draw[dashed] (1,0.4) -- (1,0); \node[below,font=\tiny] at (1,0) {$ 1 $}; \draw[dashed] (1,0.4) -- (0,0.4); \node[left,font=\tiny] at (0,0.4) {$ 20 lg k $}; \node[right,font=\tiny] at (1,0.4) {斜率$ = 1 $}; \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ \varphi(\omega) $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0.5) -- (1.2,0.5); \node[left,font=\tiny] at (0,0.5) {$ \frac{\pi}{2} $}; \end{tikzpicture} \\
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[right,font=\tiny] at (0,0.2) {$ \omega = 0 $}; \node[right,font=\tiny] at (0,1) {$ \omega = \infty $}; 
+\draw[->,thick] (0,0) -- (0,1); \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ j \omega $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; 
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[left,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,0.4) {$ 20 lg k $}; \node[below,font=\tiny] at (1,0) {$ 1 $}; \node[right,font=\tiny] at (1,0.4) {斜率$ = 1 $}; 
+\draw[->] (0,-1) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \draw[->] (0,0) -- (2,0) node[right,font=\tiny] {$ \omega $}; 
+\draw[thick] (0,-0.6) -- (2,1.4); 
+\draw[dashed] (1,0.4) -- (0,0.4); \draw[dashed] (1,0.4) -- (1,0); 
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4]
+\node[left,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,0.5) {$ \frac{\pi}{2} $}; 
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ \varphi(\omega) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; 
+\draw[thick] (0,0.5) -- (1.2,0.5); 
+\end{tikzpicture} \\
 \hline
 惯性 & $ \frac{k}{1 + Ts} $ & $ \frac{k}{\sqrt{1 + (T\omega)^2}} $ & $ -\arctan(T\omega) $ &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; \draw[->] (0,-1) -- (0,1) node[above,font=\tiny] {$ j \omega $}; \node[left,font=\tiny] at (0,0.2) {$ 0 $}; \draw[thick] (0,0) arc (-180:0:0.75); \node[left,font=\tiny] at (0,-0.2) {$ \omega = \infty $}; \node[right,font=\tiny] at (1.5,-0.2) {$ \omega = 0 $}; \node[above,font=\tiny] at (1.5,0) {$ k $}; \node[above,font=\tiny] at (0.75,0) {$ \frac{k}{2} $}; \node[below,font=\tiny] at (0.75,-0.75) {$ 1 $}; \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,-1) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,1) {$ 20 lg k $}; \draw[thick] (0,1) -- (0.5,1) -- (1.5,-0.5); \node[right,font=\tiny] at (1,0.6) {斜率$ = -1 $}; \draw[dashed] (0.5,0) -- (0.5,1); \node[below,font=\tiny] at (0.5,0) {\textcolor{red}{$ \frac{1}{T} $}}; \end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[left,font=\tiny] at (0,-0.2) {$ \omega = \infty $}; \node[left,font=\tiny] at (0,0.2) {$ 0 $}; 
+\draw[->] (0,-1) -- (0,1) node[above,font=\tiny] {$ j \omega $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; \node[below,font=\tiny] at (0.75,-0.75) {$ 1 $}; \node[above,font=\tiny] at (0.75,0) {$ \frac{k}{2} $}; \node[right,font=\tiny] at (1.5,-0.2) {$ \omega = 0 $}; \node[above,font=\tiny] at (1.5,0) {$ k $};
+\draw[thick] (0,0) arc (-180:0:0.75); 
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[left,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,1) {$ 20 lg k $}; \node[below,font=\tiny] at (0.5,0) {$ \textcolor{red}{\frac{1}{T}} $}; \node[right,font=\tiny] at (1,0.6) {斜率$ = -1 $}; 
+\draw[->] (0,-1) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; 
+\draw[thick] (0,1) -- (0.5,1) -- (1.5,-0.5); 
+\draw[dashed] (0.5,0) -- (0.5,1); 
+\end{tikzpicture} &
 \includegraphics[width=2cm]{1.1} \\
 \hline
 比例微分 & $ 1 + \tau s $ & $ \sqrt{1 + (\tau \omega)^2} $ & $ \arctan(\tau \omega) $ &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ j \omega $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \node[below,font=\tiny] at (0.5,0) {$ 1 $}; \draw[->,thick] (0.5,0) -- (0.5,1); \node[right,font=\tiny] at (0.5,1) {$ \omega = \infty $}; \node[right,font=\tiny] at (0.5,0.2) {$ \omega = 0 $}; \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \node[below,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0.5) -- (0.8,0.5) -- (1.5,1.5); \draw[dashed] (0.8,0) -- (0.8,0.5); \node[left,font=\tiny] at (0,0.5) {$ 20 lg k $}; \node[below,font=\tiny] at (0.8,0) {\textcolor{red}{$ \frac{1}{\tau} $}}; \node[right,font=\tiny] at (1,0.6) {斜率$ = 1 $}; \end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[below,font=\tiny] at (0.5,0) {$ 1 $}; \node[right,font=\tiny] at (0.5,0.2) {$ \omega = 0 $};  \node[right,font=\tiny] at (0.5,1) {$ \omega = \infty $};
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ j \omega $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; \draw[->,thick] (0.5,0) -- (0.5,1); 
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[below,font=\tiny] at (0,0) {$ 0 $}; \node[left,font=\tiny] at (0,0.5) {$ 20 lg k $}; \node[below,font=\tiny] at (0.8,0) {$ \textcolor{red}{\frac{1}{\tau}} $}; \node[right,font=\tiny] at (1,0.6) {斜率$ = 1 $}; 
+\draw[->] (0,0) -- (0,1.5) node[above,font=\tiny] {$ L(\omega) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; 
+\draw[thick] (0,0.5) -- (0.8,0.5) -- (1.5,1.5); 
+\draw[dashed] (0.8,0) -- (0.8,0.5); 
+\end{tikzpicture} &
 \includegraphics[width=2cm]{1.2} \\
 \hline
  & & & & \includegraphics[width=2cm]{1.3} & \includegraphics[width=2cm]{1.4} & \includegraphics[width=2cm]{1.5} \\
- & & & & $ A(\omega_n) = \frac{1}{2}\xi $ & \textcolor{red}{$ M_p = \frac{1}{\sqrt{1 - \xi^2}2\xi} $} & \\
- & & & & $ \varphi(\omega_n) = \frac{\pi}{2} $ & \textcolor{red}{$ \omega_p = \omega_n \sqrt{1 - 2\xi^2} $} & \\
+ & & & & $ A(\omega_n) = \frac{1}{2}\xi $ & $ \textcolor{red}{M_p = \frac{1}{\sqrt{1 - \xi^2}2\xi}} $ & \\
+ & & & & $ \varphi(\omega_n) = \frac{\pi}{2} $ & $ \textcolor{red}{\omega_p = \omega_n \sqrt{1 - 2\xi^2}} $ & \\
 振荡 & $ \frac{\omega_n^2}{s^2 + 2\xi \omega_n s + \omega_n^2} $ & $ \frac{1}{\sqrt{[1 - (\frac{\omega}{\omega_n})^2]^2 + (2\xi \frac{\omega}{\omega_n})^2}}$ & $ -\arctan \frac{2\xi \frac{\omega}{\omega_n}}{1 - (\frac{\omega}{\omega_n})^2} $ & $ \xi_1 < \xi_2 $ & & \\
 \hline
 时滞 & $ e^{-\tau s} $ & $ 1 $ & $ -\tau \omega $ &
-\begin{tikzpicture}[scale=0.4] \draw[->] (-1.5,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; \draw[->] (0,-1.5) -- (0,1.5) node[above,font=\tiny] {$ j \omega $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (1,0) arc (0:360:1); \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,-1) -- (0,1) node[above,font=\tiny] {$ L(\omega) $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) -- (1.5,0); \end{tikzpicture} &
-\begin{tikzpicture}[scale=0.4] \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; \draw[->] (0,-1) -- (0,1) node[above,font=\tiny] {$ \varphi(\omega) $}; \node[left,font=\tiny] at (0,0) {$ 0 $}; \draw[thick] (0,0) -- (1,-1); \end{tikzpicture} \\
+\begin{tikzpicture}[scale=0.4] 
+\node[left,font=\tiny] at (0,0) {$ 0 $};    
+\draw[->] (-1.5,0) -- (1.5,0) node[right,font=\tiny] {$ \sigma $}; \draw[->] (0,-1.5) -- (0,1.5) node[above,font=\tiny] {$ j \omega $}; 
+\draw[thick] (1,0) arc (0:360:1); 
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[left,font=\tiny] at (0,0) {$ 0 $}; 
+\draw[->] (0,-1) -- (0,1) node[above,font=\tiny] {$ L(\omega) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; 
+\draw[thick] (0,0) -- (1.5,0); 
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\node[left,font=\tiny] at (0,0) {$ 0 $};     
+\draw[->] (0,-1) -- (0,1) node[above,font=\tiny] {$ \varphi(\omega) $}; \draw[->] (0,0) -- (1.5,0) node[right,font=\tiny] {$ \omega $}; 
+\draw[thick] (0,0) -- (1,-1); 
+\end{tikzpicture} \\
 \hline
 \end{tabular}
 \caption{典型环节的频率特性}
@@ -831,12 +973,12 @@ $ s $平面上闭合曲线$ \Gamma $包围$ F(s) $的$ P $个极点和$ Z $个�
 \end{itemize}
 %------------------------------------------------
 \paragraph{\textcolor{red}{穿越次数}}
-$ \Sigma_{GH} $包围\textcolor{red}{$ (-1, j 0) $}的圈数$ R $。
+$ \Sigma_{GH} $包围$ \textcolor{red}{(-1, j 0)} $的圈数$ R $。
 \begin{itemize}
 \item 正穿越$ N^+ $为$ (-1, j 0) $左侧由上至下\textcolor{red}{逆时针}穿过，负穿越$ N^- $反之。
 \item 半次：起/止于$ (-1, j 0) $左侧。
 \item $ (-1, j 0) $处不计数，为临界稳定。
-\item \textcolor{red}{$ R = 2N = 2(N^+ - N^-) $}。
+\item $ \textcolor{red}{R = 2N = 2(N^+ - N^-)} $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{对数频率稳定判据}
@@ -853,15 +995,15 @@ $ \Sigma_{GH} $包围\textcolor{red}{$ (-1, j 0) $}的圈数$ R $。
 \begin{minipage}{0.56\textwidth}
 \paragraph{重要频率}
 \begin{itemize}
-\item \textcolor{red}{截止频率$ \omega_c $}：\textcolor{red}{$ L(\omega_c) = 0 $}。
-\item \textcolor{red}{穿越频率$ \omega_x $}：\textcolor{red}{$ \varphi(\omega_x) = \angle G(j \omega_x)H(j \omega_x) - \pi $}。
+\item \textcolor{red}{截止频率$ \omega_c $}：$ \textcolor{red}{L(\omega_c) = 0} $。
+\item \textcolor{red}{穿越频率$ \omega_x $}：$ \textcolor{red}{\varphi(\omega_x) = \angle G(j \omega_x)H(j \omega_x) - \pi} $。
 \end{itemize}
 \end{minipage}
 \begin{minipage}{0.44\textwidth}
 \paragraph{裕度}
 \begin{itemize}
-\item \textcolor{red}{相角裕度}：\textcolor{red}{$ \gamma(\omega_c) = \pi + \varphi(\omega_c) $}。
-\item \textcolor{red}{幅值裕度}：\textcolor{red}{$ h(\omega_x) = \frac{1}{|G(j \omega_x)H(j \omega_x)|} $}。
+\item \textcolor{red}{相角裕度}：$ \textcolor{red}{\gamma(\omega_c) = \pi + \varphi(\omega_c)} $。
+\item \textcolor{red}{幅值裕度}：$ \textcolor{red}{h(\omega_x) = \frac{1}{|G(j \omega_x)H(j \omega_x)|}} $。
 \end{itemize}
 \end{minipage}
 
@@ -955,11 +1097,11 @@ $ G_c(s) $ & $ \textcolor{red}{\frac{1}{\alpha}} \frac{1 + \alpha Ts}{1 + Ts} $ 
 \hline
 $ \omega $ & $ \omega_1 = \frac{1}{\alpha T}, \quad \omega_2 = \frac{1}{T} $ & $ \omega_1 = \frac{1}{T}, \omega_2 = \frac{1}{bT} $ \\
 \hline
-\textcolor{red}{$ \omega_m = \sqrt{\omega_1 \omega_2} $} & $ \frac{1}{T \sqrt{\alpha}} $ & $ \frac{1}{T \sqrt{b}} $ \\
+$ \textcolor{red}{\omega_m = \sqrt{\omega_1 \omega_2}} $ & $ \frac{1}{T \sqrt{\alpha}} $ & $ \frac{1}{T \sqrt{b}} $ \\
 \hline
 $ \varphi(\omega) $ & $ \arctan(\alpha T \omega) - \arctan(T \omega) $ & $ \arctan(T \omega) - \arctan(b T \omega) $ \\
 \hline
-\textcolor{red}{$ \varphi_m(\omega) $} & $ \arcsin(\frac{\alpha - 1}{\alpha + 1}) $ & $ \arcsin(\frac{1 - b}{1 + b}) $ \\
+$ \textcolor{red}{\varphi_m(\omega)} $ & $ \arcsin(\frac{\alpha - 1}{\alpha + 1}) $ & $ \arcsin(\frac{1 - b}{1 + b}) $ \\
 \hline
 $ L(\omega_m) $ & $ 10lg \alpha $ & $ 10lg b $ \\
 \hline
@@ -973,7 +1115,7 @@ $ \omega_c $ & \multicolumn{2}{c|}{$ \omega_c'' $为校正后，$ \omega_c $为�
 \cline{2-3}
  & \multicolumn{2}{c|}{$ \varphi(\omega_c'') \Rightarrow \omega_c'' \Rightarrow \alpha/b $} \\
 \cline{2-3}
- & & \textcolor{red}{$ \varphi(\omega_c') = \varphi(\omega_c) + \varphi(\omega_c'') $} \\
+ & & $ \textcolor{red}{\varphi(\omega_c') = \varphi(\omega_c) + \varphi(\omega_c'')} $ \\
  & & $ 20lg b + L(\omega_c'') = 0, \quad \frac{1}{bT} = 0.1\omega_c'' $ \\
 \cline{2-3}
  & \multicolumn{2}{c|}{\textcolor{red}{验算$ \varphi(\omega_c'') $}} \\
@@ -1021,7 +1163,7 @@ $ \omega_c $ & \multicolumn{2}{c|}{$ \omega_c'' $为校正后，$ \omega_c $为�
 \end{itemize}
 \end{minipage}
 
-\textcolor{red}{$$ G_b(s) = \frac{G_1(s)G_{eq}(s)}{1 + G_1(s)G_{eq}(s)}, \quad G_{eq}(s) = \frac{G_2(s)}{1 + G_2(s)G_c(s)} \overset{G_2(s)G_c(s) \gg 1}{\Longrightarrow} \frac{1}{G_c(s)} $$}
+$$ \textcolor{red}{G_b(s) = \frac{G_1(s)G_{eq}(s)}{1 + G_1(s)G_{eq}(s)}, \quad G_{eq}(s) = \frac{G_2(s)}{1 + G_2(s)G_c(s)} \overset{G_2(s)G_c(s) \gg 1}{\Longrightarrow} \frac{1}{G_c(s)}} $$
 %------------------------------------------------
 \subsection[复合校正]{\textcolor{red}{复合校正}}
 %------------------------------------------------
@@ -1059,7 +1201,7 @@ $$ C_n(s) = \frac{G_2(s)[1 + G_1(s)G_n(s)]N(s)}{1 + G_1(s)G_2(s)}, \quad \textco
 
 $$ G_b(s) = \frac{[1 + G_r(s)]G(s)}{1 + G(s)}, \quad G_k(s) = \frac{G_b(s)}{1 - G_b(s)} = \frac{1 + G_r(s)G(s)}{1 - G_r(s)G(s)} $$
 \begin{itemize}
-\item \textcolor{red}{全补偿}：\textcolor{red}{$ G_r(s) = \frac{1}{G(s)} \Rightarrow G_b(s) = 1, \quad E(s) = 0 $}。
+\item \textcolor{red}{全补偿}：$ \textcolor{red}{G_r(s) = \frac{1}{G(s)} \Rightarrow G_b(s) = 1, \quad E(s) = 0} $。
 \item \textcolor{red}{部分补偿}：$ G(s) = \frac{kv}{s(a_n s^{n - 1} + \dots + a_1)} $，取$ G_r(s) = \lambda_2 s^2 + \lambda_1 s, G_k(s) = \frac{a_2 s^2 + a_1 s + kv}{s^3(a_n s^{n - 3} + \dots + a_3)} $，\textcolor{red}{型次提升}。
 \end{itemize}
 %----------------------------------------------------------------------------------------
@@ -1080,7 +1222,7 @@ $$ G_b(s) = \frac{[1 + G_r(s)]G(s)}{1 + G(s)}, \quad G_k(s) = \frac{G_b(s)}{1 - 
 \begin{tikzpicture}[scale=0.8,transform shape]
 \node[sum] at (0,0) {$ X $}; \node[block] at (4,-1.5) {$ H(s) $}; \node[block] at (4,0) {$ G_n(s) $}; \node[block] at (7,0) {$ G_p(s) $};
 \node at (-1,0.3) {$ r(t) $}; \node at (-0.5,-0.6) {$ b(t) $}; \node at (1,0.3) {$ e(t) $}; \node at (1.5,-0.2) {采样开关}; \node at (1.5,0.2) {$ s $}; \node at (2.5,0.3) {$ e^*(t) $}; \node at (4,-0.7) {保持器}; \node at (5.5,0.3) {$ e_n(t) $}; \node at (9.5,0.3) {$ c(t) $};
-\draw (0.4,0) -- (1,0); \draw (1,0) -- (1.8,0.6);
+\draw (0.4,0) -- (1,0) -- (1.8,0.6);
 \draw[->] (-1.5,0) -- (-0.4,0); \draw[->] (2,0) -- (3,0); \draw[->] (5,0) -- (6,0); \draw[->] (8,0) -- (10,0);
 \draw[->] (3,-1.5) -| (0,-0.4) node[near end,left] {$ - $}; \draw[->] (9,0) |- (5,-1.5);
 \draw[->,thick] (1.7,0.5) to[out=-45,in=45] (1.7,0);
@@ -1092,13 +1234,13 @@ $$ G_b(s) = \frac{[1 + G_r(s)]G(s)}{1 + G(s)}, \quad G_k(s) = \frac{G_b(s)}{1 - 
 连续信号$ \underset{\text{周期/非周期}}{\overset{\text{规定时刻}}{\Longrightarrow}} $脉冲序列。
 \begin{itemize}
 \item 相当于单位脉冲被$ e(t) $调制。
-\item \textcolor{red}{$ e^*(t) = e(t) \delta T(t) \overset{\delta T(t) = \sum_{n = 0}^{\infty} \delta(t - nT)}{\Longrightarrow} \sum_{n = 0}^{\infty} e(nT)\delta(t - nT), \quad E^*(s) = \sum_{n = 0}^{\infty} e(nT)e^{-nTs} $}。
+\item $ \textcolor{red}{e^*(t) = e(t) \delta T(t) \overset{\delta T(t) = \sum_{n = 0}^{\infty} \delta(t - nT)}{\Longrightarrow} \sum_{n = 0}^{\infty} e(nT)\delta(t - nT), \quad E^*(s) = \sum_{n = 0}^{\infty} e(nT)e^{-nTs}} $。
 \item \textcolor{red}{香农采样定理}：采样器输入信号有有限带宽，且有最小周期$ T_h $，则使$ e^*(t) $完整从$ e(t) $恢复的采样周期为$ T \leq \frac{T_h}{2} $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{\textcolor{red}{信号复现（保持）}}
 脉冲序列$ \overset{\text{保持器}}{\Longrightarrow} $连续信号。
-\textcolor{red}{$$ e(t) = \begin{cases} e(nT) = e^*(nT), &t = nT \\ \text{插值}, & t \in [nT, (n + 1)T) \end{cases} $$}
+$$ \textcolor{red}{e(t) = \begin{cases} e(nT) = e^*(nT), &t = nT \\ \text{插值}, & t \in [nT, (n + 1)T) \end{cases}} $$
 
 \begin{table}[H]
 \centering
@@ -1194,8 +1336,8 @@ $ c(k + n) + a_1 c(k + n - 1) + \dots + a_n c(k) = b_0 r(k + m) + b_1 r(k + m - 
 \centering 
 \begin{tikzpicture}[scale=0.8,transform shape]
 \node[block] at (4,0) {$ G(s) $}; \node at (0,0.3) {$ r(t) $}; \node at (1.5,-0.3) {$ R(z) $}; \node at (2.5,0.3) {$ r^*(t) $}; \node at (4,-0.8) {$ G(z) $}; \node at (5.5,0.3) {$ c(t) $}; \node at (8,-0.3) {$ C(z) $}; \node at (8,0.3) {$ c^*(t) $}; \node at (11,-0.3) {$ c(nT) = k(nT) $}; \node at (11,0.3) {$ r(nT) = \delta(nT) $};
-\draw (0,0) -- (1,0); \draw (1,0) -- (1.8,0.6); \draw (2,0) -- (2,-1); \draw (5,0) -- (6,0); \draw (6,0) -- (6,-1); \draw (6,0) -- (6.8,0.6);
-\draw[->] (2,0) -- (3,0); \draw[->] (3.5,-0.8) -- (2,-0.8); \draw[->] (4.5,-0.8) -- (6,-0.8); \draw[->] (7,0) -- (8.5,0);
+\draw (0,0) -- (1,0) -- (1.8,0.6); \draw (2.2,0) -- (2.2,-1); \draw (5,0) -- (6,0) -- (6.8,0.6); \draw (5.8,0) -- (5.8,-1);
+\draw[->] (2,0) -- (3,0); \draw[->] (3.5,-0.8) -- (2.2,-0.8); \draw[->] (4.5,-0.8) -- (5.8,-0.8); \draw[->] (7,0) -- (8.5,0);
 \end{tikzpicture}
 \caption{反馈校正结构图}
 \end{figure}
@@ -1205,8 +1347,8 @@ $$ G(z) = \frac{C(z)}{R(z)} = \sum_{n = 0}^{\infty} k(nT)z^{-n} = Z[G(s)] $$
 \item 开环：
 \begin{itemize}
 \item $ G^*(s) = G^*(s + j k \omega s) $。
-\item \textcolor{red}{$ [G(s)E^*(s)]^* = G^*(s) E^*(s) $}。
-\item \textcolor{red}{$ G_1 G_2^*(s) \neq G_1^*(s) \cdot G_2^*(s) $}。
+\item $ \textcolor{red}{[G(s)E^*(s)]^* = G^*(s) E^*(s)} $。
+\item $ \textcolor{red}{G_1 G_2^*(s) \neq G_1^*(s) \cdot G_2^*(s)} $。
 \end{itemize}
 \item 有\textcolor{red}{零阶保持器}：
 $$ G(s) = G_h(s) \cdot G_p(s) = \frac{1 - e^{-Ts}}{s} G_p(s) = (1 - e^{-Ts})\frac{G_p(s)}{s} \Rightarrow \textcolor{red}{G(z) = (1 - z^{-1})z[\frac{G_p(s)}{s}]} $$
@@ -1225,7 +1367,7 @@ $$ G(s) = G_h(s) \cdot G_p(s) = \frac{1 - e^{-Ts}}{s} G_p(s) = (1 - e^{-Ts})\fra
 \begin{itemize}
 \item 单位圆：$ s = \sigma + j \omega \Rightarrow z = e^{Ts} = e^{\sigma T + j \omega T} \Rightarrow |z| = e^{\sigma T} $。
 $$ \begin{cases} \textcolor{red}{\sigma < 0 \Leftrightarrow |z| < 1} &, \quad \text{\textcolor{red}{稳定}（有界输入得到有界输出）} \\ \sigma = 0 \Leftrightarrow |z| = 1 & \\ \sigma > 0 \Leftrightarrow |z| > 1 & \end{cases} $$
-\item \textcolor{red}{双线性变换}：\textcolor{red}{$ z = \frac{\omega + 1}{\omega - 1} $}，通分后\textcolor{red}{对$ \omega $用劳斯判据}。
+\item \textcolor{red}{双线性变换}：$ \textcolor{red}{z = \frac{\omega + 1}{\omega - 1}} $，通分后\textcolor{red}{对$ \omega $用劳斯判据}。
 \item \textcolor{red}{稳态误差}：$ e(\infty) = \lim_{t \to \infty} e^*(t), \quad \textcolor{red}{ess(\infty) = \lim_{z \to 1} (1 - z^{-1})\Phi(z)R(z)} $。
 \end{itemize}
 
@@ -1269,7 +1411,7 @@ E(z) &= [1 - \Phi(z)]R(z) = g_0 + g_1 z^{-1} + \dots + g_n z^{-n}
 \begin{tikzpicture}[scale=0.8,transform shape]
 \node[sum] at (0,0) {$ X $}; \node[block] at (4,0) {$ D(z) $}; \node[block] at (9,0) {$ G_n(s) $}; \node[block] at (12,0) {$ G_o(s) $};
 \node at (-1,0.3) {$ R(s) $}; \node at (10.5,0.8) {$ G(s) $}; \node at (14,0.3) {$ C(s) $};
-\draw (0.4,0) -- (1,0); \draw (1,0) -- (1.8,0.6); \draw (5,0) -- (6,0); \draw (6,0) -- (6.8,0.6); \draw (7.5,0) -- (7.5,1); \draw (13.5,0) -- (13.5,1);
+\draw (0.4,0) -- (1,0) -- (1.8,0.6); \draw (5,0) -- (6,0) -- (6.8,0.6); \draw (7.5,0) -- (7.5,1); \draw (13.5,0) -- (13.5,1);
 \draw[->] (-1.5,0) -- (-0.4,0); \draw[->] (2,0) -- (3,0); \draw[->] (7,0) -- (8,0); \draw[->] (10,0) -- (11,0); \draw[->] (13,0) -- (14,0); \draw[->] (10,0.8) -- (7.5,0.8); \draw[->] (12,0.8) -- (13.5,0.8);
 \draw[->] (13.5,0) |- (13.5,-1) -| (0,-0.4) node[near end,left] {$ - $};
 \end{tikzpicture}

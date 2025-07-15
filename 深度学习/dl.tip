@@ -1,0 +1,14 @@
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 1} 神经网络反向传播}{5}{tips.1}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 2} 卷积的计算}{5}{tips.2}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 3} $ 1 \times 1 $卷积的作用}{6}{tips.3}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 4} 卷积神经网络实例}{7}{tips.4}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 5} 欠拟合与过拟合}{7}{tips.5}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 6} 梯度消失与梯度爆炸}{8}{tips.6}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 7} 交叉熵损失函数}{8}{tips.7}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 8} 激活函数}{9}{tips.8}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 9} 优化器}{10}{tips.9}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 10} 正则化}{11}{tips.10}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 11} 训练策略和技巧}{11}{tips.11}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 12} LSTM}{12}{tips.12}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 13} 多头自注意力}{13}{tips.13}%
+\contentsline {tips}{\makebox [4em][l]{要点\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 14} 生成式模型}{14}{tips.14}%

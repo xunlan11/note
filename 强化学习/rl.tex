@@ -164,11 +164,7 @@ $ \pi(a|s) = argmax_a q(a) $。
 \paragraph{探索-利用平衡策略}
 \begin{itemize}
 \item $ \epsilon $-greedy策略\tip{$ \epsilon $-greedy策略}：靠近贪心策略，但所有动作概率不为零，需注意多最优情况。
-$$
-a = \begin{cases} argmax_a q(a) &, p = 1 - \epsilon \\ random(a) &, p = \epsilon \end{cases}
-\Rightarrow 
-\pi(a|s) = \begin{cases} 1 - \epsilon + \frac{\epsilon}{|A|} &, a = argmax_a q(a) \\ \frac{\epsilon}{|A|} &, otherwise \end{cases}
-$$
+$$ a = \begin{cases} argmax_a q(a) &, p = 1 - \epsilon \\ random(a) &, p = \epsilon \end{cases} \Rightarrow \pi(a|s) = \begin{cases} 1 - \epsilon + \frac{\epsilon}{|A|} &, a = argmax_a q(a) \\ \frac{\epsilon}{|A|} &, otherwise \end{cases} $$
 \item UCB（Upper Confidence Bound）策略：可以自适应平衡探索与利用。
 $$ \pi(a|s) = Q(a) + c\sqrt{\frac{\ln N}{n(a)}} $$
 
@@ -178,7 +174,7 @@ $$ \pi(a|s) = \frac{e^{Q(a)/\tau}}{\sum_{a'} e^{Q(a)/\tau}} $$
 
 其中$ \tau $是温度参数，控制随机程度，趋于$ 0 $时贪心，趋于$ \infty $时随机。
 \item 高斯策略：
-$$ \pi = \mu + \epsilon, \epsilon \sim N(0, \sigma^2) $$
+$$ \pi = \mu + \epsilon, \quad \epsilon \sim N(0, \sigma^2) $$
 \end{itemize}
 %------------------------------------------------
 \paragraph{增量式更新}
@@ -201,7 +197,7 @@ $$ G_t \doteq \sum_{k = t + 1}^{T} \gamma^{k - t - 1} R_k $$
 %------------------------------------------------
 \paragraph{值函数}
 \begin{align*}
-v_\pi(s) &\doteq E_\pi[G_t|S_t = s] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s], s \in S \\
+v_\pi(s) &\doteq E_\pi[G_t|S_t = s] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s], \quad s \in S \\
 &= E_\pi[\underbrace{R_{t + 1}}_{\text{即时奖励}} + \gamma \underbrace{G_{t + 1}}_{\text{未来奖励}}|S_t = s] (\text{后继递推关系}) \\
 &= \sum_{a \in A} \pi(a|s)[\sum_{r \in R} p(r|s, a)r + \gamma \sum_{s' \in S} p(s'|s, a)v_{\pi}(s')] (\text{分项全概率展开}) \\
 &= \underbrace{\sum_{a \in A} \pi(a|s) \overbrace{\sum_{s' \in S, r \in R} p(s', r|s, a)[r + \gamma v_\pi(s')]}^{q_{\pi}(s, a)}}_{\text{贝尔曼方程}} (\text{值函数递推关系})
@@ -209,7 +205,7 @@ v_\pi(s) &\doteq E_\pi[G_t|S_t = s] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t 
 %------------------------------------------------
 \paragraph{行为值函数}
 \begin{align*} 
-q_\pi(s, a) &\doteq E_\pi[G_t|S_t = s, A_t = a] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s, A_t = a], s \in S \\
+q_\pi(s, a) &\doteq E_\pi[G_t|S_t = s, A_t = a] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s, A_t = a], \quad s \in S \\
 &= \sum_{r \in R} p(r|s, a)r + \gamma \sum_{s' \in S} P(s'|s, a) \underbrace{\sum_{a' \in A} \pi(a'|s')q_{\pi}(s'|a')}_{v_{\pi}(s')} (\text{行为值函数递推关系})
 \end{align*}
 %------------------------------------------------
@@ -224,7 +220,7 @@ $ s' $的价值信息回传给$ s $。
 %------------------------------------------------
 \paragraph{最优值函数与最优策略}
 \begin{itemize}
-\item $ \forall s \in S, q_{\pi}(s, \pi'(s)) = v_{\pi'}(s) \geq v_{\pi}(s) $，则称$ \pi' $优于或等于$ \pi $。
+\item $ \forall s \in S, \quad q_{\pi}(s, \pi'(s)) = v_{\pi'}(s) \geq v_{\pi}(s) $，则称$ \pi' $优于或等于$ \pi $。
 \item $ v_\pi(s) $定义了$ \pi $的偏序关系，$ \pi^* $存在且可能不唯一，它们共享：
 $$ v^*(s) \doteq \max_{\pi} v_{\pi}(s) \quad q^*(s, a) \doteq \max_{\pi} q_{\pi}(s, a) $$
 \end{itemize}
@@ -297,7 +293,7 @@ $$ \pi_0 \xrightarrow{PE} v_{\pi_0} \xrightarrow{PI} \pi_1 \xrightarrow{PE} v_{\
 \begin{itemize}
 \item 直接求解：$ v_{\pi_k} = (I - \gamma P_{\pi_k})^{-1} r_{\pi_k} $。
 \item 迭代求解：
-$$ \underbrace{v_{\pi_k}^{(j + 1)} = r_{\pi_k} + \gamma P_{\pi_k} v_{\pi_k}^{(j)} = \sum_{a \in A} \pi(a|s)[r(a|s) + \gamma \sum_{s' \in S}P(s'|s, a)v_{\pi}(s')], j = 0, 1, 2, \dots}_{\text{期望更新：基于后继可能状态的期望值}} $$
+$$ \underbrace{v_{\pi_k}^{(j + 1)} = r_{\pi_k} + \gamma P_{\pi_k} v_{\pi_k}^{(j)} = \sum_{a \in A} \pi(a|s)[r(a|s) + \gamma \sum_{s' \in S}P(s'|s, a)v_{\pi}(s')], \quad j = 0, 1, 2, \dots}_{\text{期望更新：基于后继可能状态的期望值}} $$
 \item 截断策略评估：不需要完全收敛。
 \end{itemize}
 \item 策略改进（PI）\tip{策略改进证明}：
@@ -342,7 +338,7 @@ v_{\pi}(s) &\leq q_{\pi}[s, \pi'(s)] \\
 \subsection[值迭代]{值迭代\tip{值迭代}}
 结合极端PE和PI，只进行一次PE遍历，对每个状态更新一次。
 $$ u_0 \xrightarrow{PU} \pi'_1 \xrightarrow{VU} u_1 \xrightarrow{PU} \pi'_2 \xrightarrow{VU} u_2 \xrightarrow{PU} \dots $$
-$$ v_{k + 1} = \max_{\pi} r_{\pi} + \gamma P_{\pi}v_k, k = 1, 2, 3, \dots $$
+$$ v_{k + 1} = \max_{\pi} r_{\pi} + \gamma P_{\pi}v_k, \quad k = 1, 2, 3, \dots $$
 \begin{itemize}
 \item 策略更新（PU）：$ \pi_{k + 1} = argmax_{\pi}(r_{\pi} + \gamma P_{\pi}v_k) $，贪婪选取。
 \item 价值更新（VU）：$ v_{k + 1} = r_{\pi_{k + 1}} + \gamma P_{\pi_{k + 1}}v_k = \max_{a \in A} q_k $。
@@ -350,7 +346,7 @@ $$ v_{k + 1} = \max_{\pi} r_{\pi} + \gamma P_{\pi}v_k, k = 1, 2, 3, \dots $$
 %------------------------------------------------
 \begin{myalgorithm}[值迭代]
 \State 参数：估计精度阈值$ \theta > 0 $
-\State 初始化：$ \forall s \in S^+ $，任意初始化$ v(s), v(\text{终止}) = 0 $
+\State 初始化：$ \forall s \in S^+ $，任意初始化$ v(s), \quad v(\text{终止}) = 0 $
 \Repeat
 \State $ \Delta \gets 0 $
 \For{$ \forall s \in S $}
@@ -440,7 +436,7 @@ $ s_4 $ & $ 1 + \gamma 1 $ & $ 1 + \gamma 1 $ & $ 1 + \gamma 1 $ & $ 0 + \gamma 
 \item 每次访问（every visit）：$ \hat{q}(s, a) = \frac{G_{11}(s, a) + G_{12}(s, a) + \dots + G_{21}(s, a) + \dots}{N(s, a)} $。
 \end{itemize}
 
-$ N(s) $是$ s $的访问次数，$ N(s) \to \infty, \hat{q}(s, a) \to q_{\pi}(s, a) $。靠近目标的状态比远离目标的状态更早具有非零值，幕长应足够长，无需无限长。
+$ N(s) $是$ s $的访问次数，$ N(s) \to \infty, \quad \hat{q}(s, a) \to q_{\pi}(s, a) $。靠近目标的状态比远离目标的状态更早具有非零值，幕长应足够长，无需无限长。
 
 \begin{figure}[H]
 \centering 
@@ -455,7 +451,7 @@ $ N(s) $是$ s $的访问次数，$ N(s) \to \infty, \hat{q}(s, a) \to q_{\pi}(s
 \item 无马尔可夫性时性能损失较小。
 \end{itemize}
 %------------------------------------------------
-\paragraph{恒温策略：$ \forall(s, a), \pi(a|s) > 0 $}
+\paragraph{恒温策略：$ \forall(s, a), \quad \pi(a|s) > 0 $}
 \begin{enumerate}
 \item 试探性出发（ES）：为采样部分无法正常获得的$ (s, a) $，可设定所有$ (s, a) $都有概率作为起始。满足充分探索的理论要求，但实际中很难实现。
 \item $ \epsilon $-greedy策略。
@@ -466,7 +462,7 @@ $ N(s) $是$ s $的访问次数，$ N(s) \to \infty, \hat{q}(s, a) \to q_{\pi}(s
 %------------------------------------------------
 \begin{myalgorithm}[MC-On-policy（first visit）]
 \State 参数：$ \epsilon > 0 $
-\State 初始化：$ \forall s \in S, a \in A(s) $，任意初始化$ q(s, a) \in R $，初始化$ Returns(s, a) $为空列表，$ \epsilon $-greedy初始化$ \pi $
+\State 初始化：$ \forall s \in S, \quad a \in A(s) $，任意初始化$ q(s, a) \in R $，初始化$ Returns(s, a) $为空列表，$ \epsilon $-greedy初始化$ \pi $
 \Loop
 \State 根据$ \pi $生成一幕序列$ S_0, A_0, R_1, S_1, A_1, R_2, \dots, S_{T - 1}, A_{T - 1}, R_T $
 \State $ G \gets 0 $
@@ -506,7 +502,7 @@ C_{n + 1} &\doteq C_n + W_{n + 1}
 其中，$ W_i $是随机权重，$ C_i $是其累加和。
 %------------------------------------------------
 \begin{myalgorithm}[MC-Off-policy（every visit）]
-\State 初始化：$ \forall s \in S, a \in A(s) $，任意初始化$ q(s, a) \in R, C(s, a) = 0 $，初始化$ \pi(s) = argmax_a q(s, a) $ \Comment{目标策略为贪婪策略}
+\State 初始化：$ \forall s \in S, \quad a \in A(s) $，任意初始化$ q(s, a) \in R, \quad C(s, a) = 0 $，初始化$ \pi(s) = argmax_a q(s, a) $ \Comment{目标策略为贪婪策略}
 \Loop
 \State 根据$ b $生成一幕序列$ S_0, A_0, R_1, S_1, A_1, R_2, \dots, S_{T - 1}, A_{T - 1}, R_T $ \Comment{行为策略为$ \epsilon $-greedy策略}
 \State $ G \gets 0, W \gets 1 $
@@ -587,7 +583,7 @@ $$ v_{t + 1}(s_t) = v_t(s_t) + \alpha_t(s_t)[\overbrace{\underbrace{r_{t + 1} + 
 \begin{myalgorithm}[TD($ 0 $)]
 \State 输入：待评估策略$ \pi $
 \State 参数：步长$ \alpha \in (0, 1] $
-\State 初始化：$ \forall s \in S^+ $，任意初始化$ v(s), v(\text{终止}) = 0 $
+\State 初始化：$ \forall s \in S^+ $，任意初始化$ v(s), \quad v(\text{终止}) = 0 $
 \For{每一幕}
 \State 初始化$ s $
 \While{$ s $不是终止状态}
@@ -609,8 +605,8 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma q
 \end{figure}
 %------------------------------------------------
 \begin{myalgorithm}[Sarsa（TD-on-policy）]
-\State 参数：步长$ \alpha \in (0, 1], \epsilon > 0 $
-\State 初始化：$ \forall s \in S^+ $，任意初始化$ q(s, a), q(\text{终止}, \cdot) = 0 $
+\State 参数：步长$ \alpha \in (0, 1], \quad \epsilon > 0 $
+\State 初始化：$ \forall s \in S^+ $，任意初始化$ q(s, a), \quad q(\text{终止}, \cdot) = 0 $
 \For{每一幕}
 \State 初始化$ s $
 \State 使用从$ q $得到的$ \epsilon $-greedy策略，在$ s $选择$ a $
@@ -618,7 +614,7 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma q
 \State 执行$ a $，观察$ r, s' $
 \State 使用从$ q $得到的$ \epsilon$-greedy策略，在$ s' $处选择$ a' $
 \State $ q(s, a) \gets q(s, a) + \alpha [R + \gamma q(s', a') - q(s, a)] $
-\State $ s \gets s', a \gets a' $
+\State $ s \gets s', \quad a \gets a' $
 \EndWhile
 \EndFor
 \end{myalgorithm}
@@ -654,7 +650,7 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma \
 %------------------------------------------------
 \begin{myalgorithm}[Q-learning（TD-off-policy）]
 \State 参数：步长$ \alpha \in (0, 1] $，探索率$ \epsilon > 0 $
-\State 初始化：$ \forall s \in S^+, a \in A(s) $，任意初始化$ q(s, a), q(\text{终止}, \cdot) = 0 $
+\State 初始化：$ \forall s \in S^+, \quad a \in A(s) $，任意初始化$ q(s, a), \quad q(\text{终止}, \cdot) = 0 $
 \For{每一幕}
 \State 初始化$ s $
 \While{$ s $不是终止状态}
@@ -677,7 +673,7 @@ $$ q_{1_{t + 1}}(s_t, a_t) = q_{1_t}(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} +
 %------------------------------------------------
 \begin{myalgorithm}[双Q-learning]
 \State 参数：步长$ \alpha \in (0, 1] $，探索率$ \epsilon > 0 $
-\State 初始化：$ \forall s \in S^+, a \in A(s) $，任意初始化$ q_1(s, a), q_2(s, a), q_1(\text{终止}, \cdot) = q_2(\text{终止}, \cdot) = 0 $
+\State 初始化：$ \forall s \in S^+, \quad a \in A(s) $，任意初始化$ q_1(s, a), q_2(s, a), q_1(\text{终止}, \cdot) = q_2(\text{终止}, \cdot) = 0 $
 \For{每一幕}
 \State 初始化$ s $
 \While{$ s $不是终止状态}
@@ -700,7 +696,7 @@ $$ G_{t:t + n} \doteq r_{t + 1} + \gamma r_{t + 2} + \dots + \gamma^{n - 1} r_{t
 %------------------------------------------------
 \begin{myalgorithm}[n-TD]
 \State 输入：待评估策略$ \pi $
-\State 参数：步长$ \alpha \in (0, 1], n \in N_+ $
+\State 参数：步长$ \alpha \in (0, 1], \quad n \in N_+ $
 \State 初始化：$ \forall s \in S $，任意初始化$ v(s) $
 \For{每一幕}
 \State 初始化$ s_0 $为非终止状态
@@ -861,7 +857,7 @@ MC & $ r_{t + 1} + \gamma r_{t + 2} + \cdots $ & 贝尔曼方程 \\
 \section{值函数近似}
 %------------------------------------------------
 \subsection[值函数近似]{值函数近似\tip{值函数近似与随机梯度下降}}
-$$ \hat{v}(s, \omega) \approx v_{\pi}(s), \omega \in R^d, d \ll |S| $$
+$$ \hat{v}(s, \omega) \approx v_{\pi}(s), \quad \omega \in R^d, \quad d \ll |S| $$
 %------------------------------------------------
 \paragraph{目标函数}
 $$ J(\omega) = E[(v_{\pi}(s) - \hat{v}(s, \omega))^2] $$
@@ -880,7 +876,7 @@ $$ \overline{VE}(\omega) \doteq \sum_{s \in S} \mu(s) [v_\pi(s) - \hat{v}(s, w)]
 \end{itemize}
 \item $ \hat{v}(s, \omega) $：
 \begin{itemize}
-\item 线性参数：$ \hat{v}(s, \omega) = \phi(s)^T \omega $，$ \phi(s) $为特征函数，有多项式基函数，傅里叶基函数$ \phi_i(s) = \cos(i \pi s), s \in [0, 1] $，径向基函数$ \phi_i(s) = e^{-\frac{||s - c_i||^2}{2\sigma_i^2}} $。表格法可视为特殊情况。
+\item 线性参数：$ \hat{v}(s, \omega) = \phi(s)^T \omega $，$ \phi(s) $为特征函数，有多项式基函数，傅里叶基函数$ \phi_i(s) = \cos(i \pi s), \quad s \in [0, 1] $，径向基函数$ \phi_i(s) = e^{-\frac{||s - c_i||^2}{2\sigma_i^2}} $。表格法可视为特殊情况。
 \item 非线性参数：如神经网络，网络参数为$ \omega $，输入$ s $，输出$ \hat{v}(s, \omega) $。还有决策树，模糊网络。
 \item 非参数方法：核函数（见\ref{sec:kernal}）、高斯回归等。
 \end{itemize}
@@ -927,7 +923,7 @@ $$ \omega_{k + 1} = \omega_k - \alpha_k \nabla_\omega J(\omega_k) $$
 \end{itemize}
 %------------------------------------------------
 \begin{myalgorithm}[半梯度TD($ 0 $)]
-\State 输入：待评估$ \pi $，可微函数$ \hat{v}:S^+ \times R^d \to R, \hat{v}(\text{终止}, \cdot) = 0 $
+\State 输入：待评估$ \pi $，可微函数$ \hat{v}:S^+ \times R^d \to R, \quad \hat{v}(\text{终止}, \cdot) = 0 $
 \State 参数：步长$ \alpha > 0 $
 \State 初始化：任意初始化$ w \in R^d $
 \Loop \Comment{对每一幕}
@@ -1013,7 +1009,7 @@ $$ \bar{v}_\pi = \sum_{s \in S} d(s) v_\pi(s) = E[v_\pi(S)] $$
 其中$ d(s) \geq 0 $为$ s $的权重，$ \sum_{s \in S} d(s) = 1 $，其可由以下方法选取：
 \begin{itemize}
 \item 均匀分布：$ d(s) = \frac{1}{|S|} $。
-\item 只关心$ s_0 $：$ d(s_0) = 1, d(s \neq s_0) = 0 $。
+\item 只关心$ s_0 $：$ d(s_0) = 1, \quad d(s \neq s_0) = 0 $。
 \item 平稳分布：$ d_{\pi}^T P_{\pi} = d_{\pi}^T $，根据访问频次赋予概率。
 \end{itemize}
 \item 平均单步奖励：
@@ -1353,7 +1349,7 @@ r_{11} p_1 + r_{21} p_2 \geq V_1 \\
 r_{12} p_1 + r_{22} p_2 \geq V_1 \\
 p_1 + p_2 = 1 \\
 \end{cases} \\
-&p_j \geq 0, j = 1, 2
+&p_j \geq 0, \quad j = 1, 2
 \end{align*}
 %------------------------------------------------
 \paragraph{非完美信息博弈的扩展式博弈}
@@ -1509,8 +1505,8 @@ $$ G_{t:t + n} \doteq r_{t + 1} + \gamma \sum_{a \neq a_{t + 1}} \pi(a|s_{t + 1}
 \end{figure}
 %------------------------------------------------
 \begin{myalgorithm}[n-树回溯]
-\State 参数：步长$ \alpha \in (0,1], n \in N_+ $
-\State 初始化：$ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $，初始化$ \pi $
+\State 参数：步长$ \alpha \in (0,1], \quad n \in N_+ $
+\State 初始化：$ \forall s \in S, \quad a \in A $，任意初始化$ Q(s, a) $，初始化$ \pi $
 \For{每一幕}
 \State 初始化$ s_0 $为非终止状态，根据它任意选取$ a_0 $
 \State $ T \gets \infty $
@@ -1555,7 +1551,7 @@ $$ G_{t:h} \doteq r_{t + 1} + \gamma [\sigma_{t + 1}\rho_{t + 1} + (1 - \sigma_{
 \begin{myalgorithm}[n-Q($ \sigma $)-off-policy]
 \State 输入：$ b(a|s) > 0 $
 \State 参数：步长$ \alpha \in (0,1] $，探索率$ \epsilon > 0 $，步数$ n \in N_+ $
-\State 初始化：$ \forall s \in S, a \in A $，任意初始化$ Q(s, a) $，初始化$ \pi $
+\State 初始化：$ \forall s \in S, \quad a \in A $，任意初始化$ Q(s, a) $，初始化$ \pi $
 \For{每一幕}
 \State 初始化$ s_0 $为非终止状态
 \State 根据$ b(\cdot|s_0) $选取$ a_0 $
@@ -1624,7 +1620,7 @@ $$ \text{模型} \Longrightarrow \text{模拟经验} \overset{\text{回溯}}{\Lo
 学习和规划由相同算法完成，真实经验用于学习，模拟经验用于规划。
 %------------------------------------------------
 \begin{myalgorithm}[Dyna-Q]
-\State 初始化：$ \forall s \in S, a \in A(S) $，初始化$ Q(s, a) $和$ Model(s, a) $
+\State 初始化：$ \forall s \in S, \quad a \in A(S) $，初始化$ Q(s, a) $和$ Model(s, a) $
 \Loop
 \State $ s \gets $ 当前（非终止）状态 \Comment{学习}
 \State 基于$ (s, Q) $选取$ a $，执行后观察$ r,s' $ \Comment{可用$ \epsilon $-greedy策略}
@@ -1645,7 +1641,7 @@ $$ \text{模型} \Longrightarrow \text{模拟经验} \overset{\text{回溯}}{\Lo
 集中更新有收益动作，而非均匀采样。关联前导动作和前导状态，在后续动作有收益时先更新前导动作价值，进行有效更新。按照价值改变多少对状态-动作对进行优先级排序，并由后至前反向传播出高影响序列。
 %------------------------------------------------
 \begin{myalgorithm}[确定性环境下的优先遍历]
-\State 初始化：$ \forall s \in S, a \in A(s) $，初始化$ Q(s, a), Model(s, a) $，初始化优先级队列$ PQueue = NULL $
+\State 初始化：$ \forall s \in S, \quad a \in A(s) $，初始化$ Q(s, a), Model(s, a) $，初始化优先级队列$ PQueue = NULL $
 \Loop
 \State $ s \gets $当前（非终止）状态
 \State 基于$ (s, q) $选取$ a $，执行后观察$ r s' $ \Comment{可用$ \epsilon $-greedy策略}
@@ -1704,7 +1700,7 @@ $$ k(s, s') = x(s)^T x(s') $$
 \begin{itemize}
 \item 性质
 \begin{itemize}
-\item 非负性：$ \forall A \in F, P(A) \geq 0 $。
+\item 非负性：$ \forall A \in F, \quad P(A) \geq 0 $。
 \item 规范性：$ P(\Omega) = 1 $。
 \item 可列可加性：若$ A_1, A_2, \dots $互斥，则$ P(\bigcup_{i = 1}^{\infty} A_i) = \sum_{i = 1}^{\infty} P(A_i) $。
 \end{itemize}
@@ -1719,12 +1715,12 @@ $$ k(s, s') = x(s)^T x(s') $$
 \begin{itemize}
 \item 离散型
 \begin{itemize}
-\item 概率质量函数(PMF)：$ P(X = x) = p(x), \sum_{x} p(x) = 1 $。
+\item 概率质量函数(PMF)：$ P(X = x) = p(x), \quad \sum_{x} p(x) = 1 $。
 \item 期望：$ E[X] = \sum_{x} x p(x) $。
 \end{itemize}
 \item 连续型
 \begin{itemize}
-\item 概率密度函数(PDF)：$ f(x) \geq 0, \int_{-\infty}^{\infty} f(x) dx = 1 $。
+\item 概率密度函数(PDF)：$ f(x) \geq 0, \quad \int_{-\infty}^{\infty} f(x) dx = 1 $。
 \item 期望：$ E[X] = \int_{-\infty}^{\infty} x f(x) dx $。
 \end{itemize}
 \item 方差：$ Var(X) = E[(X - E[X])^2] $。
@@ -1732,7 +1728,7 @@ $$ k(s, s') = x(s)^T x(s') $$
 %------------------------------------------------
 \paragraph{条件概率与独立性}
 \begin{itemize}
-\item 条件概率：$ P(B|A) = \frac{P(A \cap B)}{P(A)}, P(A) > 0 $。
+\item 条件概率：$ P(B|A) = \frac{P(A \cap B)}{P(A)}, \quad P(A) > 0 $。
 \item 全概率公式：$ P(B) = \sum_{A \subseteq F} P(B|A) P(A) $。
 \item 贝叶斯定理：$ P(A|B) = \frac{P(B|A) P(A)}{P(B)} $。
 \item 独立性： $ A, B $独立$ \Leftrightarrow $$ P(A \cap B) = P(A)P(B) $。

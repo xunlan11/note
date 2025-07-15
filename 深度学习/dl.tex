@@ -34,6 +34,8 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \end{multicols}
 \endgroup
 \newpage
+\listoftips
+\newpage
 %----------------------------------------------------------------------------------------
 \section{学术史}
 \begin{table}[H]
@@ -80,7 +82,7 @@ John Hopfield & $ x $ & $ \surd $ \\
 \paragraph{全连接神经网络（Full Connect Neural Network，FCNN）}
 \begin{itemize}
 \item 前向传播：计算结果并保存特征。
-\item 反向传播：链式规则。
+\item 反向传播\tip{神经网络反向传播}：链式规则。
 \end{itemize}
 %------------------------------------------------
 \subsection[卷积神经网络]{卷积神经网络（Convolutional Neural Networks，CNN）}
@@ -100,17 +102,17 @@ John Hopfield & $ x $ & $ \surd $ \\
 %------------------------------------------------
 \paragraph{卷积}~\\
 
-计算：
+计算\tip{卷积的计算}：
 \begin{itemize}
 \item 原图像：$ H_0 \times N_0 \times M_0 \times A_0 $。
 \item 卷积核：$ B \times F \times F \times A_0 $。
 \item 填充：$ P $。
 \item 步幅：$ S $。
-\item 新图像大小：$ N_1 = \frac{N_0 + 2P - F}{S} + 1, A_1 = B $。
+\item 新图像大小：$ N_1 = \frac{N_0 + 2P - F}{S} + 1, \quad A_1 = B $。
 \item 参数量：$ F \times F \times A_0 \times B $。
 \end{itemize}
 
-$ 1 \times 1 $卷积：
+$ 1 \times 1 $卷积\tip{$ 1 \times 1 $卷积的作用}：
 \begin{itemize}
 \item 维度变换（降/升维）：改变特征图的深度（通道数）。降维有助于降低模型复杂度和计算量，同时保持大部分有用信息。
 \item 非线性引入：在卷积后添加激活函数，可以在不改变空间尺寸的情况下引入非线性，使模型能够学习更复杂的模式。
@@ -138,7 +140,7 @@ $ 1 \times 1 $卷积：
 \item 平衡速度与精度：较大步幅可加速计算过程，但可能丢失细节信息；较小步幅能更精细地捕捉特征，但会增加计算成本。
 \end{itemize}
 %------------------------------------------------
-\subsubsection[实例]{实例}
+\subsubsection[实例]{实例\tip{卷积神经网络实例}}
 趋势：卷积核变小、层数增加，抛弃池化层、全连接层。
 \begin{itemize}
 \item LeNet：没有使用ReLU。
@@ -152,14 +154,14 @@ $ 1 \times 1 $卷积：
 %------------------------------------------------
 \subsection[问题]{问题}
 %------------------------------------------------
-\subsubsection[拟合]{拟合}
+\subsubsection[拟合]{拟合\tip{欠拟合与过拟合}}
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{1.5cm}|p{8.5cm}|p{2cm}|p{2cm}|}
 \hline
 问题 & 描述 & \multicolumn{2}{|c|}{训练收敛的网络} \\
 \cline{3-4}
- &  & 训练误差 & 测试误差 \\
+ & & 训练误差 & 测试误差 \\
 \hline
 欠拟合 & 未训练收敛 & 大 & 大 \\
 \hline
@@ -169,7 +171,7 @@ $ 1 \times 1 $卷积：
 \caption{欠拟合和过拟合}
 \end{table}
 %------------------------------------------------
-\subsubsection[梯度]{梯度}
+\subsubsection[梯度]{梯度\tip{梯度消失与梯度爆炸}}
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{0.5cm}|p{3.5cm}|p{3.5cm}|p{8cm}|}
@@ -186,10 +188,10 @@ $ 1 \times 1 $卷积：
 %------------------------------------------------
 \subsection[改进技术]{改进技术}
 %------------------------------------------------
-\subsubsection[损失函数]{损失函数}
+\subsubsection[损失函数]{损失函数\tip{交叉熵损失函数}}
 交叉熵损失函数更适用于分类问题，常用于衡量模型预测的概率分布与真实标记的概率分布之间的差异。
 %------------------------------------------------
-\subsubsection[激活函数]{激活函数}
+\subsubsection[激活函数]{激活函数\tip{激活函数}}
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{2cm}|p{5.5cm}|p{4.5cm}|p{4.5cm}|}
@@ -242,7 +244,7 @@ Maxout & $ y = \max(w_1^T x + b_1, w_2^T x + b_2) $ & & \\
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
-\subsubsection[优化器]{优化器}
+\subsubsection[优化器]{优化器\tip{优化器}}
 \begin{itemize}
 \item 二阶算法，牛顿法。
 \item SGD。
@@ -268,14 +270,14 @@ Kaiming均匀分布初始化（He初始化） & & 适用于使用ReLU及其变�
 \caption{权重初始化方法对比}
 \end{table}
 %------------------------------------------------
-\subsubsection[正则化]{正则化}
+\subsubsection[正则化]{正则化\tip{正则化}}
 \begin{itemize}
 \item 丢弃法（dropout）：在训练过程中随机失活部分神经元（输出$ 0 $），减少对训练集的过度依赖，阻止特征间自适应。可以防止过拟合，提高鲁棒性，间接减小计算量，实现模型平均效果。
 \item L1正则化：使权重稀疏。
 \item L2正则化：是权重分散。
 \end{itemize}
 %------------------------------------------------
-\subsubsection[训练策略/技巧]{训练策略/技巧}
+\subsubsection[训练策略和技巧]{训练策略和技巧\tip{训练策略和技巧}}
 \begin{itemize}
 \item 批量规范化（Batch Normalization）：归一化每个小批量样本为标准正态分布，减少梯度消失和梯度爆炸问题，加速收敛。提高模型稳定性、泛化能力，减少对其他正则化技术的依赖。
 \item 早停。
@@ -303,7 +305,7 @@ Kaiming均匀分布初始化（He初始化） & & 适用于使用ReLU及其变�
 \subsubsection[GRU]{GRU（Gated Recurrent Unit networks，门控循环单元网络）}
 重置门和更新门，没有细胞状态。相比于RNN，主要改善了梯度消失问题。
 %------------------------------------------------
-\subsubsection[LSTM]{LSTM（Long Short-Term Memory networks，长短期记忆网络）}
+\subsubsection[LSTM]{LSTM（Long Short-Term Memory networks，长短期记忆网络）\tip{LSTM}}
 遗忘门、输入门、输出门中使用Sigmoid激活函数。
 \begin{itemize}
 \item 细胞状态（Cell State，黄色）：贯穿模型，根据遗忘门和输入门的结果，在整个序列上进行少量的线性交互，使信息流动而不发生太多改变。
@@ -329,10 +331,10 @@ Kaiming均匀分布初始化（He初始化） & & 适用于使用ReLU及其变�
 \item 查询（Query）。
 \end{itemize}
 %------------------------------------------------
-\paragraph{多头自注意力（Multi-Head Self-Attention）}
+\paragraph{多头自注意力（Multi-Head Self-Attention）}\tip{多头自注意力}
 \begin{enumerate}
 \item 对于输入序列$ X = [x_1, x_2, \ldots, x_n] $，其维度是$ [n, d_{model}] $。
-\item 由权重矩阵$ W^Q,  W^K, W^V $生成查询、键、值，维度是$ [d_{model}, d_k], d_k < d_{model} $：
+\item 由权重矩阵$ W^Q,  W^K, W^V $生成查询、键、值，维度是$ [d_{model}, d_k], \quad d_k < d_{model} $：
 $$ Q = X W^Q, \quad K = X W^K, \quad V = X W^V $$
 \item 将其分割成$ h $个头，每个头维度为$ \frac{d_k}{h} $：
 $$ Q_{split} = Split(Q), \quad K_{split} = Split(K), \quad V_{split} = Split(V) $$
@@ -350,7 +352,7 @@ $$ MultiHead(Q, K, V) = Concat(head_1, head_2, \ldots, head_h)W^o $$
 \paragraph{掩蔽注意力（Masked Attention）}
 确保模型在生成序列时不依赖未来信息，只关注到它之前的元素。这能模拟真实场景，保证因果关系，维持逻辑性和连贯性，对于生成符合语法和语义规范的句子非常重要。
 %------------------------------------------------
-\subsection[生成式模型]{生成式模型}
+\subsection[生成式模型]{生成式模型\tip{生成式模型}}
 %------------------------------------------------
 \paragraph{步骤}
 \begin{itemize}

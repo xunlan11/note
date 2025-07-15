@@ -261,7 +261,7 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 \paragraph{位姿（Pose）}~\\
 
 位置空间求导得到速度空间：
-$$ \xi_I = \begin{bmatrix} x_I \\ y_I \\ \theta_I \end{bmatrix}, \xi_R = \begin{bmatrix} x_R \\ y_R \\ \theta_R \end{bmatrix} \overset{\text{求导}}{\Longrightarrow} \dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix}, \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} $$
+$$ \xi_I = \begin{bmatrix} x_I \\ y_I \\ \theta_I \end{bmatrix}, \quad \xi_R = \begin{bmatrix} x_R \\ y_R \\ \theta_R \end{bmatrix} \overset{\text{求导}}{\Longrightarrow} \dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix}, \quad \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} $$
 
 惯性系旋转得到机器人系：
 $$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
@@ -333,7 +333,7 @@ $$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
 \item 滚动约束
 $$ J_1(\beta_s) R(\theta) \dot{\xi}_I - J_2 \dot{\varphi} = 0 $$
 
-其中$ J_1(\beta_s) =  \begin{bmatrix} {J_{1f}}_{(N_f \times 3)} \\ {J_{1s}(\beta_s)}_{(N_s \times 3)} \end{bmatrix}, \varphi(t) = \begin{bmatrix} \varphi_f(t) \\ \varphi_s(t) \end{bmatrix}, J_2 = diag(r_1, \cdots, r_N)\text{为轮径对角阵} $。
+其中$ J_1(\beta_s) =  \begin{bmatrix} {J_{1f}}_{(N_f \times 3)} \\ {J_{1s}(\beta_s)}_{(N_s \times 3)} \end{bmatrix}, \quad \varphi(t) = \begin{bmatrix} \varphi_f(t) \\ \varphi_s(t) \end{bmatrix}, J_2 = diag(r_1, \cdots, r_N)\text{为轮径对角阵} $。
 \item 滑动约束
 $$ C_1(\beta_s) R(\theta) \dot{\xi}_I = 0 $$
 
@@ -341,7 +341,7 @@ $$ C_1(\beta_s) R(\theta) \dot{\xi}_I = 0 $$
 \end{itemize}
 %------------------------------------------------
 \subsubsection[例子]{例子}\label{sec:example1}
-以下以两轮差速机器人（见\ref{sec:two_wheel}）为例，$ \alpha = \frac{\pi}{2}, \beta = 0 $：
+以下以两轮差速机器人（见\ref{sec:two_wheel}）为例，$ \alpha = \frac{\pi}{2}, \quad \beta = 0 $：
 \begin{figure}[H]
 \centering
 \subfloat[瞬心法]{\includegraphics[width=.3\textwidth]{icr}} \quad
@@ -833,12 +833,12 @@ $$ (R, t) = argmin \sum_{i = 1}^{n}w_i ||(R p_i + t) - q_i||^2 $$
 为求极值，对目标式求关于$ t $的偏导：
 $$ 2t(\sum_{i = 1}^{n} w_i) + 2R(\sum_{i = 1}^{n} w_i p_i) - 2\sum_{i = 1}^{n} w_i q_i = 0 \overset{\text{等号两边同除}}{\underset{\sum_{i = 1}^{n} w_i}{\Longrightarrow}} t + R\frac{(\sum_{i = 1}^{n} w_i p_i)}{\sum_{i = 1}^{n} w_i} - \frac{\sum_{i = 1}^{n} w_i q_i}{\sum_{i = 1}^{n} w_i} = 0 $$
 
-取两个点云的加权中心点$ \hat{p} = \frac{\sum_{i = 1}^{n} w_i p_i}{\sum_{i = 1}^{n} w_i}, \hat{q} = \frac{\sum_{i = 1}^{n} w_i q_i}{\sum_{i = 1}^{n} w_i} $，上式可化简为$ t = \hat{q} - R \hat{p} $。该式描述了平移量和旋转阵的关系，将其带回目标式，得到单变量最值问题：
+取两个点云的加权中心点$ \hat{p} = \frac{\sum_{i = 1}^{n} w_i p_i}{\sum_{i = 1}^{n} w_i}, \quad \hat{q} = \frac{\sum_{i = 1}^{n} w_i q_i}{\sum_{i = 1}^{n} w_i} $，上式可化简为$ t = \hat{q} - R \hat{p} $。该式描述了平移量和旋转阵的关系，将其带回目标式，得到单变量最值问题：
 $$ R = argmin \sum_{i = 1}^{n}w_i ||R(p_i - \hat{p}) - (q_i - \hat{q})||^2 $$
 %------------------------------------------------
 \paragraph{去中心化}~\\
 
-取去中心化$ x_i = p_i - \hat{p}, y_i = q_i - \hat{q} $，目标式可化简为：
+取去中心化$ x_i = p_i - \hat{p}, \quad y_i = q_i - \hat{q} $，目标式可化简为：
 $$ R = argmin \sum_{i = 1}^{n}w_i ||R x_i - y_i||^2 $$
 
 将平方项变成矩阵相乘的形式：
@@ -952,7 +952,7 @@ $$ p(x|y) = \frac{p(y|x)p(x)}{p(y)} $$
 \subsubsection[卡尔曼滤波]{卡尔曼滤波}
 %------------------------------------------------
 \paragraph{推导}
-两次独立测量的概率均服从正态分布$ p_1(q) = N(\hat{q}_1, \sigma_1^2), p_2(q) = N(\hat{q}_2, \sigma_2^2) $，它们整合得到的最终分布也服从正态分布：
+两次独立测量的概率均服从正态分布$ p_1(q) = N(\hat{q}_1, \sigma_1^2), \quad p_2(q) = N(\hat{q}_2, \sigma_2^2) $，它们整合得到的最终分布也服从正态分布：
 \begin{align*}
 p(q) = p_1(q) \cdot p_2(q) &= \frac{1}{\sigma_1 \sqrt{2\pi}}exp(-\frac{(q - \hat{q}_1)^2}{2\sigma_1^2}) \cdot \frac{1}{\sigma_2 \sqrt{2\pi}}exp(-\frac{(q - \hat{q}_2)^2}{2\sigma_2^2}) \\
 &= \frac{1}{2\sigma_1 \sigma_2 \pi}\exp[-\frac{(q - \hat{q}_1)^2}{2\sigma_1^2} - \frac{(q - \hat{q}_2)^2}{2\sigma_2^2}] \\
@@ -968,7 +968,7 @@ p(q) = p_1(q) \cdot p_2(q) &= \frac{1}{\sigma_1 \sqrt{2\pi}}exp(-\frac{(q - \hat
 \sigma^2 = \frac{\sigma_1^2 \sigma_2^2}{\sigma_1^2 + \sigma_2^2} &\Leftrightarrow \sigma^2 = \underbrace{\sigma_1^2 - \frac{\sigma_1^4}{\sigma_1^2 + \sigma_2^2}}_{< \sigma_1^2, \sigma_2^2}
 \end{align*}
 
-以$ P = \sigma_1^2, Q = \sigma_2^2, R = \sigma^2 $，记卡尔曼增益$ K = P(P + Q)^{-1} $和创新协方差$ \Sigma_{IN} = P + Q $：
+以$ P = \sigma_1^2, \quad Q = \sigma_2^2, \quad R = \sigma^2 $，记卡尔曼增益$ K = P(P + Q)^{-1} $和创新协方差$ \Sigma_{IN} = P + Q $：
 \begin{align*}
 \hat{q} &= \hat{q}_1 + P(P + Q)^{-1}(\hat{q}_2 - \hat{q}_1) = \hat{q}_1 + K(\hat{q}_2 - \hat{q}_1) \\
 R &= P - P(P + Q)^{-1}P = P - K \cdot \Sigma_{IN} \cdot K^T
@@ -982,7 +982,7 @@ R &= P - P(P + Q)^{-1}P = P - K \cdot \Sigma_{IN} \cdot K^T
 
 其中$ x_k \in R^n $为系统状态，$ z_k \in R^m $为测量输出，$ u_k \in R^l $为系统输入。$ w_k \in R^n $为过程噪声（Process Noise）$ p(w) = N(0, Q) $，$ v_k \in R^m $为测量噪声（Measurement Noise，白噪声）$ p(v) = N(0, R) $。
 
-有先/后验估计$ \hat{x}_k^-, \hat{x}_k $，先/后验估计误差$ e_k^- = x_k - \hat{x}_k^-, e_k = x_k - \hat{x}_k $，先/后验估计方差$ P_k^- = E[e_k^- e_k^{-T}], P_k = E[e_k e_k^T] $。其中，优化目标是$ argmin_K P_k $。
+有先/后验估计$ \hat{x}_k^-, \hat{x}_k $，先/后验估计误差$ e_k^- = x_k - \hat{x}_k^-, \quad e_k = x_k - \hat{x}_k $，先/后验估计方差$ P_k^- = E[e_k^- e_k^{-T}], \quad P_k = E[e_k e_k^T] $。其中，优化目标是$ argmin_K P_k $。
 
 先后验转化关系为：
 $$ \hat{x}_k = \hat{x}_k^- + \underbrace{K}_{\text{卡尔曼增益}}\underbrace{(z_k - H \hat{x}_k^-)}_{\text{新息}} $$
@@ -1000,14 +1000,14 @@ P_k &= E[e_k e_k^T] = E[(x_k - \hat{x}_k)(x_k - \hat{x}_k)^T] (\text{误差展�
 令偏导为$ 0 $：
 $$ \frac{\partial P_k}{\partial K} = -2P_k^- H^T + 2K H P_k^- H^T + 2KR = 0 $$
 
-有$ K = P_k^- H^T(H P_k^- H^T + R)^{-1} $，在方差趋于$ 0 $时，$ \lim_{R \to 0} K = H^{-1}, \lim_{P_k^- \to 0} K = 0 $。
+有$ K = P_k^- H^T(H P_k^- H^T + R)^{-1} $，在方差趋于$ 0 $时，$ \lim_{R \to 0} K = H^{-1}, \quad \lim_{P_k^- \to 0} K = 0 $。
 %------------------------------------------------
 \paragraph{步骤}\tip{卡尔曼滤波迭代公式}
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[node distance=3cm, auto, thick]
+\begin{tikzpicture}[node distance=3cm,auto,thick]
 \usetikzlibrary{positioning}
-\node[draw, rectangle, minimum width=5cm, minimum height=2cm, text width=5cm](predict){
+\node[draw,rectangle,minimum width=5cm,minimum height=2cm,text width=5cm](predict){
 \centering 过程
 \vspace{-1em}
 \begin{align*}
@@ -1015,7 +1015,7 @@ $$ \frac{\partial P_k}{\partial K} = -2P_k^- H^T + 2K H P_k^- H^T + 2KR = 0 $$
 &P_k^- = AP_{k - 1}A^T + Q
 \end{align*}
 };
-\node[draw, rectangle, minimum width=5cm, minimum height=3cm, text width=5cm, right=of predict] (correct) {
+\node[draw,rectangle,minimum width=5cm,minimum height=3cm,text width=5cm,right=of predict] (correct) {
 \centering 测量
 \vspace{-1em}
 \begin{align*}
@@ -1024,7 +1024,7 @@ $$ \frac{\partial P_k}{\partial K} = -2P_k^- H^T + 2K H P_k^- H^T + 2KR = 0 $$
 &P_k = (I - K_k H)P_k^- < P_k^-, R
 \end{align*}
 };
-\node[draw, rectangle, minimum width=5cm, minimum height=2cm, text width=5cm, below=0.5cm of predict] (init) {
+\node[draw,rectangle,minimum width=5cm,minimum height=2cm,text width=5cm,below=0.5cm of predict] (init) {
 \centering 初始化
 \vspace{-1em}
 \begin{align*}
@@ -1032,9 +1032,9 @@ $$ \frac{\partial P_k}{\partial K} = -2P_k^- H^T + 2K H P_k^- H^T + 2KR = 0 $$
 &P_0 = \begin{bmatrix} v_{x0} & 0 \\ 0 & v_{y0} \end{bmatrix} 
 \end{align*}
 };
-\draw[->, line width=1pt] (predict) to[bend left=20] (correct);
-\draw[->, line width=1pt] (correct) to[bend left=20] (predict);
-\draw[->, line width=1pt] (init) to (predict);
+\draw[->,line width=1pt] (predict) to[bend left=20] (correct);
+\draw[->,line width=1pt] (correct) to[bend left=20] (predict);
+\draw[->,line width=1pt] (init) to (predict);
 \end{tikzpicture}
 \caption{卡尔曼滤波框图}
 \end{figure}
@@ -1203,7 +1203,7 @@ $$ p_{hit}(z_t|x_t, m) = \begin{cases} N(z_t^{k*}, \sigma_{hit}^2) & 0 \leq z_t^
 \item 计算
 \begin{itemize}
 \item 概率$ p $：$ p(m_i|s_n) = 1 - E_r E_\alpha $，其中：
-$$ E_r = 1 - k_r(\frac{2(\rho_i - r_i)}{\Delta r})^2, E_\alpha = 1 - k_\alpha(\frac{2(\theta_i - \alpha)}{\Delta \alpha})^2 $$
+$$ E_r = 1 - k_r(\frac{2(\rho_i - r_i)}{\Delta r})^2, \quad E_\alpha = 1 - k_\alpha(\frac{2(\theta_i - \alpha)}{\Delta \alpha})^2 $$
 \item 几率$ l $：$ \text{几率} = \frac{\text{概率}}{1 - \text{概率}} $，几率与概率非线性正相关。
 
 利用贝叶斯公式得到每次测量（相互独立）的递推关系：
@@ -1273,7 +1273,7 @@ x_t = \begin{bmatrix} X_R \\ M_1 \\ M_2 \\ \vdots \\ M_n \end{bmatrix}_{(3 + 2n)
 %------------------------------------------------
 \paragraph{步骤}
 \begin{enumerate}
-\item 初始状态：$ X_0 = 0, \Sigma_0 = diag(\infty) $。
+\item 初始状态：$ X_0 = 0, \quad \Sigma_0 = diag(\infty) $。
 \item 基于运动模型进行状态估计：地图保持不变，与其相关项为$ 0 $。
 \begin{align*}
 &\bar{X}_t = f'(X_{t - 1}, U_{t - 1}) \\
@@ -1293,17 +1293,10 @@ $$ X_t = \bar{X}_t + K_t[\hat{Z}_t - h(\bar{X}_t)], \quad \Sigma_t = [I - K_t H_
 $$ \begin{pmatrix} \bar{x}_m \\ \bar{y}_m \end{pmatrix} = \begin{pmatrix} \bar{x}_R \\ \bar{y}_R \end{pmatrix} + \begin{pmatrix} r_t^i \cos(\phi_t^i + \bar{\theta}_R) \\ r_t^i \sin(\phi_t^i + \bar{\theta}_R) \end{pmatrix} $$
 
 转换得到：
-$$
-\delta = \begin{pmatrix} \delta_x \\ \delta_y \end{pmatrix} = \begin{pmatrix} \bar{x}_m - \bar{x}_R \\ \bar{y}_m - \bar{y}_R \end{pmatrix}, \quad
-q = \delta^T \delta, \quad
-\hat{z}_t^i = \begin{pmatrix} \sqrt{q} \\ atan2(\delta_y, \delta_x) - \bar{\theta}_R \end{pmatrix}
-$$
+$$ \delta = \begin{pmatrix} \delta_x \\ \delta_y \end{pmatrix} = \begin{pmatrix} \bar{x}_m - \bar{x}_R \\ \bar{y}_m - \bar{y}_R \end{pmatrix}, \quad q = \delta^T \delta, \quad \hat{z}_t^i = \begin{pmatrix} \sqrt{q} \\ atan2(\delta_y, \delta_x) - \bar{\theta}_R \end{pmatrix} $$
 
 有单路标雅可比：
-\begin{align*}
-H_i^j &= {}^{low} H_i^j F_{x, j} \\
-&= \frac{1}{q} \begin{pmatrix} -\sqrt{q}\delta_x & -\sqrt{q}\delta_y & 0 & \sqrt{q}\delta_x & \sqrt{q}\delta_y \\ \delta_y & -\delta_x & -q & -\delta_y & \delta_x \end{pmatrix} \begin{pmatrix} I_3 & 0_{2j - 2} & 0 & 0_{2N - 2j} \\ 0 & 0 & I_2 & 0 \\ \end{pmatrix}
-\end{align*}
+\begin{align*} H_i^j &= {}^{low} H_i^j F_{x, j} \\ &= \frac{1}{q} \begin{pmatrix} -\sqrt{q}\delta_x & -\sqrt{q}\delta_y & 0 & \sqrt{q}\delta_x & \sqrt{q}\delta_y \\ \delta_y & -\delta_x & -q & -\delta_y & \delta_x \end{pmatrix} \begin{pmatrix} I_3 & 0_{2j - 2} & 0 & 0_{2N - 2j} \\ 0 & 0 & I_2 & 0 \\ \end{pmatrix} \end{align*}
 \item 在地图中加入新的路标：新路标与原路标不独立，因为前者由不确定度决定，而不确定度有后者计算。
 \begin{align*}
 &m_{n + 1} = f(X_R, Z_{n + 1}) \\
@@ -1419,22 +1412,14 @@ w^{[k]} &= \frac{\overbrace{p(x_{1:t}^{[k]}|z_{1:t}, u_{1:t})}^{\text{目标分�
 $$ c = \sum_{i = 1}^{4} f_i^2 = (x_0 - 0)^2 + (x_1 - x_0 - 1)^2 + [x_2 - x_1 -(-0.8)]^2 +(x_2 - x_0 - 0)^2 $$
 
 求偏导得到方程组，解得：
-$$
-\begin{bmatrix}  x_0 \\ x_1 \\ x_2 \end{bmatrix} 
-= \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1} \begin{bmatrix} -1.0 \\ 1.8 \\ -0.8 \end{bmatrix} 
-= \begin{bmatrix} 0 \\ 0.93 \\ 0.07 \end{bmatrix}
-$$
+$$ \begin{bmatrix}  x_0 \\ x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1} \begin{bmatrix} -1.0 \\ 1.8 \\ -0.8 \end{bmatrix} = \begin{bmatrix} 0 \\ 0.93 \\ 0.07 \end{bmatrix} $$
 \item SLAM：起点在$ 0 $处，观测到前方$ 2m $处有路标。向前移动到路标前$ 0.8m $处，编码器测得位移$ 1m $。
 
 有目标函数：
 $$ c = \sum_{i = 1}^{4} f_i^2 = (x_0 - 0)^2 + (x_1 - x_0 - 1)^2 + (l_0 - x_0 - 2)^2 +(l_0 - x_1 - 0.8)^2 $$
 
 求偏导得到方程组，解得：
-$$
-\begin{bmatrix}  x_0 \\ x_1 \\ l_0 \end{bmatrix} 
-= \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1} \begin{bmatrix} -3.0 \\ 0.2 \\ 2.8 \end{bmatrix} 
-= \begin{bmatrix} 0 \\ 1.07 \\ 1.93 \end{bmatrix}
-$$
+$$ \begin{bmatrix}  x_0 \\ x_1 \\ l_0 \end{bmatrix} = \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1} \begin{bmatrix} -3.0 \\ 0.2 \\ 2.8 \end{bmatrix} = \begin{bmatrix} 0 \\ 1.07 \\ 1.93 \end{bmatrix} $$
 \end{enumerate}
 %------------------------------------------------
 \paragraph{优化求解}
@@ -1600,7 +1585,7 @@ A* & 路径评价由移动开销$ G(n) $和启发函数代价估计$ H(n) $组�
 %------------------------------------------------
 \subsection[奇异值分解]{奇异值分解（Singular Value Decomposition，SVD）}\label{sec:svd}
 根据$ A_{m \times n} $计算$ (A^T A)_{n \times n} $ 和$ (A A^T)_{m \times m} $两个对称矩阵，求二者的特征值和特征向量：
-$$ A^T A v_i = \lambda_i v_i, i = 1, 2, \dots, n \quad A A^T u_i = \mu_i u_i, i = 1, 2, \dots, m $$
+$$ A^T A v_i = \lambda_i v_i, i = 1, 2, \dots, n \quad A A^T u_i = \mu_i u_i, \quad i = 1, 2, \dots, m $$
 
 其中，$ \lambda_i, \mu_i $是特征值，$ v_i, u_i $是其对应的特征向量，分别组成$ V = [v_1, v_2, \dots, v_n] $和$ U = [u_1, u_2, \dots, u_m] $。
 
