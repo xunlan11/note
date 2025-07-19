@@ -20,7 +20,7 @@
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 20} DPG}{38}{myalgorithm.20}%
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 21} DDPG}{39}{myalgorithm.21}%
 \contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 22} MADDPG}{42}{myalgorithm.22}%
-\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 23} n-树回溯}{46}{myalgorithm.23}%
-\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 24} n-Q($ \sigma $)-off-policy}{47}{myalgorithm.24}%
-\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 25} Dyna-Q}{49}{myalgorithm.25}%
-\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 26} 确定性环境下的优先遍历}{50}{myalgorithm.26}%
+\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 23} n-树回溯}{45}{myalgorithm.23}%
+\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 24} n-Q($ \sigma $)-off-policy}{46}{myalgorithm.24}%
+\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 25} Dyna-Q}{48}{myalgorithm.25}%
+\contentsline {algorithms}{\makebox [4em][l]{算法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces 26} 确定性环境下的优先遍历}{48}{myalgorithm.26}%

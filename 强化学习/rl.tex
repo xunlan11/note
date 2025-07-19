@@ -48,8 +48,8 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \paragraph{特征}
 智能体与环境交互（采样），在不断尝试中学习策略，使收益最大化。
 \begin{itemize}
-\item 试错探索：不会获知应采取的行动，通过尝试获得。
-\item 延迟收益：一个动作的收益可能无法短期体现，而是长期浮现。
+\item \textcolor{red}{试错探索}：不会获知应采取的行动，通过尝试获得。
+\item \textcolor{red}{延迟收益}：一个动作的收益可能无法短期体现，而是长期浮现。
 \item 环境不确定性：当前动作不但会影响当前收益，还会影响后续环境，进而影响后续收益。
 \item 影响未知性：无法预测动作的影响，需与环境频繁交互。
 \item 试探（开拓动作空间）与开发/贪心（根据经验获得收益）折中。
@@ -102,19 +102,19 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 %----------------------------------------------------------------------------------------
 \section{马尔可夫决策过程与贝尔曼方程}
 %----------------------------------------------------------------------------------------
-\subsection[马尔可夫决策过程]{马尔可夫决策过程（Markov decision process，MDP）}
+\subsection[马尔可夫决策过程]{\textcolor{red}{马尔可夫决策过程}（Markov decision process，\textcolor{red}{MDP}）}
 %------------------------------------------------
-\subsubsection[要素]{要素\tip{马尔可夫决策过程及其元素}}
+\subsubsection[要素]{\textcolor{red}{要素}\tip{马尔可夫决策过程及其元素}}
 \begin{itemize}
-\item 状态（state，$ S $）：强化学习依赖的概念。
-\item 动作（action，$ A $）：智能体做出的选择。
-\item 奖励/收益（reward，$ R $）：短期学习目标，环境给予智能体的信号。
-\item 策略（policy，$ \pi $）：特定状态下动作空间上的分布$ \pi(a|s) = p[A_t = a|S_t = s] $。
-\item 回报（return，$ G $）：长期收益累计，可能含有折扣，需综合评估。
-\item 折扣因子（$ \gamma \in [0, 1] $）。
-\item 值函数（value function，$ V $）：对$ s $预估的期望回报。
-\item 行为/动作值函数（$ Q $）：对$ (s, a) $预估的期望回报。
-\item 环境模型（$ P $）：模拟环境的反应，可以是确定性转移，也可以是随机性转移。
+\item \textcolor{red}{状态（state，$ S $）}：强化学习依赖的概念。
+\item \textcolor{red}{动作（action，$ A $）}：智能体做出的选择。
+\item \textcolor{red}{奖励/收益（reward，$ R $）}：短期学习目标，环境给予智能体的信号。
+\item \textcolor{red}{策略（policy，$ \pi $）}：特定状态下\textcolor{red}{动作空间}上的分布$ \pi(a|s) = p[A_t = a|S_t = s] $。
+\item \textcolor{red}{回报（return，$ G $）}：长期收益累计，可能含有折扣，需综合评估。
+\item \textcolor{red}{折扣因子（$ \gamma \in [0, 1] $）}。
+\item \textcolor{red}{值函数（value function，$ V $）}：对$ s $预估的期望回报。
+\item \textcolor{red}{行为/动作值函数（$ Q $）}：对$ (s, a) $预估的期望回报。
+\item \textcolor{red}{环境模型（$ P $）}：模拟环境的反应，可以是确定性转移，也可以是随机性转移。
 \item 大写字母表示空间，小写字母表示个体，上标$ ^* $表示最优。
 \end{itemize}
 
@@ -128,17 +128,17 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 %------------------------------------------------
 \paragraph{序贯交互轨迹（trajectory）$ \tau =  s_0, a_0, r_1, s_1, a_1, r_2, \dots $}~\\
 
-随机变量$ s', r $服从离散概率分布$ p(s', r|s, a) \doteq \Pr\{S_t = s', R_t = r|S_{t - 1} = s, A_{t - 1} = a\} $
-$$ \sum_{s' \in S}\sum_{r \in R} p(s', r|s, a) = 1 $$
+随机变量$ s', r $服从\textcolor{red}{离散概率分布$ p(s', r|s, a) \doteq \Pr\{S_t = s', R_t = r|S_{t - 1} = s, A_{t - 1} = a\} $}，
+$$ \textcolor{red}{\sum_{s' \in S}\sum_{r \in R} p(s', r|s, a) = 1} $$
 %------------------------------------------------
-\paragraph{马尔可夫性}\tip{马尔可夫性}
+\paragraph{\textcolor{red}{马尔可夫性}}\tip{马尔可夫性}
 即“无记忆性”，未来状态仅依赖当前状态，而独立于过去状态。
-$$ P(S_{t + 1}|S_t, S_{t - 1}, \dots, S_0) = P(S_{t + 1}|S_t) $$
+$$ \textcolor{red}{P(S_{t + 1}|S_t, S_{t - 1}, \dots, S_0) = P(S_{t + 1}|S_t)} $$
 %------------------------------------------------
 \paragraph{状态转移与期望收益}~\\
 
 由$ s $和$ a $转移到$ s' $的概率，包括$ s' $下各可能收益情况：
-$$ p(s'|s, a) \doteq \Pr\{S_t = s'|S_{t - 1} = s, A_{t - 1} = a\} = \sum_{r \in R} p(s', r|s, a) $$
+$$ \textcolor{red}{p(s'|s, a) \doteq \Pr\{S_t = s'|S_{t - 1} = s, A_{t - 1} = a\} = \sum_{r \in R} p(s', r|s, a)} $$
 
 若不指定$ a $，由$ s $转移到$ s' $的概率为：
 $$ p(s'|s) = \sum_{a \in A} [p(s'|s, a)p(a|s)] $$
@@ -158,13 +158,13 @@ r(s, a, s') &\doteq E[R_t|S_{t - 1} = s, A_{t - 1} = a, S_t = s'] = \sum_{r \in 
 %------------------------------------------------
 \subsubsection[策略]{策略}
 %------------------------------------------------
-\paragraph{贪婪策略}
-$ \pi(a|s) = argmax_a q(a) $。
+\paragraph{\textcolor{red}{贪婪策略}}
+$ \textcolor{red}{\pi(a|s) = argmax_a q(a)} $。
 %------------------------------------------------
 \paragraph{探索-利用平衡策略}
 \begin{itemize}
-\item $ \epsilon $-greedy策略\tip{$ \epsilon $-greedy策略}：靠近贪心策略，但所有动作概率不为零，需注意多最优情况。
-$$ a = \begin{cases} argmax_a q(a) &, p = 1 - \epsilon \\ random(a) &, p = \epsilon \end{cases} \Rightarrow \pi(a|s) = \begin{cases} 1 - \epsilon + \frac{\epsilon}{|A|} &, a = argmax_a q(a) \\ \frac{\epsilon}{|A|} &, otherwise \end{cases} $$
+\item \textcolor{red}{$ \epsilon $-greedy策略}\tip{$ \epsilon $-greedy策略}：靠近贪心策略，但所有动作概率不为零，需注意多最优情况。
+$$ a = \begin{cases} argmax_a q(a) &, p = 1 - \epsilon \\ random(a) &, p = \epsilon \end{cases} \Rightarrow \textcolor{red}{\pi(a|s) = \begin{cases} 1 - \epsilon + \frac{\epsilon}{|A|} &, a = argmax_a q(a) \\ \frac{\epsilon}{|A|} &, otherwise \end{cases}} $$
 \item UCB（Upper Confidence Bound）策略：可以自适应平衡探索与利用。
 $$ \pi(a|s) = Q(a) + c\sqrt{\frac{\ln N}{n(a)}} $$
 
@@ -177,7 +177,7 @@ $$ \pi(a|s) = \frac{e^{Q(a)/\tau}}{\sum_{a'} e^{Q(a)/\tau}} $$
 $$ \pi = \mu + \epsilon, \quad \epsilon \sim N(0, \sigma^2) $$
 \end{itemize}
 %------------------------------------------------
-\paragraph{增量式更新}
+\paragraph{\textcolor{red}{增量式更新}}
 将轮次更新转化为递推关系，减少空间复杂度，如运行均值：
 $$ Q_{n + 1} = \frac{1}{n}\sum_{i = 1}^n R_i = Q_n + \frac{1}{n}(R_n - Q_n) $$
 %------------------------------------------------
@@ -190,23 +190,23 @@ $$ G_t = R_{t + 1} + R_{t + 2} + \cdots + R_T = \sum_{k = t + 1}^T R_k $$
 \item 持续性任务（continuing tasks）：没有终止状态，持续进行，不能自然分幕。其中$ \gamma $越大代表长期收益越重要。
 $$ G_t = R_{t + 1} + \gamma R_{t + 2} + \gamma^2 R_{t + 3} + \cdots = \sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1} \leq \frac{1}{1 - \gamma} \max R_t $$
 \item 统一表示：有限项终止后，状态持续转移回自己，相当于无限项。
-$$ G_t \doteq \sum_{k = t + 1}^{T} \gamma^{k - t - 1} R_k $$
+$$ \textcolor{red}{G_t \doteq \sum_{k = t + 1}^{T} \gamma^{k - t - 1} R_k} $$
 \end{itemize}
 %------------------------------------------------
 \subsubsection[值函数]{值函数\tip{值函数与回溯算法}}
 %------------------------------------------------
 \paragraph{值函数}
 \begin{align*}
-v_\pi(s) &\doteq E_\pi[G_t|S_t = s] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s], \quad s \in S \\
+\textcolor{red}{v_\pi(s)} &\textcolor{red}{\doteq E_\pi[G_t|S_t = s]} = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s], \quad s \in S \\
 &= E_\pi[\underbrace{R_{t + 1}}_{\text{即时奖励}} + \gamma \underbrace{G_{t + 1}}_{\text{未来奖励}}|S_t = s] (\text{后继递推关系}) \\
 &= \sum_{a \in A} \pi(a|s)[\sum_{r \in R} p(r|s, a)r + \gamma \sum_{s' \in S} p(s'|s, a)v_{\pi}(s')] (\text{分项全概率展开}) \\
-&= \underbrace{\sum_{a \in A} \pi(a|s) \overbrace{\sum_{s' \in S, r \in R} p(s', r|s, a)[r + \gamma v_\pi(s')]}^{q_{\pi}(s, a)}}_{\text{贝尔曼方程}} (\text{值函数递推关系})
+&\textcolor{red}{= \underbrace{\sum_{a \in A} \pi(a|s) \overbrace{\sum_{s' \in S, r \in R} p(s', r|s, a)[r + \gamma v_\pi(s')]}^{q_{\pi}(s, a)}}_{\text{贝尔曼方程}} (\text{值函数递推关系})}
 \end{align*}
 %------------------------------------------------
 \paragraph{行为值函数}
 \begin{align*} 
-q_\pi(s, a) &\doteq E_\pi[G_t|S_t = s, A_t = a] = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s, A_t = a], \quad s \in S \\
-&= \sum_{r \in R} p(r|s, a)r + \gamma \sum_{s' \in S} P(s'|s, a) \underbrace{\sum_{a' \in A} \pi(a'|s')q_{\pi}(s'|a')}_{v_{\pi}(s')} (\text{行为值函数递推关系})
+\textcolor{red}{q_\pi(s, a)} &\textcolor{red}{\doteq E_\pi[G_t|S_t = s, A_t = a]} = E_\pi[\sum_{k = 0}^{\infty} \gamma^k R_{t + k + 1}|S_t = s, A_t = a], \quad s \in S \\
+&\textcolor{red}{= \sum_{r \in R} p(r|s, a)r + \gamma \sum_{s' \in S} P(s'|s, a) \underbrace{\sum_{a' \in A} \pi(a'|s')q_{\pi}(s'|a')}_{v_{\pi}(s')} (\text{行为值函数递推关系})}
 \end{align*}
 %------------------------------------------------
 \paragraph{回溯算法}
@@ -228,34 +228,34 @@ $$ v^*(s) \doteq \max_{\pi} v_{\pi}(s) \quad q^*(s, a) \doteq \max_{\pi} q_{\pi}
 \subsubsection[构建要点]{构建要点}
 \begin{itemize}
 \item 确定$ s,a,r $（不含先验知识，不为达到子目标而舍弃最终目标）。
-\item 奖励与惩罚是相对的，可以全奖励或全惩罚。
+\item \textcolor{red}{奖励与惩罚是相对的}，可以全奖励或全惩罚。
 \item 同一问题可能有多层次MDP。
 \item 利用先验知识，人为排除愚蠢动作。
 \end{itemize}
 %----------------------------------------------------------------------------------------
 \subsection[贝尔曼方程]{贝尔曼方程\tip{贝尔曼方程}}
 %------------------------------------------------
-\subsubsection[贝尔曼方程]{贝尔曼方程}
+\subsubsection[贝尔曼方程]{\textcolor{red}{贝尔曼方程}}
 \begin{align*}
 v_\pi(s) &= \sum_{a \in A} \pi(a|s) \sum_{s' \in S, r \in R} P(s', r|s, a)[r + \gamma v_\pi(s')] \\
 &= \underbrace{\sum_{a \in A} \pi(a|s) \sum_{r \in R} P(r|s, a)}_{r_{\pi}(s)} + \gamma \sum_{s' \in S} [\underbrace{\sum_{a \in A} \pi(a|s)P(s'|s, a)}_{p_{\pi}(s'|s)}]v_\pi(s')
 \end{align*}
 %------------------------------------------------
-\subsubsection[贝尔曼最优方程]{贝尔曼最优方程}
+\subsubsection[贝尔曼最优方程]{\textcolor{red}{贝尔曼最优方程}}
 方程组中方程数为$ |S| $，如$ P $已知，并具有马尔可夫性，则可求解。但一般难以满足，且计算资源有限，求近似解。
 %------------------------------------------------
 \paragraph{形式}
 \begin{itemize}
 \item $ s \rightarrow a^* $：
 \begin{align*}
-v^*(s) &= \max_{a \in A} q_{\pi^*}(s, a) (\text{凸组合最优}) \\
+\textcolor{red}{v^*(s)} &= \max_{a \in A} q_{\pi^*}(s, a) (\text{凸组合最优}) \\
 &= \max_{\pi} \sum_{s \in S} \pi(a|s)q(s,a) (\text{元素}) \\
-&= \max_{\pi} (r_\pi + \gamma P_\pi v) (\text{矩阵})
+&\textcolor{red}{= \max_{\pi} (r_\pi + \gamma P_\pi v)} (\text{矩阵})
 \end{align*}
 \item $ (s, a) \rightarrow (s, a)_{next}^* $：
 \begin{align*}
-q^*(s, a) &= E[R_{t + 1} + \gamma \max_{a'} q^*(S_{t + 1}, a')|S_t = s, A_t = a] \\
-&= \sum_{s' \in S, r \in R} p(s', r|s, a)[r + \gamma \max_{a'} q^*(s', a')]
+\textcolor{red}{q^*(s, a)} &= E[R_{t + 1} + \gamma \max_{a'} q^*(S_{t + 1}, a')|S_t = s, A_t = a] \\
+&\textcolor{red}{= \sum_{s' \in S, r \in R} p(s', r|s, a)[r + \gamma \max_{a'} q^*(s', a')]}
 \end{align*}
 \end{itemize}
 
@@ -266,9 +266,9 @@ q^*(s, a) &= E[R_{t + 1} + \gamma \max_{a'} q^*(S_{t + 1}, a')|S_t = s, A_t = a]
 \end{figure}
 %------------------------------------------------
 \paragraph{求解}\label{sec:Scalability Mapping back}
-伸缩映射性，见\ref{sec:Scalability Mapping}。
+\textcolor{red}{伸缩映射性}，见\ref{sec:Scalability Mapping}。
 %------------------------------------------------
-\paragraph{贪婪最优策略}
+\paragraph{\textcolor{red}{贪婪最优策略}}
 $ \pi^* $中，$ v(s) = E[r(a^*|s)] $，可使用贪心策略求取（证明：凸组合最大值为最大一项）。
 %----------------------------------------------------------------------------------------
 \section[动态规划]{动态规划（Dynamic Programming，DP）：期望更新}
@@ -285,20 +285,20 @@ $ \pi^* $中，$ v(s) = E[r(a^*|s)] $，可使用贪心策略求取（证明：�
 \end{figure}
 \end{minipage}
 %------------------------------------------------
-\subsection[策略迭代]{策略迭代\tip{策略迭代}}
-反复进行PE和PI，得到改进的$ v_{\pi} $估计和$ \pi $，最后收敛到最优。
+\subsection[策略迭代]{\textcolor{red}{策略迭代}\tip{策略迭代}}
+\textcolor{red}{反复进行PE和PI}，得到改进的$ v_{\pi} $估计和$ \pi $，最后收敛到最优。
 $$ \pi_0 \xrightarrow{PE} v_{\pi_0} \xrightarrow{PI} \pi_1 \xrightarrow{PE} v_{\pi_1} \xrightarrow{PI} \pi_2 \xrightarrow{PE} v_{\pi_2} \xrightarrow{PI} \dots $$
 \begin{itemize}
-\item 策略评估（PE）：
+\item \textcolor{red}{策略评估}（PE）：
 \begin{itemize}
 \item 直接求解：$ v_{\pi_k} = (I - \gamma P_{\pi_k})^{-1} r_{\pi_k} $。
 \item 迭代求解：
-$$ \underbrace{v_{\pi_k}^{(j + 1)} = r_{\pi_k} + \gamma P_{\pi_k} v_{\pi_k}^{(j)} = \sum_{a \in A} \pi(a|s)[r(a|s) + \gamma \sum_{s' \in S}P(s'|s, a)v_{\pi}(s')], \quad j = 0, 1, 2, \dots}_{\text{期望更新：基于后继可能状态的期望值}} $$
-\item 截断策略评估：不需要完全收敛。
+$$ \underbrace{\textcolor{red}{v_{\pi_k}^{(j + 1)} = r_{\pi_k} + \gamma P_{\pi_k} v_{\pi_k}^{(j)} = \sum_{a \in A} \pi(a|s)[r(a|s) + \gamma \sum_{s' \in S}P(s'|s, a)v_{\pi}(s')], \quad j = 0, 1, 2, \dots}}_{\text{期望更新：基于后继可能状态的期望值}} $$
+\item \textcolor{red}{截断策略评估}：不需要完全收敛。
 \end{itemize}
-\item 策略改进（PI）\tip{策略改进证明}：
+\item \textcolor{red}{策略改进}（PI）\tip{策略改进证明}：
 \begin{itemize}
-\item 理论：$ v_{\pi}(s) \leq q_{\pi}[s, \pi'(s)] $则$ \pi' $不次于$ \pi $
+\item 理论：\textcolor{red}{$ v_{\pi}(s) \leq q_{\pi}[s, \pi'(s)] $则$ \pi' $不次于$ \pi $}。
 \begin{align*}
 v_{\pi}(s) &\leq q_{\pi}[s, \pi'(s)] \\
 &= E_{\pi'} [R_{t + 1} + \gamma v_{\pi}(S_{t + 1})|S_t = s, A_t = \pi'(s)] \\
@@ -306,7 +306,7 @@ v_{\pi}(s) &\leq q_{\pi}[s, \pi'(s)] \\
 &\leq E_{\pi'} [R_{t + 1} + \gamma R_{t + 2} + \gamma^2 R_{t + 3} + \dots|S_t = s] \\
 &= v_{\pi'}(s)
 \end{align*}
-\item 贪心策略：$ \pi_{k + 1} = argmax_{\pi}(r_{\pi} + \gamma P_{\pi} v_{\pi_k}) $
+\item 贪心策略：$ \pi_{k + 1} = argmax_{\pi}(r_{\pi} + \gamma P_{\pi} v_{\pi_k}) $。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
@@ -335,13 +335,13 @@ v_{\pi}(s) &\leq q_{\pi}[s, \pi'(s)] \\
 \Until{策略稳定}
 \end{myalgorithm}
 %------------------------------------------------
-\subsection[值迭代]{值迭代\tip{值迭代}}
-结合极端PE和PI，只进行一次PE遍历，对每个状态更新一次。
+\subsection[值迭代]{\textcolor{red}{值迭代}\tip{值迭代}}
+\textcolor{red}{结合极端PE和PI}，只进行一次PE遍历，对每个状态更新一次。
 $$ u_0 \xrightarrow{PU} \pi'_1 \xrightarrow{VU} u_1 \xrightarrow{PU} \pi'_2 \xrightarrow{VU} u_2 \xrightarrow{PU} \dots $$
 $$ v_{k + 1} = \max_{\pi} r_{\pi} + \gamma P_{\pi}v_k, \quad k = 1, 2, 3, \dots $$
 \begin{itemize}
-\item 策略更新（PU）：$ \pi_{k + 1} = argmax_{\pi}(r_{\pi} + \gamma P_{\pi}v_k) $，贪婪选取。
-\item 价值更新（VU）：$ v_{k + 1} = r_{\pi_{k + 1}} + \gamma P_{\pi_{k + 1}}v_k = \max_{a \in A} q_k $。
+\item \textcolor{red}{策略更新}（PU）：\textcolor{red}{$ \pi_{k + 1} = argmax_{\pi}(r_{\pi} + \gamma P_{\pi}v_k) $}，贪婪选取。
+\item \textcolor{red}{价值更新}（VU）：\textcolor{red}{$ v_{k + 1} = r_{\pi_{k + 1}} + \gamma P_{\pi_{k + 1}}v_k = \max_{a \in A} q_k $}。
 \end{itemize}
 %------------------------------------------------
 \begin{myalgorithm}[值迭代]
@@ -362,6 +362,7 @@ $$ v_{k + 1} = \max_{\pi} r_{\pi} + \gamma P_{\pi}v_k, \quad k = 1, 2, 3, \dots 
 \end{myalgorithm}
 %------------------------------------------------
 \paragraph{例题}\tip{值函数计算例题}
+{\footnotesize
 出界、碰到障碍$ -1 $分，抵达目标$ 1 $分，折扣率$ \lambda $。
 \begin{figure}[H]
 \centering 
@@ -400,6 +401,7 @@ $ s_4 $ & $ 1 + \gamma 1 $ & $ 1 + \gamma 1 $ & $ 1 + \gamma 1 $ & $ 0 + \gamma 
 \end{tabular}
 \caption{值函数计算例题}
 \end{table}
+}
 %------------------------------------------------
 \subsection[对比与补充]{对比与补充}\label{sec:DP back}
 \begin{table}[H]
@@ -429,11 +431,11 @@ $ s_4 $ & $ 1 + \gamma 1 $ & $ 1 + \gamma 1 $ & $ 1 + \gamma 1 $ & $ 0 + \gamma 
 %------------------------------------------------
 \subsection[概念]{概念\tip{蒙特卡洛}}
 %------------------------------------------------
-\paragraph{估计$ q(s, a) $}
+\paragraph{\textcolor{red}{估计$ q(s, a) $}}
 \begin{itemize}
 \item 访问（visit）：给定的一幕中，指定状态的一次出现。
-\item 首次访问（first visit）：$ \hat{q}(s, a) = \frac{G_{11}(s, a) + G_{21}(s, a) + \dots}{N(s, a)} $。
-\item 每次访问（every visit）：$ \hat{q}(s, a) = \frac{G_{11}(s, a) + G_{12}(s, a) + \dots + G_{21}(s, a) + \dots}{N(s, a)} $。
+\item \textcolor{red}{首次访问}（first visit）：$ \hat{q}(s, a) = \frac{G_{11}(s, a) + G_{21}(s, a) + \dots}{N(s, a)} $。
+\item \textcolor{red}{每次访问}（every visit）：$ \hat{q}(s, a) = \frac{G_{11}(s, a) + G_{12}(s, a) + \dots + G_{21}(s, a) + \dots}{N(s, a)} $。
 \end{itemize}
 
 $ N(s) $是$ s $的访问次数，$ N(s) \to \infty, \quad \hat{q}(s, a) \to q_{\pi}(s, a) $。靠近目标的状态比远离目标的状态更早具有非零值，幕长应足够长，无需无限长。
@@ -446,19 +448,19 @@ $ N(s) $是$ s $的访问次数，$ N(s) \to \infty, \quad \hat{q}(s, a) \to q_{
 %------------------------------------------------
 \paragraph{优势}
 \begin{itemize}
-\item 不需要$ P $，可从实际经历和模拟经历中学习。
-\item 对每个状态的估计是独立的，可聚焦于状态子集，无需考虑其他状态，效率高。
+\item \textcolor{red}{不需要$ P $}，可从实际经历和模拟经历中学习。
+\item 对每个\textcolor{red}{状态的估计是独立的}，可聚焦于状态子集，无需考虑其他状态，效率高。
 \item 无马尔可夫性时性能损失较小。
 \end{itemize}
 %------------------------------------------------
 \paragraph{恒温策略：$ \forall(s, a), \quad \pi(a|s) > 0 $}
 \begin{enumerate}
-\item 试探性出发（ES）：为采样部分无法正常获得的$ (s, a) $，可设定所有$ (s, a) $都有概率作为起始。满足充分探索的理论要求，但实际中很难实现。
+\item \textcolor{red}{试探性出发（ES）}：为采样部分无法正常获得的$ (s, a) $，可设定所有$ (s, a) $都有概率作为起始。满足充分探索的理论要求，但实际中很难实现。
 \item $ \epsilon $-greedy策略。
 \end{enumerate}
 %------------------------------------------------
-\subsection[MC-on-policy]{MC-on-policy（同轨）\tip{MC-on-policy}}
-采样并改进相同策略。
+\subsection[MC-on-policy]{\textcolor{red}{MC-on-policy（同轨）}\tip{MC-on-policy}}
+\textcolor{red}{采样并改进相同策略}。
 %------------------------------------------------
 \begin{myalgorithm}[MC-On-policy（first visit）]
 \State 参数：$ \epsilon > 0 $
@@ -478,14 +480,14 @@ $ N(s) $是$ s $的访问次数，$ N(s) \to \infty, \quad \hat{q}(s, a) \to q_{
 \EndLoop
 \end{myalgorithm}
 %------------------------------------------------
-\subsection[MC-off-policy]{MC-off-policy（离轨）\tip{MC-off-policy}}
-采样行为策略（Behavior Policy）$ b $（保证对所有可能动作的采样），改进目标策略（Target Policy）$ \pi $。
+\subsection[MC-off-policy]{\textcolor{red}{MC-off-policy（离轨）}\tip{MC-off-policy}}
+\textcolor{red}{采样行为策略（Behavior Policy）$ b $}（保证对所有可能动作的采样），\textcolor{red}{改进目标策略（Target Policy）$ \pi $}。
 %------------------------------------------------
-\paragraph{重要度采样（importance sampling）}\tip{重要度采样}\label{sec:MC back}
+\paragraph{\textcolor{red}{重要度采样}（importance sampling）}\tip{重要度采样}\label{sec:MC back}
 off-policy的数学基础。
 
 计算$ G $时，对轨迹在$ \pi $和$ b $中出现的相对概率进行加权：
-$$ \rho_{t:T - 1} = \Pi_{k = t}^{T - 1} \frac{\pi(A_k|S_k)}{b(A_k|S_k)} (\text{约去相同的转移概率}) $$
+$$ \textcolor{red}{\rho_{t:T - 1} = \Pi_{k = t}^{T - 1} \frac{\pi(A_k|S_k)}{b(A_k|S_k)}} (\text{约去相同的转移概率}) $$
 \begin{itemize}
 \item 普通重要度采样：$ v(s) \doteq \frac{\sum_{t \in \tau(s)} \rho_{t:T(t) - 1}G_t}{|\tau(s)|} $，无偏但无界。
 \item 加权重要度采样：$ v(s) \doteq \frac{\sum_{t \in \tau(s)} \rho_{t:T(t) - 1}G_t}{\sum_{t \in \tau(s)} \rho_{t:T(t) - 1}} $，有偏但偏差值渐近收敛。
@@ -526,7 +528,7 @@ C_{n + 1} &\doteq C_n + W_{n + 1}
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-策略类型 & 稳定性 & 收敛性 \\
+策略类型 & \textcolor{red}{稳定性} & \textcolor{red}{收敛性} \\
 \hline
 on-policy & 较稳定 & 需要更多样本 \\
 \hline
@@ -537,11 +539,11 @@ off-policy & 不太稳定（行为策略） & 更快找到优质解 \\
 \end{table}
 %----------------------------------------------------------------------------------------
 \section[时序差分]{时序差分（Temporal Difference，TD）：采样更新}
-TD可直接从与环境的互动中获取信息，不需要$ P $，同时运用自举思想，可基于已得到的其他状态估计来更新当前$ v(s) $，相当于结合了DP和MC的优点。
+直接从与环境的互动中获取信息，不需要$ P $，同时运用自举思想，可基于已得到的其他状态估计来更新当前$ v(s) $，相当于结合了DP和MC的优点。
 %------------------------------------------------
 \subsection[TD($ 0 $)]{TD($ 0 $)\tip{时序差分}}
 更新公式为：
-$$ v_{t + 1}(s_t) = v_t(s_t) + \alpha_t(s_t)[\overbrace{\underbrace{r_{t + 1} + \gamma v_t(s_{t + 1})}_{\text{TD目标（target）}} - v_t(s_t)}^{\text{新息：TD误差（error）}\delta_t}] $$
+$$ \textcolor{red}{v_{t + 1}(s_t) = v_t(s_t) + \alpha_t(s_t)[\overbrace{\underbrace{r_{t + 1} + \gamma v_t(s_{t + 1})}_{\text{TD目标（target）}} - v_t(s_t)}^{\text{新息：TD误差（error）}\delta_t}]} $$
 
 \begin{itemize}
 \item $ G_t $是$ v_{\pi}(s_t) $的无偏估计；$ r_{t + 1} + \gamma v_{\pi}(s_{t + 1}) $是无偏估计，而$ r_{t + 1} + \gamma v(s_{t + 1}) $是有偏估计。
@@ -556,8 +558,8 @@ $$ v_{t + 1}(s_t) = v_t(s_t) + \alpha_t(s_t)[\overbrace{\underbrace{r_{t + 1} + 
 %------------------------------------------------
 \paragraph{优势}
 \begin{itemize}
-\item 不需要$ P, R $。
-\item 只评估当前动作，与后续动作无关。
+\item \textcolor{red}{不需要$ P, R $}。
+\item 只评估当前动作，\textcolor{red}{与后续动作无关}。
 \end{itemize}
 
 \begin{table}[H]
@@ -566,15 +568,15 @@ $$ v_{t + 1}(s_t) = v_t(s_t) + \alpha_t(s_t)[\overbrace{\underbrace{r_{t + 1} + 
 \hline
 & TD & MC \\
 \hline
-更新速度 & 快，只需等到下一时刻 & 慢，须等到幕尾确定增量 \\
+更新速度 & \textcolor{red}{快}，只需等到下一时刻 & 慢，须等到幕尾确定增量 \\
 \hline
-更新对象 & TD目标 & $ G_t $ \\
+\textcolor{red}{更新对象} & TD目标 & $ G_t $ \\
 \hline
 估计方差 & 小，仅依赖一个随机动作 & 大，依赖很多随机动作 \\
 \hline
 收敛速度 & 快，找出完全符合马尔可夫过程的最大似然估计参数，收敛到确定性等价估计 & 慢，只在有限方面最优，找出最小化训练集均方误差的估计 \\
 \hline
-自举性 & 有，需初始猜测 & 无，无需初始猜测 \\
+\textcolor{red}{自举性} & 有，需初始猜测 & 无，无需初始猜测 \\
 \hline
 \end{tabular}
 \caption{TD与MC比较}
@@ -594,9 +596,9 @@ $$ v_{t + 1}(s_t) = v_t(s_t) + \alpha_t(s_t)[\overbrace{\underbrace{r_{t + 1} + 
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------
-\subsection[Sarsa]{Sarsa（State-Action-Reward-State-Action）（TD-on-policy）\tip{Sarsa（TD-on-policy）}}
+\subsection[Sarsa]{\textcolor{red}{Sarsa}（State-Action-Reward-State-Action）（\textcolor{red}{TD-on-policy}）\tip{Sarsa（TD-on-policy）}}
 更新单元为$ (s_t, a_t, r_t, s_{t + 1}, a_{t + 1}) $，是TD算法的$ q(s, a) $版本：
-$$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma q_t(s_{t + 1}, a_{t + 1}) - q_t(s_t, a_t)] $$
+$$ \textcolor{red}{q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma q_t(s_{t + 1}, a_{t + 1}) - q_t(s_t, a_t)]} $$
 
 \begin{figure}[H]
 \centering
@@ -619,7 +621,7 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma q
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------
-\paragraph{期望Sarsa}
+\paragraph{\textcolor{red}{期望Sarsa}}
 $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} + \gamma[\underbrace{\sum_a \pi(a|s_{t + 1}) q_t(s_{t + 1}, a)}_{v_t(s_{t + 1})}] - q_t(s_t, a_t)\} $$
 
 \noindent
@@ -638,9 +640,9 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} + \gamma[
 \end{figure}
 \end{minipage}
 %------------------------------------------------
-\subsection[Q-learning]{Q-learning（TD-off-policy）\tip{Q-learning（TD-off-policy）}}
+\subsection[Q-learning]{\textcolor{red}{Q-learning}（\textcolor{red}{TD-off-policy}）\tip{Q-learning（TD-off-policy）}}
 求解行为值贝尔曼最优方程，直接逼近$ q^*(s, a) $，更新单元为$ (s_t, a_t, r_t, s_{t + 1}) $。
-$$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma \max_a q_t(s_{t + 1}, a) - q_t(s_t, a_t)] $$
+$$ \textcolor{red}{q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma \max_a q_t(s_{t + 1}, a) - q_t(s_t, a_t)]} $$
 
 \begin{figure}[H]
 \centering
@@ -661,7 +663,7 @@ $$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[r_{t + 1} + \gamma \
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------
-\paragraph{双Q-learning}
+\paragraph{\textcolor{red}{双Q-learning}}
 划分样本，学习两个独立的估计$ q_1(a), q_2(a) $，确定$ a^* = argmax_a q_1(a) $，再计算$ q_2(a*) = q_2(argmax_a q_1(a)) $，后者是无偏的（可以交换再来一次）。需双倍内存，但计算量没有增大。
 $$ q_{1_{t + 1}}(s_t, a_t) = q_{1_t}(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} + \gamma q_{2_t}[s_{t + 1}, argmax_a q_{1_t}(s_{t + 1}, a)] - q_{1_t}(s_t, a_t)\} $$
 
@@ -688,11 +690,11 @@ $$ q_{1_{t + 1}}(s_t, a_t) = q_{1_t}(s_t, a_t) + \alpha_t(s_t, a_t)\{r_{t + 1} +
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------
-\subsection[n-TD]{n-TD\tip{n-TD}}
+\subsection[n-TD]{\textcolor{red}{n-TD}\tip{n-TD}}
 n-TD作为MC和TD的一般推广，在两种极端间找到了平衡。n-TD在$ n $步后进行更新，截断得到$ n $步回报。
-$$ G_{t:t + n} \doteq r_{t + 1} + \gamma r_{t + 2} + \dots + \gamma^{n - 1} r_{t + n} + \gamma^n v_{t + n - 1}(s_{t + n}) $$
+$$ \textcolor{red}{G_{t:t + n} \doteq r_{t + 1} + \gamma r_{t + 2} + \dots + \gamma^{n - 1} r_{t + n} + \gamma^n v_{t + n - 1}(s_{t + n})} $$
 
-其中$ v_{t + n}(s_t) \doteq v_{t + n - 1}(s_t) + \alpha[G_{t:t + n} - v_{t + n - 1}(s_t)] $。
+其中$ \textcolor{red}{v_{t + n}(s_t) \doteq v_{t + n - 1}(s_t) + \alpha[G_{t:t + n} - v_{t + n - 1}(s_t)]} $。
 %------------------------------------------------
 \begin{myalgorithm}[n-TD]
 \State 输入：待评估策略$ \pi $
@@ -808,7 +810,7 @@ $$ \rho_{t:h} \doteq \prod_{k = t}^{\min(h, T - 1)} \frac{\pi(a_k|s_k)}{b(a_k|s_
 \end{myalgorithm}
 %------------------------------------------------
 \subsection[对比与补充]{对比与补充}\label{sec:TD back}
-Sarsa较为保守，在存在风险的任务中，会避开低回报动作； Q-learning较为乐观，更倾向于探索并找到最优解。在存在陷阱的任务中，Sarsa会比Q-learning取得更好的结果。
+\textcolor{red}{Sarsa较为保守}，在存在风险的任务中，会避开低回报动作；\textcolor{red}{Q-learning较为乐观}，更倾向于探索并找到最优解。在存在陷阱的任务中，Sarsa会比Q-learning取得更好的结果。
 
 补充见\ref{sec:TD}。
 %----------------------------------------------------------------------------------------
@@ -832,7 +834,7 @@ Sarsa较为保守，在存在风险的任务中，会避开低回报动作； Q-
 \end{figure}
 
 统一格式：
-$$ q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[\bar{q}_t - q_t(s_t, a_t)] $$
+$$ \textcolor{red}{q_{t + 1}(s_t, a_t) = q_t(s_t, a_t) + \alpha_t(s_t, a_t)[\bar{q}_t - q_t(s_t, a_t)]} $$
 
 \begin{table}[H]
 \centering
@@ -857,10 +859,10 @@ MC & $ r_{t + 1} + \gamma r_{t + 2} + \cdots $ & 贝尔曼方程 \\
 \section{值函数近似}
 %------------------------------------------------
 \subsection[值函数近似]{值函数近似\tip{值函数近似与随机梯度下降}}
-$$ \hat{v}(s, \omega) \approx v_{\pi}(s), \quad \omega \in R^d, \quad d \ll |S| $$
+$$ \textcolor{red}{\hat{v}(s, \omega) \approx v_{\pi}(s)}, \quad \omega \in R^d, \quad d \ll |S| $$
 %------------------------------------------------
 \paragraph{目标函数}
-$$ J(\omega) = E[(v_{\pi}(s) - \hat{v}(s, \omega))^2] $$
+$$ \textcolor{red}{J(\omega) = E[(v_{\pi}(s) - \hat{v}(s, \omega))^2]} $$
 
 对$ s $按重要程度加权：
 $$ \overline{VE}(\omega) \doteq \sum_{s \in S} \mu(s) [v_\pi(s) - \hat{v}(s, w)]^2 $$
@@ -869,15 +871,15 @@ $$ \overline{VE}(\omega) \doteq \sum_{s \in S} \mu(s) [v_\pi(s) - \hat{v}(s, w)]
 %------------------------------------------------
 \paragraph{近似方法}\label{sec:kernal back}
 \begin{itemize}
-\item $ v_\pi(s_t) $：
+\item $ \textcolor{red}{v_\pi(s_t)} $：
 \begin{itemize}
 \item MC：$ G_t $。
 \item TD：$ r_{t + 1} + \gamma \hat{v}(s_{t + 1}, \omega_t) $。
 \end{itemize}
-\item $ \hat{v}(s, \omega) $：
+\item $ \textcolor{red}{\hat{v}(s, \omega)} $：
 \begin{itemize}
 \item 线性参数：$ \hat{v}(s, \omega) = \phi(s)^T \omega $，$ \phi(s) $为特征函数，有多项式基函数，傅里叶基函数$ \phi_i(s) = \cos(i \pi s), \quad s \in [0, 1] $，径向基函数$ \phi_i(s) = e^{-\frac{||s - c_i||^2}{2\sigma_i^2}} $。表格法可视为特殊情况。
-\item 非线性参数：如神经网络，网络参数为$ \omega $，输入$ s $，输出$ \hat{v}(s, \omega) $。还有决策树，模糊网络。
+\item 非线性参数：如\textcolor{red}{神经网络}，网络参数为$ \omega $，输入$ s $，输出$ \hat{v}(s, \omega) $。还有决策树，模糊网络。
 \item 非参数方法：核函数（见\ref{sec:kernal}）、高斯回归等。
 \end{itemize}
 \end{itemize}
@@ -888,8 +890,8 @@ $$ \overline{VE}(\omega) \doteq \sum_{s \in S} \mu(s) [v_\pi(s) - \hat{v}(s, w)]
 \item 曲线拟合：用少量参数储存状态，阶数越高越近似。
 \end{itemize}
 %------------------------------------------------
-\subsection[随机梯度下降]{随机梯度下降（SGD）}
-$$ \omega_{k + 1} = \omega_k - \alpha_k \nabla_\omega J(\omega_k) $$
+\subsection[随机梯度下降]{\textcolor{red}{随机梯度下降（SGD）}}
+$$ \textcolor{red}{\omega_{k + 1} = \omega_k - \alpha_k \nabla_\omega J(\omega_k)} $$
 
 其中，
 \begin{align*}
@@ -899,9 +901,9 @@ $$ \omega_{k + 1} = \omega_k - \alpha_k \nabla_\omega J(\omega_k) $$
 &= -2E[(v_\pi(s) - \hat{v}(s, \omega)) \nabla_\omega \hat{v}(s, \omega)]
 \end{align*}
 
-因此$ \omega_{k + 1} = \omega_k + \underbrace{\alpha}_{\text{步长}}[v_\pi(s_k) - \hat{v}(s_k, \omega_k)]\nabla_\omega \hat{v}(s_k, \omega_k) $。
+因此$ \textcolor{red}{\omega_{k + 1} = \omega_k + \underbrace{\alpha}_{\text{步长}}[v_\pi(s_k) - \hat{v}(s_k, \omega_k)]\nabla_\omega \hat{v}(s_k, \omega_k)} $。
 
-梯度方向增长最快，负梯度方向下降最快。
+梯度方向增长最快，\textcolor{red}{负梯度方向下降最快}。
 %------------------------------------------------
 \begin{myalgorithm}[梯度MC]
 \State 输入：待评估$ \pi $，可微函数$ \hat{v}: S \times R^d \to R $
@@ -915,7 +917,7 @@ $$ \omega_{k + 1} = \omega_k - \alpha_k \nabla_\omega J(\omega_k) $$
 \EndLoop
 \end{myalgorithm}
 %------------------------------------------------
-\paragraph{半梯度下降}
+\paragraph{\textcolor{red}{半梯度下降}}
 只考虑$ w_t $对估计值的影响，而忽略对目标的影响。在使用自举目标时，目标本身依赖$ w $，有偏。
 \begin{itemize}
 \item 优势：学习速度较快，支持持续在线学习，无需等待幕结束。
@@ -942,15 +944,15 @@ $$ \omega_{k + 1} = \omega_k - \alpha_k \nabla_\omega J(\omega_k) $$
 最小二乘法减少迭代计算量：
 $$ LS(\omega) = \sum_{t = 1}^{T}[q_t^{\pi} - \hat{q}(s_t, a, \omega)]^2 = E_D[(q^{\pi} - \hat{q}(s, a, \omega))^2] $$
 %------------------------------------------------
-\subsection[DQN]{DQN（Deep Q-Network，深度Q网络）\tip{DQN}}
+\subsection[DQN]{\textcolor{red}{DQN}（Deep Q-Network，深度Q网络）\tip{DQN}}
 利用卷积神经网络作为非线性函数近似器，最小化损失函数，适用于高维空间：
-$$ J(\omega) = E\{[R + \gamma \max_{a' \in A(S')} \hat{q}(S', a', \underbrace{\omega^-}_{\text{目标网络}}) - \hat{q}(S, A, \underbrace{\omega}_{\text{主网络}})]^2\} $$
+$$ \textcolor{red}{J(\omega) = E\{[R + \gamma \max_{a' \in A(S')} \hat{q}(S', a', \underbrace{\omega^-}_{\text{目标网络}}) - \hat{q}(S, A, \underbrace{\omega}_{\text{主网络}})]^2\}} $$
 
 目标网络：$ y^{DQN} = r + \gamma \max_{a'} Q(s', a', \theta^-) $。
 %------------------------------------------------
 \paragraph{主要技术}
 \begin{itemize}
-\item 两个网络：主网络$ \hat{q}(s, a, \omega) $和目标网络$ \hat{q}(s', a', \omega^-) $，后者参数阶段性从前者同步。
+\item 两个网络：\textcolor{red}{主网络$ \hat{q}(s, a, \omega) $和目标网络$ \hat{q}(s', a', \omega^-) $}，后者参数阶段性从前者同步。
 \begin{itemize}
 \item 防止过拟合：
 \begin{itemize}
@@ -964,7 +966,7 @@ $$ J(\omega) = E\{[R + \gamma \max_{a' \in A(S')} \hat{q}(S', a', \underbrace{\o
 \item 硬更新：直接复制。
 \end{itemize}
 \end{itemize}
-\item 经验回放（Experience Replay）：存储经验到固定大小的回放缓冲区，训练时从中随机选取。可以打乱样本相关性，提升训练稳定性。可改进为优先经验回放。
+\item \textcolor{red}{经验回放}（Experience Replay）：存储经验到固定大小的回放缓冲区，训练时从中随机选取。可以打乱样本相关性，提升训练稳定性。可改进为优先经验回放。
 \item 帧堆叠：将图像作为神经网络输入时，堆叠多帧图像作为输入，并跳帧选取放入帧，增加时间信息。
 \item 奖励裁剪（Reward Clipping）：将奖励限制在特定范围内（甚至使用符号函数），避免大奖励幅度波动，提升训练稳定性，适用于奖励范围差异大的环境。
 \end{itemize}
@@ -988,7 +990,7 @@ $$ J(\omega) = E\{[R + \gamma \max_{a' \in A(S')} \hat{q}(S', a', \underbrace{\o
 \EndLoop
 \end{myalgorithm}
 %------------------------------------------------
-\paragraph{double-DQN}
+\paragraph{\textcolor{red}{double-DQN}}
 两个值函数逼近网络，一个选择动作，一个评估值函数。
 
 目标网络：$ y^{DDQN} = r + \gamma Q[s', argmax_a Q(s_{t + 1}, a, \theta_t), \theta^-] $。
@@ -999,7 +1001,7 @@ $$ J(\omega) = E\{[R + \gamma \max_{a' \in A(S')} \hat{q}(S', a', \underbrace{\o
 将策略参数化，搜索策略空间，是同轨策略：
 $$ \pi(a|s, \theta) = \pi_{\theta}(a|s) $$
 %------------------------------------------------
-\paragraph{梯度与梯度上升（推导1）}~\\
+\paragraph{\textcolor{red}{梯度}与梯度上升（推导1）}~\\
 
 学习$ \theta $使指标最大。
 \begin{itemize}
@@ -1038,7 +1040,7 @@ $$ \bar{v}_\pi = \sum_{s \in S} d(s) v_\pi(s) = E[v_\pi(S)] $$
 \item $ \beta_t $与$ q_{\pi}(s_t, a_t) $正相关，与$ \pi(a_t|s_t, \theta_t) $负相关，倾向选择高价值动作，探索低概率动作。
 \end{itemize}
 %------------------------------------------------
-\paragraph{似然率策略梯度（推导2）}~\\
+\paragraph{似然率策略\textcolor{red}{梯度}（推导2）}~\\
 
 记$ R(\tau) = \sum_{t = 0}^H R(s_t, u_t) $，目标函数为$ U(\theta) = \sum_{\tau} P(\tau, \theta) R(\tau) $，其梯度为：
 \begin{align*}
@@ -1063,9 +1065,9 @@ $$ \nabla_\theta U(\theta) \approx \hat{g} = \frac{1}{m} \sum_{i = 1}^m \nabla_\
 \item 在状态空间大时，存储和泛化能力强。
 \end{itemize}
 %------------------------------------------------·
-\subsection[REINFORCE]{REINFORCE（MC-policy gradient）\tip{REINFORCE}}
+\subsection[REINFORCE]{\textcolor{red}{REINFORCE}（MC-policy gradient）\tip{REINFORCE}}
 用MC估计$ q_\pi(s, a) $，使用与$ \theta $无关的$ G_t $代替$ q_\pi(s_t, a_t) $：
-$$ \theta_{t + 1} \doteq \theta_t + \alpha G_t \nabla_{\theta} ln \pi (a_t|s_t, \theta_t) $$
+$$ \textcolor{red}{\theta_{t + 1} \doteq \theta_t + \alpha G_t \nabla_{\theta} ln \pi (a_t|s_t, \theta_t)} $$
 %------------------------------------------------·
 \begin{myalgorithm}[REINFORCE]
 \State 输入：可微分的$ \pi(a|s, \theta) $
@@ -1083,11 +1085,11 @@ $$ \theta_{t + 1} \doteq \theta_t + \alpha G_t \nabla_{\theta} ln \pi (a_t|s_t, 
 \section{Actor-Critic方法}
 %------------------------------------------------·
 \subsection[概念]{概念\tip{Actor-Critic方法}}
-结合策略梯度和价值方法，一般是on-policy方法。
-$$ \theta_{t + 1} = \theta_t + \alpha \nabla_\theta \ln \pi(a_t|s_t, \theta_t) q_\pi(s_t, a_t) $$
+结合策略梯度和价值方法，\textcolor{red}{一般是on-policy方法}。
+$$ \textcolor{red}{\theta_{t + 1} = \theta_t + \alpha \nabla_\theta \ln \pi(a_t|s_t, \theta_t) q_\pi(s_t, a_t)} $$
 \begin{itemize}
-\item 演员（Actor）：策略更新，用于采取行动，对应算法更新。
-\item 评论家（Critic）：策略评估或价值估计，用于评判策略，对应估计$ q_{\pi}(s, a) $，采用TD方法。
+\item \textcolor{red}{演员}（Actor）：\textcolor{red}{策略更新}，用于采取行动，对应算法更新。
+\item \textcolor{red}{评论家}（Critic）：策略评估或价值估计，用于\textcolor{red}{评判策略}，对应估计$ q_{\pi}(s, a) $，采用TD方法。
 \end{itemize}
 %------------------------------------------------·
 \begin{myalgorithm}[QAC]
@@ -1102,13 +1104,13 @@ $$ \theta_{t + 1} = \theta_t + \alpha \nabla_\theta \ln \pi(a_t|s_t, \theta_t) q
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------·
-\subsection[基线优势]{基线优势\tip{基线优势}}
-基本的Actor-Critic方法有较大方差，引入基线降低。
+\subsection[基线优势]{\textcolor{red}{基线优势}\tip{基线优势}}
+基本的Actor-Critic方法有较大\textcolor{red}{方差}，引入基线降低。
 %------------------------------------------------
 \paragraph{基线}
 $$ \nabla_\theta J(\theta) = E_{S \sim \eta, A \sim \pi}\{\nabla_\theta \ln \pi(A|S, \theta_t) [q_\pi(S, A) - b(S)]\} $$
 
-策略梯度期望不变：
+\textcolor{red}{策略梯度期望不变}：
 \begin{align*}
 E_{S \sim \eta, A \sim \pi}[\nabla_\theta \ln \pi(A|S, \theta_t)b(S)] &= \sum_{s \in S} \eta(s) \sum_{a \in A} \nabla_\theta \pi(a|s, \theta_t)b(s) \\
 &= \sum_{s \in S} \eta(s) b(s) \sum_{a \in A} \nabla_\theta \pi(a|s, \theta_t) \\
@@ -1116,11 +1118,11 @@ E_{S \sim \eta, A \sim \pi}[\nabla_\theta \ln \pi(A|S, \theta_t)b(S)] &= \sum_{s
 &= 0
 \end{align*}
 
-为使策略梯度方差最小化，求偏导得：
+为使\textcolor{red}{策略梯度方差最小化}，求偏导得：
 \begin{align*}
-b^*(s) &= \frac{E_{A \sim \pi}[||\nabla_\theta \ln \pi(A|s, \theta_t)||^2 q_\pi(s, A)]}{E_{A \sim \pi}[||\nabla_\theta \ln \pi(A|s, \theta_t)||^2]} \\
+\textcolor{red}{b^*(s)} &= \frac{E_{A \sim \pi}[||\nabla_\theta \ln \pi(A|s, \theta_t)||^2 q_\pi(s, A)]}{E_{A \sim \pi}[||\nabla_\theta \ln \pi(A|s, \theta_t)||^2]} \\
 &= E_{A \sim \pi}[q_\pi(s, A)] (\text{省略权重}) \\
-&= v_{\pi}(s)
+&\textcolor{red}{= v_{\pi}(s)}
 \end{align*}
 
 如果直接用$ b(s) = q_{\pi}(s, a) $，会导致策略梯度为$ 0 $。
@@ -1163,15 +1165,15 @@ $$ \nabla_\theta J(\theta) = E_{S \sim \rho, A \sim \beta}[\frac{\pi(A|S, \theta
 %------------------------------------------------·
 \subsection[TRPO与PPO]{TRPO与PPO\tip{TRPO与PPO}}
 %------------------------------------------------·
-\subsubsection[TRPO]{TRPO（Trust Region Policy Optimization，信赖域策略优化）}
-限制每次策略更新的幅度，保证稳定性和单调提升。
+\subsubsection[TRPO]{\textcolor{red}{TRPO}（Trust Region Policy Optimization，信赖域策略优化）}
+\textcolor{red}{限制每次策略更新的幅度}，保证稳定性和单调提升。
 %------------------------------------------------
-\paragraph{替代回报函数}
+\paragraph{\textcolor{red}{替代回报函数}}
 \begin{align*}
 \eta(\tilde{\pi}) &= \eta(\pi) + \underbrace{E_{s_0, a_0, \cdots \sim \tilde{\pi}}[\sum_{t = 0}^{\infty} \gamma^t A_{\pi}(s_t, a_t)]}_{\text{新旧策略回报差}} \\
 &= \eta(\pi) + \sum_{s} \rho_{\tilde{\pi}}(s) \sum_{a} \tilde{\pi}(a|s) A_{\pi}(s, a) \\
-L_{\pi}(\tilde{\pi}) &= \eta(\pi) + \sum_{s} \textcolor{red}{\rho_{\pi}(s)} \sum_{a} \tilde{\pi}(a|s) A_{\pi}(s, a) (\text{忽略状态分布变化}) \\
-&= \eta(\pi) + E_{s \sim \rho_{\theta_{old}}, a \sim \pi_{\theta_{old}}}[\frac{\tilde{\pi}_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)] (\text{重要性采样动作分布})
+L_{\pi}(\tilde{\pi}) &= \eta(\pi) + \sum_{s} \textcolor{red}{\rho_{\pi}(s)} \sum_{a} \tilde{\pi}(a|s) A_{\pi}(s, a) (\textcolor{red}{\text{忽略状态分布变化}}) \\
+&= \eta(\pi) + E_{s \sim \rho_{\theta_{old}}, a \sim \pi_{\theta_{old}}}[\frac{\tilde{\pi}_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)] (\textcolor{red}{\text{重要性采样动作分布}})
 \end{align*}
 
 有$ L_{\pi_{\theta_{old}}}(\pi_{\theta_{old}}) = \eta(\pi_{\theta_{old}}), \nabla_{\theta} L_{\pi_{\theta_{old}}}(\pi_{\theta}) \big|_{\theta = \theta_{old}} = \nabla_{\theta} \eta(\pi_{\theta}) \big|_{\theta = \theta_{old}} $。
@@ -1179,16 +1181,16 @@ L_{\pi}(\tilde{\pi}) &= \eta(\pi) + \sum_{s} \textcolor{red}{\rho_{\pi}(s)} \sum
 令$ \alpha = D^{\max}_{TV}(\pi, \tilde{\pi}), \epsilon = \max_{s, a}|A_{\pi}(s, a)|$，惩罚因子$ C = \frac{2\epsilon \gamma}{(1 - \gamma)^2} $，则有：
 $$ \eta(\tilde{\pi}) \geq L_{\pi}(\tilde{\pi}) - \frac{4\epsilon}{(1 - \gamma)^2} \alpha^2 \quad \eta(\tilde{\pi}) \geq L_{\pi}(\tilde{\pi}) - C D^{\max}_{KL}(\pi, \tilde{\pi}) $$
 %------------------------------------------------
-\paragraph{优化：共轭梯度搜索}
+\paragraph{优化：\textcolor{red}{共轭梯度搜索}}
 问题转化为：
 \begin{align*}
 &\max_{\theta}[L_{\theta_{old}}(\theta) - C D^{\max}_{KL}(\theta_{old}, \theta)] \\
 \overset{\text{迭代步长较小}}{\Longrightarrow} &\max_{\theta} E_{s \sim \rho_{\theta_{old}}, a \sim \pi_{\theta_{old}}}[\frac{\pi_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)], \quad D^{\max}_{KL}(\theta_{old}, \theta) \leq \delta \\
-\underset{\text{平均KL散度}}{\overset{\text{策略状态空间分布}}{\Longrightarrow}} &\max_{\theta} E_{s \sim \textcolor{red}{\pi_{\theta_{old}}}, a \sim \pi_{\theta_{old}}}[\frac{\pi_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)], \quad E_{s \sim \pi_{\theta_{old}}}\{D_{KL}[\pi_{\theta_{old}}(\cdot|s)\pi_{\theta}(\cdot|s)]\} \leq \delta \\
-\underset{\text{约束二次逼近}}{\overset{\text{目标线性逼近}}{\Longrightarrow}} &\max_{\theta}[\nabla_{\theta} L_{\theta_{old}}(\theta) \big|_{\theta = \theta_{old}} \cdot (\theta - \theta_{old})], \quad \frac{1}{2}(\theta_{old} - \theta)^T \underbrace{A(\theta_{old})}_{Fisher \text{信息矩阵}} (\theta_{old} - \theta) \leq \delta
+\underset{\textcolor{red}{\text{平均KL散度}}}{\overset{\text{策略状态空间分布}}{\Longrightarrow}} &\max_{\theta} E_{s \sim \textcolor{red}{\pi_{\theta_{old}}}, a \sim \pi_{\theta_{old}}}[\frac{\pi_{\theta}(a|s)}{\pi_{\theta_{old}}(a|s)} A_{\theta_{old}}(s, a)], \quad E_{s \sim \pi_{\theta_{old}}}\{D_{KL}[\pi_{\theta_{old}}(\cdot|s)\pi_{\theta}(\cdot|s)]\} \leq \delta \\
+\underset{\textcolor{red}{\text{约束二次逼近}}}{\overset{\textcolor{red}{\text{目标线性逼近}}}{\Longrightarrow}} &\max_{\theta}[\nabla_{\theta} L_{\theta_{old}}(\theta) \big|_{\theta = \theta_{old}} \cdot (\theta - \theta_{old})], \quad \frac{1}{2}(\theta_{old} - \theta)^T \underbrace{A(\theta_{old})}_{Fisher \text{信息矩阵}} (\theta_{old} - \theta) \leq \delta
 \end{align*}
 %------------------------------------------------·
-\subsubsection[PPO]{PPO（Proximal Policy Optimization，近端策略优化）}
+\subsubsection[PPO]{\textcolor{red}{PPO}（Proximal Policy Optimization，近端策略优化）}
 限制新旧策略的变化幅度，保证策略更新的稳定性，简化TRPO的实现并提升效率。
 \begin{align*}
 L^{CLIP}(\theta) &= E_t[\min\{r_t(\theta) \hat{A}_t, clip[r_t(\theta), 1 - \epsilon, 1 + \epsilon]\hat{A}_t\}] \\
@@ -1236,10 +1238,10 @@ $$ \nabla_\theta J(\theta) = \sum_{s \in S} \underbrace{\rho_\mu(s)}_{\text{状�
 \EndFor
 \end{myalgorithm}
 %------------------------------------------------·
-\subsubsection[DDPG]{DDPG\tip{DDPG}}
-结合DQN和DPG，演员、评论家各有主网络和目标网络，一共四个网络。为在确定性策略中保障探索性，引入噪声。
+\subsubsection[DDPG]{\textcolor{red}{DDPG}\tip{DDPG}}
+结合DQN和DPG，演员、评论家各有主网络和目标网络，一共\textcolor{red}{四个网络}。为在确定性策略中保障探索性，引入噪声。
 %------------------------------------------------
-\paragraph{OU（Ornstein-Uhlenbeck）噪声}~\\
+\paragraph{OU（Ornstein-Uhlenbeck）\textcolor{red}{噪声}}~\\
 
 均值回归随机过程$ dX_t = \underbrace{\theta}_{\text{回归速度参数}}(\underbrace{\mu}_{\text{长期均值}} - X_t)dt + \underbrace{\sigma}_{\text{噪声强度}} \underbrace{dW_t}_{\text{维纳过程}} $，离散为：
 $$ X_{t + 1} = X_t + \theta(\mu - X_t) + \sigma \epsilon_t $$
@@ -1321,7 +1323,7 @@ $$
 \end{itemize}
 \end{minipage}
 %------------------------------------------------
-\paragraph{博弈论}
+\paragraph{\textcolor{red}{博弈论}}
 \begin{itemize}
 \item 参与人行动先后顺序：
 \begin{itemize}
@@ -1335,7 +1337,7 @@ $$
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
-\paragraph{完美信息静态博弈的纳什均衡策略（Nash equilibrium）}\tip{纳什均衡}
+\paragraph{完美信息静态博弈的\textcolor{red}{纳什均衡策略}（Nash equilibrium）}\tip{纳什均衡}
 所有智能体以最佳策略应对，全理性，没有智能体能单独偏离自身策略来改善自身回报。所有智能体采取纳什均衡策略应比部分智能体采取纳什均衡策略的价值高。
 
 双人策略为$ \pi_1, \pi_2 $，玩家$ i $值函数为$ V_i = \pi_1 R_i \pi_2^T $，有$ R_1 = -R_2 = \begin{bmatrix} r_{11} & r_{12} \\ r_{21} & r_{22} \end{bmatrix} $。纳什均衡指$ V_i(\pi_i^*, \pi_{-i}^*) \geq V_i(\pi_i, \pi_{-i}^*) $，求解等价于：
@@ -1355,7 +1357,7 @@ p_1 + p_2 = 1 \\
 \paragraph{非完美信息博弈的扩展式博弈}
 七元组$ \{H, Z, P, p, u, I ,\sigma_c\} $，分别是当前节点已知所有信息（包含个人私有信息），终止状态集合，玩家集合，非终止状态到玩家映射，非终止状态到实数映射，终止状态到实数映射（玩家到终止状态时获得的回报），信息集，策略。
 %------------------------------------------------
-\subsection[算法]{算法\tip{MADDPG}}
+\subsection[算法]{\textcolor{red}{算法}\tip{MADDPG}}
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\textwidth]{many}
@@ -1398,6 +1400,7 @@ p_1 + p_2 = 1 \\
 \end{itemize}
 %----------------------------------------------------------------------------------------
 \section{附录}
+{\footnotesize
 %------------------------------------------------
 \subsection[概念与原理]{概念与原理}
 %------------------------------------------------
@@ -1765,5 +1768,6 @@ $$ k(s, s') = x(s)^T x(s') $$
 \item KL散度：衡量两个概率分布之间的距离。
 $$ D_{KL}(P||Q) = E_{x \sim P}[\log \frac{P(x)}{Q(x)}] = \int P(x) \log P(x) dx - \int P(x) \log Q(x) dx $$
 \end{itemize}
+}
 %----------------------------------------------------------------------------------------
 \end{document}

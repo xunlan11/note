@@ -139,19 +139,19 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \item 环境适应性：腿越多，通过性越好，环境适应性越强。
 \item 系统稳定性：腿数增加，由动态稳定向静态稳定过度。
 \begin{itemize}
-\item 动态稳定：执行器停止工作摔倒。运动过程中通常半数腿离地。
-\item 静态稳定：执行器停止工作不摔倒。点接触需保证三腿同时着地，面接触需保证一条腿着地。
+\item \textcolor{red}{动态稳定}：执行器停止工作摔倒。运动过程中通常半数腿离地。
+\item \textcolor{red}{静态稳定}：执行器停止工作不摔倒。点接触需保证三腿同时着地，面接触需保证一条腿着地。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
 \paragraph{运动规划}
 运动学+动力学。
 %------------------------------------------------
-\paragraph{步态}
+\paragraph{\textcolor{red}{步态}}
 一个行进周期内各腿抬落组合，$ k $腿机器人的步态模式数量为$ N = (2^k - 1)! $。
 %------------------------------------------------
 \paragraph{单位距离能耗}
-$ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $。
+$ \textcolor{red}{COT} = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $。
 %------------------------------------------------
 \subsubsection[四足机器人]{四足机器人}
 \begin{itemize}
@@ -179,10 +179,10 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 %------------------------------------------------
 \paragraph{动态稳定运动机理}
 \begin{itemize}
-\item 倒立摆模型：类似纯滚动，步距越小越趋于圆。步态不自然，重心变化（需做功），落地冲击大。
+\item \textcolor{red}{倒立摆模型}：类似纯滚动，步距越小越趋于圆。步态不自然，重心变化（需做功），落地冲击大。
 \item 无源动态行走：摆动与向前摔落结合，势能转化为动能。
-\item 弹簧负载倒立摆（SLIP）：仿照动物腿肌肉，增加弹簧缓冲并储存能量。周期往复运动对称，动态稳定性可由庞加莱变换线性化后验证，条件为$ \lambda < 1 $（PPT.2.34-43）。
-\item 串联弹性驱动（SEA）：更为高效，更符合生物自然属性，基于运动学的位置控制，基于动力学的力矩控制。可由其获得稳定平台（PPT.2.48-50）。
+\item 弹簧负载倒立摆（SLIP）：仿照动物腿肌肉，增加弹簧缓冲并储存能量。周期往复运动对称，动态稳定性可由庞加莱变换线性化后验证，条件为$ \lambda < 1 $。
+\item 串联弹性驱动（SEA）：更为高效，更符合生物自然属性，基于运动学的位置控制，基于动力学的力矩控制。可由其获得稳定平台。
 \end{itemize}
 %------------------------------------------------
 \subsection[轮式机器人]{轮式机器人}
@@ -209,8 +209,8 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 \paragraph{机械臂与移动机器人的区别}
 \begin{itemize}
 \item 机械臂本体坐标系固定，精度高；移动机器人本体坐标系随动，精度低。
-\item 非完整约束\tip{非完整约束}（不可积的微分约束）：移动机器人只知道码盘变化量无法获取位姿，状态取决于路径。
-\item 微分运动学（Differential Kinematics）：速度空间替代位置空间。
+\item \textcolor{red}{非完整约束}\tip{非完整约束}（不可积的微分约束）：移动机器人只知道码盘变化量无法获取位姿，状态取决于路径。
+\item \textcolor{red}{微分运动学}（Differential Kinematics）：速度空间替代位置空间。
 \end{itemize}
 %------------------------------------------------
 \subsection[车轮]{车轮}
@@ -228,9 +228,9 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 \hline
 类型 & 自由度 & 约束 & 分类/特点 \\
 \hline
-标准轮 \newline （Standard wheel） & $ 2 $ \newline 沿轮平面滚动 \newline 沿垂直轴转动 & $ 1 $ \newline 沿轮轴滑动 & 标准固定轮：只能滚动 \newline 标准转向轮（舵轮） \\
+\textcolor{red}{标准轮} \newline （Standard wheel） & $ 2 $ \newline 沿轮平面滚动 \newline 沿垂直轴转动 & $ 1 $ \newline 沿轮轴滑动 & \textcolor{red}{标准固定轮}：只能滚动 \newline \textcolor{red}{标准转向轮}（舵轮） \\
 \hline
-脚轮 \newline （Castor wheel） & $ 3 $ \newline 沿轮平面滚动 \newline 沿垂直轴转动 \newline 沿路轴运动 & $ 0 $ & 偏心距$ d $：触地点到垂直旋转轴距离。 \newline 受扭矩压力，易损坏。 \\
+\textcolor{red}{脚轮} \newline （Castor wheel） & $ 3 $ \newline 沿轮平面滚动 \newline 沿垂直轴转动 \newline 沿路轴运动 & $ 0 $ & \textcolor{red}{偏心距$ d $}：触地点到垂直旋转轴距离。 \newline 受扭矩压力，易损坏。 \\
 \hline
 瑞典轮 \newline （Swedish wheel） & $ 3 $ \newline 沿轮平面滚动（被动） \newline 沿轮轴转动（主动） \newline 沿垂直轴转动（被动） & $ 0 $ & 麦克纳姆轮（Macanum wheel）：$ 45^\circ $，至少$ 4 $个共同使用。 \newline 连续切换轮：$ 90^\circ $，至少$ 3 $个共同使用。 \newline 对地面冲击大，噪音大，易损坏，成本高。 \\
 \hline
@@ -253,9 +253,9 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 %------------------------------------------------
 \paragraph{坐标系}
 \begin{itemize}
-\item 惯性系I：作业目标、控制指令、传感器感知测量信息。
-\item 机器人系R：控制器误差输入、控制器控制指令。
-\item 笛卡尔系：右手法则。
+\item \textcolor{red}{惯性系I}：作业目标、控制指令、传感器感知测量信息。
+\item \textcolor{red}{机器人系R}：控制器误差输入、控制器控制指令。
+\item \textcolor{red}{笛卡尔系}：右手法则。
 \end{itemize}
 %------------------------------------------------
 \paragraph{位姿（Pose）}~\\
@@ -264,15 +264,15 @@ $ COT = \frac{\text{消耗能量}}{\text{重量} \times \text{运行距离}} $�
 $$ \xi_I = \begin{bmatrix} x_I \\ y_I \\ \theta_I \end{bmatrix}, \quad \xi_R = \begin{bmatrix} x_R \\ y_R \\ \theta_R \end{bmatrix} \overset{\text{求导}}{\Longrightarrow} \dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix}, \quad \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} $$
 
 惯性系旋转得到机器人系：
-$$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
+$$ \textcolor{red}{\dot{\xi}_R = R(\theta) \dot{\xi}_I} $$
 
-旋转阵$ R(\theta) = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} $为单位正交阵，$ R^T = R^{-1} $。
+\textcolor{red}{旋转阵}$ R(\theta) = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} $为\textcolor{red}{单位正交阵}，$ R^T = R^{-1} $。
 %------------------------------------------------
-\subsubsection[瞬心法]{瞬心（ICR）法\tip{瞬心法运动学建模}}
+\subsubsection[瞬心法]{\textcolor{red}{瞬心（ICR）法}\tip{瞬心法运动学建模}}
 \noindent
 \begin{minipage}{0.4\textwidth}
 \paragraph{瞬时旋转/曲率中心（ICR）}~\\
-刚体上各点角速度相同。
+\textcolor{red}{刚体上各点角速度相同}。
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.5\textwidth]{icr_point} 
@@ -289,7 +289,7 @@ $$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
 \end{enumerate}
 \end{minipage}
 %------------------------------------------------
-\subsubsection[约束方程法]{约束方程法\tip{约束方程法运动学建模}}
+\subsubsection[约束方程法]{\textcolor{red}{约束方程法}\tip{约束方程法运动学建模}}
 %------------------------------------------------
 \paragraph{要求}
 在水平面上运动，与地面点接触，不变形，安装在刚体表面，舵机转轴与地面垂直。
@@ -305,19 +305,19 @@ $$ \dot{\xi}_R = R(\theta) \dot{\xi}_I $$
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{0.9cm}|p{1.3cm}|p{10cm}|p{1.4cm}|p{1.3cm}|}
+\begin{tabular}{|p{0.9cm}|p{1.3cm}|p{10.5cm}|p{1.4cm}|p{1.3cm}|}
 \hline
 类型 & 约束 & 约束方程 & 主动轮 & 随动轮 \\
 \hline
-\multirow{2}{*}{\parbox[c]{0.9cm}{标\\准\\轮}} & 纯滚动 & $ \begin{bmatrix} \sin(\alpha + \beta(t)) & -\cos(\alpha + \beta(t)) & -l \cos\beta(t) \end{bmatrix} R \theta \dot{\xi}_I \newline = r \dot{\varphi} $ & $ \surd $ & x \\
+\multirow{2}{*}{\parbox[c]{0.9cm}{标\\准\\轮}} & 纯滚动 & $ \textcolor{red}{\begin{bmatrix} \sin(\alpha + \beta(t)) & -\cos(\alpha + \beta(t)) & -l \cos\beta(t) \end{bmatrix} R \theta \dot{\xi}_I = r \dot{\varphi}} $ & $ \surd $ & x \\
 \cline{2-5}
-& 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta(t)) & \sin(\alpha + \beta(t)) & l \sin\beta(t) \end{bmatrix} R \theta \dot{\xi}_I = 0 $ & $ \surd $ & $ \surd $ \\
+& 无滑动 & $ \textcolor{red}{\begin{bmatrix} \cos(\alpha + \beta(t)) & \sin(\alpha + \beta(t)) & l \sin\beta(t) \end{bmatrix} R \theta \dot{\xi}_I = 0} $ & $ \surd $ & $ \surd $ \\
 \hline
-\multirow{2}{*}{\parbox[c]{0.9cm}{脚\\轮}} & 纯滚动 & $ \begin{bmatrix} \sin(\alpha + \beta) & -\cos(\alpha + \beta) & -l \cos\beta \end{bmatrix} R \theta \dot{\xi}_I = r \dot{\varphi} $ & $ \surd $ & x \\
+\multirow{2}{*}{\parbox[c]{0.9cm}{脚\\轮}} & 纯滚动 & $ \textcolor{red}{\begin{bmatrix} \sin(\alpha + \beta) & -\cos(\alpha + \beta) & -l \cos\beta \end{bmatrix} R \theta \dot{\xi}_I = r \dot{\varphi}} $ & $ \surd $ & x \\
 \cline{2-5}
-& 无滑动 & $ \begin{bmatrix} \cos(\alpha + \beta) & \sin(\alpha + \beta) & d + l \sin\beta \end{bmatrix} R \theta \dot{\xi}_I = -d \dot{\beta} $ & $ \surd $ & x \\
+& 无滑动 & $ \textcolor{red}{\begin{bmatrix} \cos(\alpha + \beta) & \sin(\alpha + \beta) & d + l \sin\beta \end{bmatrix} R \theta \dot{\xi}_I = -d \dot{\beta}} $ & $ \surd $ & x \\
 \hline
-\multirow{2}{*}{\parbox[c]{0.9cm}{瑞\\典\\轮}} & 纯滚动 & $ \begin{bmatrix} \cos(\alpha + \beta + \gamma) & \sin(\alpha + \beta + \gamma) & l \sin(\beta + \gamma) \end{bmatrix} R \theta \dot{\xi}_I \newline = r \dot{\varphi}\sin\gamma + r_{sw}\dot{\varphi}_{sw} $ & $ \surd $ & x \\
+\multirow{2}{*}{\parbox[c]{0.9cm}{瑞\\典\\轮}} & 纯滚动 & $ \begin{bmatrix} \cos(\alpha + \beta + \gamma) & \sin(\alpha + \beta + \gamma) & l \sin(\beta + \gamma) \end{bmatrix} R \theta \dot{\xi}_I \newline = r \dot{\varphi}\sin \gamma + r_{sw}\dot{\varphi}_{sw} $ & $ \surd $ & x \\
 \cline{2-5}
 & 无滑动 & $ \begin{bmatrix} \sin(\alpha + \beta + \gamma) & -\cos(\alpha + \beta + \gamma) & -l \cos(\beta + \gamma) \end{bmatrix} R \theta \dot{\xi}_I \newline = r \dot{\varphi} \cos\gamma $ & $ \surd $ \newline 小轮 & x \\
 \hline
@@ -341,6 +341,7 @@ $$ C_1(\beta_s) R(\theta) \dot{\xi}_I = 0 $$
 \end{itemize}
 %------------------------------------------------
 \subsubsection[例子]{例子}\label{sec:example1}
+{\footnotesize
 以下以两轮差速机器人（见\ref{sec:two_wheel}）为例，$ \alpha = \frac{\pi}{2}, \quad \beta = 0 $：
 \begin{figure}[H]
 \centering
@@ -364,8 +365,9 @@ $$ \dot{\theta} = \frac{\dot{x}_R}{R} = \frac{\dot{\varphi}_l r}{R - l} = \frac{
 %------------------------------------------------
 \paragraph{正运动学模型}
 $$ \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} $$
+}
 %------------------------------------------------
-\subsection[自由度]{自由度}
+\subsection[自由度]{\textcolor{red}{自由度}}
 \begin{itemize}
 \item 衡量机器人改变运行状态的能力。
 \item 需满足实际作业需求，考虑实现成本。
@@ -375,11 +377,11 @@ $$ \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{b
 %------------------------------------------------
 \paragraph{分类}\tip{自由度}
 \begin{itemize}
-\item 移动度（Degree of Mobility）$ \delta_m $：瞬时改变机器人运动状态的能力。
+\item \textcolor{red}{移动度}（Degree of Mobility）$ \delta_m $：瞬时改变机器人运动状态的能力。
 $$ \delta_m = \dim[C_1(\beta_s)] = 3 - rank[C_1(\beta_s)] \in [0, 3] $$
-\item 转向度（Degree of Steerability）$ \delta_s $：间接改变机器人运动状态的能力。
+\item \textcolor{red}{转向度}（Degree of Steerability）$ \delta_s $：间接改变机器人运动状态的能力。
 $$ \delta_s = rank[C_{1s}(\beta_s)] \in [0, 2] $$
-\item 机动度（Degree of Maneuverability）$ \delta_M $：改变机器人运动状态的能力。
+\item \textcolor{red}{机动度}（Degree of Maneuverability）$ \delta_M $：改变机器人运动状态的能力。
 $$ \delta_M = \delta_m + \delta_s $$
 \begin{itemize}
 \item 机动度相同，结构不一定相同。
@@ -388,6 +390,7 @@ $$ \delta_M = \delta_m + \delta_s $$
 \end{itemize}
 %------------------------------------------------
 \paragraph{例题}
+{\footnotesize
 示意图中，圆表示全向轮，椭圆表示固定轮，可旋转椭圆表示舵轮。
 
 \noindent
@@ -417,8 +420,10 @@ $ 5 $ & $ \surd $ & $ - $ & $ - $ & $ 1 $ & $ 2 $ & $ 3 $ \\
 \end{minipage}
 
 $ \surd $表示可直接控制，$ - $表示可间接控制（不同形态下直接控制），$ x $表示不可控制。
+}
 %------------------------------------------------
-\paragraph{实例（Type(移动度,转向度)）}
+\paragraph{实例（Type(移动度,转向度)）}~\\
+
 \begin{itemize}
 \begin{minipage}{0.6\textwidth}
 \item 全向机器人：
@@ -450,19 +455,19 @@ $ \surd $表示可直接控制，$ - $表示可间接控制（不同形态下直
 %------------------------------------------------
 \paragraph{特点}
 \begin{itemize}
-\item 大多存在滑动约束，是非完整系统，有侧向和姿态偏差。
-\item 非线性，控制器复杂，需根据可获得的反馈信号选取，且不能同时实现定点控制和跟踪控制。
-\item 不存在能完成控制目标的连续时不变（静态）反馈控制率。
+\item 大多存在\textcolor{red}{滑动约束}，是非完整系统，有侧向和姿态偏差。
+\item 非线性，控制器复杂，需根据可获得的反馈信号选取，且\textcolor{red}{不能同时实现定点控制和跟踪控制}。
+\item \textcolor{red}{不存在能完成控制目标的连续时不变（静态）反馈控制率}。
 \item 受标定精度影响大，且由于执行器约束，控制输入要合理限幅。
 \end{itemize}
 %------------------------------------------------
 \paragraph{分类}
 \begin{itemize}
-\item 定点（镇定）控制（Regulation Control）：以指定姿态到达指定位置。
+\item \textcolor{red}{定点（镇定）控制}（Regulation Control）：以指定姿态到达指定位置。
 \item 跟踪控制：
 \begin{itemize}
-\item 轨迹跟踪控制（Trajectory Tracking Control）：跟随给定轨迹（速度+姿态）。
-\item 路径跟踪控制（Path Tracking Control）：跟随给定路径。
+\item \textcolor{red}{轨迹跟踪控制}（Trajectory Tracking Control）：跟随给定轨迹（速度+姿态）。
+\item \textcolor{red}{路径跟踪控制}（Path Tracking Control）：跟随给定路径。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
@@ -478,29 +483,31 @@ $ \surd $表示可直接控制，$ - $表示可间接控制（不同形态下直
 取正定李雅普诺夫函数，其导数负定则系统渐进稳定。
 %------------------------------------------------
 \paragraph{两轮差速机器人运动控制}
+{\footnotesize
 以下以两轮差速机器人（见\ref{sec:two_wheel}）为例。
 $$ \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v_1 \\ 0 \\ v_2 \end{bmatrix} \overset{\text{变换}}{\Longrightarrow} \dot{\xi}_I = \begin{bmatrix} \dot{x}_I \\ \dot{y}_I \\ \dot{\theta}_I \end{bmatrix} = \begin{bmatrix} \cos\theta & 0 \\ \sin\theta & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} $$
+}
 %------------------------------------------------
-\subsection[定点控制器]{定点控制器\tip{定点控制器}}
+\subsection[定点控制器]{\textcolor{red}{定点控制器}\tip{定点控制器}}
 %------------------------------------------------
 \paragraph{控制目标}
 机器人参考坐标系下误差$ e = \begin{bmatrix} x & y & \theta \end{bmatrix}^T $，设计控制阵$ K = \begin{bmatrix} k_{11} & k_{12} & k_{13} \\ k_{21} & k_{22} & k_{23} \end{bmatrix} $，其中$ k_{ij} = k(t, e) $，得到控制输入$ \begin{bmatrix} v(t) \\ \omega(t) \end{bmatrix} = Ke $，使$ \lim_{t \to \infty} e(t) = 0 $。
 %------------------------------------------------
-\paragraph{误差信号转换}~\\
+\paragraph{\textcolor{red}{误差信号转换}}~\\
 
 惯性系下，实际状态$ q = \begin{bmatrix} x & y & \theta \end{bmatrix}^T $与参考状态$ q_r \begin{bmatrix} x_r & y_r & \theta_r \end{bmatrix}^T $之差为开环误差$ \tilde{q} = \begin{bmatrix} \tilde{x} & \tilde{y} & \tilde{\theta} \end{bmatrix}^T = \begin{bmatrix} x - x_r & y - y_r & \theta - \theta_r \end{bmatrix}^T $。
 \begin{enumerate}
-\item 转换到机器人系
-$$ e = \begin{bmatrix} e_1 \\ e_2 \\ e_3 \end{bmatrix} = R(\theta)^T \tilde{q} = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \tilde{x} \\ \tilde{y} \\ \tilde{\theta} \end{bmatrix} \overset{\text{闭环}}{\Longrightarrow} \dot{e} = \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = R(\theta) \dot{\tilde{q}} + \dot{R(\theta)}\tilde{q} = \begin{bmatrix} v_1 + v_2 e_2 \\ -v_2 e_1 \\ v_2 \end{bmatrix} $$
-\item 转换到极坐标系
-$$ \begin{cases} \rho = \sqrt{\tilde{x}^2 + \tilde{y}^2} \\ \beta = -atan2(-\tilde{y}, -\tilde{x}) \\ \alpha = -\beta - \tilde{\theta} \end{cases} \overset{\text{闭环}}{\Longrightarrow} \begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = \begin{bmatrix} -\cos\alpha & 0 \\ \frac{\sin\alpha}{\rho} & 0 \\ \frac{\sin\alpha}{\rho} & -1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} $$ 
+\item 转换到\textcolor{red}{机器人系}
+$$ e = \begin{bmatrix} e_1 \\ e_2 \\ e_3 \end{bmatrix} = R(\theta)^T \tilde{q} = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \tilde{x} \\ \tilde{y} \\ \tilde{\theta} \end{bmatrix} \overset{\text{闭环}}{\Longrightarrow} \textcolor{red}{\dot{e} = \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = R(\theta) \dot{\tilde{q}} + \dot{R(\theta)}\tilde{q} = \begin{bmatrix} v_1 + v_2 e_2 \\ -v_2 e_1 \\ v_2 \end{bmatrix}} $$
+\item 转换到\textcolor{red}{极坐标系}
+$$ \begin{cases} \rho = \sqrt{\tilde{x}^2 + \tilde{y}^2} \\ \beta = -atan2(-\tilde{y}, -\tilde{x}) \\ \alpha = -\beta - \tilde{\theta} \end{cases} \overset{\text{闭环}}{\Longrightarrow} \textcolor{red}{\begin{bmatrix} \dot{\rho} \\ \dot{\beta} \\ \dot{\alpha} \end{bmatrix} = \begin{bmatrix} -\cos\alpha & 0 \\ \frac{\sin\alpha}{\rho} & 0 \\ \frac{\sin\alpha}{\rho} & -1 \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}} $$ 
 \end{enumerate}
 %------------------------------------------------
-\paragraph{机器人系非线性控制器}~\\
+\paragraph{\textcolor{red}{机器人系非线性控制器}}~\\
 
 设计控制器$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 \\ -k_2 e_2 + e_2^2 \sin(t) \end{bmatrix} $，代入得$ \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 + v_2 e_2 \\ -v_2 e_1 \\ -k_2 e_2 + e_2^2 \sin(t) \end{bmatrix} $，其有误差时扰动，效果不佳。
 %------------------------------------------------
-\paragraph{极坐标系线性控制器}~\\
+\paragraph{\textcolor{red}{极坐标系线性控制器}}~\\
 
 设计控制器$ \begin{cases} v_1 = k_\rho \rho \\ v_2 = k_\alpha \alpha + k_\beta \beta \end{cases} $，代入得
 $$ 
@@ -511,7 +518,7 @@ $$
 
 其中前两行非线性耦合，在$ \alpha \to 0 $时指数性稳定，非全局稳定。
 %------------------------------------------------
-\paragraph{极坐标系线性控制器}~\\
+\paragraph{\textcolor{red}{极坐标系非线性控制器}}~\\
 
 设计控制器$ \begin{cases} v_1 = k_\rho \rho \cos\alpha \\ v_2 = k_\alpha \alpha + \frac{k_\rho \sin\alpha \cos\alpha}{\alpha}(\alpha - k_\beta \beta) \end{cases} $，代入得
 $$ 
@@ -522,7 +529,7 @@ $$
 
 其全局渐近稳定。
 %------------------------------------------------
-\subsection[轨迹跟踪控制器]{轨迹跟踪控制器\tip{轨迹跟踪控制器}}
+\subsection[轨迹跟踪控制器]{\textcolor{red}{轨迹跟踪控制器}\tip{轨迹跟踪控制器}}
 %------------------------------------------------
 \paragraph{控制目标与误差变换}~\\
 
@@ -537,7 +544,7 @@ $$ e = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta &
 
 $ e_3 \to 0 $时，控制器简化为$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 + v_{r1} \\ -v_{r1}  e_2 + v_{r2} \end{bmatrix} $，代入得$ \begin{bmatrix} \dot{e}_1 \\ \dot{e}_2 \\ \dot{e}_3 \end{bmatrix} = \begin{bmatrix} -k_1 e_1 + v_2 e_2 \\ -v_2 e_1 \\ -k_2 e_3 - v_{r1} e_2 \end{bmatrix} $。
 %------------------------------------------------
-\subsection[路径跟踪控制器]{路径跟踪控制器\tip{路径跟踪控制器}}
+\subsection[路径跟踪控制器]{\textcolor{red}{路径跟踪控制器}\tip{路径跟踪控制器}}
 %------------------------------------------------
 \paragraph{控制目标与误差变换}~\\
 
@@ -553,7 +560,7 @@ $ e_3 \to 0 $时，控制器简化为$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} 
 %----------------------------------------------------------------------------------------
 \section{机器人感知}
 %------------------------------------------------
-\subsection[传感器]{传感器\tip{传感器}}
+\subsection[传感器]{\textcolor{red}{传感器}\tip{传感器}}
 %------------------------------------------------
 \paragraph{分类}
 \begin{table}[H]
@@ -610,8 +617,8 @@ $ e_3 \to 0 $时，控制器简化为$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} 
 \end{table}
 
 \begin{itemize}
-\item PC（Proprioceptive，本体感受）/EC（Exteroceptive，外感受）。
-\item A（Active，有源）/P（Passive，无源）。
+\item \textcolor{red}{PC}（Proprioceptive，本体感受）/\textcolor{red}{EC}（Exteroceptive，外感受）。
+\item \textcolor{red}{A}（Active，有源）/\textcolor{red}{P}（Passive，无源）。
 \end{itemize}
 %------------------------------------------------
 \paragraph{特性}
@@ -637,21 +644,21 @@ $ e_3 \to 0 $时，控制器简化为$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} 
 \subsubsection[编码器]{编码器\tip{编码器}}
 测量系统相对运动角度，具有高精度、高分辨率和高可靠性。按结构可分为接触式、光电式和电磁式，后两种为非接触式编码。
 %------------------------------------------------
-\paragraph{增量式旋转编码器}
+\paragraph{\textcolor{red}{增量式旋转编码器}}
 \begin{itemize}
 \item 不能直接输出数字编码，需要数字电路。
-\item 原理：遮光周期性变化，莫尔条纹明暗交替，电压$ U_0 = U_m \cos(\frac{2\pi}{W}x) $周期性变化，形成脉冲，根据脉冲数量可推算旋转角度。位置数据是相对的，掉电后需复位。
-\item 辨向：为判断光栅移动方向，使用D触发器整合两个光栅的信息。
+\item 原理：遮光周期性变化，莫尔条纹明暗交替，电压$ U_0 = U_m \cos(\frac{2\pi}{W}x) $周期性变化，形成\textcolor{red}{脉冲}，根据脉冲数量可推算旋转角度。位置数据是相对的，\textcolor{red}{掉电后需复位}。
+\item \textcolor{red}{辨向}：为判断光栅移动方向，使用D触发器整合两个光栅的信息。
 \begin{itemize}
 \item D触发器：时钟信号有效时，$ Q = D $。
 \item 边缘D触发器：时钟信号处于有效边沿时，$ Q = D $。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
-\paragraph{绝对式光电编码器}
+\paragraph{\textcolor{red}{绝对式光电编码器}}
 \begin{itemize}
-\item 能直接输出某种码制的数码，掉电后无需复位。
-\item 格雷码（余$ 3 $循环码）：任意相邻数只有一位二进制数不同，可以由二进制码按位异或（第一位保留）获得，属于可靠性编码，求反方便。
+\item 能直接输出某种码制的数码，\textcolor{red}{掉电后无需复位}。
+\item \textcolor{red}{格雷码}（余$ 3 $循环码）：任意相邻数只有一位二进制数不同，可以由二进制码按位异或（第一位保留）获得，属于可靠性编码，求反方便。
 \end{itemize}
 %------------------------------------------------
 \subsection[里程计]{里程计}
@@ -659,11 +666,13 @@ $ e_3 \to 0 $时，控制器简化为$ \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} 
 \subsubsection[里程计模型]{里程计模型}\label{sec:odometer}
 %------------------------------------------------
 \paragraph{例子}
+{\footnotesize
 以下以两轮差速机器人（见\ref{sec:two_wheel}）为例。
 $$ \dot{\xi}_R = \begin{bmatrix} \dot{x}_R \\ \dot{y}_R \\ \dot{\theta}_R \end{bmatrix} = \frac{r}{2} \begin{bmatrix} \dot{\varphi}_l + \dot{\varphi}_r \\ 0 \\ \frac{\dot{\varphi}_r - \dot{\varphi}_l}{l} \end{bmatrix} = \begin{bmatrix} v \\ 0 \\ \omega \end{bmatrix} \overset{\text{转换到惯性系}}{\Longrightarrow} \begin{cases} \dot{x} &= v \cos \theta \\ \dot{y} &= v \sin \theta \\ \dot{\theta} &= \omega \end{cases} $$
 
 码盘读数为：
 $$ \begin{cases} \Delta s = \frac{r}{2}(\Delta \phi_R + \Delta \phi_L) \\ \Delta \theta = \frac{r}{2d}(\Delta \phi_R - \Delta \phi_L) \end{cases} \overset{\text{小时间变化}}{\Longrightarrow} \begin{cases} \Delta s &= v_k T_s \\ \Delta \theta &= \omega_k T_s \end{cases} $$ 
+}
 %------------------------------------------------
 \paragraph{建模方法}\tip{里程计建模方法}
 \begin{figure}[H]
@@ -676,15 +685,15 @@ $$ \begin{cases} \Delta s = \frac{r}{2}(\Delta \phi_R + \Delta \phi_L) \\ \Delta
 
 \begin{itemize}
 \begin{minipage}{0.5\textwidth}
-\item 欧拉法
-$$ \begin{cases} x_{k + 1} = x_k + v_k T_s \cos \theta_k \\ y_{k + 1} = y_k + v_k T_s \sin \theta_k \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases} $$
+\item \textcolor{red}{欧拉法}
+$$ \textcolor{red}{\begin{cases} x_{k + 1} = x_k + v_k T_s \cos \theta_k \\ y_{k + 1} = y_k + v_k T_s \sin \theta_k \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases}} $$
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
-\item RK2（二阶Runge-Kutta）法
-$$ \begin{cases} x_{k + 1} = x_k + v_k T_s \cos(\theta_k + \frac{\omega_k T_s}{2}) \\ y_{k + 1} = y_k + v_k T_s \sin(\theta_k + \frac{\omega_k T_s}{2}) \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases} $$
+\item \textcolor{red}{RK2（二阶Runge-Kutta）法}
+$$ \textcolor{red}{\begin{cases} x_{k + 1} = x_k + v_k T_s \cos(\theta_k + \frac{\omega_k T_s}{2}) \\ y_{k + 1} = y_k + v_k T_s \sin(\theta_k + \frac{\omega_k T_s}{2}) \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases}} $$
 \end{minipage}
-\item 解析积分法
-$$ \begin{cases} x_{k + 1} = x_k + \frac{v_k}{\omega_k} (\sin \theta_{k + 1} - \sin \theta_k) \\ y_{k + 1} = y_k - \frac{v_k}{\omega_k} (\cos \theta_{k + 1} - \cos \theta_k) \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases} \overset{\omega_k = 0}{\Longrightarrow} \begin{cases} x_{k + 1} = x_k + v_k T_s \\ y_{k + 1} = y_k \end{cases} $$
+\item \textcolor{red}{解析积分法}
+$$ \textcolor{red}{\begin{cases} x_{k + 1} = x_k + \frac{v_k}{\omega_k} (\sin \theta_{k + 1} - \sin \theta_k) \\ y_{k + 1} = y_k - \frac{v_k}{\omega_k} (\cos \theta_{k + 1} - \cos \theta_k) \\ \theta_{k + 1} = \theta_k + \omega_k T_s \end{cases}} \overset{\omega_k = 0}{\Longrightarrow} \begin{cases} x_{k + 1} = x_k + v_k T_s \\ y_{k + 1} = y_k \end{cases} $$
 \end{itemize}
 %------------------------------------------------
 \subsubsection[里程计误差]{里程计误差}
@@ -702,7 +711,7 @@ $$ \begin{cases} x_{k + 1} = x_k + \frac{v_k}{\omega_k} (\sin \theta_{k + 1} - \
 $$ p' = f(x, y, \theta, \Delta \phi_R, \Delta \phi_L) = \begin{bmatrix} x \\ y \\ \theta \end{bmatrix} + \begin{bmatrix} \frac{r(\Delta \phi_R + \Delta \phi_L)}{2} \cos(\theta_k + \frac{r[\Delta \phi_R - \Delta \phi_L]}{4d}) \\ \frac{r(\Delta \phi_R + \Delta \phi_L)}{2} \sin(\theta_k + \frac{r[\Delta \phi_R - \Delta \phi_L]}{4d}) \\ \frac{r(\Delta \phi_R - \Delta \phi_L)}{2d} \end{bmatrix} $$
 
 其中$ \Delta \phi_R, \Delta \phi_L $是控制输入量，有误差协方差矩阵迭代公式：
-$$ \sum_{p'} = \underbrace{\nabla_p f \cdot \sum_p \cdot \nabla_p f^T}_{\text{位姿}} + \underbrace{\nabla_{r|l}f \cdot \sum_{\Delta} \cdot \nabla_{r|l}f^T}_{\text{控制输入量}} $$
+$$ \textcolor{red}{\sum_{p'} = \underbrace{\nabla_p f \cdot \sum_p \cdot \nabla_p f^T}_{\text{位姿}} + \underbrace{\nabla_{r|l}f \cdot \sum_{\Delta} \cdot \nabla_{r|l}f^T}_{\text{控制输入量}}} $$
 
 初始化姿态协方差矩阵$ \sum_{p'} $（可零初始化），其更新量为：
 $$ \nabla_p f = \begin{bmatrix}\frac{\partial f}{\partial x} & \frac{\partial f}{\partial y} & \frac{\partial f}{\partial \theta}\end{bmatrix} = \begin{bmatrix} 1 & 0 & -\Delta s \sin(\theta_k + \frac{\Delta \theta}{2}) \\ 0 & 1 & \Delta s \cos(\theta_k + \frac{\Delta \theta}{2}) \\ 0 & 0 & 1 \end{bmatrix} $$
@@ -723,9 +732,9 @@ $$ \nabla_{rl}f = \begin{bmatrix} \frac{\partial f}{\partial \Delta \phi_R} & \f
 \caption{里程计误差转化展示}
 \end{figure}
 
-直线运动时误差方向与运动方向垂直，曲线运动时则不垂直。
+\textcolor{red}{直线运动时误差方向与运动方向垂直，曲线运动时则不垂直}。
 %------------------------------------------------
-\subsection[激光传感器]{激光传感器}
+\subsection[激光传感器]{\textcolor{red}{激光传感器}}
 \begin{itemize}
 \item 组成：激光器，激光检测器，测量电路。
 \item 特点：无接触远距离测量，速度快，精度高，量程大，抗干扰能力强。
@@ -735,52 +744,52 @@ $$ \nabla_{rl}f = \begin{bmatrix} \frac{\partial f}{\partial \Delta \phi_R} & \f
 %------------------------------------------------
 \section{机器人点云处理}
 %------------------------------------------------
-\subsection[直线提取]{直线提取}
+\subsection[直线提取]{\textcolor{red}{直线提取}}
 %------------------------------------------------
-\subsubsection[最小二乘法]{最小二乘法（Least Squares Method）}
+\subsubsection[最小二乘法]{\textcolor{red}{最小二乘法}（Least Squares Method）}
 在求解拟合直线时，最小化拟合误差平方和，目标式为：
-$$ \min \sum_{i = 1}^{n} d_i^2 = \min \sum_{i = 1}^{n}[y_i - f(x_i)]^2 $$
+$$ \textcolor{red}{\min \sum_{i = 1}^{n} d_i^2 = \min \sum_{i = 1}^{n}[y_i - f(x_i)]^2} $$
 
 其中$ f(x) = ax + b $是拟合直线，$ (x, y) $是待拟合的点坐标。
 %------------------------------------------------
 \paragraph{求解方法}
 \begin{enumerate}
-\item 求偏导：求目标式关于$ a, b $的偏导，得到如下极值条件：
+\item \textcolor{red}{求偏导}：求目标式关于$ a, b $的偏导，得到如下极值条件：
 $$ \begin{cases} \frac{\partial \Pi}{\partial a} = 2 \sum_{i = 1}^{n} [y_i - (a + b x_i)] = 0 \\ \frac{\partial \Pi}{\partial b} = 2 \sum_{i = 1}^{n} x_i [y_i - (a + b x_i)] = 0 \end{cases} $$
-\item 矩阵形式\tip{最小二乘法矩阵形式求解}：将拟合直线$ f(x) = ax + b $增广为矩阵形式$ Y = X \beta $，在误差$ d = Y - X \beta \to 0 $时，有$ Y = X \beta $，由于$ X $不一定是方阵，有：
-$$ Y = X \beta \Rightarrow X^T Y = X^T X \beta \Rightarrow \beta = (X^T X)^{-1}X^T Y $$
+\item \textcolor{red}{矩阵形式}\tip{最小二乘法矩阵形式求解}：将拟合直线$ f(x) = ax + b $增广为矩阵形式$ Y = X \beta $，在误差$ d = Y - X \beta \to 0 $时，有$ Y = X \beta $，由于$ X $不一定是方阵，有：
+$$ Y = X \beta \Rightarrow X^T Y = X^T X \beta \Rightarrow \textcolor{red}{\beta = (X^T X)^{-1}X^T Y} $$
 \end{enumerate}
 %------------------------------------------------
-\subsubsection[Split-and-Merge]{Split-and-Merge（分割与合并）\tip{Split-and-Merge直线提取}}
+\subsubsection[Split-and-Merge]{\textcolor{red}{Split-and-Merge}（分割与合并）\tip{Split-and-Merge直线提取}}
 \begin{enumerate}
-\item 分裂（Split）：以全集作为初始点集。对当前点集拟合直线（采用端点拟合），计算到最远点的距离，距离大于阈值则在该最远点处将点集分裂为两个子集，并对分裂后的两个子集进行迭代。
-\item 合并（Merge）：检查相邻线段是否满足合并要求（合并后是否有过远点），若满足要求，则合并并拟合新的直线。
+\item \textcolor{red}{分裂}（Split）：以全集作为初始点集。对当前点集拟合直线（采用端点拟合），计算到最远点的距离，距离大于阈值则在该最远点处将点集分裂为两个子集，并对分裂后的两个子集进行迭代。
+\item \textcolor{red}{合并}（Merge）：检查相邻线段是否满足合并要求（合并后是否有过远点），若满足要求，则合并并拟合新的直线。
 \end{enumerate}
 %------------------------------------------------
-\subsubsection[Line-Regression]{Line-Regression（线性回归）}
+\subsubsection[Line-Regression]{\textcolor{red}{Line-Regression}（线性回归）}
 \begin{enumerate}
-\item 滑动拟合：选取窗口，在其内采用最小二乘法拟合直线，之后滑动窗口拟合新的直线。
-\item 合并：检查相邻线段是否满足合并的角度和距离要求，满足则合并并拟合新的直线，直到所有线段不可再合并。
+\item \textcolor{red}{滑动拟合}：选取窗口，在其内采用最小二乘法拟合直线，之后滑动窗口拟合新的直线。
+\item \textcolor{red}{合并}：检查相邻线段是否满足合并的角度和距离要求，满足则合并并拟合新的直线，直到所有线段不可再合并。
 \end{enumerate}
 %------------------------------------------------
-\subsubsection[RANSAC]{RANSAC（Random Sample Consensus，随机抽样一致性算法）\tip{RANSAC直线提取}}
+\subsubsection[RANSAC]{\textcolor{red}{RANSAC}（Random Sample Consensus，随机抽样一致性算法）\tip{RANSAC直线提取}}
 \begin{itemize}
 \item 外点（outliers）：异常值。
 \item 内点（inliers）：符合模型的数据点。
 \end{itemize}
 \begin{enumerate}
 \item 根据内点比例$ w $和找到一个完全由内点组成的样本的希望概率$ p $计算迭代次数：
-$$ k = \frac{log(1 - p)}{log(1 - w^2)} $$
+$$ \textcolor{red}{k = \frac{log(1 - p)}{log(1 - w^2)}} $$
 \item 从所有数据点中随机选择最小数量（直线2点，平面3点）的数据点子集，确定唯一的模型参数。
 \item 计算剩余数据点与该模型的误差，小于设定阈值的为内点。
-\item 重复迭代次数次采样，选取包含最多内点的模型。
+\item 重复迭代次数次\textcolor{red}{采样，选取包含最多内点的模型}。
 \end{enumerate}
 %------------------------------------------------
-\subsubsection[Hough-Transform]{Hough-Transform（霍夫变换）}
+\subsubsection[Hough-Transform]{\textcolor{red}{Hough-Transform}（霍夫变换）}
 图像空间中的一个点对应Hough空间中的一条线。激光定位任务中，常用极坐标$ \rho = x \cos\theta + y \sin\theta $表示。在定距下，误差呈正态分布；而在变距下，误差增长与距离正相关。
 \begin{enumerate}
 \item 计算数据范围（Hough空间参数分辨率），并初始化累加器。
-\item 遍历边缘点，计算可能的参数组合，并在对应位置进行投票。
+\item 遍历边缘点，计算可能的参数组合，并在对应位置进行\textcolor{red}{投票}。
 \item 在累加器中寻找峰值（可能不唯一），获得相应Hough空间参数。
 \item 转换回图像空间，确定直线。
 \end{enumerate}
@@ -817,7 +826,7 @@ Hough-Transform & $ S n n_C + S n_R n_C $ & 高 & 高 & 适用 &  \\
 %------------------------------------------------
 \subsection[定位与匹配]{定位与匹配}
 %------------------------------------------------
-\subsubsection[基于SVD的定位算法]{基于SVD的定位算法\tip{基于SVD的定位算法}}
+\subsubsection[基于SVD的定位算法]{\textcolor{red}{基于SVD的定位算法}\tip{基于SVD的定位算法}}
 %------------------------------------------------
 \paragraph{条件与目标}~\\
 
@@ -828,20 +837,20 @@ $$ (R, t) = argmin \sum_{i = 1}^{n}w_i ||(R p_i + t) - q_i||^2 $$
 
 其中$ w_i $表示匹配点对$ (p_i, q_i) $的权重，可取为距离的倒数$ w_i = \frac{1}{\sigma_i(\rho_i)} $。
 %------------------------------------------------
-\paragraph{加权平均}~\\
+\paragraph{\textcolor{red}{加权平均}}~\\
 
 为求极值，对目标式求关于$ t $的偏导：
 $$ 2t(\sum_{i = 1}^{n} w_i) + 2R(\sum_{i = 1}^{n} w_i p_i) - 2\sum_{i = 1}^{n} w_i q_i = 0 \overset{\text{等号两边同除}}{\underset{\sum_{i = 1}^{n} w_i}{\Longrightarrow}} t + R\frac{(\sum_{i = 1}^{n} w_i p_i)}{\sum_{i = 1}^{n} w_i} - \frac{\sum_{i = 1}^{n} w_i q_i}{\sum_{i = 1}^{n} w_i} = 0 $$
 
-取两个点云的加权中心点$ \hat{p} = \frac{\sum_{i = 1}^{n} w_i p_i}{\sum_{i = 1}^{n} w_i}, \quad \hat{q} = \frac{\sum_{i = 1}^{n} w_i q_i}{\sum_{i = 1}^{n} w_i} $，上式可化简为$ t = \hat{q} - R \hat{p} $。该式描述了平移量和旋转阵的关系，将其带回目标式，得到单变量最值问题：
+取两个点云的加权中心点$ \hat{p} = \frac{\sum_{i = 1}^{n} w_i p_i}{\sum_{i = 1}^{n} w_i}, \quad \hat{q} = \frac{\sum_{i = 1}^{n} w_i q_i}{\sum_{i = 1}^{n} w_i} $，上式可化简为$ t = \hat{q} - R \hat{p} $。该式描述了平移量和旋转阵的关系，将其带回目标式，得到\textcolor{red}{单变量最值问题}：
 $$ R = argmin \sum_{i = 1}^{n}w_i ||R(p_i - \hat{p}) - (q_i - \hat{q})||^2 $$
 %------------------------------------------------
-\paragraph{去中心化}~\\
+\paragraph{\textcolor{red}{去中心化}}~\\
 
 取去中心化$ x_i = p_i - \hat{p}, \quad y_i = q_i - \hat{q} $，目标式可化简为：
 $$ R = argmin \sum_{i = 1}^{n}w_i ||R x_i - y_i||^2 $$
 
-将平方项变成矩阵相乘的形式：
+将平方项变成\textcolor{red}{矩阵相乘}的形式：
 $$ ||R x_i - y_i||^2 = (R x_i - y_i)^T(R x_i - y_i) = x_i^T (R^T R) x_i - y_i^T R x_i - x_i^T R^T y_i + y_i^T y_i $$
 \begin{itemize}
 \item $ R^{-1} = R^T \Rightarrow R^T R = E $。
@@ -854,9 +863,9 @@ $$ ||R x_i - y_i||^2 = x_i^T x_i - 2 y_i^T R x_i + y_i^T y_i $$
 其中仅有负号项与$ R $相关，其它项都是定值，目标可改写为：
 $$ R = argmax \sum_{i = 1}^{n}w_i y_i^T R x_i $$
 %------------------------------------------------
-\paragraph{SVD分解}\label{sec:svd back}~\\
+\paragraph{\textcolor{red}{SVD分解}}\label{sec:svd back}~\\
 
-将其写成对角阵的迹的形式：
+将其写成\textcolor{red}{对角阵的迹}的形式：
 \begin{align*}
 \sum_{i = 1}^{n} w_i y_i^T R x_i 
 &= tr(diag(w_1 y_1^T R x_1, w_2 y_2^T R x_2, \dots, w_n y_n^T R x_n)) \\
@@ -870,10 +879,10 @@ $$ R = argmax tr(\Sigma M) $$
 \paragraph{求解变换}
 单位正交阵的最大迹在单位阵下取得的，有$ M = E $，即$ R = V U^T $。代回确定$ t $。
 %------------------------------------------------
-\subsubsection[基于ICP的点云匹配算法]{基于ICP（Iterative Closest Point，迭代最近点）的点云匹配算法\tip{基于ICP的点云匹配算法}}
+\subsubsection[基于ICP的点云匹配算法]{\textcolor{red}{基于ICP}（Iterative Closest Point，迭代最近点）\textcolor{red}{的点云匹配算法}\tip{基于ICP的点云匹配算法}}
 \begin{enumerate}
 \item 条件与目标：求解二维平面上检测点云$ P = \{p_1, p_2, \dots, p_{N_p}\} $和目标点云$ X = \{x_1, x_2, \dots, x_{N_x}\} $的匹配。
-\item 计算最近点集：采取采样方法获得目标点云，并采用点集匹配方法为检测点云数据点匹配最近的目标点云数据点。
+\item \textcolor{red}{计算最近点集}：采取采样方法获得目标点云，并采用点集匹配方法为检测点云数据点匹配最近的目标点云数据点。
 
 \begin{minipage}{0.5\textwidth}
 \begin{itemize}
@@ -891,8 +900,8 @@ $$ R = argmax tr(\Sigma M) $$
 \item Projection Matching。
 \end{itemize}
 \end{minipage}
-\item 变换：使用基于SVD的定位算法求解齐次变换矩阵并应用于检测点云。
-\item 目标函数计算：统计对齐误差，如果达到阈值则停止迭代，否则重复上述操作。
+\item \textcolor{red}{变换}：使用基于SVD的定位算法求解齐次变换矩阵并应用于检测点云。
+\item \textcolor{red}{目标函数计算}：统计对齐误差，如果达到阈值则停止迭代，否则重复上述操作。
 \end{enumerate}
 %------------------------------------------------
 \section{机器人定位}
@@ -910,15 +919,15 @@ $$ R = argmax tr(\Sigma M) $$
 \begin{itemize}
 \item 问题
 \begin{itemize}
-\item 全局定位：未知初始位置，根据地图进行定位。
-\item 位置跟踪：已知初始位置，跟踪位置变化。
-\item 绑架问题。
+\item \textcolor{red}{全局定位}：未知初始位置，根据地图进行定位。
+\item \textcolor{red}{位置跟踪}：已知初始位置，跟踪位置变化。
+\item \textcolor{red}{绑架问题}。
 \end{itemize}
 \item 方法：基于机载传感器、基于额外传感器和路标、里程计。
 \item 分类（不确定度分布）：连续单峰（卡尔曼滤波）、连续多峰、离散多峰（粒子滤波）、拓扑。
 \end{itemize}
 %------------------------------------------------
-\subsection[贝叶斯定位]{贝叶斯定位}
+\subsection[贝叶斯定位]{\textcolor{red}{贝叶斯定位}}
 %------------------------------------------------
 \paragraph{原理}
 新信息出现后的概率 = 概率 $ \times $ 新信息带来的调整：
@@ -947,31 +956,31 @@ $$ p(x|y) = \frac{p(y|x)p(x)}{p(y)} $$
 \end{minipage}
 \end{itemize}
 %------------------------------------------------
-\subsection[基于卡尔曼滤波的定位]{基于卡尔曼滤波的定位}
+\subsection[基于卡尔曼滤波的定位]{\textcolor{red}{基于卡尔曼滤波的定位}}
 %------------------------------------------------
-\subsubsection[卡尔曼滤波]{卡尔曼滤波}
+\subsubsection[卡尔曼滤波]{\textcolor{red}{卡尔曼滤波}}
 %------------------------------------------------
 \paragraph{推导}
 两次独立测量的概率均服从正态分布$ p_1(q) = N(\hat{q}_1, \sigma_1^2), \quad p_2(q) = N(\hat{q}_2, \sigma_2^2) $，它们整合得到的最终分布也服从正态分布：
 \begin{align*}
-p(q) = p_1(q) \cdot p_2(q) &= \frac{1}{\sigma_1 \sqrt{2\pi}}exp(-\frac{(q - \hat{q}_1)^2}{2\sigma_1^2}) \cdot \frac{1}{\sigma_2 \sqrt{2\pi}}exp(-\frac{(q - \hat{q}_2)^2}{2\sigma_2^2}) \\
+\textcolor{red}{p(q) = p_1(q) \cdot p_2(q)} &= \frac{1}{\sigma_1 \sqrt{2\pi}}exp(-\frac{(q - \hat{q}_1)^2}{2\sigma_1^2}) \cdot \frac{1}{\sigma_2 \sqrt{2\pi}}exp(-\frac{(q - \hat{q}_2)^2}{2\sigma_2^2}) \\
 &= \frac{1}{2\sigma_1 \sigma_2 \pi}\exp[-\frac{(q - \hat{q}_1)^2}{2\sigma_1^2} - \frac{(q - \hat{q}_2)^2}{2\sigma_2^2}] \\
 &= \frac{1}{2\sigma_1 \sigma_2 \pi}\exp\{-\frac{1}{2}[\frac{q^2(\sigma_1^2 + \sigma_2^2) - 2q(\hat{q}_1 \sigma_2^2 + \hat{q}_2 \sigma_1^2) + (\hat{q}_1^2 \sigma_2^2 + \hat{q}_2^2 \sigma_1^2)}{\sigma_1^2 \sigma_2^2}]\} \\
 &= \frac{1}{2\sigma_1 \sigma_2 \pi}\exp\{-\frac{1}{2}[\frac{q^2 - \frac{2q(\hat{q}_1 \sigma_2^2 + \hat{q}_2 \sigma_1^2)}{\sigma_1^2 + \sigma_2^2} + \frac{(\hat{q}_1^2 \sigma_2^2 + \hat{q}_2^2 \sigma_1^2)}{\sigma_1^2 + \sigma_2^2}}{\frac{\sigma_1^2 \sigma_2^2}{\sigma_1^2 + \sigma_2^2}}]\} \\
 &= \underbrace{\frac{1}{2\sigma_1 \sigma_2 \pi}\exp[-\frac{1}{2}\frac{\frac{\hat{q}_1^2 \sigma_2^2 + \hat{q}_2^2 \sigma_1^2}{\sigma_1^2 + \sigma_2^2} - (\frac{\hat{q}_1 \sigma_2^2 + \hat{q}_2 \sigma_1^2}{\sigma_1^2 + \sigma_2^2})^2}{\frac{\sigma_1^2 \sigma_2^2}{\sigma_1^2 + \sigma_2^2}}]}_{\text{常数}}\underbrace{\exp[-\frac{1}{2}\frac{(q - \frac{\hat{q}_1 \sigma_2^2 + \hat{q}_2 \sigma_1^2}{\sigma_1^2 + \sigma_2^2})^2}{\frac{\sigma_1^2 \sigma_2^2}{\sigma_1^2 + \sigma_2^2}}]}_{\text{正态分布}} \\
-&= N(\hat{q}, \sigma^2)
+&\textcolor{red}{= N(\hat{q}, \sigma^2)}
 \end{align*}
 
 有：
 \begin{align*}
-\hat{q} = \underbrace{\frac{\hat{q}_1 \sigma_2^2 + \hat{q}_2 \sigma_1^2}{\sigma_1^2 + \sigma_2^2}}_{\text{方差小的项权重大}} &\Leftrightarrow \hat{q} = \hat{q}_1 + \frac{\sigma_1^2}{\sigma_1^2 + \sigma_2^2}\underbrace{(\hat{q}_2 - \hat{q}_1)}_{\text{校正量}} \\
-\sigma^2 = \frac{\sigma_1^2 \sigma_2^2}{\sigma_1^2 + \sigma_2^2} &\Leftrightarrow \sigma^2 = \underbrace{\sigma_1^2 - \frac{\sigma_1^4}{\sigma_1^2 + \sigma_2^2}}_{< \sigma_1^2, \sigma_2^2}
+\textcolor{red}{\hat{q}} &= \underbrace{\frac{\hat{q}_1 \sigma_2^2 + \hat{q}_2 \sigma_1^2}{\sigma_1^2 + \sigma_2^2}}_{\text{方差小的项权重大}} \textcolor{red}{= \hat{q}_1 + \frac{\sigma_1^2}{\sigma_1^2 + \sigma_2^2}\underbrace{(\hat{q}_2 - \hat{q}_1)}_{\text{校正量}}} \\
+\textcolor{red}{\sigma^2} &= \frac{\sigma_1^2 \sigma_2^2}{\sigma_1^2 + \sigma_2^2} \textcolor{red}{= \underbrace{\sigma_1^2 - \frac{\sigma_1^4}{\sigma_1^2 + \sigma_2^2}}_{< \sigma_1^2, \sigma_2^2}}
 \end{align*}
 
-以$ P = \sigma_1^2, \quad Q = \sigma_2^2, \quad R = \sigma^2 $，记卡尔曼增益$ K = P(P + Q)^{-1} $和创新协方差$ \Sigma_{IN} = P + Q $：
+以$ P = \sigma_1^2, \quad Q = \sigma_2^2, \quad R = \sigma^2 $，记\textcolor{red}{卡尔曼增益$ K = P(P + Q)^{-1} $}和\textcolor{red}{创新协方差$ \Sigma_{IN} = P + Q $}：
 \begin{align*}
-\hat{q} &= \hat{q}_1 + P(P + Q)^{-1}(\hat{q}_2 - \hat{q}_1) = \hat{q}_1 + K(\hat{q}_2 - \hat{q}_1) \\
-R &= P - P(P + Q)^{-1}P = P - K \cdot \Sigma_{IN} \cdot K^T
+\textcolor{red}{\hat{q}} &= \hat{q}_1 + P(P + Q)^{-1}(\hat{q}_2 - \hat{q}_1) \textcolor{red}{= \hat{q}_1 + K(\hat{q}_2 - \hat{q}_1)} \\
+\textcolor{red}{R} &= P - P(P + Q)^{-1}P \textcolor{red}{= P - K \cdot \Sigma_{IN} \cdot K^T}
 \end{align*}
 
 有模型：
@@ -982,10 +991,10 @@ R &= P - P(P + Q)^{-1}P = P - K \cdot \Sigma_{IN} \cdot K^T
 
 其中$ x_k \in R^n $为系统状态，$ z_k \in R^m $为测量输出，$ u_k \in R^l $为系统输入。$ w_k \in R^n $为过程噪声（Process Noise）$ p(w) = N(0, Q) $，$ v_k \in R^m $为测量噪声（Measurement Noise，白噪声）$ p(v) = N(0, R) $。
 
-有先/后验估计$ \hat{x}_k^-, \hat{x}_k $，先/后验估计误差$ e_k^- = x_k - \hat{x}_k^-, \quad e_k = x_k - \hat{x}_k $，先/后验估计方差$ P_k^- = E[e_k^- e_k^{-T}], \quad P_k = E[e_k e_k^T] $。其中，优化目标是$ argmin_K P_k $。
+有先/后验估计$ \hat{x}_k^-, \hat{x}_k $，先/后验估计误差$ e_k^- = x_k - \hat{x}_k^-, \quad e_k = x_k - \hat{x}_k $，先/后验估计方差$ P_k^- = E[e_k^- e_k^{-T}], \quad P_k = E[e_k e_k^T] $。其中，\textcolor{red}{优化目标是$ argmin_K P_k $}。
 
 先后验转化关系为：
-$$ \hat{x}_k = \hat{x}_k^- + \underbrace{K}_{\text{卡尔曼增益}}\underbrace{(z_k - H \hat{x}_k^-)}_{\text{新息}} $$
+$$ \textcolor{red}{\hat{x}_k = \hat{x}_k^- + K \underbrace{(z_k - H \hat{x}_k^-)}_{\text{新息}}} $$
 
 $ P_k $可进行转化：
 \begin{align*}
@@ -1000,9 +1009,9 @@ P_k &= E[e_k e_k^T] = E[(x_k - \hat{x}_k)(x_k - \hat{x}_k)^T] (\text{误差展�
 令偏导为$ 0 $：
 $$ \frac{\partial P_k}{\partial K} = -2P_k^- H^T + 2K H P_k^- H^T + 2KR = 0 $$
 
-有$ K = P_k^- H^T(H P_k^- H^T + R)^{-1} $，在方差趋于$ 0 $时，$ \lim_{R \to 0} K = H^{-1}, \quad \lim_{P_k^- \to 0} K = 0 $。
+有$ \textcolor{red}{K = P_k^- H^T(H P_k^- H^T + R)^{-1}} $，在方差趋于$ 0 $时，$ \lim_{R \to 0} K = H^{-1}, \quad \lim_{P_k^- \to 0} K = 0 $。
 %------------------------------------------------
-\paragraph{步骤}\tip{卡尔曼滤波迭代公式}
+\paragraph{\textcolor{red}{步骤}}\tip{卡尔曼滤波迭代公式}
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[node distance=3cm,auto,thick]
@@ -1039,9 +1048,9 @@ $$ \frac{\partial P_k}{\partial K} = -2P_k^- H^T + 2K H P_k^- H^T + 2KR = 0 $$
 \caption{卡尔曼滤波框图}
 \end{figure}
 %------------------------------------------------
-\subsubsection[基于卡尔曼滤波的定位算法]{基于卡尔曼滤波的定位算法\tip{基于卡尔曼滤波的定位算法}}
+\subsubsection[基于卡尔曼滤波的定位算法]{\textcolor{red}{基于卡尔曼滤波的定位算法}\tip{基于卡尔曼滤波的定位算法}}
 %------------------------------------------------
-\paragraph{步骤}
+\paragraph{\textcolor{red}{步骤}}
 $ Prediction \rightarrow Observation \rightarrow Estimation $。
 
 \begin{figure}[H]
@@ -1051,14 +1060,14 @@ $ Prediction \rightarrow Observation \rightarrow Estimation $。
 \end{figure}
 
 \begin{enumerate}
-\item 先验估计：预测模型，如里程计模型。
-\item 先验估计误差：误差传导模型。
-\item 观测：如激光定位，采用SVD确定位姿，采用ICP配准。
-\item 观测误差：SVD匹配误差。
-\item 基于观测的后验估计：卡尔曼滤波。
+\item \textcolor{red}{先验估计}：预测模型，如里程计模型。
+\item \textcolor{red}{先验估计误差}：误差传导模型。
+\item \textcolor{red}{观测}：如激光定位，采用SVD确定位姿，采用ICP配准。
+\item \textcolor{red}{观测误差}：SVD匹配误差。
+\item \textcolor{red}{基于观测的后验估计}：卡尔曼滤波。
 \end{enumerate}
 %------------------------------------------------
-\paragraph{描述维度}
+\paragraph{\textcolor{red}{描述维度}}
 \begin{table}[H]
 \centering
 \begin{tabular}{c|c|c|c|c}
@@ -1067,11 +1076,11 @@ $ Prediction \rightarrow Observation \rightarrow Estimation $。
 \hline
 $ \begin{bmatrix} x_k \\ y_k \end{bmatrix} $ & $ \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} $ & 
 \multirow{2}{*}{$ \begin{bmatrix} u_k \\ v_k \end{bmatrix} $} & $ \begin{bmatrix} u_k \\ v_k \end{bmatrix} $ & 
-\begin{tabular}[c]{@{}c@{}}动态误差大\\静止误差小\\适合缓慢移动\end{tabular} \\
+\begin{tabular}[c]{@{}c@{}} 动态误差大\\ 静止误差小 \\ 适合缓慢移动 \end{tabular} \\
 \cline{1-2}\cline{4-5}
 $ \begin{bmatrix} x \\ y \\ \frac{dx}{dt} \\ \frac{dy}{dt} \end{bmatrix} $ & $ \begin{bmatrix} 1 & 0 & dt & 0 \\ 0 & 1 & 0 & dt \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} $ & 
  & $ \begin{array}{c} \begin{bmatrix} H_x & 0 & 0 & 0 \\ 0 & H_y & 0 & 0 \end{bmatrix} \\ \text{未测量速度} \end{array} $ & 
-\begin{tabular}[c]{@{}c@{}}动态误差小\\静止误差大\\低维估计高维\end{tabular} \\
+\begin{tabular}[c]{@{}c@{}} 动态误差小 \\ 静止误差大 \\ \textcolor{red}{低维估计高维} \end{tabular} \\
 \hline
 \end{tabular}
 \caption{卡尔曼滤波算法描述维度}
@@ -1079,13 +1088,13 @@ $ \begin{bmatrix} x \\ y \\ \frac{dx}{dt} \\ \frac{dy}{dt} \end{bmatrix} $ & $ \
 %------------------------------------------------
 \paragraph{特点}
 \begin{itemize}
-\item 严重依赖匹配精度，匹配失败则定位失败，且无法判断和恢复。
+\item 严重依赖匹配精度，\textcolor{red}{匹配失败则定位失败}，且无法判断和恢复。
 \item 收敛速度受初始状态误差和协方差阵精度影响较大。
-\item 无法全局定位，无法应对绑架问题，只能位置跟踪。
-\item 不确定度需为单峰高斯分布。
+\item \textcolor{red}{无法全局定位，无法应对绑架问题，只能位置跟踪}。
+\item \textcolor{red}{不确定度需为单峰高斯分布}。
 \end{itemize}
 %------------------------------------------------
-\subsection[蒙特卡洛定位]{蒙特卡洛定位}
+\subsection[蒙特卡洛定位]{\textcolor{red}{蒙特卡洛定位}}
 %------------------------------------------------
 \subsubsection[蒙特卡洛方法]{蒙特卡洛方法（Monte Carlo Method）}
 不断抽样，逐渐逼近。通用，但收敛速度慢，不精确。
@@ -1093,14 +1102,14 @@ $ \begin{bmatrix} x \\ y \\ \frac{dx}{dt} \\ \frac{dy}{dt} \end{bmatrix} $ & $ \
 \paragraph{分布函数拟合}
 用样本（粒子）分布处理各种分布。
 \begin{itemize}
-\item 已知概率分布求粒子分布：采样排除法，概率高的地方采样密集。
-\item 未知概率分布求粒子分布：重要性评估，迭代，根据预估分布（以均匀分布开始）撒粒子，再根据结果调整重要性评估（归一化）。
+\item \textcolor{red}{已知概率分布求粒子分布}：\textcolor{red}{采样排除法}，概率高的地方采样密集。
+\item \textcolor{red}{未知概率分布求粒子分布}：\textcolor{red}{重要性评估}，迭代，根据预估分布（以均匀分布开始）撒粒子，再根据结果调整重要性评估（归一化）。
 \end{itemize}
 %------------------------------------------------
-\subsubsection[蒙特卡洛定位（粒子滤波）算法]{蒙特卡洛定位（粒子滤波算法）（MCL）\tip{蒙特卡洛定位（粒子滤波）算法}}
+\subsubsection[蒙特卡洛定位（粒子滤波）算法]{\textcolor{red}{蒙特卡洛定位（粒子滤波算法）（MCL）}\tip{蒙特卡洛定位（粒子滤波）算法}}
 多信息融合，提高真值处重要性。
 %------------------------------------------------
-\paragraph{重要性采样}~\\
+\paragraph{\textcolor{red}{重要性采样}}~\\
 
 目标分布：
 $$ p(x_i|z_1, z_2, \cdots, z_n) = \frac{\prod_k p(z_k|x_i)p(x_i)}{p(z_1, z_2, \cdots, z_n)} $$
@@ -1111,14 +1120,14 @@ $$ p(x_i|z_i) = \frac{p(z_i|x_i)p(x_i)}{p(z_i)} $$
 有重要性权重：
 $$ w_i = \frac{p(x_i|z_1, z_2, \cdots, z_n)}{p(x_i|z_i)} = \frac{p(z_i)\prod_{k \neq i}p(z_k|x_i)}{p(z_1, z_2, \cdots, z_n)} \propto \prod_{k \neq i}p(z_k|x_i) $$
 %------------------------------------------------
-\paragraph{步骤}
+\paragraph{\textcolor{red}{步骤}}
 在一次迭代（$ X_{t - 1} \rightarrow X_t $）中，经历以下过程：
 \begin{enumerate}
-\item 预测：基于运动模型（建议分布）对粒子进行更新和采样：
+\item \textcolor{red}{预测}：基于运动模型（建议分布）对粒子进行更新和采样：
 $$ x_t^{(i)} = f(x_{t - 1}^{(i)}, u_t) $$
-\item 校正：使用传感器模型计算粒子权重：
+\item \textcolor{red}{校正}：使用传感器模型计算粒子权重：
 $$ w_t^{(i)} = p(z_t|x_t^{(i)}) $$
-\item 重采样：根据归一化权重进行重采样（采用轮盘赌），权重越大概率越高。
+\item \textcolor{red}{重采样}：根据归一化权重进行重采样（采用轮盘赌），权重越大概率越高。
 \end{enumerate}
 %------------------------------------------------
 \paragraph{激光雷达观测误差模型}
@@ -1145,23 +1154,23 @@ $$ p_{hit}(z_t|x_t, m) = \begin{cases} N(z_t^{k*}, \sigma_{hit}^2) & 0 \leq z_t^
 %------------------------------------------------
 \paragraph{特点}
 \begin{itemize}
-\item 优点：计算简单，可解决大范围全局定位问题，适用于多种分布。
-\item 缺点：粒子数过大时占用内存大，计算效率低；大地图下，只用少量粒子可能发散；无法应对绑架问题。
+\item 优点：\textcolor{red}{计算简单}，可解决大范围全局定位问题，适用于多种分布。
+\item 缺点：\textcolor{red}{粒子数}过大时占用内存大，计算效率低；大地图下，只用少量粒子可能发散；\textcolor{red}{无法应对绑架问题}。
 \end{itemize}
 %------------------------------------------------
-\subsubsection[自适应蒙特卡洛定位算法]{自适应蒙特卡洛定位算法（AMCL）\tip{自适应蒙特卡洛定位算法}}
+\subsubsection[自适应蒙特卡洛定位算法]{\textcolor{red}{自适应蒙特卡洛定位算法（AMCL）}\tip{自适应蒙特卡洛定位算法}}
 %------------------------------------------------
 \paragraph{改进}
 引入短、长期指数滤波器衰减率$ \alpha_{slow} \ll \alpha_{fast} $，计算短、长期重要性指数似然评价估计$ w_{slow}, w_{fast} $，二者计算公式格式一致，正常时$ w_{slow} < w_{fast} $。
 %------------------------------------------------
 \paragraph{解决问题}
 \begin{itemize}
-\item 绑架问题：发生绑架时，$ w_{avg} $会突然下降，导致$ w_{slow} > w_{fast} $，将按照概率$ \max(0, 1 - \frac{w_{fast}}{w_{slow}}) $向粒子集中注入随机粒子。
-\item 粒子数问题：使用KLD（Kullback-Leibler Divergence，库尔贝克-莱布勒散度，计算概率分布间差异）采样，在收敛过程中减少粒子。
+\item \textcolor{red}{绑架问题}：发生绑架时，$ w_{avg} $会突然下降，导致$ w_{slow} > w_{fast} $，将按照概率$ \max(0, 1 - \frac{w_{fast}}{w_{slow}}) $向粒子集中注入随机粒子。
+\item \textcolor{red}{粒子数问题}：使用KLD（Kullback-Leibler Divergence，库尔贝克-莱布勒散度，计算概率分布间差异）采样，在收敛过程中减少粒子。
 \end{itemize}
 %------------------------------------------------
 \paragraph{算法}
-标红部分是AMCL相较MCL的改进。
+\textcolor{red}{AMCL相较MCL的改进}。
 \begin{myalgorithm}[AMCL]
 \State 参数：$ \alpha_{slow}, \alpha_{fast} $
 \State 初始化：初始化$ \overline{X}_t = X_t $为空，初始化$ w_{slow}, w_{fast} $
@@ -1182,7 +1191,7 @@ $$ p_{hit}(z_t|x_t, m) = \begin{cases} N(z_t^{k*}, \sigma_{hit}^2) & 0 \leq z_t^
 %------------------------------------------------
 \section{机器人建图}
 %------------------------------------------------
-\subsection[地图]{地图}
+\subsection[地图]{\textcolor{red}{地图}}
 %------------------------------------------------
 \paragraph{功能}
 \begin{itemize}
@@ -1193,12 +1202,12 @@ $$ p_{hit}(z_t|x_t, m) = \begin{cases} N(z_t^{k*}, \sigma_{hit}^2) & 0 \leq z_t^
 %------------------------------------------------
 \paragraph{表示法}
 \begin{itemize}
-\item 点云地图
+\item \textcolor{red}{点云地图}
 \begin{itemize}
 \item 优点：可以完全表示环境三维信息，无需预定义尺寸。
 \item 缺点：存储要求高，存在盲区和空洞，需判断占用和联通状态，不具有通用性。
 \end{itemize}
-\item 栅格地图：以允许误差大小确定栅格大小，用$ 0 - 1 $的值表示栅格被占用的概率（不同激光数据中占用的概率）。
+\item \textcolor{red}{栅格地图}：以允许误差大小确定栅格大小，用$ 0 - 1 $的值表示栅格被占用的概率（不同激光数据中占用的概率）。
 \begin{itemize}
 \item 计算
 \begin{itemize}
@@ -1234,29 +1243,29 @@ l_{i, n} &= \log\frac{p(m_i|s_1, s_2, \cdots, s_n)}{p(\bar{m}_i|s_1, s_2, \cdots
 \item 多分辨率地图：障碍质密处栅格小，无障碍处栅格大，空间占用效率高，计算复杂度高，存储存在稀疏特征。
 \end{itemize}
 \end{itemize}
-\item 特征（语义）地图：连续多边形地图，空间占用效率高，定位精度高。
-\item 拓扑地图：节点和连线的拓扑结构图，便于导航和路径规划，难以精确定位。
+\item \textcolor{red}{特征（语义）地图}：连续多边形地图，空间占用效率高，定位精度高。
+\item \textcolor{red}{拓扑地图}：节点和连线的拓扑结构图，便于导航和路径规划，难以精确定位。
 \end{itemize}
 %------------------------------------------------
-\subsection[SLAM]{SLAM（Simultaneous Localization and Mapping，同步定位与建图）}
+\subsection[SLAM]{\textcolor{red}{SLAM}（Simultaneous Localization and Mapping，同步定位与建图）}
 %------------------------------------------------
 \paragraph{问题描述}
 \begin{itemize}
-\item 定位（Localization）：根据观测序列、运动序列和地图，确定位姿。误差源于全局定位的初始误差和局部定位的观测误差。
+\item \textcolor{red}{定位}（Localization）：根据观测序列、运动序列和地图，确定位姿。误差源于全局定位的初始误差和局部定位的观测误差。
 $$ E[X^t|Z^t, U^{t - 1}, m] $$
-\item 建图（Mapping）：根据观测序列和位姿，构建地图。误差源于观测噪声。
+\item \textcolor{red}{建图}（Mapping）：根据观测序列和位姿，构建地图。误差源于观测噪声。
 $$ E[m|Z^t, X^t] $$
-\item SLAM：根据观测序列、运动序列，确定位姿并构建地图。
+\item \textcolor{red}{SLAM}：根据观测序列、运动序列，确定位姿并构建地图。
 $$ E[X^t, m|Z^t, U^{t - 1}] $$
 \end{itemize}
 %------------------------------------------------
-\subsection[基于滤波的SLAM算法]{基于滤波的SLAM算法}
+\subsection[基于滤波的SLAM算法]{基于\textcolor{red}{滤波}的SLAM算法}
 GMAPPING包。
 %------------------------------------------------
-\subsubsection[EKF-SLAM]{EKF-SLAM（扩展卡尔曼滤波SLAM）\tip{EKF-SLAM}}
+\subsubsection[EKF-SLAM]{\textcolor{red}{EKF-SLAM}（扩展卡尔曼滤波SLAM）\tip{EKF-SLAM}}
 第一个SLAM算法，面向特征地图，采用maximum likelihood进行数据关联。
 %------------------------------------------------
-\paragraph{状态}
+\paragraph{\textcolor{red}{状态}}
 机器人位姿$ X_R = \begin{bmatrix} x & y & \theta \end{bmatrix}^T $，地图特征$ M_i = \begin{bmatrix} x_i & y_i \end{bmatrix}^T $。
 \begin{align*}
 x_t = \begin{bmatrix} X_R \\ M_1 \\ M_2 \\ \vdots \\ M_n \end{bmatrix}_{(3 + 2n) \times 1} \quad 
@@ -1271,23 +1280,23 @@ x_t = \begin{bmatrix} X_R \\ M_1 \\ M_2 \\ \vdots \\ M_n \end{bmatrix}_{(3 + 2n)
 
 高斯协方差矩阵表征了高度互相关性。
 %------------------------------------------------
-\paragraph{步骤}
+\paragraph{\textcolor{red}{步骤}}
 \begin{enumerate}
 \item 初始状态：$ X_0 = 0, \quad \Sigma_0 = diag(\infty) $。
-\item 基于运动模型进行状态估计：地图保持不变，与其相关项为$ 0 $。
+\item \textcolor{red}{基于运动模型进行状态估计}：地图保持不变，与其相关项为$ 0 $。
 \begin{align*}
 &\bar{X}_t = f'(X_{t - 1}, U_{t - 1}) \\
 &\bar{\Sigma}_{X_R} = \nabla f \cdot \Sigma_{R_{t - 1}} \cdot \nabla f^T + R_t, \quad
 \bar{\Sigma}_t = \nabla f' \cdot \Sigma_{R_{t - 1}} \cdot \nabla f'^T + F_x^T R_t F_x, \quad
 \nabla f' = \begin{bmatrix} \nabla f & 0 \\ 0 & I \end{bmatrix}
 \end{align*}
-\item 基于观测模型进行预估观测：每个路标观测独立，交叉项为$ 0 $。
+\item \textcolor{red}{基于观测模型进行预估观测}：\textcolor{red}{每个路标观测独立}，交叉项为$ 0 $。
 $$ \hat{Z}_t = \begin{bmatrix} Z_{1t} \\ Z_{2t} \\ \vdots \\ Z_{nt} \end{bmatrix}, \quad Q_t = \begin{bmatrix} Q_{1t} & 0 & \cdots & 0 \\ 0 & Q_{2t} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & Q_{nt} \end{bmatrix} $$
-\item 建立状态估计和预估观测的数据关联。
+\item \textcolor{red}{建立状态估计和预估观测的数据关联}。
 $$ K_t = \bar{\Sigma}_t H_t^T (H_t \bar{\Sigma}_t H_t^T + Q_t)^{-1} $$
-\item 状态更新。
+\item \textcolor{red}{状态更新}。
 $$ X_t = \bar{X}_t + K_t[\hat{Z}_t - h(\bar{X}_t)], \quad \Sigma_t = [I - K_t H_t]\bar{\Sigma}_t $$
-\item 获得实际观测：全局地图 = 全局观测位置 + 机器人测量数据。
+\item \textcolor{red}{获得实际观测}：全局地图 = 全局观测位置 + 机器人测量数据。
 
 机器人系的激光观测数据$ z^i_t = [r_t^i, \phi_t^i] $，投影到世界坐标系：
 $$ \begin{pmatrix} \bar{x}_m \\ \bar{y}_m \end{pmatrix} = \begin{pmatrix} \bar{x}_R \\ \bar{y}_R \end{pmatrix} + \begin{pmatrix} r_t^i \cos(\phi_t^i + \bar{\theta}_R) \\ r_t^i \sin(\phi_t^i + \bar{\theta}_R) \end{pmatrix} $$
@@ -1297,7 +1306,7 @@ $$ \delta = \begin{pmatrix} \delta_x \\ \delta_y \end{pmatrix} = \begin{pmatrix}
 
 有单路标雅可比：
 \begin{align*} H_i^j &= {}^{low} H_i^j F_{x, j} \\ &= \frac{1}{q} \begin{pmatrix} -\sqrt{q}\delta_x & -\sqrt{q}\delta_y & 0 & \sqrt{q}\delta_x & \sqrt{q}\delta_y \\ \delta_y & -\delta_x & -q & -\delta_y & \delta_x \end{pmatrix} \begin{pmatrix} I_3 & 0_{2j - 2} & 0 & 0_{2N - 2j} \\ 0 & 0 & I_2 & 0 \\ \end{pmatrix} \end{align*}
-\item 在地图中加入新的路标：新路标与原路标不独立，因为前者由不确定度决定，而不确定度有后者计算。
+\item \textcolor{red}{在地图中加入新的路标}：\textcolor{red}{新路标与原路标不独立}，因为前者由不确定度决定，而不确定度有后者计算。
 \begin{align*}
 &m_{n + 1} = f(X_R, Z_{n + 1}) \\
 &\nabla f_R = \frac{\partial f(X_R, Z_{n + 1})}{\partial X_R}, \quad \nabla f_Z = \frac{\partial f(X_R, Z_{n + 1})}{\partial Z_{n + 1}} \\
@@ -1306,7 +1315,7 @@ $$ \delta = \begin{pmatrix} \delta_x \\ \delta_y \end{pmatrix} = \begin{pmatrix}
 &\Sigma_{m_{n + 1}X_R} = \nabla f_R \cdot \Sigma_{X_R}
 \end{align*}
 
-得到新的状态（标红部分为扩充内容）：
+得到新的状态（\textcolor{red}{扩充内容}）：
 \begin{align*}
 X_t = \begin{bmatrix} X_R \\ M_1 \\ M_2 \\ \vdots \\ M_n \\ \color{red} M_{n + 1} \end{bmatrix}, \quad
 \Sigma_t = \begin{bmatrix} 
@@ -1324,16 +1333,16 @@ X_t = \begin{bmatrix} X_R \\ M_1 \\ M_2 \\ \vdots \\ M_n \\ \color{red} M_{n + 1
 \paragraph{特点}
 \begin{itemize}
 \item 计算复杂度高。
-\item 要求高斯分布，只能处理单峰假设。
-\item 依赖数据关联正确性，错误匹配会使算法发散。
-\item 仅适用于有全连接人工路标的点云地图或特征地图，无法使用栅格地图。
+\item 要求\textcolor{red}{单峰高斯分布}。
+\item \textcolor{red}{依赖数据关联正确性}，错误匹配会使算法发散。
+\item 仅适用于有全连接人工路标的\textcolor{red}{点云地图或特征地图}，无法使用栅格地图。
 \end{itemize}
 %------------------------------------------------
-\subsubsection[FastSLAM]{FastSLAM（粒子滤波SLAM）\tip{FastSLAM}}
+\subsubsection[FastSLAM]{\textcolor{red}{FastSLAM}（粒子滤波SLAM）\tip{FastSLAM}}
 集成粒子滤波器与EKF，使用粒子分布表示位姿。
 %------------------------------------------------
 \paragraph{粒子降维}
-每个粒子相当于对机器人路径的一个假设，构建独立的地图，协方差矩阵只有对角线。
+\textcolor{red}{每个粒子相当于对机器人路径的一个假设，构建独立的地图}，协方差矩阵只有对角线。
 $$ x = (\underbrace{x_1, \cdots, x_t}_{3t\text{，撒粒子获得}}, \underbrace{l_{1, x}, l_{1, y}, \cdots, l_{N, x}, l_{N, y}}_{2N\text{，计算获得}})^T $$
 
 基于饶布莱克维尔定理进行因式分解：
@@ -1345,19 +1354,19 @@ p(x_{0:t}, \underbrace{l_{1:M}}_{\text{地图（路标）}}|z_{1:t}, u_{1:t})
 
 其中粒子滤波部分不需要修正过去位姿信息，只需要维护当前位姿。
 %------------------------------------------------
-\paragraph{步骤}
+\paragraph{\textcolor{red}{步骤}}
 \begin{enumerate}
-\item 运动更新。
-\item 计算新特征的EKF。
-\item 地图更新。
-\item 基于观测计算权重：仅与当前观测相关。
+\item \textcolor{red}{运动更新}。
+\item \textcolor{red}{计算新特征的EKF}。
+\item \textcolor{red}{地图更新}。
+\item \textcolor{red}{基于观测计算权重}：仅与当前观测相关。
 \begin{align*}
 w^{[k]} &= \frac{\overbrace{p(x_{1:t}^{[k]}|z_{1:t}, u_{1:t})}^{\text{目标分布}}}{\underbrace{p(x_{1:t}^{[k]}|z_{1:t - 1}, u_{1:t})}_{\text{建议分布}}} \\
 &= \frac{\eta p(z_t | x_{1:t}^{[k]}, z_{1:t - 1})p(x_t^{[k]}|x_{t - 1}, u_t)p(x_{1:t - 1}^{[k]}|z_{1:t - 1}, u_{1:t - 1})}{p(x_t^{[k]}|x_{t - 1}, u_t)p(x_{1:t - 1}^{[k]}|z_{1:t - 1}, u_{1:t - 1})} \\
 &= \eta p(z_t|x_{1:t}^{[k]}, z_{1:t - 1})
 \end{align*}
-\item 插入新特征。
-\item 基于权重重采样。
+\item \textcolor{red}{插入新特征}。
+\item \textcolor{red}{基于权重重采样}。
 \end{enumerate}
 %------------------------------------------------
 \paragraph{数据关联}
@@ -1369,15 +1378,15 @@ w^{[k]} &= \frac{\overbrace{p(x_{1:t}^{[k]}|z_{1:t}, u_{1:t})}^{\text{目标分�
 %------------------------------------------------
 \paragraph{特点}
 \begin{itemize}
-\item 降维高效。
-\item 随机采样使数据关联更鲁棒，利用多假设分析忽略位姿误差。
+\item \textcolor{red}{降维高效}。
+\item 随机采样使\textcolor{red}{数据关联更鲁棒}，利用多假设分析忽略位姿误差。
 \item 粒子数量选取：尽量多，过多可能占用过大内存，过少可能导致错误。
 \end{itemize}
 %------------------------------------------------
-\subsection[基于优化的SLAM算法]{基于优化的SLAM算法}
+\subsection[基于优化的SLAM算法]{基于\textcolor{red}{优化}的SLAM算法}
 图优化SLAM中，位姿通过约束相互连接，表征不确定性，寻求最优的节点构型使约束误差最小。g2o包，主流。
 %------------------------------------------------
-\paragraph{构建图（前端）}
+\paragraph{\textcolor{red}{构建图}（前端）}
 \begin{itemize}
 \item 节点（Node）：机器人位姿，包含位姿$ x_{1:n}(x, y, \theta) $、特征或路标$ m_{1:k}(x, y) $信息。
 \begin{itemize}
@@ -1391,13 +1400,14 @@ w^{[k]} &= \frac{\overbrace{p(x_{1:t}^{[k]}|z_{1:t}, u_{1:t})}^{\text{目标分�
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
-\paragraph{图优化（后端）}
+\paragraph{\textcolor{red}{图优化}（后端）}
 \begin{itemize}
 \item 定位：$ e_{ij}(x_i, x_j) = t2v[z_{ij}^{-1}(x_i^{-1}x_j)] \overset{e_{ij}(x_i, x_j) = 0}{\Longrightarrow} z_{ij} = (x_i^{-1}x_{i + 1}) $。
 \item SLAM：$ e_{ij}(z_i, x_j) = \hat{z}_{ij} - z_{ij} = R_j^T(z_i - t_j) - z_{ij} \overset{e_{ij}(x_i, x_j) = 0}{\Longrightarrow} z_{ij} = R_i^T(z_i - t_j) $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{例题}\tip{图优化例题}
+{\footnotesize
 \begin{figure}[H]
 \centering
 \subfloat[定位]{\includegraphics[width=.3\textwidth]{Pose}} \quad
@@ -1421,13 +1431,14 @@ $$ c = \sum_{i = 1}^{4} f_i^2 = (x_0 - 0)^2 + (x_1 - x_0 - 1)^2 + (l_0 - x_0 - 2
 求偏导得到方程组，解得：
 $$ \begin{bmatrix}  x_0 \\ x_1 \\ l_0 \end{bmatrix} = \begin{bmatrix} 3 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}^{-1} \begin{bmatrix} -3.0 \\ 0.2 \\ 2.8 \end{bmatrix} = \begin{bmatrix} 0 \\ 1.07 \\ 1.93 \end{bmatrix} $$
 \end{enumerate}
+}
 %------------------------------------------------
 \paragraph{优化求解}
 略
 %------------------------------------------------
 \paragraph{特点}
 \begin{itemize}
-\item 仅将实际发生关联的约束构建连接并进行优化，且不是每次观测都需要更新（多分辨率），效率高。
+\item 仅将实际发生关联的约束构建连接并进行优化，且不是每次观测都需要更新（多分辨率），\textcolor{red}{效率高}。
 \item 优化思想而非概率思想，易理解和计算。
 \end{itemize}
 %------------------------------------------------
@@ -1453,15 +1464,15 @@ $$ \begin{bmatrix}  x_0 \\ x_1 \\ l_0 \end{bmatrix} = \begin{bmatrix} 3 & -1 & -
 %------------------------------------------------
 \paragraph{分层规划}
 \begin{itemize}
-\item 路径规划：只考虑几何约束，不考虑机器人和执行器约束。
+\item \textcolor{red}{路径规划}：只考虑几何约束，不考虑机器人和执行器约束。
 \begin{itemize}
-\item 基于图搜索：算法完备，有限时间内返回解或返回无解。
-\item 基于采样：概率完备。
+\item 基于\textcolor{red}{图搜索}：\textcolor{red}{算法完备}，有限时间内返回解或返回无解。
+\item 基于\textcolor{red}{采样}：\textcolor{red}{概率完备}。
 \end{itemize}
-\item 轨迹规划：在给定路径上考虑机器人和执行器约束，生成随时间变化的运动序列。分在线和离线两种。
+\item \textcolor{red}{轨迹规划}：在给定路径上考虑机器人和执行器约束，生成随时间变化的运动序列。分在线和离线两种。
 \end{itemize}
 %------------------------------------------------
-\subsection[基于图搜索的路径规划]{基于图搜索的路径规划}
+\subsection[基于图搜索的路径规划]{\textcolor{red}{基于图搜索的路径规划}}
 %------------------------------------------------
 \subsubsection[静态路径规划]{静态路径规划}
 %------------------------------------------------
@@ -1473,23 +1484,23 @@ $$ \begin{bmatrix}  x_0 \\ x_1 \\ l_0 \end{bmatrix} = \begin{bmatrix} 3 & -1 & -
 \item 精确单元分解地图。
 \item 栅格地图：关联格间无障碍。
 \item 拓扑地图。
-\item 搜索树。
+\item \textcolor{red}{搜索树}。
 \end{itemize}
 %------------------------------------------------
-\paragraph{算法}\tip{图搜索算法}
+\paragraph{\textcolor{red}{算法}}\tip{图搜索算法}
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{2cm}|p{5.5cm}|p{1.4cm}|p{3.5cm}|p{2.5cm}|}
 \hline
 算法 & 原理 & 完备性 & 最优性 & 补充 \\
 \hline
-深度优先（DFS） & 分支遍历 & 完备 & 不最优 & 无方向性，效率低下 \\
+\textcolor{red}{深度优先}（DFS） & \textcolor{red}{分支遍历} & 完备 & 不最优 & 无方向性，效率低下 \\
 \hline
-宽/广度优先（BFS，泛洪搜索） & 层次遍历 & 完备 & 不最优 & 无方向性，效率低下 \\
+\textcolor{red}{宽/广度优先}（BFS，泛洪搜索） & \textcolor{red}{层次遍历} & 完备 & 不最优 & 无方向性，效率低下 \\
 \hline
-Dijkstra & 计算节点到起点的代价，优先遍历队列中代价最小的节点 & 完备 & 最优 & 地图信息利用不充分 \\
+\textcolor{red}{Dijkstra} & 计算\textcolor{red}{节点到起点的代价}，优先遍历队列中代价最小的节点 & 完备 & 最优 & 地图信息利用不充分 \\
 \hline
-A* & 路径评价由移动开销$ G(n) $和启发函数代价估计$ H(n) $组合得到 & 完备 & 最优（需满足可采纳性和一致性） & 高效，多解，不一定平滑 \\
+\textcolor{red}{A*} & 路径评价由\textcolor{red}{移动开销$ G(n) $和启发函数代价估计$ H(n) $}组合得到 & 完备 & 最优（\textcolor{red}{需满足可采纳性和一致性}） & 高效，多解，不一定平滑 \\
 \hline
 \end{tabular}
 \caption{图搜索算法对比}
@@ -1500,8 +1511,8 @@ A* & 路径评价由移动开销$ G(n) $和启发函数代价估计$ H(n) $组�
 \item 可选曼哈顿距离、欧几里得距离、切比雪夫距离，是算法效率的重要因素。
 \item 最优性性质：
 \begin{itemize}
-\item 可采纳性：低估代价。
-\item 一致性：符合三角不等式。
+\item \textcolor{red}{可采纳性}：\textcolor{red}{低估代价}。
+\item \textcolor{red}{一致性}：\textcolor{red}{符合三角不等式}。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
@@ -1567,6 +1578,7 @@ A* & 路径评价由移动开销$ G(n) $和启发函数代价估计$ H(n) $组�
 \end{itemize}
 %----------------------------------------------------------------------------------------
 \section{附录}
+{\footnotesize
 %------------------------------------------------
 \subsection[误差转化展示]{误差转化展示}\label{sec:error}
 将误差传播协方差矩阵$ \sum_p $转化成椭圆展示。
@@ -1592,5 +1604,6 @@ $$ A^T A v_i = \lambda_i v_i, i = 1, 2, \dots, n \quad A A^T u_i = \mu_i u_i, \q
 奇异值$ \sigma_i $是$ \lambda_i, \mu_i $的平方根，将其按降序排列，并构造对角矩阵$ \Sigma = diag(\sigma_1, \sigma_2, \dots, \sigma_r) $，得到SVD分解$ A = U \Sigma V^T $。
 
 返回里程计\ref{sec:svd back}。
+}
 %----------------------------------------------------------------------------------------
 \end{document}
