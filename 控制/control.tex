@@ -1796,22 +1796,25 @@ $ \lambda $互异时，范德蒙特矩阵$ P = \begin{bmatrix} 1 & \cdots & 1 \\
 $ m $重$ \lambda_1 $，只有一个独立特征向量$ \alpha_1 $。
 \begin{align*}
 p &= [\alpha_1 \alpha_2 \cdots \alpha_m|\alpha_{m + 1} \cdots \alpha_n] \\
-J &= p^{-1} A p = \begin{bmatrix} \lambda_1 & 1 & 0 & 0 & \cdots & \cdots & 0 \\ 0 & \lambda_1 & \ddots & 0 & \cdots & \cdots & 0 \\ \vdots & \vdots & \ddots & 1 & 0 & \cdots & 0 \\ 0 & 0 & \cdots & \lambda_1 & 0 & \cdots & 0 \\ 0 & 0 & \cdots & 0 & \lambda_{m + 1} & \ddots & 0 \\ 0 & 0 & \cdots & 0 & 0 & \ddots & 0 \\ 0 & 0 & \cdots & 0 & 0 & \cdots & \lambda_n \end{bmatrix}
+J &= p^{-1} A p = \begin{bmatrix} \lambda_1 & 1 & & & & & \\ & \lambda_1 & \ddots & & & 0 & \\ & & \ddots & 1 & & & \\ & & & \lambda_1 & & & \\ & & & & \lambda_{m + 1} & & \\ & 0 & & & & \ddots & \\ & & & & & & \lambda_n \end{bmatrix}
 \end{align*}
 
 其中左上角的约当块$ = A [\alpha_1 \alpha_2 \cdots \alpha_m] $。
 %------------------------------------------------
-\subsubsection[能控标准型]{能控标准型}
-$$ A = \begin{bmatrix} 0 & 1 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & 1 \\ -a_0 & -a_1 & \cdots & -a_n \end{bmatrix}, \quad b = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix} $$
+\subsubsection[标准型]{标准型}
+$ A $阵称为伴随阵。
+%------------------------------------------------
+\paragraph{能控标准型}
+$$ A = \begin{bmatrix} 0 & & I & \\ -a_0 & -a_1 & \cdots & -a_{n - 1} \end{bmatrix}, \quad B = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix}^T $$
 \begin{enumerate}
 \item $ U = [B \vdots AB \vdots \cdots \vdots A^{n - 1} B] $，$ |U| \neq 0 $则能控，求$ U^{-1} $。
-\item $ P = [0 \cdots 0 1] U^{-1} $（取最后一行）。
-\item $ T^{-1} = [P^T \vdots (PA)^T \vdots \cdots \vdots (PA^{n - 1})^T]^T $，求$ T $，其可将系统标准化。
+\item $ q = [0 \cdots 0 1] U^{-1} $（取最后一行）。
+\item $ T^{-1} = [q^T \vdots (qA)^T \vdots \cdots \vdots (qA^{n - 1})^T]^T $，求$ T $，其可将系统标准化。
 \end{enumerate}
 %------------------------------------------------
-\subsubsection[能观测标准型]{能观测标准型}
+\paragraph{能观测标准型}
 与能控标准型对偶。
-$$ A = \begin{bmatrix} 0 & \cdots & 0 & -a_0 \\ 1 & \cdots & 0 & -a_1 \\ \vdots & \ddots & \vdots & \vdots \\ 0 & \cdots & 1 & -a_n \end{bmatrix}, \quad C = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} $$
+$$ A = \begin{bmatrix} 0 & -a_0 \\ & -a_1 \\ I & \vdots \\ & -a_{n - 1} \end{bmatrix}, \quad C = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} $$
 %------------------------------------------------
 \subsection[分解]{分解}
 %------------------------------------------------
@@ -1844,7 +1847,7 @@ $$ A = \begin{bmatrix} 0 & \cdots & 0 & -a_0 \\ 1 & \cdots & 0 & -a_1 \\ \vdots 
 对偶 & 对偶系统的能观测部分 & 对偶系统的能控部分 \\
 \hline
 \end{tabular}
-\caption{分解}
+\caption{结构分解}
 \end{table}
 %------------------------------------------------
 \paragraph{不变子空间}
@@ -1900,7 +1903,7 @@ $$ G(s) = \frac{b_m s^m + \dots + b_1 s + b_0}{s^n + a_{n - 1} s^{n - 1} + \dots
 \Rightarrow &Y(s) = [\sum_{i = 1}^p \frac{c_{1i}}{(s - \lambda_1)^i} + \sum_{i = p + 1}^q \frac{c_i}{s - \lambda_i}]U(s) \\
 \overset{\text{留数}}{\Longrightarrow} &c_{1i} = [\frac{N(s)}{D(s)}(s - \lambda_1)^i]|_{s = \lambda_1} \text{}, \quad c_i = [\frac{N(s)}{D(s)}(s - \lambda_i)]_{s = \lambda_i}, i \neq 1 \quad (\text{也可待定系数化分式和}) \\
 \Rightarrow &\begin{cases}
-\dot{x} &= p^{-1} A p = \begin{bmatrix} \lambda_1 & 1 & 0 & 0 & \cdots & \cdots & 0 \\ 0 & \lambda_1 & \ddots & 0 & \cdots & \cdots & 0 \\ \vdots & \vdots & \ddots & 1 & 0 & \cdots & 0 \\ 0 & 0 & \cdots & \lambda_1 & 0 & \cdots & 0 \\ 0 & 0 & \cdots & 0 & \lambda_{m + 1} & \ddots & 0 \\ 0 & 0 & \cdots & 0 & 0 & \ddots & 0 \\ 0 & 0 & \cdots & 0 & 0 & \cdots & \lambda_n \end{bmatrix} \\
+\dot{x} &= p^{-1} A p = \begin{bmatrix} \lambda_1 & 1 & & & & & \\ & \lambda_1 & \ddots & & & 0 & \\ & & \ddots & 1 & & & \\ & & & \lambda_1 & & & \\ & & & & \lambda_{m + 1} & & \\ & 0 & & & & \ddots & \\ & & & & & & \lambda_n \end{bmatrix} \\
 y &= \begin{bmatrix} c_{11} & \cdots & c_{1p} & c_{p + 1} & \cdots & c_q \end{bmatrix} x
 \end{cases}
 \end{align*}
@@ -2001,30 +2004,311 @@ $ \dot{x} = f(x, t), \quad \forall t, \quad f(x_e, t) = 0 $，其中$ x_e $为�
 \paragraph{离散线性定常系统稳定性}
 方程变为$ A^T P A + P = -Q $。
 %----------------------------------------------------------------------------------------
-\section{反馈控制系统}
+\section{反馈控制系统（状态反馈）}
 %------------------------------------------------
 \subsection[反馈]{反馈}
-1
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+ & 状态反馈 & 输出反馈 \\
+\hline
+反馈 & $ u(t) = r(t) - k x(t) $ & $ u(t) = r(t) - k y(y) $ \\
+\hline
+状态方程 & $ \dot{x} = (A - B x) + B r $ & $ \dot{x} = (A - B k C)x + B r $ \\
+\hline
+开环传递函数 & $ G_k(s) = C (sI - A + B k)^{-1} B $ & $ G_k(s) = C (sI - A + B k C)^{-1} B $ \\
+\hline
+能控性 & 不影响 & 不影响 \\
+\hline
+能观测性 & 影响 & 不影响 \\
+\hline
+稳定性 & \multicolumn{2}{c|}{影响} \\
+\hline
+\end{tabular}
+\caption{反馈}
+\end{table}
+%------------------------------------------------
+\paragraph{镇定}
+\begin{itemize}
+\item 定义：加入反馈，使闭环系统稳定。
+\item 连续系统：线性定常系统能状态反馈镇定$ \Leftrightarrow $不能控部分渐进稳定（能控部分不受影响）。
+\item 离散系统：离散线性定常系统能镇定$ \Leftrightarrow $不能控部分极点模小于$ 1 $。
+\end{itemize}
+
+连续系统镇定判断：
+\begin{enumerate}
+\item 能控性分离，完全能控则可以镇定。
+\item 判断不能控部分渐近稳定性，即$ \lambda $是否均有负实部。
+\end{enumerate}
 %------------------------------------------------
 \subsection[李雅普诺夫方法设计反馈系统]{李雅普诺夫方法设计反馈系统}
-1
+%------------------------------------------------
+\subsubsection[极点配置]{极点配置}
+在$ r = 0 $，$ k $省去符号时，状态反馈的方程为$ \dot{x} = (A + B k)x $。根据李雅普诺夫方程求解$ k $，得到闭环极点。不同的$ Q, P $组合会得到不同的$ k $，配置得到不同的极点。
+\begin{enumerate}
+\item 设未知阵$ k $，计算$ A + B k $。
+\item 一般设$ Q = P = I $，得到方程$ (A + B k)^T + (A + B k) = -I $，解得$ k $。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{极点实部小于$ -\sigma $，$ \sigma > 0 $}
+方程变为$ (A + B k)^T + (A + B k) + 2 \sigma I = -I $。
+%------------------------------------------------
+\subsubsection[设计最优控制系统]{设计最优控制系统}
+已知$ x(0) $，求$ u(t) = k x(t), \quad \min J = \int_{0}^{\infty} x^T Q x d t $。
+\begin{enumerate}
+\item 设未知阵$ k $，计算$ A^* = A + B k $。
+\item 由$ A^*T P + P A^* = -Q $得到$ P $关于$ k $的表达式。
+\item 对$ J = x^T(0) P x(0) $求关于$ k $的偏导，得到$ J $取极小值时的$ k $，其应使$ P $为正定阵。
+\end{enumerate}
 %------------------------------------------------
 \subsection[极点配置]{极点配置}
-1
+%------------------------------------------------
+\subsubsection[状态反馈配置极点]{状态反馈配置极点}
+%------------------------------------------------
+\paragraph{原理}
+状态反馈只改变能控部分极点集，不改变不能控部分极点集。
+$$ \sigma(A_1) \cup \sigma(A_2) \overset{\text{状态反馈}}{\Longrightarrow} \sigma(A_1 + B_1 K_c) \cup \sigma(A_2) $$
+%------------------------------------------------
+\paragraph{条件}
+\begin{itemize}
+\item $ (A, B) $能通过状态反馈任意配置极点$ \Leftrightarrow $$ (A, B) $完全能控。
+\item $ (A, B) $不完全能控$ \Rightarrow $$ (A, B) $不能通过反馈任意配置极点。
+\end{itemize}
+%------------------------------------------------
+\paragraph{离散系统}
+离散线性定常系统$ (A, B) $能通过状态反馈任意配置极点$ \Leftrightarrow $$ (A, B) $完全能达。
+%------------------------------------------------
+\subsubsection[SISO系统]{SISO系统（唯一）}
+能控标准型为：
+$$ (A + B k) = \begin{bmatrix} 0 & & I & \\ -a_0 + k_1 & -a_1 + k_2 & \cdots & -a_{n - 1} + k_n \end{bmatrix}  $$
+
+目标极点集多项式为：
+$$ (s - \lambda_1)(s - \lambda_2) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0 $$
+
+故$ k = [a_0 - \alpha_0 \cdots a_{n - 1} - \alpha_{n - 1}] $（实际 - 期望）。
+%------------------------------------------------
+\paragraph{法1}
+\begin{enumerate}
+\item 化能控标准型的部分步骤：
+\begin{enumerate}
+\item $ U = [B \vdots AB \vdots \cdots \vdots A^{n - 1} B] $。
+\item $ q = [0 \cdots 0 1] U^{-1} $。
+\item $ T^{-1} = [q^T \vdots (qA)^T \vdots \cdots \vdots (qA^{n - 1})^T]^T $。
+\end{enumerate}
+\item 计算极点：$ |sI - A| = s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0 $。
+\item 计算目标极点：$ (s - \lambda_1)(s - \lambda_2) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0 $。
+\item 计算针对标准型的反馈：$ k = [a_0 - \alpha_0 \cdots a_{n - 1} - \alpha_{n - 1}] $。
+\item 还原：$ k' = k T^{-1} $。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{法2}
+\begin{enumerate}
+\item 设未知阵$ k $，计算$ A + B k $。
+\item 计算极点：$ |sI - (A + B k)| = s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0 $。
+\item 计算目标极点：$ (s - \lambda_1)(s - \lambda_2) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0 $。
+\item 两式对应位置系数相等，得到$ k $。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{阿克曼公式}
+高阶单输入，计算机使用。
+%------------------------------------------------
+\paragraph{极点位置的确定}
+高阶系统的性能主要由主极点对确定，其位置根据期望性能指标决定，其它极点配置在远方。
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+ & 情况1 & 情况2 \\
+\hline
+变化趋势 & 
+\begin{tikzpicture}[scale=0.4] 
+\draw[->] (-1,0) -- (1,0); \draw[->] (-0.2,-0.5) -- (-0.5,-0.8); \draw[->] (-0.2,0.5) -- (-0.5,0.8); \draw[->] (0,-1) -- (0,1);
+\draw[thick] (0,0) -- (-1,-1); \draw[thick] (0,0) -- (-1,1);
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.4] 
+\draw[->] (-1,0) -- (1,0); \draw[->] (0,-1) -- (0,1);
+\draw[thick] (0,0.5) arc (90:270:0.5); 
+\draw[->] (-0.5,-0.5) arc (270:180:0.2); \draw[->] (-0.5,0.5) arc (90:180:0.2);
+\end{tikzpicture} \\
+\hline
+性能 & $ \sigma -, \quad t_s \downarrow, \quad \xi -, \quad \omega_n \uparrow $ & $ \sigma \downarrow, \quad t_s \downarrow, \quad \xi \uparrow, \quad \omega_n - $ \\
+\hline
+\end{tabular}
+\caption{反馈}
+\end{table}
+%------------------------------------------------
+\subsubsection[MI系统]{MI系统（不唯一）}
+%------------------------------------------------
+\paragraph{法1}
+\begin{enumerate}
+\item 化能控规范型：
+\begin{enumerate}
+\item $ U = [B \vdots AB \vdots \cdots \vdots A^{n - 1} B] $。
+\item 重排得到$ \{b_1 \, A b_1 \dots A^{n - 1} b_1; \dots; b_m \, A b_m \dots A^{n - 1} b_m\} $。
+\item 从左至右提取线性无关组$ Q = \begin{bmatrix} b_1 & A b_1 & \dots & A^{\mu_1 - 1} b_1 \\ & & \cdots & \\ b_n & A b_n & \dots & A^{\mu_n - 1} b_n \end{bmatrix} $。
+\item 以$ Q $为变换，得到规范型：
+\begin{align*}
+A &= \begin{bmatrix} A_{11} & \cdots & A_{1h} \\ & \ddots & \vdots \\ 0 & & A_{hh} \end{bmatrix}, \quad A_{ij} = \begin{bmatrix} 0 & * \\ I & * \end{bmatrix}, \quad A_{ij} = \begin{bmatrix} 0 & * \end{bmatrix}, \quad * \neq 0 \\
+B &= \begin{bmatrix} B_1 & & 0 \\ & \ddots & \\ 0 & & B_h & \end{bmatrix}, \quad B_i = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix} 
+\end{align*}
+\end{enumerate}
+\item 对但输入求状态反馈$ S = \begin{bmatrix} 0 & e_i \vdots 0 & e_j \vdots \cdots \end{bmatrix} $。
+\item $ \hat{k} = S Q^{-1} $。
+\item $ \overline{A} = A + B \hat{k}, \quad |sI - \overline{A}| = s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0 $。
+\item 目标：$ (s - \lambda_1)(s - \lambda_2) \cdots (s - \lambda_m) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0 $。
+\item $ k = \begin{bmatrix} a_0 - \alpha_0 & \cdots & a_{n - 1} - \alpha_{n - 1} \end{bmatrix} $。
+\item 化能控标准型的部分步骤：
+\begin{enumerate}
+\item $ \overline{U} = [B_1 \vdots \overline{A} B_1 \vdots \cdots \vdots \overline{A}^{n - 1} B_1] $。
+\item $ q = [0 \cdots 0 1] \overline{U}^{-1} $。
+\item $ T^{-1} = [q^T \vdots (q \overline{A})^T \vdots \cdots \vdots (q \overline{A}^{n - 1})^T]^T $。
+\end{enumerate}
+\item $ \widetilde{k} = k T^{-1}, \quad k = \hat{k} + \begin{bmatrix} \widetilde{k} \\ 0 \end{bmatrix} $。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{法2}
+\begin{enumerate}
+\item 同法1前3步。
+\item $ q = [0 \cdots 0 1] Q^{-1} $。
+\item $ \overline{A} = A + B \hat{k}, \quad \widetilde{k} = -q \hat{f_c}(\overline{A}) \quad (\text{用}\overline{A}\text{代替特征多项式中的}\lambda) $。
+\item $ k = \hat{k} + \begin{bmatrix} \widetilde{k} \\ 0 \end{bmatrix} $。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{极点位置的确定}
+估算 + 试探。
+%------------------------------------------------
+\subsubsection[其它方法]{其它方法}
+%------------------------------------------------
+\paragraph{解李雅普诺夫方程}
+$ (A, B) $能控、$ (\overline{k}, F) $能观测$ \Leftrightarrow $$ A P - P F = B \overline{k} $有唯一非奇异解（SI为充要，MI为必要）。
+\begin{enumerate}
+\item 选取$ F_{n \times n} $，包含目标极点但不包含$ A $的特征根。常选能观测标准型伴随阵。
+\item 任取$ \overline{k}_{m \times n} $，使$ (\overline{k}, F) $能观测。常选$ [0 \cdots 0 1] $。
+\item 解$ A P - P F = B \overline{k} $的唯一解$ P $。若$ P $奇异则选取其它$ \overline{k} $重新计算，否则$ k = \overline{k} P $。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{能控性PBH判据}
+%------------------------------------------------
+\paragraph{有噪声}
+为$ \dot{x} = A x + B u + F w(t) $设计$ u(t) = k x(t) + k \omega w(t) $，使$ \dot{x} = (A + B k)x(t) + (F + B k \omega)w(t) $中$ (F + B k \omega) $尽可能小，方法为使其中较大元素为$ 0 $。
 %------------------------------------------------
 \subsection[解耦]{解耦}
-1
+使闭环系统中每个输入仅影响一个输出，MIMO$ \Rightarrow $多个SISO。
+$$
+\begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases}
+\overset{u = k_1 x + k_2 v}{\Longrightarrow}
+\overline{G}(s) = \underbrace{C (sI - A + B k_1)^{-1} B}_{\text{非奇异对角阵}} k_2
+$$
+%------------------------------------------------
+\paragraph{状态反馈解耦}
+\begin{enumerate}
+\item 求$ C $第$ i $行对应的$ \sigma_i $，其为使$ C_i A^{j - 1} B $非奇异的最小数，不超过$ n - 1 $。
+$$ \sigma_i = \begin{cases} min\{j|C_i A^{j - 1} B \neq 0\} \\ n - 1, \quad \forall j < n, \quad C_i A^{j - 1} B = 0 \end{cases} $$
+\item $ E = \begin{bmatrix} C_1 A^{\sigma_1 - 1} B \\ \cdots \\ C_m A^{\sigma_m - 1} B \end{bmatrix} $，若$ E $非奇异，则$ u = k_1 x + k_2 v $可解耦。
+\item $ L = \begin{bmatrix} C_1 A^{\sigma_1} \\ \cdots \\ C_m A^{\sigma_m} \end{bmatrix}, \quad k_1 = -E^{-1} L, \quad k_2 = E^{-1} $。
+\item $ u = k_1 x + k_2 v $解耦后，$ C (sI - A + B k_1)^{-1} B = diag(\frac{1}{s^{\sigma_1}}, \dots, \frac{1}{s^{\sigma_m}}) $。
+\end{enumerate}
 %----------------------------------------------------------------------------------------
 \section{状态观测器与动态反馈}
 %------------------------------------------------
-\subsection[观测器]{观测器}
-1
+\subsection[观测器]{观测器（状态估计器、状态重构器）}
+\begin{itemize}
+\item 开环：重构原系统，不能根据估计误差进行修正。
+\item 闭环：龙伯格观测器$ C Z = y - \widetilde{y}  $。
+$$ \dot{z} = A z + B u - G \widetilde{y} = (A + G C)z + B u - G y $$
+\end{itemize}
+
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}[scale=0.8,transform shape]
+\node[block] at (0,-2) {$ R $}; \node[block] at (0,0) {$ \dot{x} = A x + B u $}; \node[block] at (5,-2) {$ \dot{z} = (A + G C)z + B u - G y $}; \node[block] at (5,0) {$ C $}; 
+\node at (-1.5,0.3) {$ u $}; \node at (1.8,-1.7) {$ z $}; \node at (2.8,0.3) {$ x $}; \node at (8.5,0.3) {$ y $};
+\draw[->] (1.3,0) -- (4,0); \draw[->] (2.5,-2) -- (1,-2); \draw[->] (6,0) -- (9,0); 
+\draw[->] (-1.5,0) |- (8,-1) |- (7.5,-1.8) node[near end,above] {$ u $}; \draw[->] (-1,-2) -| (-2,0) -- (-1.3,0); \draw[->] (8.5,0) |- (7.5,-2.2) node[near end,below] {$ y $};
+\end{tikzpicture}
+\caption{连续系统离散化结构图}
+\end{figure}
 %------------------------------------------------
-\subsection[动态反馈]{动态反馈}
-1
+\paragraph{条件}
+\begin{itemize}
+\item $ \exists G $使$ (A + G C) $能任意配置极点$ \Leftrightarrow $$ (A^T, C^T) $完全能控$ \Leftrightarrow $$ (C, A) $完全能观测。
+\item 能设计形如$ \dot{z} = (A + G C)z + B u - G y $的观测器（不要求任意配置极点）$ \Leftrightarrow $$ (A^T, C^T) $能稳$ \Leftrightarrow $$ (C, A) $能检测$ \Leftrightarrow $$ \exists G $使$ (A + G C) $的$ \lambda $全具有负实部。
+\end{itemize}
 %------------------------------------------------
-\subsection[鲁棒控制]{鲁棒控制}
-1
+\subsubsection[全阶观测器]{全阶观测器（全状态观测器）}
+观测器维度与状态方程同维。
+\begin{enumerate}
+\item 为对偶系统$ (A^T, C^T, B^T) $配置极点，得到$ k $。
+\item $ G = k^T, \quad \dot{x} = (A + G C)x - B u + G y $。
+\end{enumerate}
+%------------------------------------------------
+\subsubsection[降维观测器]{降维观测器}
+部分状态变量（$ r $维，对应$ x_2 $）可用作反馈，不需要估计，只需$ n - r $阶观测器。
+\begin{enumerate}
+\item 改写系统，使输出由部分状态变量表示。
+\begin{enumerate}
+\item 任取$ D $，使$ Q = \begin{bmatrix} D \\ C \end{bmatrix} $可逆。
+\item 作变换$ x = Q^{-1} x', \quad C' = C Q^{-1} = \begin{bmatrix} 0 & I_r \end{bmatrix} $，得到：
+$$ \begin{cases} \dot{x} = \begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \end{bmatrix} = \begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} + \begin{bmatrix} B_1 \\ B_2 \end{bmatrix} u \\ y = \begin{bmatrix} 0 & I_r \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} \end{cases} $$
+\item 若以上系统完全能观测，则以下子系统也完全能观测：
+$$ 
+y = x_2 \Rightarrow \begin{cases} \dot{x}_1 = A_{11} x_1 + A_{12} y + B_1 u = A_{11} x_1 + v \\ \overline{y} = \dot{y} - A_{22} y - B_2 u = A_{21} x_1 \end{cases} $$
+\end{enumerate}
+\item 为$ \dot{z} = (A_{11} + G A_{21}) z + \underbrace{A_{12} y + B_1 u}_{v} - G(\underbrace{\dot{y} - A_{22} y - B_2 u}_{\overline{y}}) $设计观测器。
+\begin{enumerate}
+\item 即为$ \dot{w} = \dot{z} + G \dot{y} = (A_{11} + G A_{21})w + (B_1 + G B_2)u + [A_{12} + G A_{22} - (A_{11} + G A_{21})G]y $配置极点，即使$ A_{11} + G A_{21} $满足期望极点。
+\item $ x $的估计为$ \hat{x} = \begin{bmatrix} z \\ y \end{bmatrix} = \begin{bmatrix} I \\ 0 \end{bmatrix} w + \begin{bmatrix} -G \\ I \end{bmatrix} y $。
+\item 返回原系统。
+\end{enumerate}
+\end{enumerate}
+%------------------------------------------------
+\subsubsection[带观测器的状态反馈器]{带观测器的状态反馈器}
+$$ \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} \text{与} \begin{cases} \dot{\hat{x}} = (A + G C)\hat{x} + B u - G y \\ u = k \hat{x} + v \end{cases} $$
+
+组合得到：
+$$ \begin{cases} \begin{bmatrix} \dot{x} \\ \dot{\hat{x}} \end{bmatrix} = \underbrace{\begin{bmatrix} A & B k \\ -G C & A + G C + B k \end{bmatrix}}_{A'} \begin{bmatrix} x \\ \hat{x} \end{bmatrix} + \underbrace{\begin{bmatrix} B \\ B \end{bmatrix}}_{B'} v \\ y = \underbrace{\begin{bmatrix} C & 0 \end{bmatrix}}_{C'} \begin{bmatrix} x \\ \hat{x} \end{bmatrix} \end{cases} $$
+
+经过线性变换$ \begin{bmatrix} I_n & 0 \\ I_{11} & -I_n \end{bmatrix} $，有$ det(sI - A') = det[sI - (A + B k)] \cdot det[sI - (A + G C)] $。
+\begin{itemize}
+\item 分离定理：待观测器的状态反馈器的极点 = 原闭环系统极点 + 观测器极点。
+\item $ G(s) $：$ C'(sI - A')^{-1}B' = C[sI - (A + B k)]^{-1}B $。
+\item 极点位置确定：
+\begin{itemize}
+\item 配置在闭环极点远端，使状态估计误差的衰减速率快于系统响应速率。
+\item 设计原则：使估计尽快逼近实际，兼顾状态估计误差的衰减速率和观测器的抗干扰能力。
+\end{itemize}
+\end{itemize}
+%------------------------------------------------
+\subsection[其它]{其它}
+%------------------------------------------------
+\subsubsection[静态状态反馈与输出反馈]{静态状态反馈与输出反馈}
+\begin{itemize}
+\item 都不增加新状态变量，开闭环系统同维。
+\item 线性反馈，常阵反馈增益阵。
+\end{itemize}
+%------------------------------------------------
+\subsubsection[动态反馈与动态补偿器]{动态反馈与动态补偿器}
+带观测器的状态反馈系统中引入的动态子系统状态观测器。
+$$ \begin{cases} \dot{z} = E z + F y \\ G = K z + L y \end{cases} \Rightarrow \begin{cases} \dot{x} = (A + B L C)x + B K z \\ \dot{z} = F C x + E Z \end{cases} $$
+\begin{itemize}
+\item 系统维数 = 受控系统维数 + 动态补偿器维数。
+\item $ G(s) $：带观测器的状态反馈系统 = 同时有串联、反馈补偿器的输出反馈系统。
+\item 动态补偿器镇定。
+\item 系统能用动态补偿器任意配置极点$ \Leftrightarrow $系统完全能控能观测。
+\item 系统的固定模经任何输出动态反馈不变。
+\end{itemize}
+%------------------------------------------------
+\subsubsection[鲁棒控制]{鲁棒控制}
+鲁棒控制器存在$ \Leftrightarrow $$ (A, B) $可镇定，$ (C, A) $可检测，$ m \geq r, \quad rank \begin{bmatrix} A - \lambda I & B \\ C & D \end{bmatrix} = n + r $。
+%------------------------------------------------
+\paragraph{为$ n $阶系统配置$ 2n $个闭环极点}
+\begin{enumerate}
+\item 期望极点集为$ \sigma(A + B k) + \sigma(A + G C) $。
+\item 组合系统为：
+$$ \begin{cases} \dot{z} = (A + G C + B k)z - G y \\ u = k z \end{cases} $$
+\end{enumerate}
 %----------------------------------------------------------------------------------------
 \part{最优控制}
 %----------------------------------------------------------------------------------------
