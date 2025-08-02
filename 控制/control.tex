@@ -2136,7 +2136,7 @@ $$ (s - \lambda_1)(s - \lambda_2) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} 
 性能 & $ \sigma -, \quad t_s \downarrow, \quad \xi -, \quad \omega_n \uparrow $ & $ \sigma \downarrow, \quad t_s \downarrow, \quad \xi \uparrow, \quad \omega_n - $ \\
 \hline
 \end{tabular}
-\caption{反馈}
+\caption{极点位置的确定}
 \end{table}
 %------------------------------------------------
 \subsubsection[MI系统]{MI系统（不唯一）}
@@ -2312,37 +2312,484 @@ $$ \begin{cases} \dot{z} = (A + G C + B k)z - G y \\ u = k z \end{cases} $$
 %----------------------------------------------------------------------------------------
 \part{最优控制}
 %----------------------------------------------------------------------------------------
-\section{最优控制}
-%------------------------------------------------
-\subsection[概念]{概念}
-1
-%------------------------------------------------
-\subsection[各方法的关系]{各方法的关系}
-1
-%----------------------------------------------------------------------------------------
 \section{连续时间最优控制}
 %------------------------------------------------
-\subsection[变分法]{变分法}
-1
+\subsection[概念]{概念}
 %------------------------------------------------
-\subsection[最大值原理]{最大值原理}
-1
+\paragraph{必备条件}
+\begin{itemize}
+\item 系统数学模型$ \dot{x}(t) = \underbrace{f[x(t), u(t), t]}_{\text{连续向量函数}} $，其中状态向量$ x(t) \in R^n $，控制向量$ u(t) \in R^m $。
+\item 正则方程：
+\begin{itemize}
+\item 边界条件$ x(t_0) = x_0 $。
+\item 横截条件$ \psi[x(t_f), x_f] = 0 $。
+\end{itemize}
+\item 容许控制$ u(t) $和控制域$ U $，$ u(t) \in U $，且分段连续。
+\item 性能指标$ J = \underbrace{\theta[x(t_f), x_f]}_{\text{末值项（终端要求）}} + \underbrace{\int_{t_0}^{t_f} L[x(t), u(t), t] d t}_{\text{过程项}} $。
+\begin{itemize}
+\item 最小时间：$ J(U) = \int_{t_0}^{t_f} d t = t_f - t_0 $。
+\item 最小能量：$ J(u) = \int_{t_0}^{t_f} u^T R u d t $。
+\item 最省燃料：$ J(u) = \int_{t_0}^{t_f} |u| d t $。
+\item 状态调节器：$ J(u) = \frac{1}{2}\int_{t_0}^{t_f} x^T Q x d t $。
+\item 终点偏差：$ J(u) = \frac{1}{2} x^T(t_f) F x(t_f) + \frac{1}{2}\int_{t_0}^{t_f}(x^T Q x + u^T R u) d t $。
+\end{itemize}
+\end{itemize}
+%------------------------------------------------
+\subsection[变分法]{变分法：无约束}
+%------------------------------------------------
+\paragraph{起源}
+最速降线问题。
+%------------------------------------------------
+\subsubsection[泛函]{泛函}
+%------------------------------------------------
+\paragraph{函数与泛函}
+\begin{itemize}
+\item $ y = y(x) $，$ y $是$ x $的函数；$ J = J[y(x)] $，$ J $为依赖$ y(x) $的泛函。
+\item 泛函的容许函数类：满足条件的函数，不同容许函数类之差为宗量变分：$ \delta y(x) = y(x) - y_0(x) $。
+\item 线性：$ J[c_1 y_1(x) + c_2 y_2(x)] = c_1 J[y_1(x)] + c_2 J[y_2(x)] $。
+\end{itemize}
+%------------------------------------------------
+\paragraph{求解积分型指标泛函$ J = \int_{t_0}^{t_f} L[x(t), \dot{x}(t), t] d t $}
+以$ J = \int_{x_0}^{x_1} y^2(x) d x $为例。
+\begin{itemize}
+\item 法1：变分取线性主部$ \delta J $：
+\begin{align*} \Delta J &= \int_{x_0}^{x_1} [y(x) + \delta y(x)]^2 d x - \int_{x_0}^{x_1} y^2(x) d x \\ &= \int_{x_0}^{x_1} \{\underbrace{[2y(x) \delta y(x)]}_{\text{线性主部}\delta J} + [\delta y(x)]^2\} d x \end{align*}
+\item 法2：微分：
+\begin{align*} 
+\Delta J &= \frac{\partial}{\partial \epsilon} J[y(x) + \epsilon \delta y(x)]|_{\epsilon = 0} \\
+&= \int_{x_0}^{x_1} \frac{\partial}{\partial \epsilon}[y(x) + \epsilon \delta y(x)]^2 d x|_{\epsilon = 0} \\
+&= \int_{x_0}^{x_1} 2[y(x) + \epsilon \delta y(x)] \delta y(x) d x|_{\epsilon = 0}
+\end{align*}
+\end{itemize}
+%------------------------------------------------
+\paragraph{函数微分与泛函变分}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|c|c|}
+\hline
+ & 函数微分 & 泛函变分 \\
+\hline
+\multirow{3}{*}{概念} & $ \Delta x = x - x_0 $ & $ \Delta y = y(x) - y_0(x) $ \\
+\cline{2-3}
+ & $ \Delta y = f(x + \Delta x) - f(x) = f'(x) \Delta x + o(\Delta x) $ & $ \Delta J = J(y + \Delta y) - J(y) = \frac{d}{d y}J(y) \Delta y + o(\Delta y) $ \\
+\cline{2-3}
+ & $ d y = \lim_{x \to x_0} \Delta x = f'(x) d x $ & $ \delta J = \lim_{y(x) \to y_0(x)} \Delta y = \frac{d}{d y}J(y) \delta y $ \\
+\hline
+极值必要条件 & $ x = x_0, \quad \frac{d y}{d x} = 0 $ & $ y = y_0(x), \quad \delta J = 0 $ \\
+\hline
+极值充分条件 & $ \frac{d y}{d x} = 0, \quad \frac{d^2 y}{d x^2}>/<0 $，极大/小 & $ \delta J = 0, \quad \delta^2 J >/< 0 $，极大/小 \\
+\hline
+\end{tabular}
+\caption{函数微分与泛函变分}
+\end{table}
+%------------------------------------------------
+\subsubsection[欧拉拉格朗日方程]{欧拉拉格朗日方程$ \frac{\partial f}{\partial x} - \frac{d}{d t}(\frac{\partial f}{\partial \dot{x}}) = 0 $}
+%------------------------------------------------
+\paragraph{使用条件}
+$ J = \int_{t_0}^{t_f} f(x, \dot{x}, t) d t $，$ x(t) $对$ t $二次可微，$ f(x, \dot{x}, t) $对$ x, \dot{x} $二阶偏导存在。
+%------------------------------------------------
+\paragraph{变分预备定理}
+$ y(t) $在$ [t_0, t_f] $上连续，$ y(t_0) = y(t_f) = 0 $，$ g(t) $在$ [t_0, t_f] $上连续，有$ \int_{t_0}^{t_f} g(t) y(t) d t = 0 $，则$ [t_0, t_f] $上必有$ g(t) \equiv 0 $。
+%------------------------------------------------
+\paragraph{简化解法（必要条件）}
+$ u = g(x, \dot{x}), \quad J(u) = \int_{t_0}^{t_f} f(x, u) d t $，已知$ x(t_0) = x_0 $，并有$ x(t_f) $的要求，求$ argmin_{u(t)} J(u) $。
+\begin{enumerate}
+\item 把$ u $代入$ f(x, u) $，求得$ f(x, \dot{x}) $。
+\item $ \frac{\partial f}{\partial x} - \frac{d}{d t}(\frac{\partial f}{\partial \dot{x}}) = 0 $（只求偏导）。
+\item 正则方程：
+\begin{itemize}
+\item 边界条件：$ x(t_0) = x_0 $。
+\item 横截条件：
+\begin{itemize}
+\item $ x(t_f) = x_f $。
+\item $ t_f $已知，$ x(t_f) $自由：$ \frac{\partial f}{\partial \dot{x}}|_{t_f} = 0 $。
+\item $ t_f, x(t_f) $自由：$ \frac{\partial f}{\partial \dot{x}}|_{t_f} = 0, \quad f(x, \dot{x}, t)|_{t_f} = 0 $。
+\item $ x(t_f) $落在$ \varphi(t_f) $上：$ \{f(x, \dot{x}, t) + [\dot{\varphi}(t) - \dot{x}]\frac{\partial f}{\partial \dot{x}}\}|_{t_f} = 0 $（联立$ \varphi(t_f) $和线求$ t_f $）。
+\end{itemize}
+\end{itemize}
+\item 解通解$ x(t) $，代入正则方程确定。
+\item 代回$ u = g(x, \dot{x}) $求$ u(t) $。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{一般泛函$ J(x) = \theta[x(t_f), t_f] + \int_{t_0}^{t_f} f(x, \dot{x}, t) d t $推导}
+\begin{align*}
+&\Phi(\epsilon) = \theta[x(t_f + \epsilon \delta t_f) + \epsilon \delta x(t_f + \epsilon \delta t_f), t_f + \epsilon \delta t_f] + \int_{t_0}^{t_f + \epsilon \delta t_f} f(x + \epsilon \delta x, \dot{x} + \epsilon \delta \dot{x}, t) dt \\
+&\frac{d \Phi}{d t}|_{\epsilon = 0} = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)}[\dot{x}(t_f) \delta t_f + \delta x(t_f)] + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f} \delta t_f \\
+&+ \int_{t_0}^{t_f}(\frac{\partial f}{\partial x} - \frac{d}{d t}\frac{\partial f}{\partial \dot{x}}) \delta x dt + (\frac{\partial f}{\partial \dot{x}} \delta x)|_{t_0}^{t_f} + f(x, \dot{x}, t)|_{t_f} \delta t_f \\
+&\begin{cases}
+\delta x(t_f): \quad \frac{\partial f}{\partial \dot{x}}|_{t_f} = -\frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} \\
+\delta t_f: \quad \{f(x, \dot{x}, t) - \dot{x}\frac{\partial f}{\partial \dot{x}} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f}\}|_{t_f} = 0
+\end{cases}
+\end{align*}
+%------------------------------------------------
+\paragraph{一般泛函解法}
+对上述进行以下变更。
+\begin{enumerate}
+\item $ \frac{\partial f}{\partial \dot{x}}|_{t_f} = 0 \Rightarrow \frac{\partial f}{\partial \dot{x}}|_{t_f} = -\frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} $。
+\item $ \{f(x, \dot{x}, t) + [\dot{\varphi}(t) - \dot{x}]\frac{\partial f}{\partial \dot{x}}\}|_{t_f} = 0 \Rightarrow \{f(x, \dot{x}, t) - \dot{x}\frac{\partial f}{\partial \dot{x}} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f}\}|_{t_f} = 0 $。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{多变量}
+对各变量列必要条件。
+%------------------------------------------------
+\subsubsection[哈密顿函数]{哈密顿函数（拉格朗日乘子法）}
+%------------------------------------------------
+\paragraph{推导}
+$$ \dot{x} = f(x, u, t), \quad x(t_0) = x_0, \quad J(u) = \theta[x(t_f), t_f] + \int_{t_0}^{t_f} L(x, u, t) d t $$
+
+引入拉格朗日乘子求极值：
+$$ \overline{J}(x, u, \lambda) = \theta[x(t_f), t_f] + \int_{t_0}^{t_f}\{\underbrace{L(x, u, t) + \lambda^T[f(x, u, t) - \dot{x}]}_{\text{哈密顿函数}H}\}d t $$
+
+对各变量求拉格朗日方程：
+$$
+\begin{cases} \frac{\partial H}{\partial x} - \frac{d}{d t}(\frac{\partial H}{\partial \dot{x}}) = 0 \\ \frac{\partial H}{\partial u} - \frac{d}{d t}(\frac{\partial H}{\partial \dot{u}}) = 0 \\ \frac{\partial H}{\partial \lambda} - \frac{d}{d t}(\frac{\partial H}{\partial \dot{\lambda}}) = 0 \end{cases}
+\Rightarrow 
+\begin{cases} \dot{\lambda} = -\frac{\partial H}{\partial x} \quad \text{协状态方程} \\ \frac{\partial H}{\partial u} = 0 \\ \dot{x} = f(x, u, t) = \frac{\partial H}{\partial \lambda} \end{cases}
+$$
+%------------------------------------------------
+\paragraph{解法}
+\begin{enumerate}
+\item 构造$ H(x, \lambda, u, t) = L(x, u, t) + \lambda^T f(x, u, t) $。
+\item $ \frac{\partial H}{\partial u} = 0 $，得$ u^* = u(x, \lambda) $，代入$ f(x, u, t) $得到$ f(x, \lambda, t) $。
+\item $ \begin{cases} \dot{\lambda} = -\frac{\partial H}{\partial x} \\ \dot{x} = f(x, \lambda, t) = \frac{\partial H}{\partial \lambda} \end{cases} $，对向量的元素分开列。
+\item 正则方程：
+\begin{itemize}
+\item 边界条件：$ x(t_0) = x_0 $。
+\item 横截条件：
+\begin{itemize}
+\item $ x(t_f) = x_f $。
+\item $ t_f $已知，$ x(t_f) $自由：$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} $。
+\item $ t_f, x(t_f) $自由：$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)}, \quad H(x, \lambda, u, t)|_{t_f} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f} = 0 $。
+\item $ N[x(t_f), t_f] = 0 $：$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} + \frac{\partial N^T[x(t_f), t_f]}{\partial x(t_f)} \cdot v, \quad H(x, \lambda, u, t)|_{t_f} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f} + \frac{\partial N^T[x(t_f), t_f]}{\partial t_f} \cdot v = 0 $，其中$ v $为$ r $维实向量，通过作比、代回$ N $中等方法消去。
+\item $ H $不显式含$ t $：$ \dot{H} = \underbrace{(\frac{\partial H}{\partial x})^T}_{-\dot{\lambda}^T} \dot{x} + \underbrace{(\frac{\partial H}{\partial u})^T}_{0} \dot{u} + \underbrace{(\frac{\partial H}{\partial \lambda})^T}_{\dot{x}^T} \dot{\lambda} = 0, \quad H[x^*(t), u^*(t), \lambda^*(t)] $为常数。
+\item $ t_f $自由，$ H $不依赖于$ t $，$ \theta, N $不依赖于$ H $：$ H[x(t_f), u(t_f), \lambda(t_f)] = 0 $沿最优轨线。
+\end{itemize}
+\end{itemize}
+\end{enumerate}
+%------------------------------------------------
+\subsection[最大值原理]{最大值原理：有约束}
+$ u $受限，$ L $关于$ u $不可微，不存在偏导数。
+%------------------------------------------------
+\paragraph{解法}
+\begin{enumerate}
+\item 构造$ H(x, \lambda, u, t) = L(x, u, t) + \lambda^T f(x, u, t) $，求$ argmin_{u} H $，其为$ u $关于$ \lambda $的函数。
+\item $ \begin{cases} \dot{\lambda} = -\frac{\partial H}{\partial x} \\ \dot{x} = f(x, \lambda, t) = \frac{\partial H}{\partial \lambda} \end{cases} $，解$ \lambda $关于$ t $的函数，得到$ u $关于$ t $的函数。
+\item $ x^*(t) = e^{At} x_0 + \int_{t_0}^{t} e^{A(t - \tau)} B u(\tau) d \textcolor{red}{\tau} $，注意$ u $取值引起的讨论。
+\item 正则方程：
+\begin{itemize}
+\item 边界条件：$ x(t_0) = x_0 $。
+\item 横截条件：
+\begin{itemize}
+\item $ x(t_f) = x_f $。
+\item $ t_f $已知，$ x(t_f) $自由：$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} $。
+\item $ t_f, x(t_f) $自由：$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)}, \quad H(x, \lambda, u, t)|_{t_f} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f} = 0 $。
+\item $ N[x(t_f), t_f] = 0 $：$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} + \frac{\partial N^T[x(t_f), t_f]}{\partial x(t_f)} \cdot v, \quad H(x, \lambda, u, t)|_{t_f} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f} + \frac{\partial N^T[x(t_f), t_f]}{\partial t_f} \cdot v = 0 $。
+\end{itemize}
+\end{itemize}
+\item 代回$ J(u) $，分段积分。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{切换曲线}
+略。
+%------------------------------------------------
+\paragraph{最小时间控制（最速控制）}
+\begin{itemize}
+\item 条件：$ \dot{x} = A x(t) + B u(t), \quad A \in R^n, \quad B \in R^m $，$ A, B $为常阵，$ (A, B) $能控。$ x(t_0) = x_0, \quad x(t_f) = 0 $，$ t_f $自由，$ J = \int_{0}^{t_f} d t, |u_j(t)| \leq 1 $。
+\item 推导：$ H(x, u, \lambda) = 1 + \lambda^T(A x + B u), \quad B = \begin{bmatrix} b_1 & b_2 & \cdots & b_m \end{bmatrix} $，设$ g_j(t) = \lambda^T(t) b_j $，有$ u_j^*(t) = -sgn\{g_j(t)\} $。
+\item 
+\begin{itemize}
+\item 正常：$ g_j(t) \neq 0 $，可用最大值原理确定$ u_j^*(t) $，系统能控是系统正常的前提条件。
+\item 奇异：$ g_j(t) = 0 $，只能取满足$ u $限制条件的任意值。
+\item 判断：$ G_j = \begin{bmatrix} b_j & A b_j & \cdots & A^{n - 1} b_j \end{bmatrix}, \quad j = 1, 2, \dots, m $，$ G_j $非奇异则正常。
+\end{itemize}
+\item BangBang控制：定常线性系统正常，则可用最大值原理求解最速控制，在$ U $内从一个边界值切换到另一个。
+\end{itemize}
 %------------------------------------------------
 \subsection[线性二次型]{线性二次型}
-1
+非线性最优控制可通过在线执行得到线性二次型。
+$$ J(u) = \frac{1}{2} x^T(t_f) F x(t_f) + \frac{1}{2}\int_{t_0}^{t_f}[\underbrace{x^T(t) Q(t) x(t)}_{\text{状态}} (+ 2x^T(t) S(t) u(t)) + \underbrace{u^T(t) R(t) u(t)}_{\text{能量}}] d t $$
 %------------------------------------------------
-\subsection[动态规划]{动态规划}
-1
+\subsubsection[有限时间状态调节器]{有限时间状态调节器：微分}
+%------------------------------------------------
+\paragraph{条件}
+$ \dot{x} = A(t) x + B(t) u, \quad x(t_0) = x_0 $，不要求$ (A, B) $能控，$ F, Q $对称半正定，$ R $对称正定。
+%------------------------------------------------
+\paragraph{里卡蒂微分方程推导}~\\
+
+列哈密顿函数：
+\begin{align*}
+H &= \frac{1}{2}[x^T Q(t) x + u^T R(t) u] + \lambda^T[A(t) x + B(t) u] \\
+\frac{\partial H}{\partial u} &= 0 \Rightarrow u^*(t) = -R^{-1}(t) B^T(t) \lambda(t)     
+\end{align*}
+
+列状态方程、协状态方程和正则条件：
+\begin{align*}
+&\begin{cases} &\dot{x} = A(t) x + B(t) u^*(t) \\ &\dot{\lambda} = -\frac{\partial H}{\partial x} = -Q(t) x - A^T(t) \lambda \end{cases} \\
+&\lambda(t_f) = \frac{\partial[\frac{1}{2} x^T(t_f) F x(t_f)]}{\partial x(t_f)} = F x(t_f) \\
+&x(t_0) = x_0
+\end{align*}
+
+设$ \Phi(t, t_0) = \begin{bmatrix} \phi_{11}(t, t_0) & \phi_{12}(t, t_0) \\ \phi_{21}(t, t_0) & \phi_{22}(t, t_0) \end{bmatrix} $，有
+$$ \lambda(t) = \underbrace{[\phi_{22}(t_f, t) - F \phi_{12}(t_f, t)]^{-1} [F \phi_{11}(t_f, t) - \phi_{21}(t_f, t)]}_{k(t) \text{反馈增益矩阵} P(t) \text{，对称半正定}} x(t) $$
+
+有$ u(t) = -R^{-1}(t) B^T(t) P(t) x(t) $。
+
+对$ P(t) $求关于$ t $的导数即为里卡蒂微分方程：
+$$ \frac{d P}{d t} = -P(t) A(t) - A^T(t) P(t) + P(t) B(t) R^{-1}(t) B^T(t) P(t) - Q(t) $$
+
+根据$ \lambda(t) $的函数式，$ \lambda(t_f) = P(t_f) x(t_f) = F x(t_f) $，有$ P(t_f) = F $。
+%------------------------------------------------
+\paragraph{解法}
+\begin{enumerate}
+\item 提取$ A, B, Q, R, F $阵，设对称的未知阵$ P(t) $。
+\item 根据边界条件$ P(t_f, t_f) = F $解里卡蒂微分方程，得到的$ P $应是半正定的。
+$$ \frac{d P}{d t} = -P(t) A(t) - A^T(t) P(t) + P(t) B(t) R^{-1}(t) B^T(t) P(t) - Q(t) $$
+\item $ u^*(t) = -R^{-1}(t) B^T(t) P(t) x(t) $。
+\end{enumerate}
+%------------------------------------------------
+\paragraph{定理}
+\begin{itemize}
+\item 条件：$ A, B, Q, R $连续可微，$ Q $半正定，$ R $正定。
+\item 方程与解：$ u^*(t) = -R^{-1}(t) B^T(t) P(t, t_f) x(t) $，其中$ P(t, t_f) $是以下方程组的解，$ P, Q $的（半）正定性一致。
+$$ \begin{cases} \frac{d P}{d t} = -P(t) A(t) - A^T(t) P(t) + P(t) B(t) R^{-1}(t) B^T(t) P(t) - Q(t) \\ P(t_f, t_f) = F \end{cases} $$
+\item 最优解：$ J^*[x(t_0), t_0]_{min} = \frac{1}{2} x^T(t_0) P(t_0, t_f) x(t_0) $。
+\item 最优轨线：
+$$ \begin{cases} \frac{d x}{d t} = [A(t) - B(t) R^{-1}(t) B^T(t) P(t_f, t_f)] x(t) \\ x(t_0) = x_0 \end{cases} $$
+\end{itemize}
+%------------------------------------------------
+\subsubsection[非时变状态调节器]{非时变状态调节器：常阵}
+%------------------------------------------------
+\paragraph{条件}
+$ \dot{x} = A x + B u, \quad x(t_0) = x_0, \quad t_f = \infty $，$ (A, B) $完全能控，$ Q, R $对称正定。
+%------------------------------------------------
+\paragraph{极值}
+$ \lim_{t \to \infty} P(t, t_f) = \hat{P} \text{常阵} = \lim_{t \to -\infty} P(t_0, t_f) $，$ \hat{p} $正定$ \Leftrightarrow $$ (C, A) $能观测。
+%------------------------------------------------
+\paragraph{代数里卡蒂方程}
+$$ -\hat{P} A - A^T \hat{P} + \hat{P} B R^{-1} B^T \hat{P} - Q = 0 $$
+%------------------------------------------------
+\paragraph{解法}
+\begin{itemize}
+\item 法1：求代数里卡蒂方程。
+\begin{enumerate}
+\item 提取$ A, B, Q, R, F $阵，设对称的未知阵$ P $。
+\item 解代数里卡蒂方程，得到的$ P $应是正定的。
+$$ -\hat{P} A - A^T \hat{P} + \hat{P} B R^{-1} B^T \hat{P} - Q = 0 $$
+\item $ u = -R^{-1} B^T P x $。
+\end{enumerate}
+\item 法2：求里卡蒂微分方程稳态解。
+$$ \begin{cases} \frac{d P}{d t} = -P A - A^T P + P B R^{-1} B^T P - Q \\ P(t_0) = 0 \end{cases} $$
+\item 法3：哈密顿矩阵法。
+\begin{itemize}
+\item 原理：
+
+$ u^*(t) = - R^{-1} B^T \hat{P} x(t) \Rightarrow \begin{cases} \dot{x} = (A - B R^{-1} B^T \hat{P}) x \Rightarrow \text{特征根} \lambda \text{与特征向量} \eta \\ x(t_0) = x_0 \end{cases} $，有$ \lambda \eta = (A - B R^{-1} B^T \hat{P}) \eta $。
+
+构造哈密顿矩阵$ H_{2n \times 2n} $，特征值为$ \pm \lambda $（$ 2n $项）。
+
+令$ \xi = \hat{P} \eta, \quad \lambda \xi = (\hat{P} A - \hat{P} B R^{-1} B^T \hat{P}) \eta = (-Q - A^T \hat{P}) \eta = -Q \eta - A^T \xi $，有：
+$$ \lambda \begin{bmatrix} \eta \\ \xi \end{bmatrix} = \underbrace{\begin{bmatrix} A & -B R^{-1} B^T \\ -Q & -A^T \end{bmatrix}}_{H} \begin{bmatrix} \eta \\ \xi \end{bmatrix} $$
+
+取$ T = \begin{bmatrix} I_n & 0 \\ \hat{P} & I_n \end{bmatrix} $，则$ T^{-1} H T = \begin{bmatrix} A - B R^{-1} B^T \hat{P} & -B R^{-1} B^T \\ 0 & -(A - B R^{-1} B^T \hat{P})^T \end{bmatrix} $，有$ \hat{P} = [\xi] [\eta]^{-1} $。
+\item 解法：构造$ H = \begin{bmatrix} A & -B R^{-1} B^T \\ -Q & -A^T \end{bmatrix} $，求$ \lambda $和$ \begin{bmatrix} \eta \\ \xi \end{bmatrix} $，$ \hat{P} = [\xi] [\eta]^{-1} $。
+\end{itemize}
+\end{itemize}
+%------------------------------------------------
+\paragraph{定理}
+\begin{itemize}
+\item 条件：$ A, B, Q, R $连续可微，$ Q $半正定，$ R $正定。
+\item 方程与解：$ u = -R^{-1} B^T \hat{P} x $，其中$ \hat{P} $是以下方程的解。
+$$ -\hat{P} A - A^T \hat{P} + \hat{P} B R^{-1} B^T \hat{P} - Q = 0 $$
+\item 最优解：$ J^*[x(t_0), t_0]_{min} = \frac{1}{2} x^T(t_0) \hat{P} x(t_0) $。
+\item 最优轨线：
+$$ \begin{cases} \frac{d x}{d t} = [A - B R^{-1} B^T \hat{P}] x(t) \\ x(t_0) = x_0 \end{cases} $$
+\item 闭环系统$ \dot{x} = (A - B R^{-1} B^T \hat{P}) x $渐进稳定。
+\end{itemize}
+%------------------------------------------------
+\subsubsection[有限时间时变输出跟踪系统]{有限时间时变输出跟踪系统}
+使输出接近理想输出，需已知任意时刻的$ y^d(t) $。
+
+$$ \begin{cases} \dot{x} = A(t) x + B(t) u \\ y = C(t) x \end{cases}, \quad x(t_0) = x_0 $$
+
+$$ J(u) = \frac{1}{2} [y(t_f) - y^d(t_f)]^T F [y(t_f) - y^d(t_f)] + \frac{1}{2} \int_{t_0}^{t_f} \{[y(t) - y^d(t)]^T Q(t) [y(t) - y^d(t)] + u^T R u\} d t $$
+
+其中$ Q $对称非负定，$ R $对称正定。
+
+列哈密顿函数：
+$$ H = \frac{1}{2}[C(t)x - y^d(t)]^T Q(t) [C(t)x - y^d(t)] + \frac{1}{2} u^T R u + \lambda^T [A(t) x + B(t) u] $$
+
+得到：
+\begin{align*}
+&\frac{\partial H}{\partial u} = 0 \Rightarrow u = -R^{-1}(t) B^T(t) \lambda(t) \\   
+&\dot{\lambda} = -\frac{\partial H}{\partial x} = -C^T(t) Q(t) [C(t) x - y^d(t)] - A^T(t) \lambda \\
+&\dot{x} = A(t) x - B(t) R^{-1} B^T(t) \lambda
+\end{align*}
+
+边界条件：
+$$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} = \underbrace{C^T(t_f) F C(t_f)}_{P(t)} x(t_f) - \underbrace{C^T(t_f) F y^d(t_f)}_{\xi(t)} $$
+
+有：
+\begin{align*}
+&\begin{cases}
+\dot{P}(t) + P(t) A(t) + A^T(t) P(t) - P(t) B(t) R^{-1}(t) B^T(t) P(t) + C^T(t) Q(t) C(t) = 0 \\
+P(t_f) = C^T(t_f) F C(t_f)        
+\end{cases} \\
+&\begin{cases}
+\dot{\xi}(t) = -[A(t) - B(t) R^{-1}(t) B^T(t) P(t)]^T \xi(t) - C^T(t) Q(t) y^d(t) \\
+\xi(t_f) = C^T(t_f) F y^d(t_f)        
+\end{cases}
+\end{align*}
+
+解得最优控制$ u^*(t) = -R^{-1}(t) B^T(t) [P(t) x(t) - \xi(t)] $。
+
+最优轨线：
+$$ \begin{cases} \dot{x}(t) = [A - B R^{-1} B^T P(t)] x(t) + B R^{-1} B^T \xi(t) \\ x(t_0) = x_0 \end{cases} $$
+%------------------------------------------------
+\subsubsection[带观测器的最优调节器]{带观测器的最优调节器}
+$$ \begin{cases} \dot{x} = A x + B u \\ y = C x \\ \dot{z} = (A + GC)z + B u - G y \\ u = -k z + v, \quad k = R^{-1} B^T P \end{cases}, \quad J(u) = \frac{1}{2} \int_{t_0}^{\infty} (x^T Q x + u^T R u) d t $$
+
+整理并进行变换：
+$$
+\begin{cases} \begin{bmatrix} \dot{x} \\ \dot{z} \end{bmatrix} = \begin{bmatrix} A & B k \\ G C & A + G C - B k \end{bmatrix} \begin{bmatrix} x \\ z \end{bmatrix} + \begin{bmatrix} B \\ B \end{bmatrix} u \\ y = \begin{bmatrix} C & 0 \end{bmatrix} \begin{bmatrix} x \\ z \end{bmatrix} \end{cases} 
+\overset{\begin{bmatrix} x \\ z \end{bmatrix} = \begin{bmatrix} I_n & 0 \\ I_n & -I_n \end{bmatrix} \begin{bmatrix} x' \\ z' \end{bmatrix}}{\Longrightarrow}
+\begin{cases} \overline{A} = \begin{bmatrix} A + B k & - B k \\ 0 & A + G C \end{bmatrix} \\ \overline{B} = \begin{bmatrix} B & 0 \end{bmatrix}^T \\ \overline{C} = \begin{bmatrix} C & 0 \end{bmatrix} \end{cases} 
+$$
+\begin{itemize}
+\item $ G(s) $：$ \overline{G}(s) = \overline{C}(s I - \overline{A})^{-1} \overline{B} = C[s I - (A - B K)]^{-1} B $，有无观测器，最优调节器的$ G(s) $相同。
+\item 极点：带观测器的最优调节器 = 观测器 + 最优调节器。
+\end{itemize}
+%------------------------------------------------
+\subsection[动态规划]{动态规划（概念见离散部分）}
+$ \dot{x} = f(x, u, t), \quad x(t_0) = x_0, \quad J(u) = \theta[x(t_f), t_f] + \int_{t_0}^{t_f} L(x, u, t) d t $。
+%------------------------------------------------
+\paragraph{HJB（连续系统动态规划基本方程）方程}
+\begin{itemize}
+\item $ -\frac{\partial J^*(x, t)}{\partial t} = \min_{u \in U} \{L(x, u, t) + [\frac{\partial J^*(x, t)}{\partial x}]^T f(x, u, t)\} $。
+\item 边界条件：$ J^*[x(t_f), t_f] = \theta[x(t_f), t_f], \quad \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} $。
+\item 哈密顿-雅可比方程：$ -\frac{\partial J^*(x, t)}{\partial t} = \min_{u \in U} H(x, u, \lambda, t) $。
+\item 协状态方程：$ \dot{\lambda}(t) = -\frac{\partial H(x, u, \lambda, t)}{\partial x} $。
+\end{itemize}
+%------------------------------------------------
+\paragraph{解法}
+\begin{enumerate}
+\item $ H(x, u, \lambda, t) = L(x, u, t) + [\frac{\partial J^*(x, t)}{\partial x}]^T f(x, u, t) $。
+\item 求$ u^* = g(x, \frac{\partial J^*(x, t)}{\partial x}, t) $：
+$$ \begin{cases} \frac{\partial H}{\partial u} = 0, \quad& u \text{无约束} \\ \min H(x, u, \lambda, t), \quad& u \in U \end{cases} $$
+\item $ u^* $代入以下方程组得到$ J^*[x(t), t] $，再代回$ u^*(t) $：
+$$ \begin{cases}
+\text{哈密顿-雅可比方程：} -\frac{\partial J^*(x, t)}{\partial t} = \min_{u \in U} H(x, u, \lambda, t) \\
+\text{边界条件：} J^*[x(t_f), t_f] = \theta[x(t_f), t_f]
+\end{cases} $$ 
+\end{enumerate}
+%------------------------------------------------
+\subsection[各方法的关系]{各方法的关系}
+\begin{figure}[H]
+\centering 
+\begin{tikzpicture}[scale=0.8,transform shape]
+\node at (-5.2,-0.3) {必要条件}; \node[red] at (-3,-0.6) {\shortstack{最大值原理 \\ （常微分方程条件）}}; \node[red] at (0,1.3) {哈密顿函数}; \node[red] at (0,3.3) {变分法}; \node at (0,3.8) {不能处理闭集性约束}; \node[red] at (3,-0.6) {\shortstack{动态规划 \\ （偏微分方程条件）}}; \node at (5.2,-0.3) {充分条件};
+\draw[->] (-3,0) -- (-0.5,1); \draw[->] (0,3) -- (-3,0); \draw[->] (0,3) -- (0,1.6); \draw[->] (0,3) -- (3,0); \draw[->] (3,0) -- (0.5,1);
+\end{tikzpicture}
+\caption{最优控制方法的关系}
+\end{figure}
 %----------------------------------------------------------------------------------------
 \section{离散时间最优控制}
 %------------------------------------------------
 \subsection[最大值原理]{最大值原理}
-1
+\begin{align*}
+&x(k + 1) = f[x(k), u(k), k], \quad x(0) = x_0, \quad k = 0, 1, \dots, N - 1 \\
+&J = \theta[x(N), N] + \sum_{k = 0}^{N - 1} L[x(k), u(k), k], \quad N \text{已知}, \quad x(N) \text{自由}
+\end{align*}
+%------------------------------------------------
+\paragraph{推导}
+$ H(k) = L[x(k), u(k), k] + \lambda^T(k + 1) f[x(k), u(k), k] $。
+\begin{itemize}
+\item 
+\begin{itemize}
+\item $ x(k + 1) = \frac{\partial H(k)}{\partial \lambda(k + 1)} = f[x(k), u(k), k] $。
+\item $ \lambda(k) = \frac{\partial H(k)}{\partial x(k)} \Rightarrow \lambda(k + 1) = m[\lambda(k), x(k)] $。
+\end{itemize}
+\item 边界条件：$ x(0) = x_0 $。
+\item 横截条件：$ \lambda(N) = \frac{\partial \theta[x(N), N]}{\partial x(N)} $。
+\item 极值目标：
+\begin{itemize}
+\item $ u(k) $受约束：$ H^*(k) = \min_{u(k) \in U} H(k) $。
+\item $ u(k) $不受约束：$ \frac{\partial H(k)}{\partial u(k)} = 0 \Rightarrow u(k) = n[\lambda(k + 1)] $。
+\end{itemize}
+\end{itemize}
+%------------------------------------------------
+\paragraph{解法（$ u(k) $不受约束）}
+\begin{enumerate}
+\item $ \lambda(N) = \frac{\partial \theta[x(N), N]}{\partial x(N)} = g_N[x(N)] $。
+\item $ \lambda(k) = g_k[x(N)] \overset{x(k + 1) = f[x(k), u(k), k]}{\Longrightarrow} \lambda(k) = gf_k[x(k - 1), u(k - 1), k - 1] \overset{u(k) = n[\lambda(k + 1)]}{\Longrightarrow} \lambda(k) = gf_k'[x(k - 1), k - 1] \overset{\lambda(k + 1) = m[\lambda(k), x(k)]}{\Longrightarrow} \lambda(k - 1) = g_{k - 1}[x(k - 1)] $，迭代到$ \lambda(1) = gf_{1}[x(0)] $。
+\item 逐代回归表示$ u(k), \lambda(k), x(k) $为关于$ x(0) $的函数。
+\end{enumerate}
 %------------------------------------------------
 \subsection[线性二次型]{线性二次型}
-1
+\begin{align*}
+&x(k + 1) = A(k) x(k) + B(k) u(k), \quad x(0), \quad k = 0, 1, \dots, N - 1 \\
+&J = \frac{1}{2} x^T(x) F x(N) + \frac{1}{2} \sum_{k = 0}^{N - 1} [x^T(k) Q(k) x(k) + u^T(k) R(k) u(K)] \\
+&N \text{已知}, \quad x(N) \text{自由}, \quad Q(k) \text{对称半正定}, \quad R(k) \text{对称正定}
+\end{align*}
+%------------------------------------------------
+\paragraph{推导}
+$$ H(k) = \frac{1}{2}[x^T(k) Q(k) x(k) + u^T(k) R(k) u(K)] + \lambda^T(k + 1)[A(k) x(k) + B(k) u(k)] $$
+\begin{itemize}
+\item $ \lambda(k) = \frac{\partial H(k)}{\partial x(k)} = Q(k) x(k) + A^T(k) \lambda(k + 1) $。
+\item 横截条件：$ \lambda(N) = F x(N) $。
+\item 极值目标：$ \frac{\partial H(k)}{\partial u(k)} = 0 \Rightarrow u(k) = -R^{-1}(k) B^T(k) \lambda(k + 1) $。
+\end{itemize}
+%------------------------------------------------
+\paragraph{定理}
+$ u^*(k) = -[R(k) + B^T(k) P(k + 1) B(K)]^{-1} B^T(k) P(k + 1) A(k) x(k) $得到$ J_{min}^* = \frac{1}{2} x^T(0) P(0) x(0) $，$ N \to \infty $时$ P(N) $为常阵。
+%------------------------------------------------
+\paragraph{解法}
+\begin{itemize}
+\item $ Z $迭代：
+\begin{enumerate}
+\item 因为$ \lambda(k) = P(k) x(k), \quad \lambda(N) = F x(N)  $，故$ P(N) = F $。
+\item 对$ k = N - 1, N - 2, \dots, 0 $，求$ Z_1(k), Z_2(k), Z_3(k) $，进而求$ P(K), u^*(k) $。
+\begin{align*}
+Z_1(k) &= Q(k) + A^T(k) P(k + 1) A(k) \\ 
+Z_2(k) &= B^T(k) P(k + 1) A(k) \\
+Z_3(k) &= R(K) + B^T(k) P(k + 1) B(k) \\
+P(k) &= Z_1(k) - Z_2^T(k) Z_3^{-1}(k) Z_2(k) \\
+u^*(k) &= -Z_3^{-1}(k) Z_2(k) x(k)
+\end{align*}
+\end{enumerate}
+\item $ P $迭代：
+\begin{enumerate}
+\item 任取对称正定阵$ P_0 $（如$ I $）。
+\item 求$ P(k) $与$ P(k + 1) $间的递推关系：
+$$ P(k) = Q + A^T P(k + 1) A - A^T P(k + 1) B [R + B^T P(k + 1) B]^{-1} B^T P(k + 1) A $$
+\item 代$ P(k + 1) = P_0 $，的$ P(k) = P_1 $；$ \dots $；代$ P(k + 1) = P_i $，的$ P(k) = P_{i + 1} $。
+\item 当$ P_i = P_{i + 1} $时，停止迭代。
+\item $ u^*(k) = -[R + B^T P_i B]^{-1} B^T P_i A x(k) $。
+\end{enumerate}
+\end{itemize}
 %------------------------------------------------
 \subsection[动态规划]{动态规划}
-1
+%------------------------------------------------
+\paragraph{概念}
+$$ \begin{cases} x(k + 1) = f[x(k), u(k), k] \\ J_N = \sum_{k = 0}^{N - 1} L[x(k), u(k), k] + \theta[x(N)] \end{cases} $$
+\begin{itemize}
+\item 要求
+\begin{itemize}
+\item 无后效性。
+\item 目标函数可分性。
+\end{itemize}
+\item 将状态方程逐阶代入目标函数，可得$ J_N = J_N[x(0), u(0), u(1), \dots, u(N - 1)] $。
+\item 最优性原理：$ u^*(0), \dots, u^*(N - 1) $最优，则$ u^*(k), \dots, u^*(N - 1) $最优。
+\end{itemize}
+%------------------------------------------------
+\paragraph{动态规划基本方程}
+$$ \begin{cases} J_{N - i}^*[x(i)] = \min_{u(i)} \{L[x(i), u(i), i] + J_{N - i - 1}^*[x(i + 1)]\} \\ x(i + 1) = f[x(i), u(i)] \end{cases} $$
+%------------------------------------------------
+\paragraph{解法}
+\begin{enumerate}
+\item $ J_0[x(N)] = \theta[x(N)] $。
+\item $ J_i[x(N - i)] = J_{N - i - 1}^*[x(i + 1)] + L[x(i), u(i), i] $，代入$ x(i + 1) = f[x(i), u(i)] $，求最值（对$ u_i $求偏导），得到$ u(i) $关于$ x(i) $的函数，迭代到$ J_N[x(0)] $。
+\item 逐代回归表示$ u(k), x(k) $为关于$ x(0) $的函数。
+\end{enumerate}
 %----------------------------------------------------------------------------------------
 \end{document}
