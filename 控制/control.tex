@@ -1541,10 +1541,10 @@ $$ R(z) = \frac{A(z)}{(1 - z^{-1})^m}, \quad e(\infty) = \lim_{z \to 1}(1 - z^{-
 \end{minipage}
 \begin{minipage}{0.65\textwidth}
 \begin{itemize}
-\item 状态变量：数目最小（微分方程阶数）的一组独立变量，不唯一。
-\item 状态向量。
-\item 状态空间：表达式不唯一（非奇异变换）。
-\item 状态方程：连续系统为一组一阶微分方程。
+\item 状态：系统在时间域中的行为或运动信息的集合。
+\item 状态变量：数目最小（微分方程阶数）的一组独立变量，组合为状态向量，不唯一。
+\item 状态空间：状态变量的所有取值构成的空间，表达式不唯一（非奇异变换）。
+\item 状态方程：描述状态、输入、输出内在关系的方程式，连续系统通常为一阶微分方程（组）。
 \end{itemize}
 \end{minipage}
 %------------------------------------------------
@@ -1563,19 +1563,13 @@ $$ \textcolor{red}{\dot{x} = \begin{bmatrix} b_0 & \cdots & b_m & 0 & \cdots & 0
 \subsection[非线性系统]{非线性系统}
 %------------------------------------------------
 \paragraph{原因}
-死区，饱和，迟滞。
-%------------------------------------------------
-\paragraph{平衡点与工作点}
-\begin{itemize}
-\item 平衡点：$ \dot{x_0} = f(x_0, u_0) = 0, \quad x(t_0) = x_0 $。
-\item 工作点：系统实际工作状态。
-\item 平衡点和工作点统一时线性效果好。
-\end{itemize}
+死区，迟滞，饱和。
 %------------------------------------------------
 \paragraph{\textcolor{red}{线性化}}\tip{非线性系统的线性化}
-工作点附近一阶泰勒展开。
+\begin{itemize}
+\item 平衡态（静态解/工作点、稳态解/工作点）：$ \dot{x_0} = f(x_0, u_0) = 0, \quad x(t_0) = x_0 $，系统状态变化不剧烈。
+\item 线性化：工作点附近一阶泰勒展开。
 
-\noindent
 \begin{minipage}{0.3\textwidth}
 $$ \begin{cases} \dot{x} = f(x, u) \\ y = g(x, u) \end{cases} $$
 \end{minipage}
@@ -1585,8 +1579,9 @@ $$ \begin{cases} \dot{x} = f(x, u) \\ y = g(x, u) \end{cases} $$
 \item 求$ x_0 $处状态空间：$ A = \frac{\partial f}{\partial x}, B = \frac{\partial f}{\partial u}, C = \frac{\partial g}{\partial x}, D = \frac{\partial g}{\partial u} $。
 \end{enumerate}
 \end{minipage}
+\end{itemize}
 %------------------------------------------------
-\subsection[线性定常系统]{线性定常系统（LTI）\tip{线性定常系统}}
+\subsection[线性定常系统]{线性定常系统（Liner Time-Invariant，LTI）\tip{线性定常系统}}
 $$ \text{齐次} \begin{cases} \dot{x} = A x(t) \\ x(t_0) = x_0 \end{cases} \quad \text{非齐次} \begin{cases} \dot{x} = A x(t) + B u(t) \\ x(t_0) = x_0 \end{cases} $$
 %------------------------------------------------
 \paragraph{状态变量$ \textcolor{red}{x(t)} $}
@@ -1599,35 +1594,36 @@ $$ \text{齐次} \begin{cases} \dot{x} = A x(t) \\ x(t_0) = x_0 \end{cases} \qua
 \end{align*}
 \item 积分（非齐次）：
 \begin{align*}
-&e^{-At}[\dot{x}(t) - A x(t)] = e^{-At} B u(t) \\
-\overset{\text{定积分还原}}{\Longrightarrow} &[e^{-At}x(t)]|_{t_0}^{t} = \int_{t_0}^{t} e^{-A\tau} B u(\tau) d \tau = e^{-At} x(t) - e^{-A t_0} x(t_0) \\
-\Rightarrow &x(t) = \underbrace{x(t_0) e^{A(t - t_0)}}_{\text{初始状态引起的自由运动}} + \underbrace{\int_{t_0}^{t} e^{A(t - \tau)} B u(\tau) d \tau}_{\text{控制激励引起的强制运动}}
+e^{-At}[\dot{x}(t) - A x(t)] &= e^{-At} B u(t) \\
+\overset{\text{定积分还原}}{\Longrightarrow} [e^{-At}x(t)]|_{t_0}^{t} &= \int_{t_0}^{t} e^{-A\tau} B u(\tau) d \tau = e^{-At} x(t) - e^{-A t_0} x(t_0) \\
+\Rightarrow x(t) &= \underbrace{x(t_0) e^{A(t - t_0)}}_{\text{初始状态引起的自由运动}} + \underbrace{\int_{t_0}^{t} e^{A(t - \tau)} B u(\tau) d \tau}_{\text{控制激励引起的强制运动}}
 \end{align*} 
 \item 拉氏变换（非齐次）：
 \begin{align*}
 &L[\dot{x}(t)] = L[A x(t) + B u(t)] \overset{\text{拉氏变换}}{\Longrightarrow} s X(s) - x(0) = A X(s) + B U(s) \\
 \Rightarrow &(sI - A) X(s) = x(0) + B U(s) \overset{\text{拉氏反变换}}{\Longrightarrow} x(t) = L^{-1} [(sI - A)^{-1}] x(0) + \underbrace{L^{-1} [(sI - A)^{-1} B U(s)]}_{\text{卷积}} \\
-\Rightarrow &\textcolor{red}{x(t) = e^{At} x(0) + \int_{0}^{t} e^{A(t)} B u(t - \tau) d \tau}
+\Rightarrow &\textcolor{red}{x(t)} = e^{At} x(0) + \int_{0}^{t} e^{At} B u(t - \tau) d \tau \textcolor{red}{= e^{At} x(0) + \int_{0}^{t} e^{A(t - \tau)} B u(t) d \tau}
 \end{align*}    
 \end{itemize}
 %------------------------------------------------
-\paragraph{状态转移矩阵（矩阵指数函数）$ \textcolor{red}{\Phi(t) = e^{A(t)}} $}
+\paragraph{状态转移矩阵（矩阵指数函数）$ \textcolor{red}{\Phi(t) = e^{At}} = \frac{x(t)}{x(0)} $}
+针对齐次系统。
 \begin{itemize}
-\item 幂级数：$ e^{A(t)} = I + At + \frac{1}{2!}(At)^2 + \dots + \frac{1}{n!}(At)^n + \dots = \sum_{n = 0}^{\infty} \frac{(At)^n}{n!} $。
-\item \textcolor{red}{拉氏变换}：$ \textcolor{red}{e^{A(t)} = L^{-1} [(sI - A)^{-1}]} $。
+\item 幂级数（计算机使用）：$ e^{At} = I + At + \frac{1}{2!}(At)^2 + \dots + \frac{1}{n!}(At)^n + \dots = \sum_{n = 0}^{\infty} \frac{(At)^n}{n!} $。
+\item \textcolor{red}{拉氏变换}：$ \dot{x} = A x(t) \overset{\text{拉氏变换}}{\Longrightarrow} s X(s) = A X(s) + x(0) \overset{\text{拉氏反变换}}{\Longrightarrow} \textcolor{red}{e^{At} = L^{-1} [(sI - A)^{-1}]} $。
 \item \textcolor{red}{凯莱哈密顿定理}：
 \begin{itemize}
 \item 原理
 \begin{itemize}
+\item 特征多项式：$ f(\lambda) = |\lambda I - A| = \lambda^n + a_{n - 1} \lambda^{n - 1} + \dots + a_1 \lambda + a_0 \Rightarrow f(A) = 0 $。    
 \item 矩阵的幂可以由低阶幂线性表示（递推证明）：$ A^k = \sum_{m = 0}^{n - 1} \alpha_m A^m, \quad k \geq m $。
-\item $ e^{A(t)} $展开：$ e^{A(t)} = \sum_{m = 0}^{n - 1} \alpha_m(t) A^m $。
-\item 特征多项式：$ f(\lambda) = |\lambda I - A| = \lambda^n + a_{n - 1} \lambda^{n - 1} + \dots + a_1 \lambda + a_0 \Rightarrow f(A) = 0 $。
+\item $ e^{At} $展开：$ e^{At} = \sum_{m = 0}^{n - 1} \alpha_m(t) A^m $，$ \lambda $可取代$ A $。
 \end{itemize}
 \item \textcolor{red}{用法1}：
 \begin{enumerate}
-\item 求特征根$ \lambda_i $：解$ f(\lambda) = 0 $。
+\item 解$ f(\lambda) = 0 $求$ \lambda_i $。
 \item 由$ n $个方程$ \textcolor{red}{e^{\lambda_i(t)} = \sum_{m = 0}^{n - 1} \alpha_m(t) \lambda_i^m} $，解得$ n $个$ \alpha(t) $。
-\item 代回$ e^{A(t)} = \sum_{m = 0}^{n - 1} \alpha_m(t) A^m $。
+\item 代回$ e^{At} = \sum_{m = 0}^{n - 1} \alpha_m(t) A^m $。
 \end{enumerate}
 \item 用法2：
 $$ f(A) = \sum_{i = 0}^{n} a_i A^i = 0 \Rightarrow a_n A^n = -\sum_{i = 0}^{n - 1} a_i A^i \underset{{\text{代入}A^n}}{\overset{\text{两端乘}A}{\Longrightarrow}} A^{n + 1} = \sum_{i = 0}^{n - 1} a_i' A^i $$
@@ -1638,21 +1634,29 @@ $$ f(A) = \sum_{i = 0}^{n} a_i A^i = 0 \Rightarrow a_n A^n = -\sum_{i = 0}^{n - 
 $$ \begin{cases} \dot{x}(t) = A x(t) + B u(t) \\ y(t) = C x(t) + D u(t) \\ x(0) = 0 \end{cases} \overset{\text{拉氏变换}}{\Longrightarrow} \begin{cases} X(s) = (sI - A)^{-1} B U(s) \\ Y(s) = [\underbrace{\textcolor{red}{C(sI - A)^{-1}B + D}}_{G(s)}]U(s) \end{cases} $$
 %------------------------------------------------
 \subsection[线性时变系统]{线性时变系统}
-\textcolor{red}{$ \Phi(t, t_0) $的性质}：
+%------------------------------------------------
+\paragraph{初值问题}
+$$ \begin{cases} \dot{\Phi}(t, t_0) = A(t) \Phi(t, t_0) \\ \Phi(t_0, t_0) = I \end{cases} $$
+%------------------------------------------------
+\paragraph{\textcolor{red}{$ \Phi(t, t_0) $的性质}}
 \begin{itemize}
 \item 可分离性：$ \Phi(t, t_0) = \Phi(t) \Phi^{-1}(t_0) $。
-\item 唯一性：初值问题$ \dot{\Phi}(t, t_0) = A(t) \Phi(t, t_0), \quad \Phi(t_0, t_0) = I $的解唯一。
+\item 唯一性：初值问题的解唯一。
 \item 传递性：$ \forall t_0, t_1, t_2, \quad \Phi(t_2, t_1) \Phi(t_1, t_0) = \Phi(t_2, t_0) $，可将过程划分为子过程。
 \item 可逆性：$ \Phi^{-1}(t, t_0) = \Phi(t_0, t) $。
 \end{itemize}
 %------------------------------------------------
 \subsection[离散线性系统]{离散线性系统\tip{离散线性系统（连续系统离散化）}}
 $$ \begin{cases} \textcolor{red}{x(k + 1) = A(k) x(k) + B(k) u(k)} \\ \textcolor{red}{y(k) = C(k) x(k) + D(k) u(k)} \end{cases} \Rightarrow x(k) = \underbrace{\Phi(k, k_0)}_{\Pi_{\tau = k_0}^{k - 1} A(\tau) \text{，性质同上}} x(k_0) $$
+
+解与相应为：
+$$ \begin{cases} x(k) = \Phi(k, k_0) x(k_0) + \sum_{j = k_0}^{k - 1} \Phi(k, j + 1) B(j) u(j) \\ y(k) = C(k) \Phi(k, k_0) x(k_0) + C(k) \sum_{j = k_0}^{k - 1} \Phi(k, j + 1) B(j) u(j) + D(k) u(k) \end{cases} $$
 %------------------------------------------------
-\paragraph{定常系统$ \Phi(k, k_0) = A^{k - k_0} $}
+\paragraph{定常系统}
+$ \Phi(k, k_0) = A^{k - k_0} $。
 $$ \begin{cases} x(k) = A^{k - k_0} x(k_0) + \sum_{j = k_0}^{k - 1} A^{k - j - 1} B u(j) \\ y(k) = C A^{k - k_0} x(k_0) + \sum_{j = k_0}^{k - 1} C A^{k - j - 1} B u(j) + D u(k) \end{cases} $$
 %------------------------------------------------
-\paragraph{（线性）\textcolor{red}{连续系统离散化}}
+\paragraph{\textcolor{red}{线性连续系统离散化}}
 \begin{figure}[H]
 \centering 
 \begin{tikzpicture}[scale=0.8,transform shape]
@@ -1673,17 +1677,16 @@ $$ \begin{cases} x(k) = A^{k - k_0} x(k_0) + \sum_{j = k_0}^{k - 1} A^{k - j - 1
 \section{控制系统的结构性质}
 %------------------------------------------------
 \subsection[连续系统能控能观测性]{连续系统能控能观测性}
-$$ \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} $$
 \begin{itemize}
 \item 
 \begin{itemize}
-\item 能控性：$ x_0 \overset{t}{\Longrightarrow} \text{原点} $，则$ x_0 $能控。任一状态能控则完全能控。
-\item 能达性：$ \text{原点} \overset{t}{\Longrightarrow} x_t $，则$ x_t $能达。线性定常系统等价于能控。
+\item 能控性（Controllability）：$ x_0 \overset{t}{\Rightarrow} \text{原点} $，则$ x_0 $能控。任一状态能控则完全能控。
+\item 能达性：$ \text{原点} \overset{t}{\Rightarrow} x_t $，则$ x_t $能达。线性定常系统等价于能控。
 \end{itemize}
 \item 
 \begin{itemize}
-\item 能观测性：$ y(t), \quad t \in [t_0, t_1] \overset{u = 0}{\Longrightarrow} x_0 $，则（完全）能观测。
-\item 能构造性。
+\item 能观测性（Observability）：$ \forall x(t_0) = x_0 \underset{y(t)}{\overset{u = 0}{\Longrightarrow}} x_0 $，则完全能观测。
+\item 能构造性（Constructability）。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
@@ -1691,25 +1694,25 @@ $$ \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} $$
 \begin{table}[H]
 \centering
 \small
-\begin{tabular}{|p{3.2cm}|p{6.9cm}|p{6.9cm}|}
+\begin{tabular}{|p{3.5cm}|p{6.8cm}|p{6.8cm}|}
 \hline
  & $ (A, B) $能控 & $ (C, A) $能观测 \\
 \hline
-定义 & $ \forall x_0, \quad \exists t_1, u(t), \quad t \in [t_0, t_1], \newline x_0 = -\int_{t_0}^{t_1} e^{-A \tau} B u(\tau) d \tau $ & \\
+判断（直/间接） & $ u $影响所有$ x $ & $ y $包含所有$ x $ \\ 
 \hline
-判断（直/间接） & $ u $影响所有$ x $ & $ y $包含所有$ x $ \\
+引理 & $ \forall x_0, \quad \exists t_1, u(t), \quad t \in [t_0, t_1], \newline x_0 = -\int_{t_0}^{t_1} e^{-A \tau} B u(\tau) d \tau $ & \\
 \hline
 矩阵 & $ \textcolor{red}{U = \begin{bmatrix} B & AB & \cdots & A^{n - 1} B \end{bmatrix}} \newline \textcolor{red}{rank(U) = n} $ & $ \textcolor{red}{V = \begin{bmatrix} C^T & (CA)^T & \cdots & (C A^{n - 1})^T \end{bmatrix}^T} \newline \textcolor{red}{rank(V) = n} $ \\
 \hline
 转移矩阵（$ [0, \infty) $） & $ e^{-At} B $的行线性无关 & $ C e^{At} $的列线性无关 \\
 \hline
-克莱姆矩阵 \newline $ \forall t_1 > t_0 $ & $ w(t_0, t_1) = \int_{t_0}^{t_1} e^{-A \tau} B B^T e^{-A^T \tau} d \tau $非奇异 & $ w(t_0, t_1) = \int_{t_0}^{t_1} e^{A^T \tau} C^T C e^{A \tau} d \tau $非奇异 \\
+克莱姆矩阵$ W(t_0, t_1) $ \newline $ \forall t_1 > t_0 $ & $ \int_{t_0}^{t_1} e^{-A \tau} B B^T e^{-A^T \tau} d \tau $非奇异 & $ \int_{t_0}^{t_1} e^{A^T \tau} C^T C e^{A \tau} d \tau $非奇异 \\
 \hline
 PBH判据1（$ \forall \lambda $） & $ \textcolor{red}{rank \begin{bmatrix} \lambda I - A & B \end{bmatrix} = n} $ & $ \textcolor{red}{rank \begin{bmatrix} (\lambda I - A)^T & C^T \end{bmatrix} = n} $ \\
 \hline
 PBH判据2 & 不存在$ A $的左特征矢量正交于$ B $的所有列 & 不存在$ A $的右特征矢量正交于$ C $的所有行 \\
 \hline
-约当规范型 & $ \overline{B} $无全$ 0 $行 & \\
+约当规范型 & 无重根时$ \overline{B} $无全$ 0 $行；有重根时略 & \\
 \hline
 \textcolor{red}{对偶性} & 判断对偶系统能观测性 & 判断对偶系统能控性 \\
 \hline
@@ -1723,22 +1726,29 @@ PBH判据2 & 不存在$ A $的左特征矢量正交于$ B $的所有列 & 不存
 \item 提取最高阶子阵判断。
 \end{itemize}
 %------------------------------------------------
+\paragraph{\textcolor{red}{对偶性}}\tip{对偶性}
+信号传递方向相反，输入、输出交换，引出点、综合点交换。
+$$ S: \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} \overset{\text{对偶}}{\Longrightarrow} S^T: \begin{cases} \dot{x} = \textcolor{red}{A^T} x + \textcolor{red}{C^T} u \\ y = \textcolor{red}{B^T} x \end{cases} $$
+%------------------------------------------------
 \subsection[离散系统能控能观测性]{离散系统能控能观测性}
-$$ \begin{cases} x(k + 1) = A(k) x(k) + B(k) u(k) \\ y(k) = C(k) x(k) + D(k) u(k) \end{cases} $$
 %------------------------------------------------
 \paragraph{能控性}
 \begin{itemize}
-\item 能控性：$ x(l) \neq 0, \quad l \in Tk, \quad \exists m \in Tk, \quad m > l $和相应的$ u(k) $，使$ x(m) = 0 $。
-\item 能达性：$ |A(k)| \neq 0, \quad k \in [l, m - 1] $时，等于能控。
-\item 判据：
-$$ s_1' = \begin{bmatrix} A^{-1} B & A^{-2} B & \cdots & A^{-n} B \end{bmatrix}, \quad s_2' = A^n s_1' = \begin{bmatrix} A^{n - 1} B & \cdots & AB & B \end{bmatrix}, \quad \textcolor{red}{s_2 = \begin{bmatrix} B & AB & \cdots & A^{n - 1} B \end{bmatrix}} $$
+\item 能控性：$ \forall x(l) \neq 0 \underset{u(k)}{\overset{\exists m > l}{\Longrightarrow}} x(m) = 0, \quad l, m \in T_k $，则$ l $完全能控。
+\item 能达性：$ x(l) = 0 \underset{u(k)}{\overset{\exists m > l}{\Longrightarrow}} \forall x(m) \neq 0, \quad l, m \in T_k $，则$ l $完全能达。以下情况等价于能控：
 \begin{itemize}
-\item $ A $非奇异：\textcolor{red}{能控$ \Leftrightarrow $}$ rank(s_1') = rank(s_2') = \textcolor{red}{rank(s_2)} = rank(s_2 s_2^T) \textcolor{red}{= n} $。
-\item $ A $奇异：能控$ \Leftarrow $$ rank(s_2) = n $。
+\item $ A(k), \quad k \in [l, m - 1] $非奇异。
+\item 系统由连续系统离散得到。
+\end{itemize}
+\item 判据：
+$$ \footnotesize S_1' = \begin{bmatrix} A^{-1} B & A^{-2} B & \cdots & A^{-n} B \end{bmatrix}, \quad S_2' = A^n S_1' = \begin{bmatrix} A^{n - 1} B & \cdots & AB & B \end{bmatrix}, \quad \textcolor{red}{S_2 = \begin{bmatrix} B & AB & \cdots & A^{n - 1} B \end{bmatrix}} $$
+\begin{itemize}
+\item $ A $非奇异：\textcolor{red}{能控$ \Leftrightarrow $}$ rank(S_1') = rank(S_2') = \textcolor{red}{rank(S_2)} = rank(S_2 S_2^T) \textcolor{red}{= n} \Leftrightarrow det(S_2 S_2^T) \neq 0 $。
+\item $ A $奇异：能控$ \Leftarrow $$ rank(S_2) = n $。
 \item 一般性：
 \begin{itemize}
-\item 能控$ \Leftrightarrow $$ \forall k \in N_+, \underbrace{span}_{\text{列向量所组成的向量空间}} \begin{bmatrix} B & AB & \cdots & A^{k - 1} B \end{bmatrix} \supseteq span[A^k] $。
-\item 能达$ \Leftrightarrow $$ rank(s_2) = n $。
+\item 能控$ \Leftrightarrow $$ k \in N_+, \underbrace{span}_{\text{列向量所生成的向量空间}} \begin{bmatrix} B & AB & \cdots & A^{k - 1} B \end{bmatrix} \supseteq span[A^k] $。
+\item 能达$ \Leftrightarrow $$ rank(S_2) = n $。
 \end{itemize}
 \end{itemize}
 \item 一步转移回原点：根据$ -A^{-1} B u(0) = x(0) $解$ u(0) $。
@@ -1746,8 +1756,8 @@ $$ s_1' = \begin{bmatrix} A^{-1} B & A^{-2} B & \cdots & A^{-n} B \end{bmatrix},
 %------------------------------------------------
 \paragraph{能观测性}
 \begin{itemize}
-\item 能观测性：$ x(l) = x_0, \quad l \in Tk, \quad \exists m \in Tk, \quad m \neq \infty, m > l $，可由$ [l, m] $上的$ y'(k) $唯一确定$ x_0 $。
-\item 能构造性：$ x(t_f) $由$ [t_0, t_f] $的$ y(k) $决定。
+\item 能观测性：$ \forall x(l) = x_0 \underset{y(k)}{\overset{\exists m > l}{\Longrightarrow}} x_0, \quad l, m \in T_k $，则$ l $完全能观测。
+\item 能构造性：$ y(k) \Rightarrow x(t_f)$。
 \item 判据：\textcolor{red}{能观测$ \Leftrightarrow $$ rank \begin{bmatrix} C^T & (CA)^T & \cdots & (C A^{n - 1})^T \end{bmatrix} = n $}。
 \end{itemize}
 %------------------------------------------------
@@ -1757,11 +1767,9 @@ $$ s_1' = \begin{bmatrix} A^{-1} B & A^{-2} B & \cdots & A^{-n} B \end{bmatrix},
 \item \textcolor{red}{连续系统不能控/能观测$ \Rightarrow $离散系统不能控/能观测}。
 \end{itemize}
 %------------------------------------------------
-\subsection[对偶性]{\textcolor{red}{对偶性}\tip{对偶性}}
-输入、输出交换，引出点、综合点交换。
-$$ S: \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} \overset{\text{对偶}}{\Longrightarrow} S^T: \begin{cases} \dot{x} = \textcolor{red}{A^T} x + \textcolor{red}{C^T} u \\ y = \textcolor{red}{B^T} x \end{cases} $$
+\paragraph{对偶性}
 \begin{itemize}
-\item $ S $能达/能观测$ \Rightarrow $$ S^T $能观测/能达。
+\item $ S $完全能达/能观测$ \Rightarrow $$ S^T $完全能观测/能达。
 \item $ S $能控/能构造$ \Rightarrow $$ S^T $能构造/能控。
 \end{itemize}
 %------------------------------------------------
@@ -1769,28 +1777,30 @@ $$ S: \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} \overset{\text{�
 $$ \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} \underset{\textcolor{red}{x = P \overline{x}}}{\overset{\text{非奇异变换}}{\Longrightarrow}} \begin{cases} \dot{\overline{x}} = \textcolor{red}{P^{-1} A P} \overline{x} + \textcolor{red}{P^{-1} B} u \\ y = \textcolor{red}{C P} \overline{x} \end{cases} $$
 %------------------------------------------------
 \paragraph{非奇异变换的不变特性}
-\textcolor{red}{$ \lambda $、$ G(s) $、能控能观性不变}。
+\textcolor{red}{$ \lambda $、$ G(s) $、能控能观测性不变}。
 %------------------------------------------------
 \subsubsection[对角型]{\textcolor{red}{对角型}\tip{对角化}}
 \begin{itemize}
 \item 适用情况：$ \lambda $互异或有重根但$ \alpha $独立。
-\item 求法：求$ \lambda, \alpha $，\textcolor{red}{特征矩阵$ M = \begin{bmatrix} \alpha_1 & \cdots & \alpha_n \end{bmatrix} $}即为变换。
+\item 一般转化：求$ \lambda, \alpha $，\textcolor{red}{特征矩阵$ P = \begin{bmatrix} \alpha_1 & \cdots & \alpha_n \end{bmatrix} $}即为变换。
+\item 能控标准型转化：$ \lambda $互异时，范德蒙特矩阵$ P = \begin{bmatrix} 1 & \cdots & 1 \\ \lambda_1 & \cdots & \lambda_n \\ \vdots & & \vdots \\ \lambda_1^{n - 1} & \cdots & \lambda_n^{n - 1} \end{bmatrix} $为变换。
 \end{itemize}
 %------------------------------------------------
-\paragraph{能控标准型对角化}
-$ \lambda $互异时，范德蒙特矩阵$ P = \begin{bmatrix} 1 & \cdots & 1 \\ \lambda_1 & \cdots & \lambda_n \\ \lambda_1^{n - 1} & \cdots & \lambda_n^{n - 1} \end{bmatrix} $可使$ A $对角化。
-%------------------------------------------------
 \subsubsection[约当型]{\textcolor{red}{约当型}\tip{约当型}}
-$ m $重$ \lambda_1 $，只有一个独立特征向量$ \alpha_1 $；其它都是单根。
-\begin{align*}
-p &= \begin{bmatrix} \alpha_{11} & \alpha_{12} & \cdots & \alpha_{1m} & \alpha_{m + 1} & \cdots & \alpha_n \end{bmatrix} \\
-J &= p^{-1} A p = \begin{bmatrix} \lambda_1 & 1 & & & & & \\ & \lambda_1 & \ddots & & & 0 & \\ & & \ddots & 1 & & & \\ & & & \lambda_1 & & & \\ & & & & \lambda_{m + 1} & & \\ & 0 & & & & \ddots & \\ & & & & & & \lambda_n \end{bmatrix}
-\end{align*}
-
-其中左上约当块$ = A \begin{bmatrix} \alpha_{11} & \alpha_{12} & \cdots & \alpha_{1m} \end{bmatrix} $。
+\begin{itemize}
+\item 适用情况：$ \lambda $有重根且$ \alpha $不独立。
+\item 例子1：$ m $重$ \lambda_1 $，只有一个独立特征向量$ \alpha_1 $，其它都是单根。
+\begin{itemize}
+\item 变换：$ P = \begin{bmatrix} \alpha_{11} & \cdots & \alpha_{1m} & \alpha_{m + 1} & \cdots & \alpha_n \end{bmatrix} $。
+\item 约当块：$ \begin{bmatrix} \alpha_{11} & \cdots & \alpha_{1m} \end{bmatrix} $左上约当块$ = A \begin{bmatrix} \alpha_{11} & \cdots & \alpha_{1m} \end{bmatrix} $。
+$$ \overline{A} = \begin{bmatrix} \lambda_1 & 1 & & & & & \\ & \lambda_1 & \ddots & & & 0 & \\ & & \ddots & 1 & & & \\ & & & \lambda_1 & & & \\ & & & & \lambda_{m + 1} & & \\ & 0 & & & & \ddots & \\ & & & & & & \lambda_n \end{bmatrix} $$
+\end{itemize}
+\item 例子2：$ 5 $重根$ \lambda $，有两个独立特征向量，其它都是单根，其约当块可能形如：
+$$ \begin{bmatrix} \lambda & 1 & & & \\ & \lambda & 1 & & \\ & & \lambda & & \\ & & & \lambda & 1 \\ & & & & \lambda \end{bmatrix} $$
+\end{itemize}
 %------------------------------------------------
 \subsubsection[标准型]{标准型}
-$ A $阵称为伴随阵。
+$ A $阵称为伴随阵（友矩阵）。
 %------------------------------------------------
 \paragraph{\textcolor{red}{能控标准型}}\tip{能控标准型}
 $$ A = \begin{bmatrix} 0 & & I & \\ -a_0 & -a_1 & \cdots & -a_{n - 1} \end{bmatrix}, \quad B = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix}^T $$
@@ -1814,15 +1824,13 @@ $$ A = \begin{bmatrix} 0 & -a_0 \\ & -a_1 \\ I & \vdots \\ & -a_{n - 1} \end{bma
 \hline
  & 能控子空间$ x_c $ & 不能观测子空间$ x_{No} $ \\
 \hline
-性质 & $ \forall x_1, x_2 \in \text{子空间}x, \quad \forall \alpha, \beta, \quad \alpha x_1 + \beta x_2 \in x $ & $ u(t) = 0, \quad y(t) = C x(t) = 0 $，$ y $不能唯一确定$ x_0 $ \\
+构成 & $ x_c = span \begin{bmatrix} B & A B & \cdots & A^{n - 1} B \end{bmatrix} $ & $ x_{No} = \bigcap_{i = 0}^{n - 1} ker C A^i $ \\
 \hline
-构造 & $ x_c = span \begin{bmatrix} B & A B & \cdots & A^{n - 1} B \end{bmatrix} $ & $ x_{No} = \bigcap_{i = 0}^{n - 1} ker C A^i $ \\
-\hline
-子空间 & 所有能控状态构成状态空间的一个子空间 & 所有不能观测状态构成状态空间的一个子空间 \\
+子空间 & 所有能控状态构成状态空间关于$ A $的不变子空间 & 所有不能观测状态构成状态空间关于$ A $的不变子空间 \\
 \hline
 \multirow{2}{*}{分离} & $ \begin{bmatrix} \dot{x}_c \\ \dot{x}_{Nc} \end{bmatrix} = \begin{bmatrix} A_1 & A_{12} \\ 0 & A_2 \end{bmatrix} \begin{bmatrix} x_c \\ x_{Nc} \end{bmatrix} + \begin{bmatrix} B_1 \\ 0 \end{bmatrix} u \newline y = \begin{bmatrix} C_1 & C_2 \end{bmatrix} \begin{bmatrix} x_c \\ x_{Nc} \end{bmatrix} $，$ (A_1, B_1) $能控 & $ \begin{bmatrix} \dot{x}_{No} \\ \dot{x}_o \end{bmatrix} = \begin{bmatrix} A_1 & A_{12} \\ 0 & A_2 \end{bmatrix} \begin{bmatrix} x_{No} \\ x_o \end{bmatrix} + \begin{bmatrix} B_1 \\ B_2 \end{bmatrix} u \newline y = \begin{bmatrix} 0 & C_2 \end{bmatrix} \begin{bmatrix} x_{No} \\ x_o \end{bmatrix} $，$ (C_2, A_2) $能观测 \\
 \cline{2-3}
- & $ \begin{cases} \text{能控子系统}S_c: \dot{x}_c = A_1 x_c + B_1 u + A_{12} x_{Nc} \\ \text{不能控子系统}S_{Nc}: \dot{x}_{Nc} = A_2 x_{Nc} \\ \end{cases} $ & $ \begin{cases} \text{能观测子系统}S_o: \dot{x}_o = A_2 x_o + B_2 u \\ \text{不能观测子系统}S_{No}: \dot{x}_{No} = A_1 x_{No} + A_{12} x_0 + B_1 u \\ \end{cases} $ \\
+ & $ \begin{cases} \text{能控子系统}S_c: \dot{x}_c = A_1 x_c + B_1 u + A_{12} x_{Nc} \\ \text{不能控子系统}S_{Nc}: \dot{x}_{Nc} = A_2 x_{Nc} \\ \end{cases} $ & $ \begin{cases} \text{能观测子系统}S_o: \dot{x}_o = A_2 x_o + B_2 u \quad y = C_2 x_o \\ \text{不能观测子系统}S_{No}: \dot{x}_{No} = A_1 x_{No} + A_{12} x_0 + B_1 u \\ \end{cases} $ \\
 \hline
 \multirow{3}{*}{解法} & $ \textcolor{red}{U = \begin{bmatrix} B & A B & \cdots & A^{n - 1} B \end{bmatrix}} $ & $ \textcolor{red}{V = \begin{bmatrix} C^T & (C A)^T & \cdots & (C A^{n - 1})^T \end{bmatrix}} $ \\
 \cline{2-3}
@@ -1836,9 +1844,10 @@ $$ A = \begin{bmatrix} 0 & -a_0 \\ & -a_1 \\ I & \vdots \\ & -a_{n - 1} \end{bma
 \caption{结构分解}
 \end{table}
 %------------------------------------------------
-\paragraph{不变子空间}
+\paragraph{子空间}
 \begin{itemize}
-\item 子空间$ x $在线性变换$ A $的作用下仍属于子空间，称$ x $为$ A $的不变子空间。
+\item $ X $是$ Y $的子空间：空间$ Y $的子集$ X $，$ \forall x_1, x_2 \in X, \quad \forall \alpha, \beta, \quad \alpha x_1 + \beta x_2 \in X $。
+\item $ X $为$ A $的不变子空间：子空间$ X $在线性变换$ A $的作用下仍属于子空间，即$ A(X) \subset X $。
 \item 能控子空间、不能观测子空间均为线性变换的不变子空间。
 \end{itemize}
 %------------------------------------------------
@@ -1846,36 +1855,35 @@ $$ A = \begin{bmatrix} 0 & -a_0 \\ & -a_1 \\ I & \vdots \\ & -a_{n - 1} \end{bma
 \textcolor{red}{先后进行能控能观测分解}。
 %------------------------------------------------
 \paragraph{卡尔曼标准分解定理}
-$$ \dot{x} = \begin{bmatrix} A_{11} & A_{12} & A_{13} & A_{14} \\ 0 & A_{22} & 0 & A_{24} \\ 0 & 0 & A_{33} & A_{34} \\ 0 & 0 & 0 & A_{44} \end{bmatrix} x + \begin{bmatrix} B_1 \\ B_2 \\ 0 \\ 0 \end{bmatrix} u, \quad y = \begin{bmatrix} 0 & C_2 & 0 & C_4 \end{bmatrix} x $$
+$$ \begin{cases} \dot{x} = \begin{bmatrix} A_{11} & A_{12} & A_{13} & A_{14} \\ 0 & A_{22} & 0 & A_{24} \\ 0 & 0 & A_{33} & A_{34} \\ 0 & 0 & 0 & A_{44} \end{bmatrix} x + \begin{bmatrix} B_1 \\ B_2 \\ 0 \\ 0 \end{bmatrix} u \\ y = \begin{bmatrix} 0 & C_2 & 0 & C_4 \end{bmatrix} x \end{cases} $$
 \begin{itemize}
 \item $ (\begin{bmatrix} A_{11} & A_{12} \\ 0 & A_{22} \end{bmatrix}, \begin{bmatrix} B_1 \\ B_2 \end{bmatrix}) $能控，$ (\begin{bmatrix} C_2 & C_4 \end{bmatrix}, \begin{bmatrix} A_{22} & A_{24} \\ 0 & A_{44} \end{bmatrix}) $能观测。
 \item 无观测输出（不保证能控）：$ S_1 \begin{cases} \dot{x}_1 = A_{11} x_1 + B_1 u + \underbrace{A_{12} x_2 + A_{13} x_3 + A_{14} x_4}_{f_1} \\ y_1 = 0 \end{cases} $。
-\item 能控能观测：$ S_2 \begin{cases} \dot{x}_2 = A_{22} x_2 + B_2 u + \underbrace{A_{24} x_4}_{f_2} \\ y_2 = C_2 x_2 \end{cases} $。
+\item 完全能控能观测：$ S_2 \begin{cases} \dot{x}_2 = A_{22} x_2 + B_2 u + \underbrace{A_{24} x_4}_{f_2} \\ y_2 = C_2 x_2 \end{cases} $。
 \item 不受控无输出：$ S_3 \begin{cases} \dot{x}_3 = A_{33} x_3 + \underbrace{A_{34} x_4}_{f_3} \\ y_3 = 0 \end{cases} $。
 \item 不受控（不保证能观测）：$ S_4 \begin{cases} \dot{x}_4 = A_{44} x_4 \\ y_4 = C_4 x_4 \end{cases} $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{$ G(s) $}
 \begin{itemize}
-\item $ \textcolor{red}{G(s) = C (sI - A)^{-1} B = C_2 (sI - A_{22})^{-1} B_2} = \frac{b_{n - 1} s^{n - 1} + \dots + b_1 s + b_0}{s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0} $。
+\item $ \textcolor{red}{G(s) = C (sI - A)^{-1} B = C_2 (sI - A_{22})^{-1} B_2} $。
 \item 零极点相消
 \begin{itemize}
 \item 极点分为能控能观测极点集$ \sigma(A_{22}) $和固定模$ \Lambda = \sigma(A_{11}) \cup \sigma(A_{33}) \cup \sigma(A_{44}) $。
-\item 非完全能控能观测时，$ G(s) $中属于$ \Lambda $的零极点全部相消；完全能控能观测时，也可能有零极点相消，但只会降阶。
-\item \textcolor{red}{定常线性系统完全能控能观测$ \Leftrightarrow $没有零极点相消}。
+\item 非完全能控能观测时，属于$ \Lambda $的零极点全部相消；完全能控能观测时，SISO系统没有零极点相消，MIMO系统可能会降阶（定义为非零极点相消）；故\textcolor{red}{定常线性系统完全能控能观测$ \Leftrightarrow $没有零极点相消}。
 \end{itemize}
 \item $ G(s) = \underbrace{\frac{s - a}{(s - a)(s - b)}}_{\text{状态不稳定}} = \underbrace{\frac{1}{s - b}}_{\text{输入输出稳定}} $。
 \end{itemize}
 %------------------------------------------------
 \subsection[实现]{\textcolor{red}{实现}\tip{实现}}
 \begin{itemize}
-\item \textcolor{red}{由传递函数阵推状态方程}，$ (C, A, B) $是$ G(s) = C (sI - A)^{-1} B $的一个实现。
-\item 物理可实现：实系数 + 真有理分式。
+\item \textcolor{red}{$ G(s) \Rightarrow $状态方程}，$ (C, A, B) $是$ G(s) = C (sI - A)^{-1} B $的一个实现。
+\item 物理可实现：实系数真有理分式。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[SISO]{SISO}
 %------------------------------------------------
-\paragraph{\textcolor{red}{真分式实现}}
+\paragraph{\textcolor{red}{串联实现}}
 得到能控或能观测标准型。
 $$ G(s) = \frac{b_m s^m + \dots + b_1 s + b_0}{s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0}, \quad m < n $$
 %------------------------------------------------
@@ -1915,20 +1923,26 @@ $$ U(s) = \begin{bmatrix} \beta_{1, n - 1} s^{n - 1} + \cdots + \beta_{1, 0} \\ 
 \subsection[稳定性]{稳定性}
 %------------------------------------------------
 \subsubsection[稳定性]{\textcolor{red}{稳定性}}
-$ \dot{x} = f(x, t), \quad \forall t, \quad f(x_e, t) = 0 $，其中$ x_e $为平衡状态。
+$ \dot{x} = f(x, t), \quad \forall t, \quad f(x_e, t) = 0 $，则$ x_e $为平衡状态。
 \begin{itemize}
-\item 李雅普诺夫意义下的稳定（工程意义下的临界不稳定）：对$ x_e $，$ \forall \epsilon > 0, \quad \exists \delta > 0 $，使$ ||x_0 - x_e|| \leq \delta $时，有$ ||x(t; x_0, t_0) - x_e|| \leq \epsilon, \quad t \geq t_0 $。
-\item 渐近稳定（工程意义下的稳定）：$ \lim_{t \to 0} ||x(t; x_0, t_0) - x_e|| = 0 $。
-\item 大范围渐近稳定：$ \forall x_0, \quad \lim_{t \to 0} ||x(t; x_0, t_0) - x_e|| = 0 $。
-\item 不稳定：$ \exists \epsilon > 0, \quad \forall \delta > 0 $，针对$ s(\delta) $，$ \exists x_0 $使其发出的轨迹超出$ s(\epsilon) $。
+\item 李雅普诺夫意义下的稳定（工程意义下的临界不稳定）：对$ x_e $，$ \forall \epsilon > 0, \quad \exists \delta > 0 $，使$ ||x_0 - x_e|| \leq \delta $时，恒有$ ||x(t; x_0, t_0) - x_e|| \leq \epsilon, \quad t \geq t_0 $。
+\item 渐近稳定（工程意义下的稳定）：李雅普诺夫意义下的稳定 + $ \lim_{t \to 0} ||x(t; x_0, t_0) - x_e|| = 0 $。
+\item 大范围（全局）渐近稳定：对于稳定的唯一平衡状态$ x_e $，$ \forall x_0 $，恒有$ \lim_{t \to 0} ||x(t; x_0, t_0) - x_e|| = 0 $。任意点出发的轨迹收敛到$ x_e $。
+\item 不稳定：$ \exists \epsilon > 0, \quad \forall \delta > 0 $，针对$ s(\delta) $，$ \exists x $使其发出的轨迹超出$ s(\epsilon) $。
 \end{itemize}
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.4\textwidth]{stability} 
+\caption{轨迹示意图（李雅普诺夫意义下的稳定）}
+\end{figure}
 %------------------------------------------------
-\subsubsection[李雅普诺夫第一方法]{\textcolor{red}{李雅普诺夫第一方法}\tip{李雅普诺夫第一方法}}
+\subsubsection[李雅普诺夫第一方法]{\textcolor{red}{李雅普诺夫第一方法}（间接法）\tip{李雅普诺夫第一方法}}
 对于$ A $的$ \lambda $：
 \begin{itemize}
 \item 均有负实部：大范围渐近稳定（满秩，平衡状态唯一）。
 \item 有正实部：不稳定。
-\item 无正实部，零实部是最小多项式：
+\item 无正实部，有零实部：
 \begin{itemize}
 \item 单根：（不渐进）稳定。
 \item 重根：不稳定。
@@ -1937,7 +1951,7 @@ $ \dot{x} = f(x, t), \quad \forall t, \quad f(x_e, t) = 0 $，其中$ x_e $为�
 %------------------------------------------------
 \paragraph{\textcolor{red}{渐近稳定等价条件}}
 \begin{itemize}
-\item 稳定 + $ \lim_{t \to \infty} ||x(t; x_0, t_0)|| = 0 $。
+\item 平衡状态稳定 + $ \lim_{t \to \infty} ||x(t; x_0, t_0)|| = 0 $。
 \item $ \lim_{t \to 0} ||e^{A t}|| = \lim_{t \to \infty} t^{\beta_i} e^{\alpha_i t + j \omega_i t} = 0 $。
 \item \textcolor{red}{$ \lambda $均有负实部}。
 \end{itemize}
@@ -1950,13 +1964,14 @@ $ \dot{x} = f(x, t), \quad \forall t, \quad f(x_e, t) = 0 $，其中$ x_e $为�
 \paragraph{\textcolor{red}{李雅普诺夫函数$ v(x) $}}
 \begin{itemize}
 \item \textcolor{red}{$ v(x) $正定}：$ v(x) $连续，$ v(0) = 0, \quad v(x) > 0, \quad x \neq 0 $。
-\item $ \frac{\partial v(x)}{\partial x_i}, \quad i = 1, 2, \dots, n $存在且连续，$ \textcolor{red}{\dot{v}(x)} = \frac{\partial x(x)}{\partial x_1} f_1 + \dots + \frac{\partial x(x)}{\partial x_n} f_n $\textcolor{red}{半负定}。
+\item $ \frac{\partial v(x)}{\partial x_i}, \quad i = 1, 2, \dots, n $存在且连续。
+\item $ \textcolor{red}{\dot{v}(x)} = \frac{\partial v(x)}{\partial x_1} \dot{x}_1 + \dots + \frac{\partial v(x)}{\partial x_n} \dot{x}_n $\textcolor{red}{半负定}：$ \dot{v}(x) $连续，$ \dot{v}(x) \leq 0 $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{定理}
 \begin{itemize}
-\item 对$ x_e $，$ \exists v(x) $，则$ x_e $渐进稳定；如沿轨线$ \frac{d v}{d t} < 0 $，则$ x_e $渐近稳定。
-\item 对$ x_e $，$ \exists v(x) $有连续一阶导，$ v(x_e) = 0, \quad v(x^*) < 0, \quad x^* \in U(x_e, \delta) $，沿非零轨线$ \frac{d v}{d t} <(\leq) 0 $，则$ x_e $不（渐进）稳定。
+\item 对$ x_e $，$ \exists v(x) $，则稳定；如沿轨线$ \frac{d v}{d t} < 0 $，则渐近稳定。
+\item 对$ x_e $，$ \exists v(x) $有连续一阶导，$ v(x_e) = 0, \quad v(x^*) < 0, \quad x^* \in U(x_e, \delta) $，沿非零轨线$ \frac{d v}{d t} <(\leq) 0 $，则不（渐进）稳定。
 \end{itemize}
 %------------------------------------------------
 \paragraph{稳定性判断}
@@ -1965,7 +1980,7 @@ $ \dot{x} = f(x, t), \quad \forall t, \quad f(x_e, t) = 0 $，其中$ x_e $为�
 \item \textcolor{red}{求偏导得$ \dot{v}(x) $}，代入状态方程（$ \dot{x} $与$ x $的关系），\textcolor{red}{判断其负定性}。
 \end{enumerate}
 %------------------------------------------------
-\subsubsection[李雅普诺夫方程]{\textcolor{red}{李雅普诺夫方程$ A^T P + P A = -Q $}\tip{李雅普诺夫方程}}
+\subsubsection[李雅普诺夫方程]{\textcolor{red}{李雅普诺夫方程$ A^T P + P A = -Q $}（属于第二方法）\tip{李雅普诺夫方程}}
 %------------------------------------------------
 \paragraph{\textcolor{red}{连续线性定常系统稳定性}}
 \textcolor{red}{渐进稳定$ \Leftrightarrow $$ \forall $对称正定阵$ Q $，$ A^T P + P A = -Q $的唯一解$ P $也正定}。
@@ -1994,7 +2009,7 @@ $ u(t) $ & $ \textcolor{red}{r(t) - k x(t)} $ & $ r(t) - k y(y) $ \\
 \hline
 状态方程 & $ \textcolor{red}{\dot{x} = (A - B x) + B r} $ & $ \dot{x} = (A - B k C)x + B r $ \\
 \hline
-$ G_k(s) $ & $\textcolor{red}{C (sI - A + B k)^{-1} B} $ & $ C (sI - A + B k C)^{-1} B $ \\
+$ G_B(s) $ & $\textcolor{red}{C (sI - A + B k)^{-1} B} $ & $ C (sI - A + B k C)^{-1} B $ \\
 \hline
 \textcolor{red}{能控性} & 不影响 & 不影响 \\
 \hline
@@ -2012,19 +2027,15 @@ $ G_k(s) $ & $\textcolor{red}{C (sI - A + B k)^{-1} B} $ & $ C (sI - A + B k C)^
 %------------------------------------------------
 \paragraph{\textcolor{red}{镇定}}
 \begin{itemize}
-\item 定义：加入反馈可使闭环系统稳定。
-\item 连续系统：\textcolor{red}{线性定常系统能状态反馈镇定$ \Leftrightarrow $不能控部分渐进稳定}（不影响能控部分）。
-\begin{enumerate}
-\item 能控性分离，完全能控则可以镇定。
-\item 判断不能控部分渐近稳定性（$ \lambda $是否均有负实部）。
-\end{enumerate}
-\item 离散系统：\textcolor{red}{线性定常系统能镇定$ \Leftrightarrow $不能控部分极点模小于$ 1 $}。
+\item 定义：加入反馈使闭环系统稳定。
+\item 连续系统：\textcolor{red}{线性定常系统能状态反馈镇定$ \Leftrightarrow $不能控部分渐进稳定}（$ \lambda $均有负实部）。
+\item 离散系统：\textcolor{red}{线性定常系统能镇定$ \Leftrightarrow $不能控极点模小于$ 1 $}。
 \end{itemize}
 %------------------------------------------------
 \subsection[李雅普诺夫方程设计反馈系统]{\textcolor{red}{李雅普诺夫方程设计反馈系统}}
 %------------------------------------------------
 \subsubsection[极点配置]{极点配置}
-在$ r = 0 $，$ k $省去符号时，状态反馈方程为$ \dot{x} = (A + B k)x $。
+在$ r = 0 $，$ k $省去负号时，状态反馈方程为$ \dot{x} = (A + B k)x $。
 \begin{enumerate}
 \item 设未知阵$ k $，计算$ A + B k $。
 \item 设$ Q, P $（如$ Q = P = I $，不同组合会得到不同的$ k $和极点），得到方程（如$ (A + B k)^T + (A + B k) = -I $），解得$ k $。
@@ -2036,7 +2047,7 @@ $ G_k(s) $ & $\textcolor{red}{C (sI - A + B k)^{-1} B} $ & $ C (sI - A + B k C)^
 \subsubsection[最优控制]{最优控制}
 已知$ x(0) $，$ argmin_{u(t) = k x(t)} J = \int_{0}^{\infty} x^T Q x d t $。
 \begin{enumerate}
-\item 设未知阵$ k $，由$ (A + B k)^T P + P (A + B k) = -Q $得到$ P $关于$ k $的函数。
+\item 设未知阵$ k $，取$ Q $（如$ I $），由$ (A + B k)^T P + P (A + B k) = -Q $得到$ P $关于$ k $的函数。
 \item $ argmin_k J $：对$ J = x^T(0) P x(0) $求关于$ k $的偏导，得到使$ P $为正定阵的$ k $。
 \end{enumerate}
 %------------------------------------------------
@@ -2044,7 +2055,7 @@ $ G_k(s) $ & $\textcolor{red}{C (sI - A + B k)^{-1} B} $ & $ C (sI - A + B k C)^
 %------------------------------------------------
 \subsubsection[状态反馈配置极点]{状态反馈配置极点}
 \begin{itemize}
-\item 原理：\textcolor{red}{状态反馈}只改变能控部分极点集，\textcolor{red}{不改变不能控部分极点集}。
+\item 原理：\textcolor{red}{状态反馈}只改变能控极点，\textcolor{red}{不改变不能控极点}。
 $$ \sigma(A_1) \cup \sigma(A_2) \overset{\text{状态反馈}}{\Longrightarrow} \sigma(A_1 + B_1 K_c) \cup \sigma(A_2) $$
 \item 连续系统：
 \begin{itemize}
@@ -2060,35 +2071,37 @@ $$ \sigma(A_1) \cup \sigma(A_2) \overset{\text{状态反馈}}{\Longrightarrow} \
 \begin{itemize}
 \item 法1：
 \begin{enumerate}
-\item \textcolor{red}{化能控标准型}的部分步骤：
+\item 计算极点$ \textcolor{red}{|sI - A| = s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0} $。
+\item 计算目标极点$ \textcolor{red}{(s - \lambda_1) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0} $。
+\item 计算标准型反馈$ \textcolor{red}{k = \begin{bmatrix} a_0 - \alpha_0 & \cdots & a_{n - 1} - \alpha_{n - 1} \end{bmatrix}} $（实际 - 期望）。
+\item 还原：
 \begin{enumerate}
-\item $ U = \begin{bmatrix} B & AB & \cdots & A^{n - 1} B \end{bmatrix} $。
-\item $ q = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} U^{-1} $。
-\item $ T^{-1} = \begin{bmatrix} q^T & (qA)^T & \cdots & (qA^{n - 1})^T \end{bmatrix}^T $。
+\item $ {\scriptsize U = \begin{bmatrix} B & AB & \cdots & A^{n - 1} B \end{bmatrix}, \quad q = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} U^{-1}, \quad T^{-1} = \begin{bmatrix} q^T & (qA)^T & \cdots & (qA^{n - 1})^T \end{bmatrix}^T} $。
+\item $ \textcolor{red}{k' = k T^{-1}} $。
 \end{enumerate}
-\item 计算极点：$ \textcolor{red}{|sI - A| = s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0} $。
-\item 计算目标极点：$ \textcolor{red}{(s - \lambda_1)(s - \lambda_2) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0} $。
-\item 计算标准型反馈：$ \textcolor{red}{k = \begin{bmatrix} a_0 - \alpha_0 & \cdots & a_{n - 1} - \alpha_{n - 1} \end{bmatrix}} $（实际 - 期望）。
-\item 还原：$ \textcolor{red}{k' = k T^{-1}} $。
 \end{enumerate}
 \item \textcolor{red}{法2}
 \begin{enumerate}
-\item 设未知阵$ k $，计算$ A + B k $。
-\item 计算极点：$ \textcolor{red}{|sI - (A + B k)| = s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0} $。
-\item 计算目标极点：$ \textcolor{red}{(s - \lambda_1)(s - \lambda_2) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0} $。
+\item 设未知阵$ k $，计算极点$ \textcolor{red}{|sI - (A + B k)| = s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0} $。
+\item 计算目标极点$ \textcolor{red}{(s - \lambda_1) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0} $。
 \item 两式\textcolor{red}{对应位置系数相等}，得到$ k $。
 \end{enumerate}
-\item 法3：阿克曼公式，高阶单输入，计算机使用。
+\item 法3：阿克曼（Ackermann）公式，高阶单输入，计算机使用。
+\begin{enumerate}
+\item 计算目标多项式$ \phi(s) = (s - \lambda_1) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0 $。
+\item 以$ A $替换$ s $，得到$ \phi(A) = A^n + \alpha_{n - 1} A^{n - 1} + \dots + \alpha_1 A + \alpha_0 I $。
+\item $ U = \begin{bmatrix} B & AB & \cdots & A^{n - 1} B \end{bmatrix}, \quad q = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} U^{-1}, \quad k = q \phi(A) $。
+\end{enumerate}
 \end{itemize}
 %------------------------------------------------
 \paragraph{极点位置的确定}
-高阶系统的性能主要由\textcolor{red}{主极点对}确定，其位置根据期望性能指标决定，其它极点配置在远方。
+高阶系统的性能主要由\textcolor{red}{主极点对}确定，其位置根据期望性能指标决定，其它极点配置在左侧远方。
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-情况 & 1 & 2 \\
+情况 & 远离原点 & 向$ x $轴运动 \\
 \hline
 变化趋势 & 
 \begin{tikzpicture}[scale=0.4] 
@@ -2101,7 +2114,7 @@ $$ \sigma(A_1) \cup \sigma(A_2) \overset{\text{状态反馈}}{\Longrightarrow} \
 \draw[->] (-0.5,-0.5) arc (270:180:0.2); \draw[->] (-0.5,0.5) arc (90:180:0.2);
 \end{tikzpicture} \\
 \hline
-性能 & $ \sigma -, \quad t_s \downarrow, \quad \xi -, \quad \omega_n \uparrow $ & $ \sigma \downarrow, \quad t_s \downarrow, \quad \xi \uparrow, \quad \omega_n - $ \\
+性能 & $ \xi -, \quad \omega_n \uparrow, \quad \sigma -, \quad t_s \downarrow $ & $ \xi \uparrow, \quad \omega_n -, \quad \sigma \downarrow, \quad t_s \downarrow $ \\
 \hline
 \end{tabular}
 \caption{极点位置的确定}
@@ -2113,32 +2126,33 @@ $$ \sigma(A_1) \cup \sigma(A_2) \overset{\text{状态反馈}}{\Longrightarrow} \
 \begin{itemize}
 \item 法1：
 \begin{enumerate}
-\item 化能控规范型：
+\item 化第一能控规范型：
 \begin{enumerate}
 \item $ U = \begin{bmatrix} B & AB & \cdots & A^{n - 1} B \end{bmatrix} $，重排得到$ \begin{bmatrix} b_1 & A b_1 & \cdots & A^{n - 1} b_1 \\ & & \cdots & \\ b_m & A b_m & \cdots & A^{n - 1} b_m \end{bmatrix} $。
-\item 左起提取线性无关组$ Q = \begin{bmatrix} b_1 & A b_1 & \dots & A^{\mu_1 - 1} b_1 \\ & & \cdots & \\ b_n & A b_n & \dots & A^{\mu_n - 1} b_n \end{bmatrix} $作为变换，得到规范型：
+\item 左起提取线性无关组$ Q = \begin{bmatrix} b_1 & A b_1 & \dots & A^{\mu_1 - 1} b_1 \\ & & \cdots & \\ b_h & A b_h & \dots & A^{\mu_h - 1} b_h \end{bmatrix} $作为变换，得到规范型：
 \begin{align*}
-A &= \begin{bmatrix} A_{11} & \cdots & A_{1h} \\ & \ddots & \vdots \\ 0 & & A_{hh} \end{bmatrix}, \quad A_{ij} = \begin{bmatrix} 0 & * \\ I & * \end{bmatrix}, \quad A_{ij} = \begin{bmatrix} 0 & * \end{bmatrix}, \quad * \neq 0 \\
-B &= \begin{bmatrix} B_1 & & 0 \\ & \ddots & \\ 0 & & B_h & \end{bmatrix}, \quad B_i = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix} 
+\hat{A} &= \begin{bmatrix} A_{11} & \cdots & A_{1h} \\ & \ddots & \vdots \\ 0 & & A_{hh} \end{bmatrix}, \quad A_{ii} = \begin{bmatrix} 0 & * \\ I_{\mu_i - 1} & * \end{bmatrix}_{\mu_i \times \mu_i}, \quad A_{ij} = \begin{bmatrix} 0 & * \end{bmatrix}_{\mu_i \times \mu_j} \\
+\hat{B} &= \begin{bmatrix} B_1 & & 0 & \\ & \ddots & & * \\ 0 & & B_h & \end{bmatrix}, \quad B_i = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}, \quad * \neq 0
 \end{align*}
 \end{enumerate}
-\item 对单输入求状态反馈$ S = \begin{bmatrix} 0 & e_i & 0 & e_j & \cdots \end{bmatrix}, \quad \hat{k} = S Q^{-1} $。
+\item 求状态反馈$ S $使单输入完全能控$ \hat{\Sigma}_S(\hat{A} + \hat{B}S, \hat{B}) $。
+\item 返回原系统，得到反馈$ \hat{k} = S Q^{-1} $使单输入完全能控$ \Sigma_{\hat{k}}(A + B \hat{k}, B) $。
+\item 为单输入配置极点：
+\begin{enumerate}
 \item $ \overline{A} = A + B \hat{k}, \quad |sI - \overline{A}| = s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0 $。
-\item 目标：$ (s - \lambda_1)(s - \lambda_2) \cdots (s - \lambda_m) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0 $。
+\item 目标：$ (s - \lambda_1) \cdots (s - \lambda_m) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0 $。
 \item $ k = \begin{bmatrix} a_0 - \alpha_0 & \cdots & a_{n - 1} - \alpha_{n - 1} \end{bmatrix} $。
+\end{enumerate}
 \item 还原：
 \begin{enumerate}
-\item $ \overline{U} = \begin{bmatrix} B_1 & \overline{A} B_1 & \cdots & \overline{A}^{n - 1} B_1 \end{bmatrix} $。
-\item $ q = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} \overline{U}^{-1} $。
-\item $ T^{-1} = \begin{bmatrix} q^T & (q \overline{A})^T & \cdots & (q \overline{A}^{n - 1})^T \end{bmatrix}^T $。
+\item $ {\scriptsize \overline{U} = \begin{bmatrix} B_1 & \overline{A} B_1 & \cdots & \overline{A}^{n - 1} B_1 \end{bmatrix}, \quad q = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} \overline{U}^{-1}, \quad T^{-1} = \begin{bmatrix} q^T & (q \overline{A})^T & \cdots & (q \overline{A}^{n - 1})^T \end{bmatrix}^T} $。
 \item $ \widetilde{k} = k T^{-1}, \quad k = \hat{k} + \begin{bmatrix} \widetilde{k} \\ 0 \end{bmatrix} $。
 \end{enumerate}
 \end{enumerate}
-\item \textcolor{red}{法2}：
+\item \textcolor{red}{法2}：$ \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} U^{-1} = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} Q^{-1} $。
 \begin{enumerate}
-\item 同法1前2步。
-\item $ q = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} Q^{-1} $。
-\item $ \overline{A} = A + B \hat{k}, \quad \widetilde{k} = -q f(\overline{A}) \quad (\text{用}\overline{A}\text{代替特征多项式中的}\lambda) $。
+\item 同法1前3 步。
+\item $ \overline{A} = A + B \hat{k}, \quad q = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} Q^{-1}, \quad \widetilde{k} = -q f(\overline{A}) \quad (\text{用}\overline{A}\text{代替特征多项式中的}\lambda) $。
 \item $ k = \hat{k} + \begin{bmatrix} \widetilde{k} \\ 0 \end{bmatrix} $。
 \end{enumerate}
 \end{itemize}
@@ -2149,22 +2163,27 @@ B &= \begin{bmatrix} B_1 & & 0 \\ & \ddots & \\ 0 & & B_h & \end{bmatrix}, \quad
 \subsubsection[其它方法]{其它方法}
 %------------------------------------------------
 \paragraph{\textcolor{red}{解李雅普诺夫方程}}
-$ (A, B) $能控、$ (\overline{k}, F) $能观测$ \Leftrightarrow $$ A P - P F = B \overline{k} $有唯一非奇异解（SI为充要，MI为必要）。
+$ F $和$ A $没有相同特征值时，$ (A, B) $能控、$ (\overline{k}, F) $能观测$ \Leftrightarrow $$ A P - P F = B \overline{k} $有唯一非奇异解（SI为充要，MI为必要）。
 \begin{enumerate}
-\item 选取$ F_{n \times n} $（如能观测标准型伴随阵），包含目标极点但不包含$ A $的特征根。
-\item 任取$ \overline{k}_{m \times n} $（如$ \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} $），使$ (\overline{k}, F) $能观测。
-\item 解$ A P - P F = B \overline{k} $的唯一解$ P $。若$ P $奇异则选取其它$ \overline{k} $重新计算，否则$ k = \overline{k} P $。
+\item 选取$ F_{n \times n} $（如能观测标准型伴随阵），包含目标极点但不包含$ A $的特征值。
+\item 任取$ \overline{k}_{m \times n} $（如$ \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} $）使$ (\overline{k}, F) $能观测。
+\item 解$ A P - P F = B \overline{k} $的唯一解$ P $。若$ P $奇异则选取其它$ \overline{k} $重新计算，否则$ k = \overline{k} P^{-1} $。
 \end{enumerate}
 %------------------------------------------------
 \paragraph{能控性PBH判据}
-略
+$ (A, B) $能控，$ \alpha_i $为$ \lambda_i $对应的特征向量。
+\begin{enumerate}
+\item $ [\lambda_i I - (A - Bk)]\alpha_i = 0 \Rightarrow \begin{bmatrix} \lambda_i I - A & B \end{bmatrix}_{n \times (n + m)} \begin{bmatrix} \alpha_i \\ k \alpha_i \end{bmatrix} = 0 $，其中前者满秩。
+\item 方程组有$ m $个线性无关解，构成$ U(\lambda_i)_{(m + n) \times m} = \begin{bmatrix} \varphi(\lambda_i) \\ k \varphi(\lambda_i) \end{bmatrix} $。
+\item 在各$ \varphi(\lambda_i) $中选择一列构成$ n $个线性无关列$ G $，$ k \varphi(\lambda_i) $中对应列构成$ \overline{G} $，$ k = \overline{G} G^{-1} $。
+\end{enumerate}
 %------------------------------------------------
 \paragraph{有噪声}
-为$ \dot{x} = A x + B u + F w(t) $设计$ u(t) = k x(t) + k \omega w(t) $，使$ \dot{x} = (A + B k)x(t) + (F + B k \omega)w(t) $中$ (F + B k \omega) $尽可能小，方法为使其中较大元素为$ 0 $。
+为$ \dot{x} = A x + B u + F w(t) $设计$ u(t) = k x(t) + k_w w(t) $，使$ \dot{x} = (A + B k)x(t) + (F + B k_w)w(t) $中$ (F + B k_w) $尽可能小，方法为使其中较大元素为$ 0 $。
 %------------------------------------------------
 \subsection[解耦]{\textcolor{red}{解耦}\tip{解耦}}
 使闭环系统中每个输入仅影响一个输出，MIMO$ \Rightarrow $多SISO。
-$$ \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} \overset{u = k_1 x + k_2 v}{\Longrightarrow} \overline{G}(s) = \underbrace{C (sI - A + B k_1)^{-1} B}_{\textcolor{red}{\text{非奇异对角阵}}} k_2 $$
+$$ \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} \overset{u = k_1 x + k_2 v}{\Longrightarrow} \overline{G}(s) = \underbrace{C (sI - A + B k_1)^{-1} B k_2}_{\textcolor{red}{\text{非奇异对角阵}}} $$
 %------------------------------------------------
 \paragraph{状态反馈解耦}
 \begin{enumerate}
@@ -2187,7 +2206,7 @@ $$ \textcolor{red}{\sigma_i = \begin{cases} \min\{j|C_i A^{j - 1} B \neq 0\} \\ 
 \centering 
 \begin{tikzpicture}[scale=0.8,transform shape]
 \node[block] at (0,-2) {$ R $}; \node[block] at (0,0) {$ \dot{x} = A x + B u $}; \node[block] at (5,-2) {$ \dot{z} = (A + G C)z + B u - G y $}; \node[block] at (5,0) {$ C $}; 
-\node at (-1.5,0.3) {$ u $}; \node at (1.8,-1.7) {$ z $}; \node at (2.8,0.3) {$ x $}; \node at (8.5,0.3) {$ y $};
+\node at (-1.5,0.3) {$ u $}; \node at (1.8,-1.7) {$ z/\hat{x} $}; \node at (2.8,0.3) {$ x $}; \node at (8.5,0.3) {$ y $};
 \draw[->] (1.3,0) -- (4,0); \draw[->] (2.5,-2) -- (1,-2); \draw[->] (6,0) -- (9,0); 
 \draw[->] (-1.5,0) |- (8,-1) |- (7.5,-1.8) node[near end,above] {$ u $}; \draw[->] (-1,-2) -| (-2,0) -- (-1.3,0); \draw[->] (8.5,0) |- (7.5,-2.2) node[near end,below] {$ y $};
 \end{tikzpicture}
@@ -2197,15 +2216,35 @@ $$ \textcolor{red}{\sigma_i = \begin{cases} \min\{j|C_i A^{j - 1} B \neq 0\} \\ 
 \paragraph{条件}
 \begin{itemize}
 \item \textcolor{red}{$ \exists G $使$ (A + G C) $能任意配置极点$ \Leftrightarrow $$ (A^T, C^T) $完全能控$ \Leftrightarrow $$ (C, A) $完全能观测}。
-\item \textcolor{red}{能设计形如$ \dot{z} = (A + G C)z + B u - G y $的观测器}（不要求任意配置极点）$ \Leftrightarrow $$ (A^T, C^T) $能稳$ \Leftrightarrow $$ (C, A) $能检测\textcolor{red}{$ \Leftrightarrow $$ \exists G $使$ (A + G C) $的$ \lambda $全具有负实部}。
+\item \textcolor{red}{能设计龙伯格观测器}（不要求任意配置极点）$ \Leftrightarrow $$ (A^T, C^T) $能稳$ \Leftrightarrow $$ (C, A) $能检测\textcolor{red}{$ \Leftrightarrow $$ \exists G $使$ (A + G C) $的$ \lambda $全具有负实部}。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[全阶观测器]{\textcolor{red}{全阶观测器}（全状态观测器）}
 观测器维度与状态方程同维。
+\begin{itemize}
+\item 法1：
+\begin{enumerate}
+\item 记$ C^T = \begin{bmatrix} C_1^T & \cdots & C_r^T \end{bmatrix} $，有$ R = \begin{bmatrix} C_1^T & A^T C_1^T & \cdots & (A^T)^{\mu_1 - 1} C_1^T \\ & & \cdots & \\ C_r^T & A^T C_r^T & \cdots & (A^T)^{\mu_r - 1} C_r^T  \end{bmatrix} $。
+\item $ W = \begin{bmatrix} 0 & \cdots & 0 & e_2 \\ & \cdots & & \\ 0 & \cdots & 0 & e_r \\ 0 & \cdots & \cdots & 0 \end{bmatrix} $，其中$ e_i $是$ r $阶单位阵的第$ i $列。
+\item $ \hat{G}^T = W R^{-1} $。
+\item 配置：
+\begin{enumerate}
+\item 特征多项式$ |sI - (A^T + C^T \hat{G}^T)| = s^n + a_{n - 1} s^{n - 1} + \dots + a_1 s + a_0 $。
+\item 目标多项式$ (s - \lambda_1) \cdots (s - \lambda_n) = s^n + \alpha_{n - 1} s^{n - 1} + \dots + \alpha_1 s + \alpha_0 $。
+\item $ g^T = \begin{bmatrix} a_0 - \alpha_0 & \cdots & a_{n - 1} - \alpha_{n - 1} \end{bmatrix} $。
+\end{enumerate}
+\item 还原：
+\begin{enumerate}
+\item $ {\scriptsize \overline{U} = \begin{bmatrix} C_1^T & \overline{A}^T C_1^T & \cdots & (\overline{A}^T)^{n - 1} C_1^T \end{bmatrix}, \quad q = \begin{bmatrix} 0 & \cdots & 0 & 1 \end{bmatrix} \overline{U}^{-1}, \quad T^{-1} = \begin{bmatrix} q^T & (q \overline{A})^T & \cdots & (q \overline{A}^{n - 1})^T \end{bmatrix}^T} $。
+\item $ \hat{g}^T = g^T T^{-1}, \quad G^T = \hat{G} + \begin{bmatrix} \hat{g} & 0 \end{bmatrix} $。
+\end{enumerate}
+\end{enumerate}
+\item \textcolor{red}{法2}：对偶。
 \begin{enumerate}
 \item \textcolor{red}{为对偶系统$ (A^T, C^T, B^T) $配置极点，得到$ k $}。
 \item $ \textcolor{red}{G = k^T}, \quad \textcolor{red}{\dot{x} = (A + G C)x - B u + G y} $。
 \end{enumerate}
+\end{itemize}
 %------------------------------------------------
 \subsubsection[降维观测器]{\textcolor{red}{降维观测器}}
 部分状态变量（$ r $维，对应$ x_2 $）可用作反馈，不需要估计，只需$ n - r $阶观测器。
@@ -2221,8 +2260,8 @@ $$ \begin{cases} \dot{x}_1 = A_{11} x_1 + A_{12} y + B_1 u = A_{11} x_1 + v \\ \
 \begin{enumerate}
 \item 即\textcolor{red}{为$ \dot{w} = \dot{z} + G \dot{y} = \underbrace{(A_{11} + G A_{21})}_{\text{满足期望极点}} w + (B_1 + G B_2)u + [A_{12} + G A_{22} - (A_{11} + G A_{21})G]y $配置极点}。
 \item $ x $的估计为$ \textcolor{red}{\hat{x} = \begin{bmatrix} z \\ y \end{bmatrix} = \begin{bmatrix} I \\ 0 \end{bmatrix} w + \begin{bmatrix} -G \\ I \end{bmatrix} y} $。
-\item \textcolor{red}{返回原系统}。
 \end{enumerate}
+\item \textcolor{red}{返回原系统}。
 \end{enumerate}
 %------------------------------------------------
 \subsection[带观测器的状态反馈器]{\textcolor{red}{带观测器的状态反馈器}\tip{带观测器的状态反馈器（分离定理）}}
@@ -2231,32 +2270,43 @@ $$ \begin{cases} \dot{x} = A x + B u \\ y = C x \end{cases} \text{与} \begin{ca
 组合得到：
 $$ \begin{cases} \begin{bmatrix} \dot{x} \\ \dot{\hat{x}} \end{bmatrix} = \underbrace{\begin{bmatrix} A & B k \\ -G C & A + G C + B k \end{bmatrix}}_{A'} \begin{bmatrix} x \\ \hat{x} \end{bmatrix} + \underbrace{\begin{bmatrix} B \\ B \end{bmatrix}}_{B'} v \\ y = \underbrace{\begin{bmatrix} C & 0 \end{bmatrix}}_{C'} \begin{bmatrix} x \\ \hat{x} \end{bmatrix} \end{cases} $$
 
-经过线性变换$ \begin{bmatrix} I_n & 0 \\ I_n & -I_n \end{bmatrix} $，有$ det(sI - A') = det[sI - (A + B k)] \cdot det[sI - (A + G C)] $。
+经过线性变换$ \begin{bmatrix} I_n & 0 \\ I_n & -I_n \end{bmatrix} $，有$ \overline{x} = x - \hat{x} $，得到：
+$$ \begin{cases} \begin{bmatrix} \dot{x} \\ \dot{\overline{x}} \end{bmatrix} = \underbrace{\begin{bmatrix} A + B k & -B k \\ 0 & A + G C \end{bmatrix}}_{A''} \begin{bmatrix} x \\ \overline{x} \end{bmatrix} + \underbrace{\begin{bmatrix} B \\ 0 \end{bmatrix}}_{B''} v \\ y = \underbrace{\begin{bmatrix} C & 0 \end{bmatrix}}_{C''} \begin{bmatrix} x \\ \overline{x} \end{bmatrix} \end{cases} $$
+
+有$ det(sI - A') = det(sI - A'') $。
 \begin{itemize}
-\item \textcolor{red}{分离定理}：\textcolor{red}{极点上，带观测器的状态反馈器 = 原闭环系统 + 观测器}。
-\item $ \textcolor{red}{G(s)} $：$ \textcolor{red}{C'(sI - A')^{-1}B' = C[sI - (A + B k)]^{-1}B} $。
+\item （极点）\textcolor{red}{分离定理}：\textcolor{red}{带观测器的状态反馈器 = 原闭环系统 + 观测器}。对降维观测器也成立。
+\item $ \textcolor{red}{G(s)} $：$ \textcolor{red}{C'(sI - A')^{-1}B' = C''(sI - A'')^{-1}B'' = C[sI - (A + B k)]^{-1}B} $。
 \item 极点位置确定：配置在闭环极点远端，使估计尽快逼近实际，兼顾状态估计误差的衰减速率（快于系统响应速率）和观测器的抗干扰能力。
 \end{itemize}
 %------------------------------------------------
-\subsection[动态反馈与动态补偿器]{\textcolor{red}{动态反馈与动态补偿器}}
-带观测器的状态反馈系统中引入的动态子系统状态观测器。
-$$ \begin{cases} \dot{z} = E z + F y \\ G = K z + L y \end{cases} \Rightarrow \begin{cases} \dot{x} = (A + B L C)x + B K z \\ \dot{z} = F C x + E Z \end{cases} $$
+\paragraph{\textcolor{red}{动态反馈与动态补偿器}}
+带观测器的状态反馈系统中引入动态补偿器（动态子系统状态观测器）。
+$$ \begin{cases} \dot{z} = E z + F y \\ u = K z + L y \end{cases} \Rightarrow \begin{cases} \dot{x} = (A + B L C)x + B K z \\ \dot{z} = F C x + E Z \end{cases} $$
 \begin{itemize}
 \item \textcolor{red}{系统维数 = 受控系统维数 + 动态补偿器维数}。
-\item $ \textcolor{red}{G(s)} $：\textcolor{red}{带观测器的状态反馈系统 = 同时有串联、反馈补偿器的输出反馈系统}。
+\item $ \textcolor{red}{G(s)} $：\textcolor{red}{带观测器的状态反馈系统 = 同时有串联、反馈补偿器的输出反馈系统}；带观测器的状态反馈系统 = 输出动态反馈控制器。
 \item 动态补偿器镇定。
 \item \textcolor{red}{系统能用动态补偿器任意配置极点$ \Leftrightarrow $系统完全能控能观测}。
 \item 系统的固定模经任何输出动态反馈不变。
 \end{itemize}
-%------------------------------------------------
-\subsection[鲁棒控制]{鲁棒控制}
-鲁棒控制器存在$ \Leftrightarrow $$ (A, B) $可镇定，$ (C, A) $可检测，$ m \geq r, \quad rank \begin{bmatrix} A - \lambda I & B \\ C & D \end{bmatrix} = n + r $。
 %------------------------------------------------
 \paragraph{为$ n $阶系统配置$ 2n $个闭环极点}
 \begin{enumerate}
 \item 期望极点集为$ \sigma(A + B k) + \sigma(A + G C) $。
 \item 组合系统为$ \begin{cases} \dot{z} = (A + G C + B k)z - G y \\ u = k z \end{cases} $。
 \end{enumerate}
+%------------------------------------------------
+\subsection[鲁棒控制]{鲁棒控制}
+\begin{itemize}
+\item 鲁棒（Robust）控制：控制系统在不确定情况下仍能保持预期性能（性能改变可接受）。
+\item 鲁棒控制器存在$ \Leftrightarrow $$ (A, B) $可镇定，$ (C, A) $可检测，$ m \geq r, \quad rank \begin{bmatrix} A - \lambda I & B \\ C & D \end{bmatrix} = n + r $。
+\item 鲁棒控制器的结构：
+\begin{itemize}
+\item 伺服补偿器：克服干扰，实现输出调节。内模原理。
+\item 镇定补偿器：使闭环系统稳定。
+\end{itemize}
+\end{itemize}
 %----------------------------------------------------------------------------------------
 \newpage
 \part{最优控制}
@@ -2267,7 +2317,7 @@ $$ \begin{cases} \dot{z} = E z + F y \\ G = K z + L y \end{cases} \Rightarrow \b
 %------------------------------------------------
 \paragraph{必备条件}
 \begin{itemize}
-\item 系统数学模型$ \dot{x}(t) = \underbrace{f[x(t), u(t), t]}_{\text{连续向量函数}} $，其中状态向量$ x(t) \in R^n $，控制向量$ u(t) \in R^m $。
+\item 系统数学模型$ \dot{x}(t) = \underbrace{f[x(t), u(t), t]}_{\text{连续向量函数} \in R^n} $，其中状态向量$ x(t) \in R^n $，控制向量$ u(t) \in R^m $。
 \item 正则方程：
 \begin{itemize}
 \item 边界条件$ x(t_0) = x_0 $。
@@ -2281,6 +2331,8 @@ $$ \begin{cases} \dot{z} = E z + F y \\ G = K z + L y \end{cases} \Rightarrow \b
 \item 最省燃料：$ J(u) = \int_{t_0}^{t_f} |u| d t $。
 \item 状态调节器：$ J(u) = \int_{t_0}^{t_f} x^T Q x d t $。
 \item 终点偏差：$ J(u) = \frac{1}{2} x^T(t_f) F x(t_f) + \frac{1}{2}\int_{t_0}^{t_f}(x^T Q x + u^T R u) d t $。
+\item 跟踪问题：$ J(u) = \frac{1}{2} [x(t_f) - x_d(t_f)]^T F [x(t_f) - x_d(t_f)] + \frac{1}{2} \int_{t_0}^{t_f} \{[x(t) - x_d(t)]^T Q [x(t) - x_d(t)] + u^T R u\} d t $。
+\item 输出跟踪：$ J(u) = \frac{1}{2} [y(t_f) - y^d(t_f)]^T F [y(t_f) - y^d(t_f)] + \frac{1}{2} \int_{t_0}^{t_f} \{[y(t) - y^d(t)]^T Q(t) [y(t) - y^d(t)] + u^T R u\} d t $。
 \end{itemize}
 \end{itemize}
 %------------------------------------------------
@@ -2368,15 +2420,14 @@ $ u = g(x, \dot{x}), \quad J(u) = \int_{t_0}^{t_f} f(x, u) d t, \quad x(t_0) = x
 \paragraph{一般泛函$ J(x) = \theta[x(t_f), t_f] + \int_{t_0}^{t_f} f(x, \dot{x}, t) d t $推导}
 \begin{align*}
 &\Phi(\epsilon) = \theta[x(t_f + \epsilon \delta t_f) + \epsilon \delta x(t_f + \epsilon \delta t_f), t_f + \epsilon \delta t_f] + \int_{t_0}^{t_f + \epsilon \delta t_f} f(x + \epsilon \delta x, \dot{x} + \epsilon \delta \dot{x}, t) dt \\
-&\frac{d \Phi}{d t}|_{\epsilon = 0} = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)}[\dot{x}(t_f) \delta t_f + \delta x(t_f)] + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f} \delta t_f \\
-&+ \int_{t_0}^{t_f}(\frac{\partial f}{\partial x} - \frac{d}{d t}\frac{\partial f}{\partial \dot{x}}) \delta x dt + (\frac{\partial f}{\partial \dot{x}} \delta x)|_{t_0}^{t_f} + f(x, \dot{x}, t)|_{t_f} \delta t_f \\
-&\begin{cases} \delta x(t_f): \frac{\partial f}{\partial \dot{x}}|_{t_f} = -\frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} \\ \delta t_f: \{f(x, \dot{x}, t) - \dot{x}\frac{\partial f}{\partial \dot{x}} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f}\}|_{t_f} = 0 \end{cases} \Rightarrow \text{变更}
+&\frac{d \Phi(\epsilon )}{d \epsilon} = 0 = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)}[\dot{x}(t_f) \delta t_f + \delta x(t_f)] + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f} \delta t_f + \int_{t_0}^{t_f}(\frac{\partial f}{\partial x} - \frac{d}{d t}\frac{\partial f}{\partial \dot{x}}) \delta x dt + (\frac{\partial f}{\partial \dot{x}} \delta x)|_{t_0}^{t_f} + f(x, \dot{x}, t)|_{t_f} \delta t_f \\
+&\text{二者独立} \Rightarrow \begin{cases} \delta x(t_f): \frac{\partial f}{\partial \dot{x}}|_{t_f} = -\frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} \\ \delta t_f: \{f(x, \dot{x}, t) - \dot{x}\underbrace{\frac{\partial f}{\partial \dot{x}}}_{\text{代入}} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f}\}|_{t_f} = 0 \end{cases} \Rightarrow \text{变更}
 \end{align*}
 %------------------------------------------------
 \paragraph{多变量}
 对各变量列必要条件。
 %------------------------------------------------
-\subsubsection[哈密顿函数]{\textcolor{red}{哈密顿函数}（拉格朗日乘子法）}
+\subsubsection[哈密顿函数]{\textcolor{red}{哈密顿}（Hamilton）\textcolor{red}{函数}（拉格朗日乘子法）}
 %------------------------------------------------
 \paragraph{推导}
 $$ \dot{x} = f(x, u, t), \quad x(t_0) = x_0, \quad J(u) = \theta[x(t_f), t_f] + \int_{t_0}^{t_f} L(x, u, t) d t $$
@@ -2400,9 +2451,9 @@ $$ \begin{cases} \frac{\partial H}{\partial x} - \frac{d}{d t}(\frac{\partial H}
 \item $ x(t_f) = x_f $。
 \item $ t_f $已知，$ x(t_f) $自由：$ \textcolor{red}{\lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)}} $。
 \item $ t_f, x(t_f) $自由：$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial \textcolor{red}{x(t_f)}}, \quad H(x, \lambda, u, t)|_{t_f} + \frac{\partial \theta[x(t_f), t_f]}{\partial \textcolor{red}{t_f}} = 0 $。
-\item $ N[x(t_f), t_f] = 0 $：$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} + \frac{\partial N^T[x(t_f), t_f]}{\partial x(t_f)} \cdot v, \quad H(x, \lambda, u, t)|_{t_f} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f} + \frac{\partial N^T[x(t_f), t_f]}{\partial t_f} \cdot v = 0 $，其中$ v $为$ r $维实向量，通过作比、代回$ N $中等方法消去。
-\item $ H $不显式含$ t $：$ \dot{H} = \underbrace{(\frac{\partial H}{\partial x})^T}_{-\dot{\lambda}^T} \dot{x} + \underbrace{(\frac{\partial H}{\partial u})^T}_{0} \dot{u} + \underbrace{(\frac{\partial H}{\partial \lambda})^T}_{\dot{x}^T} \dot{\lambda} = 0, \quad H[x^*(t), u^*(t), \lambda^*(t)] $为常数。
-\item $ t_f $自由，$ H $不依赖于$ t $，$ \theta, N $不依赖于$ H $：$ H[x(t_f), u(t_f), \lambda(t_f)] = 0 $沿最优轨线。
+\item $ N[x(t_f), t_f] = 0 $：$ \lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} + \frac{\partial N^T[x(t_f), t_f]}{\partial x(t_f)} \cdot v $，其中$ v $为$ r $维实向量，通过作比、代回$ N $中等方法消去。$ t_f $自由时，要补充$ H(x, \lambda, u, t)|_{t_f} + \frac{\partial \theta[x(t_f), t_f]}{\partial t_f} + \frac{\partial N^T[x(t_f), t_f]}{\partial t_f} \cdot v = 0 $。
+\item $ H $不显式含$ t $：最优轨线$ \dot{H} = \underbrace{(\frac{\partial H}{\partial x})^T}_{-\dot{\lambda}^T} \dot{x} + \underbrace{(\frac{\partial H}{\partial u})^T}_{0} \dot{u} + \underbrace{(\frac{\partial H}{\partial \lambda})^T}_{\dot{x}^T} \dot{\lambda} = 0, \quad H[x^*(t), u^*(t), \lambda^*(t)] $为常数。
+\item $ t_f $自由，$ H $不依赖于$ t $，$ \theta, N $不依赖于$ t_f $：$ H[x(t_f), u(t_f), \lambda(t_f)] = 0 $沿最优轨线。
 \end{itemize}
 \end{itemize}
 \end{enumerate}
@@ -2419,7 +2470,7 @@ $ u $受限，$ L $关于$ u $不可微，不存在偏导数。
 \item 代回$ J(u) $，分段积分。
 \end{enumerate}
 %------------------------------------------------
-\paragraph{最小时间控制（最速控制）}
+\paragraph{最小时间控制（最速控制，时间最优控制）}
 \begin{itemize}
 \item 条件：$ \dot{x} = A x(t) + B u(t), \quad A \in R^n, \quad B \in R^m $，$ A, B $为常阵，$ (A, B) $能控。$ x(t_0) = x_0, \quad x(t_f) = 0 $，$ t_f $自由，$ J = \int_{0}^{t_f} d t, |u_j(t)| \leq 1 $。
 \item 推导：$ H(x, u, \lambda) = 1 + \lambda^T(A x + B u), \quad B = \begin{bmatrix} b_1 & b_2 & \cdots & b_m \end{bmatrix} $，设$ g_j(t) = \lambda^T(t) b_j $，有$ u_j^*(t) = -sgn\{g_j(t)\} $。
@@ -2433,10 +2484,14 @@ $ u $受限，$ L $关于$ u $不可微，不存在偏导数。
 \end{itemize}
 %------------------------------------------------
 \subsection[线性二次型]{\textcolor{red}{线性二次型}}
-非线性最优控制可通过在线执行得到线性二次型。
-$$ J(u) = \frac{1}{2} x^T(t_f) \textcolor{red}{F} x(t_f) + \frac{1}{2}\int_{t_0}^{t_f}[\underbrace{x^T(t) \textcolor{red}{Q(t)} x(t)}_{\text{状态}} (+ 2x^T(t) S(t) u(t)) + \underbrace{u^T(t) \textcolor{red}{R(t)} u(t)}_{\text{能量}}] d t $$
+\begin{itemize}
+\item 非线性最优控制可通过在线执行得到线性二次型。
+\item 调节$ Q, R $以调整对状态精确度和控制能量的重视程度。
+\end{itemize}
+$$ J(u) = \frac{1}{2} x^T(t_f) \textcolor{red}{F} x(t_f) + \frac{1}{2}\int_{t_0}^{t_f}[\underbrace{x^T(t) \textcolor{red}{Q(t)} x(t)}_{\text{状态}} + 2x^T(t) S(t) u(t) + \underbrace{u^T(t) \textcolor{red}{R(t)} u(t)}_{\text{能量}}] d t $$
 %------------------------------------------------
 \subsubsection[有限时间状态调节器]{\textcolor{red}{有限时间状态调节器}（\textcolor{red}{微分}）}
+$$ J(u) = \frac{1}{2} x^T(t_f) F x(t_f) + \frac{1}{2}\int_{t_0}^{\textcolor{red}{t_f}}[x^T(t) Q(t) x(t) + u^T(t) R(t) u(t)] d t $$
 %------------------------------------------------
 \paragraph{条件}
 $ \dot{x} = A(t) x + B(t) u, \quad x(t_0) = x_0 $，\textcolor{red}{不要求$ (A, B) $能控}，$ F, Q $对称半正定，$ R $对称正定。
@@ -2447,12 +2502,12 @@ $ \dot{x} = A(t) x + B(t) u, \quad x(t_0) = x_0 $，\textcolor{red}{不要求$ (
 \begin{align*} H &= \frac{1}{2}[x^T Q(t) x + u^T R(t) u] + \lambda^T[A(t) x + B(t) u] \\ \frac{\partial H}{\partial u} &= 0 \Rightarrow u^*(t) = -R^{-1}(t) B^T(t) \lambda(t) \end{align*}
 
 得到：
-\begin{align*} &\begin{cases} \dot{x} = A(t) x + B(t) u^*(t) \\ \dot{\lambda} = -\frac{\partial H}{\partial x} = -Q(t) x - A^T(t) \lambda \end{cases} \\ &\lambda(t_f) = \frac{\partial[\frac{1}{2} x^T(t_f) F x(t_f)]}{\partial x(t_f)} = F x(t_f) \\ &x(t_0) = x_0 \end{align*}
+\begin{align*} &\begin{cases} \dot{x} = A(t) x + B(t) u^*(t) \\ \dot{\lambda} = -\frac{\partial H}{\partial x} = -Q(t) x - A^T(t) \lambda \end{cases} \\ &x(t_0) = x_0 \\ &\lambda(t_f) = \frac{\partial[\frac{1}{2} x^T(t_f) F x(t_f)]}{\partial x(t_f)} = F x(t_f) \end{align*}
 
-设$ \Phi(t, t_0) = \begin{bmatrix} \phi_{11}(t, t_0) & \phi_{12}(t, t_0) \\ \phi_{21}(t, t_0) & \phi_{22}(t, t_0) \end{bmatrix} $，有：
-$$ \lambda(t) = \underbrace{[\phi_{22}(t_f, t) - F \phi_{12}(t_f, t)]^{-1} [F \phi_{11}(t_f, t) - \phi_{21}(t_f, t)]}_{k(t) \text{反馈增益矩阵} P(t) \text{，对称半正定}} x(t) $$
+设$ \Phi(t, t_0) = \begin{bmatrix} \phi_{11}(t, t_0) & \phi_{12}(t, t_0) \\ \phi_{21}(t, t_0) & \phi_{22}(t, t_0) \end{bmatrix} $，$ \phi_{ij}(t, t_0) $是$ n $阶方阵，有：
+$$ \lambda(t) = \underbrace{[\phi_{22}(t_f, t) - F \phi_{12}(t_f, t)]^{-1} [F \phi_{11}(t_f, t) - \phi_{21}(t_f, t)]}_{P(t) \text{，对称半正定}} x(t) $$
 
-有$ \textcolor{red}{u(t) = -R^{-1}(t) B^T(t) P(t) x(t)} $。
+有$ \textcolor{red}{u(t) = -R^{-1}(t) B^T(t) P(t) x(t)} = -\underbrace{k(t)}_{\text{反馈增益矩阵}} x(t) $。
 
 对$ P(t) $求关于$ t $的导数，即为里卡蒂微分方程：
 $$ \textcolor{red}{\frac{d P}{d t} = -P(t) A(t) - A^T(t) P(t) + P(t) B(t) R^{-1}(t) B^T(t) P(t) - Q(t)} $$
@@ -2471,14 +2526,15 @@ $$ \frac{d P}{d t} = -P(t) A(t) - A^T(t) P(t) + P(t) B(t) R^{-1}(t) B^T(t) P(t) 
 \begin{itemize}
 \item 方程与解：$ u^*(t) = -R^{-1}(t) B^T(t) P(t, t_f) x(t) $，其中$ P(t, t_f) $是以下方程组的解，$ P, Q $的（半）正定性一致。
 $$ \begin{cases} \frac{d P}{d t} = -P(t) A(t) - A^T(t) P(t) + P(t) B(t) R^{-1}(t) B^T(t) P(t) - Q(t) \\ P(t_f, t_f) = F \end{cases} $$
-\item \textcolor{red}{最优解}：$ J^*[x(t_0), t_0]_{min} = \frac{1}{2} x^T(t_0) P(t_0, t_f) x(t_0) $。
+\item \textcolor{red}{最优解}：$ J^*[x(t_0), t_0] = \frac{1}{2} x^T(t_0) P(t_0, t_f) x(t_0) $。
 \item 最优轨线$ \begin{cases} \frac{d x}{d t} = [A(t) - B(t) R^{-1}(t) B^T(t) P(t_f, t_f)] x(t) \\ x(t_0) = x_0 \end{cases} $。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[非时变状态调节器]{\textcolor{red}{非时变状态调节器}（\textcolor{red}{常阵}）}
+$$ J(u) = \frac{1}{2}\int_{t_0}^{\textcolor{red}{\infty}}[x^T(t) Q x(t) + u^T(t) R u(t)] d t $$
 \begin{itemize}
-\item 条件：$ \dot{x} = A x + B u, \quad x(t_0) = x_0, \quad \textcolor{red}{t_f = \infty} $，\textcolor{red}{$ (A, B) $完全能控}，$ Q $对称半正定，$ R $对称正定。
-\item 常阵$ \hat{P} $：$ \hat{P} = \lim_{t \to \infty} P(t, t_f) = \lim_{t \to -\infty} P(t_0, t_f) $，$ \hat{p} $正定$ \Leftrightarrow $$ (C, A) $能观测。
+\item 条件：$ \dot{x} = A x + B u, \quad x(t_0) = x_0 $，\textcolor{red}{$ (A, B) $完全能控}，$ Q, R $对称正定。
+\item 常阵$ \hat{P} $：$ \hat{P} = \lim_{t_f \to \infty} P(t, t_f) = \lim_{t_0 \to -\infty} P(t_0, t_f) $，$ \hat{p} $正定$ \Leftrightarrow $$ (C, A) $能观测。
 \item 代数里卡蒂方程：$ \textcolor{red}{-\hat{P} A - A^T \hat{P} + \hat{P} B R^{-1} B^T \hat{P} - Q = 0} $。
 \end{itemize}
 %------------------------------------------------
@@ -2491,13 +2547,13 @@ $$ \begin{cases} \frac{d P}{d t} = -P(t) A(t) - A^T(t) P(t) + P(t) B(t) R^{-1}(t
 $$ -\hat{P} A - A^T \hat{P} + \hat{P} B R^{-1} B^T \hat{P} - Q = 0 $$
 \item $ u = -R^{-1} B^T P x $。
 \end{enumerate}
-\item 法2：求里卡蒂微分方程稳态解。
+\item 法2：求里卡蒂微分方程稳态解，由$ t = 0 $向$ t \to -\infty $求解。
 $$ \begin{cases} \frac{d P}{d t} = -P A - A^T P + P B R^{-1} B^T P - Q \\ P(t_0) = 0 \end{cases} $$
 \item 法3：哈密顿矩阵法。
 \begin{itemize}
 \item 原理：
 
-$ u^*(t) = - R^{-1} B^T \hat{P} x(t) \Rightarrow \begin{cases} \dot{x} = \underbrace{(A - B R^{-1} B^T \hat{P})}_{\overline{A}} x \\ x(t_0) = x_0 \end{cases} $，解得$ \overline{A} $的特征值$ \lambda $和特征根$ \eta $，有$ \lambda \eta = \overline{A} \eta $。构造哈密顿矩阵$ H_{2n \times 2n} $，特征值为$ \pm \lambda $（$ 2n $项）。
+$ u^*(t) = - R^{-1} B^T \hat{P} x(t) \Rightarrow \begin{cases} \dot{x} = \underbrace{(A - B R^{-1} B^T \hat{P})}_{\overline{A}} x \\ x(t_0) = x_0 \end{cases} $，解得$ \overline{A} $的$ \lambda $和$ \eta $，有$ \lambda \eta = \overline{A} \eta $。构造哈密顿矩阵$ H_{2n \times 2n} $，特征值为$ \pm \lambda $（$ 2n $项）。
 
 令$ \xi = \hat{P} \eta, \quad \lambda \xi = (\hat{P} A - \hat{P} B R^{-1} B^T \hat{P}) \eta = (-Q - A^T \hat{P}) \eta = -Q \eta - A^T \xi $，有：
 $$ \lambda \begin{bmatrix} \eta \\ \xi \end{bmatrix} = \underbrace{\begin{bmatrix} A & -B R^{-1} B^T \\ -Q & -A^T \end{bmatrix}}_{H} \begin{bmatrix} \eta \\ \xi \end{bmatrix} $$
@@ -2509,11 +2565,11 @@ $$ \lambda \begin{bmatrix} \eta \\ \xi \end{bmatrix} = \underbrace{\begin{bmatri
 %------------------------------------------------
 \paragraph{定理}
 \begin{itemize}
-\item 方程与解：$ u = -R^{-1} B^T \hat{P} x $，其中$ \hat{P} $是以下方程的解。
+\item 方程与解：$ u^*(t) = -R^{-1} B^T \hat{P} x(t) $，其中$ \hat{P} $是以下方程的对称正定解。
 $$ -\hat{P} A - A^T \hat{P} + \hat{P} B R^{-1} B^T \hat{P} - Q = 0 $$
-\item 最优解：$ J^*[x(t_0), t_0]_{min} = \frac{1}{2} x^T(t_0) \hat{P} x(t_0) $。
+\item 最优解：$ J^*[x(t_0), t_0] = \frac{1}{2} x^T(t_0) \hat{P} x(t_0) $。
 \item 最优轨线$ \begin{cases} \frac{d x}{d t} = [A - B R^{-1} B^T \hat{P}] x(t) \\ x(t_0) = x_0 \end{cases} $。
-\item 闭环系统$ \dot{x} = (A - B R^{-1} B^T \hat{P}) x $渐进稳定。
+\item 闭环系统$ \dot{x} = (A - B R^{-1} B^T \hat{P}) x $渐进稳定。若$ Q = C^T C $半正定，$ (C, A) $能观测，也成立。
 \end{itemize}
 %------------------------------------------------
 \subsubsection[有限时间时变输出跟踪系统]{\textcolor{red}{有限时间时变输出跟踪系统}}
@@ -2533,7 +2589,7 @@ $$ H = \frac{1}{2}[C(t)x - y^d(t)]^T Q(t) [C(t)x - y^d(t)] + \frac{1}{2} u^T R u
 &\frac{\partial H}{\partial u} = 0 \Rightarrow u = -R^{-1}(t) B^T(t) \lambda(t) \\ 
 &\dot{\lambda} = -\frac{\partial H}{\partial x} = -C^T(t) Q(t) [C(t) x - y^d(t)] - A^T(t) \lambda \\ 
 &\dot{x} = A(t) x - B(t) R^{-1} B^T(t) \lambda \\
-&\lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} = \underbrace{C^T(t_f) F C(t_f)}_{P(t)} x(t_f) - \underbrace{C^T(t_f) F y^d(t_f)}_{\xi(t)}
+&\lambda(t_f) = \frac{\partial \theta[x(t_f), t_f]}{\partial x(t_f)} = \underbrace{C^T(t_f) F C(t_f)}_{P(t_f)} x(t_f) - \underbrace{C^T(t_f) F y^d(t_f)}_{\xi(t_f)}
 \end{align*}
 
 有：
@@ -2552,7 +2608,7 @@ $$ \begin{cases} \dot{x} = A x + B u \\ y = C x \\ \dot{z} = (A + GC)z + B u - G
 $$
 \begin{cases} \begin{bmatrix} \dot{x} \\ \dot{z} \end{bmatrix} = \begin{bmatrix} A & B k \\ G C & A + G C - B k \end{bmatrix} \begin{bmatrix} x \\ z \end{bmatrix} + \begin{bmatrix} B \\ B \end{bmatrix} u \\ y = \begin{bmatrix} C & 0 \end{bmatrix} \begin{bmatrix} x \\ z \end{bmatrix} \end{cases} 
 \overset{\begin{bmatrix} x \\ z \end{bmatrix} = \begin{bmatrix} I_n & 0 \\ I_n & -I_n \end{bmatrix} \begin{bmatrix} x' \\ z' \end{bmatrix}}{\Longrightarrow}
-\begin{cases} \overline{A} = \begin{bmatrix} A + B k & - B k \\ 0 & A + G C \end{bmatrix} \\ \overline{B} = \begin{bmatrix} B & 0 \end{bmatrix}^T \\ \overline{C} = \begin{bmatrix} C & 0 \end{bmatrix} \end{cases} 
+\begin{cases} \overline{A} = \begin{bmatrix} A + B k & - B k \\ 0 & A + G C \end{bmatrix} \\ \overline{B} = \begin{bmatrix} B^T & 0 \end{bmatrix}^T \\ \overline{C} = \begin{bmatrix} C & 0 \end{bmatrix} \end{cases} 
 $$
 \begin{itemize}
 \item $ \textcolor{red}{G(s)} $：$ \textcolor{red}{\overline{G}(s) = \overline{C}(s I - \overline{A})^{-1} \overline{B} = C[s I - (A - B K)]^{-1} B} $。
@@ -2561,6 +2617,9 @@ $$
 %------------------------------------------------
 \subsection[动态规划]{\textcolor{red}{动态规划}}
 $ \dot{x} = f(x, u, t), \quad x(t_0) = x_0, \quad J(u) = \theta[x(t_f), t_f] + \int_{t_0}^{t_f} L(x, u, t) d t $。
+%------------------------------------------------
+\paragraph{最优性原理}
+$ u^*(s), \quad t \leq s \leq t_f $是最优控制，则$ u^*(s), \quad t + \Delta t \leq s \leq t_f $也是最优控制。
 %------------------------------------------------
 \paragraph{HJB（连续系统动态规划基本方程）方程}
 \begin{itemize}
@@ -2619,7 +2678,7 @@ $ H(k) = L[x(k), u(k), k] + \lambda^T(k + 1) f[x(k), u(k), k] $。
 \end{enumerate}
 %------------------------------------------------
 \subsection[线性二次型]{\textcolor{red}{线性二次型}}
-\begin{align*} &x(k + 1) = A(k) x(k) + B(k) u(k), \quad x(0), \quad k = 0, 1, \dots, N - 1 \\ &J = \frac{1}{2} x^T(x) \textcolor{red}{F} x(N) + \frac{1}{2} \sum_{k = 0}^{N - 1} [x^T(k) \textcolor{red}{Q(k)} x(k) + u^T(k) \textcolor{red}{R(k)} u(K)] \\ &N \text{已知}, \quad x(N) \text{自由}, \quad Q(k) \text{对称半正定}, \quad R(k) \text{对称正定} \end{align*}
+\begin{align*} &x(k + 1) = A(k) x(k) + B(k) u(k), \quad x(0) = x_0, \quad k = 0, 1, \dots, N - 1 \\ &J = \frac{1}{2} x^T(x) \textcolor{red}{F} x(N) + \frac{1}{2} \sum_{k = 0}^{N - 1} [x^T(k) \textcolor{red}{Q(k)} x(k) + u^T(k) \textcolor{red}{R(k)} u(K)] \\ &F, Q(k) \text{对称半正定}, \quad R(k) \text{对称正定} \end{align*}
 %------------------------------------------------
 \paragraph{推导}
 $$ H(k) = \frac{1}{2}[x^T(k) Q(k) x(k) + u^T(k) R(k) u(K)] + \lambda^T(k + 1)[A(k) x(k) + B(k) u(k)] $$
@@ -2630,15 +2689,20 @@ $$ H(k) = \frac{1}{2}[x^T(k) Q(k) x(k) + u^T(k) R(k) u(K)] + \lambda^T(k + 1)[A(
 \end{itemize}
 %------------------------------------------------
 \paragraph{定理}
-$ u^*(k) = -[R(k) + B^T(k) P(k + 1) B(K)]^{-1} B^T(k) P(k + 1) A(k) x(k) $得到$ J_{min}^* = \frac{1}{2} x^T(0) P(0) x(0) $，$ N \to \infty $时$ P(N) $为常阵。
+\begin{itemize}
+\item $ u^*(k) = -[R(k) + B^T(k) P(k + 1) B(K)]^{-1} B^T(k) P(k + 1) A(k) x(k) $可得到$ J^* = \frac{1}{2} x^T(0) P(0) x(0) $，其中$ P(k) $是里卡蒂方程的解。
+$$ P(k) = Q(k) + A^T(k) P(k + 1) A(k) - A^T(k) P(k + 1) B(k) [R(K) + B^T(k) P(k + 1) B(k)]^{-1} B^T(k) P(k + 1) A(k) $$
+\item 在$ A, B, Q, R $为常阵，$ Q, R $正定，$ (A, B) $能控，$ N \to \infty $时得到非时变控制器，$ P(N) $为常阵，是代数里卡蒂方程的解。得到的闭环系统渐进稳定。若$ Q = C^T C $半正定，$ (C, A) $能观测，也成立。
+\end{itemize}
 %------------------------------------------------
 \paragraph{解法}
 \begin{itemize}
 \item 法1：$ Z $迭代
 \begin{enumerate}
-\item 因为$ \lambda(k) = P(k) x(k), \quad \lambda(N) = F x(N)  $，故$ P(N) = F $。
-\item 对$ k = N - 1, N - 2, \dots, 0 $，求$ Z_1(k), Z_2(k), Z_3(k) $，进而求$ P(K), u^*(k) $。
-\begin{align*} Z_1(k) &= Q(k) + A^T(k) P(k + 1) A(k) \\ Z_2(k) &= B^T(k) P(k + 1) A(k) \\ Z_3(k) &= R(K) + B^T(k) P(k + 1) B(k) \\ P(k) &= Z_1(k) - Z_2^T(k) Z_3^{-1}(k) Z_2(k) \\ u^*(k) &= -Z_3^{-1}(k) Z_2(k) x(k) \end{align*}
+\item $ \lambda(k) = P(k) x(k), \quad \lambda(N) = F x(N)  $，故$ P(N) = F $。
+\item 对$ k = N - 1, N - 2, \dots, 0 $，求$ Z_1(k), Z_2(k), Z_3(k) $，进而求$ P(K) $。
+\begin{align*} Z_1(k) &= Q(k) + A^T(k) P(k + 1) A(k) \\ Z_2(k) &= B^T(k) P(k + 1) A(k) \\ Z_3(k) &= R(K) + B^T(k) P(k + 1) B(k) \\ P(k) &= Z_1(k) - Z_2^T(k) Z_3^{-1}(k) Z_2(k) \end{align*}
+\item $ u^*(k) = -Z_3^{-1}(k) Z_2(k) x(k) $。
 \end{enumerate}
 \item \textcolor{red}{法2}\tip{线性二次型（离散）}：$ P $迭代
 \begin{enumerate}
