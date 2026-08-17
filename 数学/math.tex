@@ -1,14 +1,13 @@
 \documentclass[
 12pt, % 字体大小
 a4paper, 
-oneside, % 单面打印（双面为twoside）
-headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被裁剪或掩盖
+oneside, % 单面打印
 ]{scrartcl}
 \input{../structure.tex} 
 \hyphenation{Fortran hy-phen-ation} % 单词断字规则
 %----------------------------------------------------------------------------------------
 % 题目和作者
-\title{\normalfont\spacedallcaps{数学}} 
+\title{数学} 
 \date{}
 %----------------------------------------------------------------------------------------
 % 开始和目录
@@ -41,7 +40,7 @@ headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被�
 \begin{itemize}    
 \item $ A \Rightarrow B $则$ \overline{B} \Rightarrow \overline{A} $，A是B的充分条件，B是A的必要条件。
 \item $ A \Leftrightarrow B $，A是B的充要条件。
-\item $ A \nLeftrightarrow B $，A是B的无关条件。
+\item $ A \not\Leftrightarrow B $，A是B的无关条件。
 \end{itemize}
 \item 证明充要条件：充分性 + 必要性。
 \end{itemize}
@@ -365,7 +364,7 @@ $ \lim_{x \to 0} (1 + x)^{\frac{1}{x}} = e, \quad \lim_{x \to \infty} (1 + \frac
 %------------------------------------------------
 \paragraph{洛必达法则}\tip{洛必达法则}
 \begin{itemize}
-\item 使用条件：$ \lim_{x \to \cdot} f(x) $与$ \lim_{x \to \cdot} F(x) $同时为$ 0 $或$ \infty $，$ \lim_{x \to \cdot} \frac{f'(x)}{F'(x)}, \quad F'(x) \neq 0 $存在或为无穷大（区间内$ f(x), F(x) $可导，$ \lim_{x \to \cdot} \frac{f(x)}{F(x)} $有极限$ \nRightarrow $$ \lim_{x \to \cdot} \frac{f'(x)}{F'(x)} $有极限）。
+\item 使用条件：$ \lim_{x \to \cdot} f(x) $与$ \lim_{x \to \cdot} F(x) $同时为$ 0 $或$ \infty $，$ \lim_{x \to \cdot} \frac{f'(x)}{F'(x)}, \quad F'(x) \neq 0 $存在或为无穷大（区间内$ f(x), F(x) $可导，$ \lim_{x \to \cdot} \frac{f(x)}{F(x)} $有极限$ \not\Rightarrow $$ \lim_{x \to \cdot} \frac{f'(x)}{F'(x)} $有极限）。
 \item $ \lim_{x \to \cdot} \frac{f(x)}{F(x)} = \lim_{x \to \cdot} \frac{f'(x)}{F'(x)} $（仍满足条件可继续使用）。
 \item 证明：柯西中值定理。
 \end{itemize}
@@ -484,7 +483,7 @@ $ \lim_{n \to \infty} x_n = a(x_n \to a(n \to \infty)) $，$ a = 0 $时，$ x_n 
 \subsubsection[计算]{计算}
 %------------------------------------------------
 \paragraph{四则运算}
-$ \lim_{n \to \infty} a_n + b_n $存在$ \nRightarrow $$ \lim_{n \to \infty} a_n, \quad \lim_{n \to \infty} b_n $存在；$ \lim_{n \to \infty} a_n, \quad \lim_{n \to \infty} b_n $存在$ \Rightarrow $$ \lim_{n \to \infty} a_n + b_n $存在。
+$ \lim_{n \to \infty} a_n + b_n $存在$ \not\Rightarrow $$ \lim_{n \to \infty} a_n, \quad \lim_{n \to \infty} b_n $存在；$ \lim_{n \to \infty} a_n, \quad \lim_{n \to \infty} b_n $存在$ \Rightarrow $$ \lim_{n \to \infty} a_n + b_n $存在。
 %------------------------------------------------
 \paragraph{海涅定理（数列极限与函数极限的联系）}\tip{海涅定理（数列极限与函数极限的联系）}
 $ \mathring{U}(x_0, \delta) $内定义的$ f(x) $，$ \lim_{n \to \infty} f(x) = A \Leftrightarrow \forall \mathring{U}(x_0, \delta) $内以$ x_0 $为极限的数列$ \{x_n\}(x_n \neq x_0) $，$ \lim_{n \to \infty} f(x) = A $存在。常用$ \lim_{x \to 0} f(x) = A $与$ \lim_{n \to \infty} f(\frac{1}{n}) = A $。
@@ -908,7 +907,7 @@ $$ \begin{vmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31
 \item 乘法：满足结合律（连乘括号移动）、分配律，一般不满足交换律。
 \begin{itemize}
 \item $ A_{m \times s}B_{s \times n} = C_{m \times n}, \quad c_{ij} = \sum_{k = 1}^s a_{ik} b_{kj} $（$ C $的列向量是$ A $的列向量的线性组合，$ C $的行向量是$ B $的行向量的线性组合）。
-\item $ AB = 0 \nRightarrow A/B = 0, \quad AB = AC \nRightarrow B = C $。
+\item $ AB = 0 \not\Rightarrow A/B = 0, \quad AB = AC \not\Rightarrow B = C $。
 \item 满秩分解：将矩阵变成行列向量之积。
 \end{itemize}
 \end{itemize}
@@ -931,7 +930,7 @@ $ f(x) = a_0 + a_1 x + \dots + a_m x^m $，则$ f(A) = a_0 E + a_1 A + \dots + a
 \paragraph{行列式（方阵）$ |A| $}
 \begin{itemize}
 \item $ |kA| = k^n|A| $。
-\item $ A \neq B \nRightarrow |A| \neq |B|,  \quad A \neq 0 \nRightarrow |A| \neq 0 $。
+\item $ A \neq B \not\Rightarrow |A| \neq |B|,  \quad A \neq 0 \not\Rightarrow |A| \neq 0 $。
 \end{itemize}
 %------------------------------------------------
 \paragraph{逆$ A^{-1} $}

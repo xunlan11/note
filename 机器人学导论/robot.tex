@@ -1,14 +1,13 @@
 \documentclass[
 12pt, % 字体大小
 a4paper, 
-oneside, % 单面打印（双面为twoside）
-headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被裁剪或掩盖
+oneside, % 单面打印
 ]{scrartcl}
 \input{../structure.tex} 
 \hyphenation{Fortran hy-phen-ation} % 单词断字规则
 %----------------------------------------------------------------------------------------
 % 题目和作者
-\title{\normalfont\spacedallcaps{机器人学导论}} 
+\title{机器人学导论} 
 \date{}
 %----------------------------------------------------------------------------------------
 % 开始和目录
@@ -1033,7 +1032,7 @@ $$ {}^0 \omega_0 = 0, \quad {}^0 v_0 = 0, \quad {}^0 \dot{v}_0 = g $$
 \begin{itemize}
 \item \textcolor{red}{势能$ U(q, t) $}：
 \begin{itemize}
-\item 与\textcolor{red}{速度}：\textcolor{red}{无关}，$ \textcolor{mypurple}{\frac{\partial U}{\partial \dot{q}} = 0} $。
+\item 与\textcolor{red}{速度}：\textcolor{red}{无关}，$ \textcolor{Purple}{\frac{\partial U}{\partial \dot{q}} = 0} $。
 \item 与\textcolor{red}{位移}：\textcolor{red}{克服的弹力或重力}，$ \textcolor{green}{\frac{\partial U}{\partial q} = G(q)} $。
 \end{itemize}
 \item \textcolor{red}{动能}$ \textcolor{red}{K(q, \dot{q}, t)} = \frac{1}{2}\dot{q}^T M(q) \dot{q} $（其中$ q $为$ v/\omega $，$ M $为$ M/I $）：瞬时性，正标量。
@@ -1047,7 +1046,7 @@ $$ {}^0 \omega_0 = 0, \quad {}^0 v_0 = 0, \quad {}^0 \dot{v}_0 = g $$
 系统输入（广义外力）$ \Gamma $与相互独立的广义坐标和广义速度$ q, \dot{q} \in R^n $的关系：
 \begin{align*}
 \textcolor{red}{\Gamma} &= \underbrace{\textcolor{orange}{\frac{d}{dt}\frac{\partial K}{\partial \dot{q}}} - \textcolor{blue}{\frac{\partial K}{\partial q}}}_{\text{非惯性系力}M(q) \ddot{q} + V(q, \dot{q})} + \underbrace{\textcolor{green}{\frac{\partial U}{\partial q}}}_{\text{重力}G(q)} \\
-&= \frac{d}{dt}\frac{\partial(K - \textcolor{mypurple}{U})}{\partial \dot{q}} - \frac{\partial(K - U)}{\partial q} \\
+&= \frac{d}{dt}\frac{\partial(K - \textcolor{Purple}{U})}{\partial \dot{q}} - \frac{\partial(K - U)}{\partial q} \\
 &\textcolor{red}{= \frac{d}{dt}\frac{\partial L}{\partial \dot{q}} - \frac{\partial L}{\partial q}}
 \end{align*}
 

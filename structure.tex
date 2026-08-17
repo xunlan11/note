@@ -1,20 +1,18 @@
 % 主题和样式
-\usepackage[
-nochapters, % 无章节层级 
-beramono, % 等宽字体
-eulermath, % 数学公式Euler字体
-pdfspacing, % 字间距
-dottedtoc % 点线式目录
-]{classicthesis}
-\usepackage{arsclassica} 
-%----------------------------------------------------------------------------------------
-% 输入和页面
-\usepackage[T1]{fontenc} % 字体编码
-\usepackage[utf8]{inputenc} % 输入编码
+\usepackage{microtype} % 排版
+\usepackage[dvipsnames]{xcolor} % 颜色
+\usepackage{iftex}
+\ifPDFTeX % 适配英文
+  \usepackage[utf8]{inputenc} % 输入编码
+  \usepackage[T1]{fontenc} % 输出编码
+\fi
 \usepackage{ctex} % 汉语
-\usepackage{amsmath,amssymb,amsthm} % 数学公式
+\usepackage{amsmath} % 数学公式
+\usepackage{verbatim} % 展示、注释
 \usepackage{indentfirst} % 缩进
 \setlength{\parindent}{2em} % 段落缩进
+%----------------------------------------------------------------------------------------
+% 页面
 \usepackage[
 top=2cm,
 bottom=2cm, 
@@ -24,44 +22,33 @@ headheight=20pt,
 includeheadfoot 
 ]{geometry} % 页面
 \usepackage{scrlayer-scrpage} % 页眉页脚
-\renewcommand{\sectionmark}[1]{\markright{\spacedlowsmallcaps{#1}}}  % 获取章节标题
+\setlength{\footheight}{19pt}
+\clearpairofpagestyles
+\renewcommand{\sectionmark}[1]{\markright{#1}} % 获取章节标题
 \renewcommand{\subsectionmark}[1]{\markright{\thesubsection~#1}}
-\lehead{\mbox{\llap{\small\thepage\kern1em\color{halfgray} \vline}\color{halfgray}\hspace{0.5em}\rightmark\hfil}} % 标题旁边标记页码
+\ohead{\mbox{\color{Gray}\rightmark\hspace{0.5em}\vline\kern1em\small\thepage}} % 右上角显示标题和页码
 \cfoot{\hyperlink{toc}{\color{RoyalBlue}返回目录}} % 页脚返回目录链接
-\pagestyle{scrheadings}
-% 颜色
-\usepackage{xcolor}
-\definecolor{mybg}{RGB}{250,250,245}
-\definecolor{mygray}{RGB}{120,120,120}
-\definecolor{mygreen}{RGB}{34,139,34}
-\definecolor{myblue}{RGB}{0,102,204}
-\definecolor{myred}{RGB}{200,0,0}
-\definecolor{myorange}{RGB}{255,140,0}
-\definecolor{mypurple}{RGB}{153,51,255}
-\usepackage{verbatim} % 输入输出（注释）
+\pagestyle{scrheadings} % 启用页眉页脚样式
 %----------------------------------------------------------------------------------------
 % 图表和引用
-\usepackage{graphicx} % 图像
+\usepackage{graphicx,subfig} % 图像、图组
 \graphicspath{{Figures/}} % 图像路径
-\usepackage{subfig} % 图组
-\usepackage{float} % 浮动
 \usepackage{enumitem} % 列表
 \usepackage{multirow,multicol} % 多行多列
-\usepackage{varioref} % 交叉引用
-\usepackage{tikz} % 绘图
-\usepackage{pgfplots}
+\usepackage{float,floatbytocbasic} % 浮动
+\newcommand{\vref}[1]{\ref{#1}} % 交叉引用
+\usepackage{tikz,pgfplots} % 绘图
 \pgfplotsset{compat=1.18}
 %----------------------------------------------------------------------------------------
 % 代码
 \usepackage{listings}
-\lstset{
-    language=C++,                     
+\lstdefinestyle{reportcode}{
     basicstyle=\ttfamily\small,    % 字体
     numbers=left,                  % 行号
-    numberstyle=\tiny\color{mygray},  
+    numberstyle=\tiny\color{Gray},  
     stepnumber=5,
     numbersep=5pt,
-    backgroundcolor=\color{mybg},  % 背景
+    backgroundcolor=\color{White}, % 背景
     showspaces=false,              % 空格与制表符
     showstringspaces=false,
     tabsize=4,                    
@@ -69,65 +56,35 @@ includeheadfoot
     captionpos=t,                  % 标题
     title=\lstname,
     breaklines=true,               % 换行
+    escapeinside={`}{`},           % 转义（中文注释）
+}
+\lstdefinestyle{cppcode}{
+    style=reportcode,
+    language=C++,
+    tabsize=4,
     breakatwhitespace=true,
-    escapeinside={`}{`},           % 转义（中文注释）
 }
-\lstset{
-    language=Python,            
-    basicstyle=\ttfamily\small,    % 字体
-    numbers=left,                  % 行号
-    numberstyle=\tiny\color{mygray}, 
-    stepnumber=5,             
-    numbersep=5pt,            
-    backgroundcolor=\color{mybg},  % 背景
-    showspaces=false,              % 空格与制表符
-    showstringspaces=false,
-    tabsize=4,                     
-    frame=single,                  % 边框
-    captionpos=t,                  % 标题
-    title=\lstname, 
-    breaklines=true,               % 换行
-    breakatwhitespace=false,   
-    escapeinside={`}{`},           % 转义（中文注释）
+\lstdefinestyle{pythoncode}{
+    style=reportcode,
+    language=Python,
+    tabsize=4,
+    breakatwhitespace=false,
 }
-\lstset{
+\lstdefinestyle{matlabcode}{
+    style=reportcode,
     language=Matlab,
-    basicstyle=\ttfamily\small,    % 字体
-    numbers=left,                  % 行号
-    numberstyle=\tiny\color{mygray},
-    stepnumber=5,
-    numbersep=5pt,
-    backgroundcolor=\color{mybg},  % 背景
-    showspaces=false,              % 空格与制表符
-    showstringspaces=false,
     tabsize=2,                     
-    frame=single,                  % 边框
-    captionpos=t,                  % 标题
-    title=\lstname,
-    breaklines=true,               % 换行
     breakatwhitespace=true,
-    escapeinside={`}{`},           % 转义（中文注释）
 }
-\lstset{
+\lstdefinestyle{bashcode}{
+    style=reportcode,
     language=bash,
-    basicstyle=\ttfamily\small,    % 字体
-    numbers=left,                  % 行号
-    numberstyle=\tiny\color{mygray},
-    stepnumber=5,
-    numbersep=5pt,
-    backgroundcolor=\color{mybg},  % 背景
-    showspaces=false,              % 空格与制表符
-    showstringspaces=false,
     tabsize=4,                                
-    frame=single,                  % 边框
-    captionpos=t,                  % 标题
-    title=\lstname,
-    breaklines=true,               % 换行
     breakatwhitespace=true,
-    escapeinside={`}{`},           % 转义（中文注释）
 }
+\lstset{style=reportcode}
 \usepackage{algorithm} % 算法
-\usepackage{algpseudocode}
+\usepackage{algpseudocode} % 伪代码
 \usepackage{mdframed} % 跨页框架
 % 不浮动算法环境
 \newcounter{myalgorithm}
@@ -146,7 +103,7 @@ includeheadfoot
     repeatframetitle=true
   ]
   \begin{algorithmic}[1]
-    \addcontentsline{alg}{algorithms}{\makebox[4em][l]{算法~\themyalgorithm} #1}
+    \addcontentsline{alg}{myalgorithm}{\makebox[4em][l]{算法~\themyalgorithm} #1}
 }{
   \end{algorithmic}
   \end{mdframed}
@@ -172,46 +129,41 @@ includeheadfoot
 \hypersetup{
 colorlinks=true, % 彩色
 breaklinks=true, % 断行
-urlcolor=webbrown, % URL棕色
+urlcolor=Brown, % URL棕色
 linkcolor=RoyalBlue, % 内部链接蓝色
-citecolor=webgreen, % 引用绿色
-bookmarks=true, % 书签
-bookmarksnumbered,
-pdftitle={}, 
-pdfauthor={},
-pdfsubject={}, 
-pdfkeywords={}, 
-pdfcreator={pdfLaTeX}, 
-pdfproducer={LaTeX with hyperref and ClassicThesis} 
+citecolor=ForestGreen, % 引用绿色
+bookmarksnumbered % 章节编号
 }
 %----------------------------------------------------------------------------------------
 % 目录与标题
-\usepackage{tocloft}
-\usepackage{titlesec} 
+\usepackage{tocbasic}
+\DeclareTOCStyleEntry[numwidth=4em]{tocline}{figure}
+\DeclareTOCStyleEntry[numwidth=4em]{tocline}{table}
+\DeclareTOCStyleEntry[level=1,indent=0pt,numwidth=4em]{tocline}{tips}
+\DeclareNewTOC[
+    type=tip,
+    types=tips,
+    name=要点,
+    listname={要\hspace{1em}点}
+]{tip}
+\DeclareNewTOC[
+    type=myalgorithm,
+    types=myalgorithms,
+    name=算法,
+    listname={算\hspace{1em}法}
+]{alg}
 \AtBeginDocument{
     \renewcommand{\contentsname}{目\hspace{1em}录}
     \renewcommand{\listfigurename}{图\hspace{1em}片}
-    \setlength{\cftfignumwidth}{4em}
     \renewcommand{\listtablename}{表\hspace{1em}格}
-    \setlength{\cfttabnumwidth}{4em}
     \renewcommand{\figurename}{图}
     \renewcommand{\tablename}{表}
     \setcounter{tocdepth}{3} % 目录深度
 }
-% \subsection[a]{a\tip{a}}
-\let\oldsubsection\subsection
-\renewcommand{\subsection}[2][]{
-  \oldsubsection[#1]{#2}
-}
-\let\oldsubsubsection\subsubsection
-\renewcommand{\subsubsection}[2][]{
-  \oldsubsubsection[#1]{#2}
-}
 % 要点
-\newlistof{tips}{tip}{要\hspace{1em}点}
+\newcounter{tips}
 \newcommand{\tip}[1]{
   \refstepcounter{tips}
-  \textsuperscript{\textcolor{orange}{\textbf{\thetips}}}
+  \textsuperscript{\textcolor{Orange}{\textbf{\thetips}}}
   \addcontentsline{tip}{tips}{\makebox[4em][l]{要点~\thetips} #1}
 }
-\newlistof{algorithms}{alg}{算\hspace{1em}法} % 算法

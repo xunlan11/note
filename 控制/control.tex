@@ -1,8 +1,7 @@
 \documentclass[
 12pt, % 字体大小
 a4paper, 
-oneside, % 单面打印（双面为twoside）
-headinclude,footinclude, % 页眉页脚包含在文本区域内，确保不被裁剪或掩盖
+oneside, % 单面打印
 ]{scrartcl}
 \input{../structure.tex} 
 \hyphenation{Fortran hy-phen-ation} % 单词断字规则
@@ -12,7 +11,7 @@ sum/.style={circle, draw, minimum size=0.6cm},
 }
 %----------------------------------------------------------------------------------------
 % 题目和作者
-\title{\normalfont\spacedallcaps{控制}} 
+\title{控制} 
 \date{}
 %----------------------------------------------------------------------------------------
 % 开始和目录
@@ -1763,7 +1762,7 @@ $$ \footnotesize S_1' = \begin{bmatrix} A^{-1} B & A^{-2} B & \cdots & A^{-n} B 
 %------------------------------------------------
 \paragraph{连续系统离散化的能控能观测性}
 \begin{itemize}
-\item \textcolor{red}{连续系统能控/能观测$ \nRightarrow $离散系统能控/能观测}（采样周期选取）。
+\item \textcolor{red}{连续系统能控/能观测$ \not\Rightarrow $离散系统能控/能观测}（采样周期选取）。
 \item \textcolor{red}{连续系统不能控/能观测$ \Rightarrow $离散系统不能控/能观测}。
 \end{itemize}
 %------------------------------------------------
